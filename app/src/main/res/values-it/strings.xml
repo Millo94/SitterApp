@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SitterApp</string>
+
+
+    <string name="nome">Nome</string>
+    <string name="cognome">Cognome</string>
+    <string name="telefono">Telefono</string>
+    <string name="descrizione">Descrizione</string>
+    <string name="nazione">Nazione</string>
+    <string name="provincia">Provincia</string>
+    <string name="automunito">Auto</string>
+    <string name="sesso">Sesso</string>
+    <string name="citta">Città</string>
+    <string name="cap">CAP</string>
+    <string name="via">Via</string>
+    <string name="datanascita">Data di Nascita</string>
+    <string name="foto">Foto</string>
+    <string name="tariffa">Retribuzione Oraria</string>
+
+    <plurals name="numfigli">
+        <item quantity="one">Figlio</item>
+        <item quantity="other">Figli</item>
+    </plurals>
+    <string name="animali">Animali</string>
+    <string name="numlavori">Ingaggi</string>
+    <string name="giorno">Giorno</string>
+    <string name="fasciaoraria">Fascia oraria</string>
+    <string name="testocommento">Commento...</string>
+    <string name="annuncio">Annuncio</string>
+    <string name="data">Data</string>
+    <string name="orainizio">Inizio</string>
+    <string name="orafine">Fine</string>
+
+</resources>

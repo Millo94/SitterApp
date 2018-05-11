@@ -1,6 +1,42 @@
 <resources>
-<string name="app_name">SitterApp</string>
-<string name="Enricoisindahouse">ECCOMIIII GENTEEEE</string>
-<string name="Francescosindahouse">hI EvERiBadII</string>
-<string name="babySitter">Baby Sitter</string>
+    <string name="app_name">SitterApp</string>
+    <string name="Enricoisindahouse" translatable="false">ECCOMIIII GENTEEEE</string>
+    <string name="Francescosindahouse" translatable="false">hI EvERiBadII</string>
+    <string name="babySitter" translatable="false">Baby Sitter</string>
+
+    <!-- Stringhe form registrazione -->
+    <string name="username" translatable="false">Username</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="email" translatable="false">e-mail</string>
+    <string name="cognome">Surname</string>
+    <string name="telefono">"Phone "</string>
+    <string name="descrizione">Description</string>
+    <string name="nome">Name</string>
+    <string name="nazione">Nation</string>
+    <string name="provincia">District</string>
+    <string name="citta">City</string>
+    <string name="cap">Postcode</string>
+    <string name="via">Street</string>
+    <string name="civico" translatable="false">n°</string>
+    <string name="sesso">Gender</string>
+    <string name="automunito">Car</string>
+    <string name="datanascita">Birthday</string>
+    <string name="foto">Picture</string>
+    <string name="tariffa">Hourly Pay</string>
+
+    <plurals name="numfigli">
+        <item quantity="one">Child</item>
+        <item quantity="other">Children</item>
+    </plurals>
+
+    <string name="animali">Pets</string>
+    <string name="numlavori">Engages</string>
+    <string name="giorno">Day</string>
+    <string name="fasciaoraria">Time slot</string>
+    <string name="testocommento">Comment...</string>
+    <string name="punteggio" translatable="false">Rating</string>
+    <string name="annuncio">Notice</string>
+    <string name="data">Date</string>
+    <string name="orainizio">Start</string>
+    <string name="orafine">End</string>
 </resources>
