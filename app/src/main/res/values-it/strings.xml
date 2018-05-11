@@ -31,5 +31,6 @@
     <string name="data">Data</string>
     <string name="orainizio">Inizio</string>
     <string name="orafine">Fine</string>
+    <string name="confermapassword">Conferma Password</string>
 
 </resources>

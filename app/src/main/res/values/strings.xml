@@ -7,6 +7,7 @@
     <!-- Stringhe form registrazione -->
     <string name="username" translatable="false">Username</string>
     <string name="password" translatable="false">Password</string>
+    <string name="confermapassword">Confirm Password</string>
     <string name="email" translatable="false">e-mail</string>
     <string name="cognome">Surname</string>
     <string name="telefono">"Phone "</string>
