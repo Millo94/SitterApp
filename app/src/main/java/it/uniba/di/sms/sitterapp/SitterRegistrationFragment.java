@@ -49,7 +49,7 @@ public class SitterRegistrationFragment extends Fragment {
 
 
 
-
+        
         dataNascita = (EditText) view.findViewById(R.id.nascitaSitterReg);
         dataNascita.setVisibility(View.VISIBLE);
         dataNascita.setOnClickListener(new View.OnClickListener() {
