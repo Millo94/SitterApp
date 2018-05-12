@@ -1,0 +1,182 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="it.uniba.di.sms.sitterapp.SitterRegistrationFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="513dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="1000dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/phoneSitterReg"
+                android:layout_width="356dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:ems="10"
+                android:inputType="phone"
+                android:text="@string/telefono"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailSitterReg" />
+
+            <EditText
+                android:id="@+id/emailSitterReg"
+                android:layout_width="356dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                android:text="@string/email"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nascitaSitterReg" />
+
+            <EditText
+                android:id="@+id/usernameSitterReg"
+                android:layout_width="356dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:inputType="textPersonName"
+                android:text="@string/username"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/passwordSitterReg"
+                android:layout_width="356dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="1dp"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:text="@string/password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/usernameSitterReg" />
+
+            <EditText
+                android:id="@+id/confPasswordSitterReg"
+                android:layout_width="356dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="1dp"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:text="@string/password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordSitterReg" />
+
+            <EditText
+                android:id="@+id/nomeSitterReg"
+                android:layout_width="356dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="1dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/nome"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/confPasswordSitterReg" />
+
+            <EditText
+                android:id="@+id/cognomeSitterReg"
+                android:layout_width="356dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="1dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/cognome"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nomeSitterReg" />
+
+            <EditText
+                android:id="@+id/nascitaSitterReg"
+                android:layout_width="356dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:ems="10"
+                android:inputType="date"
+                android:text="@string/datanascita"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cognomeSitterReg" />
+
+            <TextView
+                android:id="@+id/gender"
+                android:layout_width="176dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="1dp"
+                android:paddingTop="3dp"
+                android:text="@string/sesso"
+                android:textAlignment="textStart"
+                android:textColor="@android:color/background_dark"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/radioGroup"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phoneSitterReg" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="178dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.922"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phoneSitterReg">
+
+                <RadioButton
+                    android:id="@+id/maleSitterReg"
+                    android:layout_width="26dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/uomo" />
+
+                <RadioButton
+                    android:id="@+id/femaleSitterReg"
+                    android:layout_width="26dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/donna" />
+            </RadioGroup>
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>
