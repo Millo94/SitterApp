@@ -4,6 +4,12 @@
     <string name="Francescosindahouse" translatable="false">hI EvERiBadII</string>
     <string name="babySitter" translatable="false">Baby Sitter</string>
 
+    <!-- Stringhe Login form  -->
+    <string name="login">Login</string>
+    <string name="createAccount">Create a new account</string>
+    <string name= "lblMyAccount">My Account</string>
+
+
     <!-- Stringhe form registrazione -->
     <string name="username" translatable="false">Username</string>
     <string name="password" translatable="false">Password</string>

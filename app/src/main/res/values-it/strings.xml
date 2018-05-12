@@ -2,6 +2,10 @@
 <resources>
     <string name="app_name">SitterApp</string>
 
+    <!-- Stringhe Login form  -->
+    <string name="login">Entra</string>
+    <string name="createAccount">Crea un nuovo profilo</string>
+    <string name= "lblMyAccount">Account personale</string>
 
     <string name="nome">Nome</string>
     <string name="cognome">Cognome</string>
