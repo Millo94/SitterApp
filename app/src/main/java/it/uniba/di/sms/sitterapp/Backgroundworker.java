@@ -5,8 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.widget.AlertDialogLayout;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -32,7 +30,7 @@ public class Backgroundworker extends AsyncTask<String,Void,String> {
     @Override
     protected String doInBackground(String... params) {
         String type = params[0];
-        String login_url = "http://192.168.4.232/login.php";
+        String login_url = "http://sitterapp.altervista.org/login.php";
         if(type.equals("login")){
             try {
                 String user_name = params[1];
