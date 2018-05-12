@@ -42,4 +42,6 @@
     <string name="orafine">End</string>
     <string name="uomo">Male</string>
     <string name="donna">Female</string>
+    <string name="confermaRegistrazione">Confirm Registration</string>
+    <string name="registrazione">Registration</string>
 </resources>

@@ -13,8 +13,6 @@ public class MainActivity extends AppCompatActivity implements SitterRegistratio
         return;
     }
 
-    SitterRegistrationFragment sitterFrag;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,10 +20,7 @@ public class MainActivity extends AppCompatActivity implements SitterRegistratio
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, new SitterRegistrationFragment()).commit();
-        //sitterFrag = (SitterRegistrationFragment) getFragmentManager().findFragmentById(R.id.container);
-        /*FragmentManager fragMenager = getFragmentManager();
-        FragmentTransaction fragTransaction = fragMenager.beginTransaction();
-        SitterRegistrationFragment fragSitter = (SitterRegistrationFragment) findViewById(R.id.);*/
+
 
     }
 }
