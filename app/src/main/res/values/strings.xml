@@ -40,4 +40,6 @@
     <string name="data">Date</string>
     <string name="orainizio">Start</string>
     <string name="orafine">End</string>
+    <string name="uomo">Male</string>
+    <string name="donna">Female</string>
 </resources>

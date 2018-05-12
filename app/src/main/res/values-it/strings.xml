@@ -32,5 +32,7 @@
     <string name="orainizio">Inizio</string>
     <string name="orafine">Fine</string>
     <string name="confermapassword">Conferma Password</string>
+    <string name="uomo">Maschio</string>
+    <string name="donna">Femmina</string>
 
 </resources>
