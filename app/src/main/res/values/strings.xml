@@ -7,7 +7,7 @@
     <!-- Stringhe Login form  -->
     <string name="login">Login</string>
     <string name="createAccount">Create a new account</string>
-    <string name= "lblMyAccount">My Account</string>
+    <string name="lblMyAccount">My Account</string>
 
 
     <!-- Stringhe form registrazione -->

@@ -1,13 +1,16 @@
 package it.uniba.di.sms.sitterapp;
 
 import android.content.Intent;
+
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity{
     EditText usernameEt,passwordEt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void createAccount(View view){
-
+         Intent createAccountIntent = new Intent(LoginActivity.this, SitterRegistrationActivity.class);
+        startActivity(createAccountIntent);
     }
-
 }
