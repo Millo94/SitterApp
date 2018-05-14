@@ -7,6 +7,20 @@
     tools:context="it.uniba.di.sms.sitterapp.LoginActivity"
     tools:layout_editor_absoluteY="81dp">
 
+    <TextView
+        android:id="@+id/textAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/lblMyAccount"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/lblUsername"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.066" />
+
     <EditText
         android:id="@+id/lblUsername"
         android:layout_width="wrap_content"
@@ -19,7 +33,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAccount" />
+        app:layout_constraintTop_toBottomOf="@+id/textAccount"
+        app:layout_constraintVertical_bias="0.219"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <EditText
         android:id="@+id/lblPassword"
@@ -32,7 +48,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/lblUsername"
+        app:layout_constraintVertical_bias="0.376" />
 
     <Button
         android:id="@+id/btnlogin"
@@ -40,34 +57,37 @@
         android:layout_height="48dp"
         android:onClick="onLogin"
         android:text="@string/login"
-        app:layout_constraintBottom_toTopOf="@+id/btnNewAccount"
+        app:layout_constraintBottom_toTopOf="@+id/btnNewAccountSitter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblPassword" />
-
-    <TextView
-        android:id="@+id/textAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lblMyAccount"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/lblUsername"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/lblPassword"
+        app:layout_constraintVertical_bias="0.498" />
 
     <Button
-        android:id="@+id/btnNewAccount"
+        android:id="@+id/btnNewAccountSitter"
         android:layout_width="250dp"
         android:layout_height="48dp"
-        android:text="@string/createAccount"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:onClick="createAccountSitter"
+        android:text="@string/createAccountSitter"
+        app:layout_constraintBottom_toTopOf="@+id/btnNewAccountFamily"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnlogin"
-        android:onClick="createAccount" />
+        app:layout_constraintVertical_bias="0.712" />
+
+    <Button
+        android:id="@+id/btnNewAccountFamily"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:onClick="createAccountFamily"
+        android:text="@string/createAccountFamily"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnNewAccountSitter"
+        app:layout_constraintVertical_bias="0.872" />
 
 </android.support.constraint.ConstraintLayout>

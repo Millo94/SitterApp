@@ -1,5 +1,6 @@
 package it.uniba.di.sms.sitterapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,6 +43,11 @@ public class FamilyRegistrationFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Activity activity = (Activity) context;
+        try{
+        }catch(ClassCastException e){
+            throw new ClassCastException(activity.toString() + "must override method");
+        }
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -68,6 +74,6 @@ public class FamilyRegistrationFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        public void onFragmentInteraction(String usename,String password , String confPass, String name,String surname , String email, String phone, String nazione);
     }
 }

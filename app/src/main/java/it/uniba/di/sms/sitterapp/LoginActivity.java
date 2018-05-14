@@ -10,6 +10,9 @@ import android.widget.EditText;
 
 public class LoginActivity extends AppCompatActivity{
     EditText usernameEt,passwordEt;
+    public static final int TYPE_FAMILY = 0;
+    public static final int TYPE_SITTER = 1;
+    public static final String TYPE = "type";
 
 
     @Override
@@ -28,8 +31,15 @@ public class LoginActivity extends AppCompatActivity{
         backgroundworker.execute(type,username,password);
     }
 
-    public void createAccount(View view){
-         Intent createAccountIntent = new Intent(LoginActivity.this, SitterRegistrationActivity.class);
+    public void createAccountSitter(View view){
+        Intent createAccountIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
+        createAccountIntent.putExtra(TYPE, TYPE_SITTER);
+        startActivity(createAccountIntent);
+    }
+
+    public void createAccountFamily(View view) {
+        Intent createAccountIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
+        createAccountIntent.putExtra(TYPE, TYPE_FAMILY);
         startActivity(createAccountIntent);
     }
 }
