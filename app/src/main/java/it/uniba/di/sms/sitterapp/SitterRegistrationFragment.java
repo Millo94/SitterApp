@@ -28,9 +28,9 @@ import java.util.Calendar;
 public class SitterRegistrationFragment extends Fragment {
     ArrayList<EditText> lista  = new ArrayList<>();
     EditText dataNascita;
-    Date data_nascita;
-    Calendar c;
+
     View view;
+
     EditText usernameET,passwordET,confPasswordET,nameET,surnameET,emailET,phoneET;
     RadioGroup radioBtnGender;
     RadioButton male,female;
@@ -56,26 +56,7 @@ public class SitterRegistrationFragment extends Fragment {
 
         initialization();
 
-        dataNascita.setVisibility(View.VISIBLE);
-        dataNascita.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerDialog.OnDateSetListener mOnDateSetListener = new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yy");
-                        data_nascita = new Date(i, i1, i2);
-                        data_nascita = new Date(i - 1900, i1, i2);
-                        dataNascita.setText(formatter.format(data_nascita));
-                    }
-                };
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), mOnDateSetListener, c.get(Calendar.YEAR), c.get(Calendar.MONTH)
-                        , c.get(Calendar.DAY_OF_MONTH));
-                datePickerDialog.setTitle(R.string.datanascita);
-                datePickerDialog.show();
 
-            }
-        });
         confRegistation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

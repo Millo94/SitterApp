@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity{
         passwordEt = (EditText) findViewById(R.id.lblPassword);
     }
 
-    public void onLoign(View view){
+    public void onLogin(View view){
         String username = usernameEt.getText().toString();
         String password = passwordEt.getText().toString();
         String type = "login";
