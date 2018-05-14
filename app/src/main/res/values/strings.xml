@@ -24,6 +24,7 @@
     <string name="datanascita">Birthday</string>
     <string name="foto">Picture</string>
     <string name="tariffa">Hourly Pay</string>
+    <string name="figlinum">Children Number</string>
 
     <plurals name="numfigli">
         <item quantity="one">Child</item>
