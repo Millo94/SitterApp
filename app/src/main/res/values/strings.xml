@@ -60,6 +60,11 @@
     <string name="registrazione">Registration</string>
     <string name="confermaRegistrazione">Confirm Registration</string>
     <string name="login">Login</string>
-    <string name="createAccount">Create New Account</string>
+    <string name="createAccountSitter">Register as Babysitter</string>
+    <string name="createAccountFamily">Register as Family</string>
     <string name="lblMyAccount">Personal Account</string>
+
+    
+
+
 </resources>

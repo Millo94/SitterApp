@@ -2,55 +2,27 @@ package it.uniba.di.sms.sitterapp;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
-
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 
-public class SitterRegistrationFragment extends Fragment {
+public class SitterRegistrationFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
     ArrayList<EditText> lista  = new ArrayList<>();
-
-    //Date Picker variables
     EditText dataNascita;
-    static final int DATE_DIALOG_ID = 0;
-    private int mYear;
-    private int mMonth;
-    private int mDay;
-
-    // the callback received when the user "sets" the date in the dialog
-    private DatePickerDialog.OnDateSetListener mDateSetListener =
-        new DatePickerDialog.OnDateSetListener() {
-
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                mYear = year;
-                mMonth = monthOfYear;
-                mDay = dayOfMonth;
-                updateDisplay();
-            }
-        };
-
     View view;
     EditText usernameET,passwordET,confPasswordET,nameET,surnameET,emailET,phoneET;
     RadioGroup radioBtnGender;
@@ -65,6 +37,15 @@ public class SitterRegistrationFragment extends Fragment {
     }
 
     @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        dataNascita.setText(
+                new StringBuilder()
+                        .append(dayOfMonth).append("-")
+                        .append(month).append("-")
+                        .append(year).append(" "));
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -74,27 +55,21 @@ public class SitterRegistrationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_sitter_registration, container, false);
-        // Inizializza i componenti della vista
+        // Inizializzazione del layout
         initialization();
 
-        // On focus della data
-        dataNascita.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        // Creazione del Date Picker
+        Calendar c = Calendar.getInstance();
+        final DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), this, c.get(Calendar.YEAR),
+                c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+
+        // Visualizzazione del date picker al click del campo
+        dataNascita.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                onCreateDialog(DATE_DIALOG_ID);
+            public void onClick(View v) {
+                datePickerDialog.show();
             }
         });
-
-        //Codice professore
-        // get the current date
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
-
-        // display the current date (this method is below)
-        updateDisplay();
-
 
         confRegistation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,27 +89,6 @@ public class SitterRegistrationFragment extends Fragment {
         return view;
     }
 
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case DATE_DIALOG_ID:
-                return new DatePickerDialog(this.getContext(),
-                        mDateSetListener,
-                        mYear, mMonth, mDay);
-        }
-        return null;
-    }
-
-
-
-
-    //Update la data
-    private void updateDisplay() {
-        dataNascita.setText(
-                new StringBuilder()
-                        .append(mDay).append("-")
-                        .append(mMonth + 1).append("-")
-                        .append(mYear).append(" "));
-    }
 
 
     @Override
