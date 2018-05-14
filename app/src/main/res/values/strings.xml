@@ -42,4 +42,18 @@
     <string name="orafine">End</string>
     <string name="uomo">Male</string>
     <string name="donna">Female</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="other">Other</string>
+    <string name="settings">Settings</string>
+    <string name="exit">Exit</string>
+    <string name="chat">Chat</string>
+    <string name="calendar">Calendar</string>
+    <string name="engagements">Engagements</string>
 </resources>
