@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\dev\android\SitterAppRepF\SitterApp.iml" filepath="C:\dev\android\SitterAppRepF\SitterApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/SitterAppRepF.iml" filepath="$PROJECT_DIR$/SitterAppRepF.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
