@@ -1,15 +1,7 @@
 package it.uniba.di.sms.sitterapp;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Switch;
 
 public class RegistrationActivity extends AppCompatActivity implements SitterRegistrationFragment.OnFragmentInteractionListener, FamilyRegistrationFragment.OnFragmentInteractionListener {
 
@@ -19,7 +11,7 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sitter_registration);
+        setContentView(R.layout.activity_registration);
 
         type = getIntent().getIntExtra(LoginActivity.TYPE, -1);
 
