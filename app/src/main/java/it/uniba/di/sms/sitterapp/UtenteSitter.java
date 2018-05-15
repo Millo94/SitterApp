@@ -17,7 +17,7 @@ public class UtenteSitter {
     String email;
     String numero;
     String genere;
-    int auto;
+    boolean auto;
 
     public UtenteSitter(String username,
                         String password,
@@ -28,7 +28,7 @@ public class UtenteSitter {
                         String email,
                         String numero,
                         String genere,
-                        int auto)
+                        boolean auto)
     {
         this.username = username;
         this.password = password;
