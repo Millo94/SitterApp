@@ -1,4 +1,4 @@
-package it.uniba.di.sms.sitterapp;
+package it.uniba.di.sms.sitterapp.Utenti;
 
 /**
  * Classe che contiene i dati di una famiglia

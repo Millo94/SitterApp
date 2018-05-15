@@ -1,4 +1,4 @@
-package it.uniba.di.sms.sitterapp;
+package it.uniba.di.sms.sitterapp.Home;
 
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -28,7 +28,10 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity
+import it.uniba.di.sms.sitterapp.MainActivity;
+import it.uniba.di.sms.sitterapp.R;
+
+public class HomeSitterActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NoticeAdapter.NoticeAdapterListener  {
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -39,18 +42,18 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.menu_laterale_sitter);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_sitter);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_sitter);
         navigationView.setNavigationItemSelectedListener(this);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -82,7 +85,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_sitter);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -120,6 +123,8 @@ public class HomeActivity extends AppCompatActivity
             getWindow().setStatusBarColor(Color.WHITE);
         }
     }
+
+
     //metodo che riconosce e gestisce la selezione di ogni voce del menu laterale
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -127,22 +132,21 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_chat) {
+        if (id == R.id.nav_chat_sitter) {
             // Handle the camera action
-        } else if (id == R.id.nav_calendar) {
+        } else if (id == R.id.nav_engagements_sitter) {
 
-        } else if (id == R.id.nav_engagements) {
+        } else if (id == R.id.nav_settings_sitter) {
 
-        } else if (id == R.id.nav_settings) {
-
-        } else if (id == R.id.nav_exit) {
+        } else if (id == R.id.nav_exit_sitter) {
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_sitter);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     //questo metodo fa partire un toast dell'annuncio selezionato
     @Override
     public void onNoticeSelected(Notice notice) {

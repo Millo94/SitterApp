@@ -19,6 +19,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import it.uniba.di.sms.sitterapp.Registrazione.RegistrationActivity;
+
 public class LoginActivity extends AppCompatActivity{
     private EditText usernameEt,passwordEt;
     public static final int TYPE_FAMILY = 0;

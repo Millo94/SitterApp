@@ -1,4 +1,5 @@
-package it.uniba.di.sms.sitterapp;
+package it.uniba.di.sms.sitterapp.Registrazione;
+
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -17,6 +18,9 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.regex.Pattern;
+
+import it.uniba.di.sms.sitterapp.R;
+import it.uniba.di.sms.sitterapp.Utenti.UtenteSitter;
 
 
 public class SitterRegistrationFragment extends Fragment implements DatePickerDialog.OnDateSetListener {

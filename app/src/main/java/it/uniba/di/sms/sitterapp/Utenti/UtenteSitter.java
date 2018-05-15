@@ -1,4 +1,4 @@
-package it.uniba.di.sms.sitterapp;
+package it.uniba.di.sms.sitterapp.Utenti;
 
 import java.sql.Date;
 
@@ -16,6 +16,7 @@ public class UtenteSitter {
     Date dataNascita;
     String email;
     String numero;
+    String foto;
     String genere;
     boolean auto;
 
@@ -40,5 +41,23 @@ public class UtenteSitter {
         this.numero = numero;
         this.genere = genere;
         this.auto = auto;
+    }
+
+    public UtenteSitter(String username, String numero, String foto){
+        this.username = username;
+        this.numero = numero;
+        this.foto = foto;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public String getFoto() {
+        return foto;
     }
 }

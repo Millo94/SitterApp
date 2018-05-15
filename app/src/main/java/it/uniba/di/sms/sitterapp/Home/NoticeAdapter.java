@@ -1,4 +1,4 @@
-package it.uniba.di.sms.sitterapp;
+package it.uniba.di.sms.sitterapp.Home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.uniba.di.sms.sitterapp.R;
 
 public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHolder>
         implements Filterable {
