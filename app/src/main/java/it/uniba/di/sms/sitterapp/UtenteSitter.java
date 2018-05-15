@@ -16,7 +16,7 @@ public class UtenteSitter {
     Date dataNascita;
     String email;
     String numero;
-    int genere;
+    String genere;
     int auto;
 
     public UtenteSitter(String username,
@@ -27,7 +27,7 @@ public class UtenteSitter {
                         Date dataNascita,
                         String email,
                         String numero,
-                        int genere,
+                        String genere,
                         int auto)
     {
         this.username = username;
