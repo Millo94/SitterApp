@@ -23,7 +23,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
 
     ArrayList<EditText> listaET = new ArrayList<>();
     View view;
-    EditText usernameET,passwordET, confermaPassowordET, nomeET, cognomeET, emailET, numeroET, dataNascitaET;
+    EditText usernameET,passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, dataNascitaET;
     RadioGroup genereRG;
     Switch autoSW;
     Button confRegistation;
@@ -81,20 +81,21 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
             }
         });
 
+        // Click listener di conferma registrazione
         confRegistation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(isEmpty()) {
                     Toast.makeText(getContext(),"Compilare i campi mancanti.", Toast.LENGTH_LONG).show();
-                } else if (!confermaPassword(passwordET.getText().toString(),confermaPassowordET.getText().toString())){
+                } else if (!confermaPassword(passwordET.getText().toString(), confermaPasswordET.getText().toString())){
                     Toast.makeText(getContext(),"Le password non corrispondono.", Toast.LENGTH_LONG).show();
                 } else if (!checkEmail(emailET.getText().toString())){
                     Toast.makeText(getContext(),"Email non valida.", Toast.LENGTH_LONG).show();
                 } else {
                     UtenteSitter sitter = new UtenteSitter(usernameET.getText().toString(),
                             passwordET.getText().toString(),
-                            confermaPassowordET.getText().toString(),
+                            confermaPasswordET.getText().toString(),
                             nomeET.getText().toString(),
                             cognomeET.getText().toString(),
                             Date.valueOf(dataNascitaET.getText().toString()),
@@ -153,8 +154,8 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
         listaET.add(usernameET);
         passwordET = (EditText) view.findViewById(R.id.passwordSitterReg);
         listaET.add(passwordET);
-        confermaPassowordET = (EditText) view.findViewById(R.id.confPasswordSitterReg);
-        listaET.add(confermaPassowordET);
+        confermaPasswordET = (EditText) view.findViewById(R.id.confPasswordSitterReg);
+        listaET.add(confermaPasswordET);
         nomeET = (EditText) view.findViewById(R.id.nomeSitterReg);
         listaET.add(nomeET);
         cognomeET = (EditText) view.findViewById(R.id.cognomeSitterReg);
@@ -175,7 +176,6 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
     }
 
     private boolean checkEmail(String email){
-
         Pattern emailPattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
         return emailPattern.matcher(email).matches();
     }

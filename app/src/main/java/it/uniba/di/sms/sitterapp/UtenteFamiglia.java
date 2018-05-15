@@ -19,7 +19,7 @@ public class UtenteFamiglia {
     String via;
     String civico;
     int numFigli;
-    int animali;
+    boolean animali;
 
     public UtenteFamiglia(String username,
                         String password,
@@ -34,7 +34,7 @@ public class UtenteFamiglia {
                         String via,
                         String civico,
                         int numFigli,
-                        int animali)
+                        boolean animali)
     {
         this.username = username;
         this.password = password;

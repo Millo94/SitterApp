@@ -13,28 +13,27 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 
 public class FamilyRegistrationFragment extends Fragment {
 
 
-    ArrayList<EditText> lista  = new ArrayList<>();
+    ArrayList<EditText> listaET = new ArrayList<>();
     View view;
     Spinner nazioni;
     String arraypaesi[];
-    EditText usernameET,passwordET,confPasswordET,nameET,surnameET,emailET,phoneET, provinceET, cityET, streetET, civicoET, numChildET;
-    TextView nationET;
-    Switch petSwitch;
+    EditText usernameET,passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, provinciaET, cittaET, viaET, civicoET, numFigliET;
+    TextView nazioneET;
+    Switch animaliSW;
     Button confRegistation;
 
 
     private OnFragmentInteractionListener mListener;
 
-    public FamilyRegistrationFragment() {
-        // Required empty public constructor
-    }
+    public FamilyRegistrationFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,14 +45,44 @@ public class FamilyRegistrationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_family_registration, container, false);
-
+        // Inizializzazione del layout
         initialization();
 
+        // Generatore dello spinner di scelta della nazione
         nazioni = (Spinner) view.findViewById(R.id.spinnerNationFamiglia);
         arraypaesi = getResources().getStringArray(R.array.paesi);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.paesi, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         nazioni.setAdapter(adapter);
+
+        confRegistation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isEmpty()) {
+                    Toast.makeText(getContext(),"Compilare i campi mancanti.", Toast.LENGTH_LONG).show();
+                } else if (!confermaPassword(passwordET.getText().toString(),confermaPasswordET.getText().toString())){
+                    Toast.makeText(getContext(),"Le password non corrispondono.", Toast.LENGTH_LONG).show();
+                } else if (!checkEmail(emailET.getText().toString())){
+                    Toast.makeText(getContext(),"Email non valida.", Toast.LENGTH_LONG).show();
+                } else {
+                    UtenteFamiglia famiglia = new UtenteFamiglia(usernameET.getText().toString(),
+                            passwordET.getText().toString(),
+                            confermaPasswordET.getText().toString(),
+                            nomeET.getText().toString(),
+                            cognomeET.getText().toString(),
+                            emailET.getText().toString(),
+                            numeroET.getText().toString(),
+                            nazioneET.getText().toString(),
+                            provinciaET.getText().toString(),
+                            cittaET.getText().toString(),
+                            viaET.getText().toString(),
+                            civicoET.getText().toString(),
+                            Integer.parseInt(numFigliET.getText().toString()),
+                            animaliSW.isChecked());
+                    mListener.onFragmentInteraction(famiglia);
+                }
+            }
+        });
 
 
 
@@ -97,38 +126,58 @@ public class FamilyRegistrationFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(String usename,String password , String confPass, String name,String surname , String email, String phone, String nazione);
+        void onFragmentInteraction(UtenteFamiglia famiglia);
     }
 
     public void initialization(){
 
         usernameET = (EditText) view.findViewById(R.id.usernameFamiglia);
-        lista.add(usernameET);
+        listaET.add(usernameET);
         passwordET = (EditText) view.findViewById(R.id.passwordFamiglia);
-        lista.add(passwordET);
-        confPasswordET= (EditText) view.findViewById(R.id.confPasswordFamiglia);
-        lista.add(confPasswordET);
-        nameET = (EditText) view.findViewById(R.id.nomeFamiglia);
-        lista.add(nameET);
-        surnameET= (EditText) view.findViewById(R.id.cognomeFamiglia);
-        lista.add(surnameET);
+        listaET.add(passwordET);
+        confermaPasswordET = (EditText) view.findViewById(R.id.confPasswordFamiglia);
+        listaET.add(confermaPasswordET);
+        nomeET = (EditText) view.findViewById(R.id.nomeFamiglia);
+        listaET.add(nomeET);
+        cognomeET = (EditText) view.findViewById(R.id.cognomeFamiglia);
+        listaET.add(cognomeET);
         emailET= (EditText) view.findViewById(R.id.emailFamiglia);
-        lista.add(emailET);
-        phoneET = (EditText) view.findViewById(R.id.telefonoFamiglia);
-        lista.add(phoneET);
-        provinceET = (EditText) view.findViewById(R.id.provinciaFamiglia);
-        lista.add(provinceET);
-        cityET = (EditText) view.findViewById(R.id.cittaFamiglia);
-        lista.add(cityET);
-        streetET = (EditText) view.findViewById(R.id.addressFamiglia);
-        lista.add(streetET);
+        listaET.add(emailET);
+        numeroET = (EditText) view.findViewById(R.id.telefonoFamiglia);
+        listaET.add(numeroET);
+        provinciaET = (EditText) view.findViewById(R.id.provinciaFamiglia);
+        listaET.add(provinciaET);
+        cittaET = (EditText) view.findViewById(R.id.cittaFamiglia);
+        listaET.add(cittaET);
+        viaET = (EditText) view.findViewById(R.id.addressFamiglia);
+        listaET.add(viaET);
         civicoET = (EditText) view.findViewById(R.id.civicoFamiglia);
-        lista.add(civicoET);
-        numChildET = (EditText) view.findViewById(R.id.numeroFigliFamiglia);
-        lista.add(numChildET);
-        nationET = (TextView) view.findViewById(R.id.nazioneFamiglia);
-        petSwitch = (Switch) view.findViewById(R.id.petSwitchFamiglia);
+        listaET.add(civicoET);
+        numFigliET = (EditText) view.findViewById(R.id.numeroFigliFamiglia);
+        listaET.add(numFigliET);
+        nazioneET = (TextView) view.findViewById(R.id.nazioneFamiglia);
+        animaliSW = (Switch) view.findViewById(R.id.petSwitchFamiglia);
         confRegistation = (Button) view.findViewById(R.id.buttonReg);
+    }
+
+    private boolean confermaPassword(String password, String conferma){
+        return password.equals(conferma);
+    }
+
+    private boolean checkEmail(String email){
+        Pattern emailPattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        return emailPattern.matcher(email).matches();
+    }
+
+    private boolean isEmpty(){
+
+        boolean empty = false;
+
+        for(EditText element : listaET){
+            if(element.getText().toString().equals(""))
+                empty = true;
+        }
+
+        return empty;
     }
 }
