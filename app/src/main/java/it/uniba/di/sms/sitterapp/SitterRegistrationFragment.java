@@ -1,5 +1,4 @@
 package it.uniba.di.sms.sitterapp;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -8,37 +7,36 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
+import android.widget.Toast;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.regex.Pattern;
 
 
 public class SitterRegistrationFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
-    ArrayList<EditText> lista  = new ArrayList<>();
-    EditText dataNascita;
+    ArrayList<EditText> listaET = new ArrayList<>();
     View view;
-    EditText usernameET,passwordET,confPasswordET,nameET,surnameET,emailET,phoneET;
-    RadioGroup radioBtnGender;
-    RadioButton male,female;
-    Switch carSwitch;
+    EditText usernameET,passwordET, confermaPassowordET, nomeET, cognomeET, emailET, numeroET, dataNascitaET;
+    RadioGroup genereRG;
+    Switch autoSW;
     Button confRegistation;
+    String genere = new String("");
 
     private OnFragmentInteractionListener mListener;
 
-    public SitterRegistrationFragment() {
-        // Required empty public constructor
-    }
+    public SitterRegistrationFragment() {}
 
+    // Creazione della stringa dalla data scelta con il DatePicker
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        dataNascita.setText(
+        dataNascitaET.setText(
                 new StringBuilder()
                         .append(dayOfMonth).append("-")
                         .append(month).append("-")
@@ -55,6 +53,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_sitter_registration, container, false);
+
         // Inizializzazione del layout
         initialization();
 
@@ -64,25 +63,47 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                 c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 
         // Visualizzazione del date picker al click del campo
-        dataNascita.setOnClickListener(new View.OnClickListener() {
+        dataNascitaET.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 datePickerDialog.show();
             }
         });
 
+        // Gestione della scelta del genere
+        genereRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.maleSitterReg)
+                    genere = "M";
+                else if(checkedId == R.id.femaleSitterReg)
+                    genere = "F";
+            }
+        });
+
         confRegistation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //  EditText usernameET,passwordET,confPasswordET,nameET,surnameET,emailET,phoneET;
-                String usertxt  = usernameET.getText().toString();
-                String  passtxt = passwordET.getText().toString();
-                String  conftxt = confPasswordET.getText().toString();
-                String nametxt = nameET.getText().toString();
-                String  surnametxt = surnameET.getText().toString();
-                String emailTxt = emailET.getText().toString();
-                String  phonetxt= phoneET.getText().toString();
-                mListener.onFragmentInteraction(usertxt,passtxt,conftxt,nametxt,surnametxt,emailTxt,phonetxt);
+
+                if(isEmpty()) {
+                    Toast.makeText(getContext(),"Compilare i campi mancanti.", Toast.LENGTH_LONG).show();
+                } else if (!confermaPassword(passwordET.getText().toString(),confermaPassowordET.getText().toString())){
+                    Toast.makeText(getContext(),"Le password non corrispondono.", Toast.LENGTH_LONG).show();
+                } else if (!checkEmail(emailET.getText().toString())){
+                    Toast.makeText(getContext(),"Email non valida.", Toast.LENGTH_LONG).show();
+                } else {
+                    UtenteSitter sitter = new UtenteSitter(usernameET.getText().toString(),
+                            passwordET.getText().toString(),
+                            confermaPassowordET.getText().toString(),
+                            nomeET.getText().toString(),
+                            cognomeET.getText().toString(),
+                            Date.valueOf(dataNascitaET.getText().toString()),
+                            emailET.getText().toString(),
+                            numeroET.getText().toString(),
+                            genere,
+                            autoSW.isChecked());
+                    mListener.onFragmentInteraction(sitter);
+                }
             }
         });
 
@@ -124,43 +145,54 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(String usename,String password , String confPass, String name,String surname , String email, String phone);
+        void onFragmentInteraction(UtenteSitter sitter);
     }
 
     public void initialization(){
         usernameET = (EditText) view.findViewById(R.id.usernameSitterReg);
-        lista.add(usernameET);
+        listaET.add(usernameET);
         passwordET = (EditText) view.findViewById(R.id.passwordSitterReg);
-        lista.add(passwordET);
-        confPasswordET= (EditText) view.findViewById(R.id.confPasswordSitterReg);
-        lista.add(confPasswordET);
-        nameET = (EditText) view.findViewById(R.id.nomeSitterReg);
-        lista.add(nameET);
-        surnameET= (EditText) view.findViewById(R.id.cognomeSitterReg);
-        lista.add(surnameET);
+        listaET.add(passwordET);
+        confermaPassowordET = (EditText) view.findViewById(R.id.confPasswordSitterReg);
+        listaET.add(confermaPassowordET);
+        nomeET = (EditText) view.findViewById(R.id.nomeSitterReg);
+        listaET.add(nomeET);
+        cognomeET = (EditText) view.findViewById(R.id.cognomeSitterReg);
+        listaET.add(cognomeET);
         emailET= (EditText) view.findViewById(R.id.emailSitterReg);
-        lista.add(emailET);
-        phoneET = (EditText) view.findViewById(R.id.phoneSitterReg);
-        lista.add(phoneET);
-        radioBtnGender = (RadioGroup) view.findViewById(R.id.groupGenderSitterReg);
-        male = (RadioButton) view.findViewById(R.id.maleSitterReg);
-        female = (RadioButton) view.findViewById(R.id.femaleSitterReg);
-        carSwitch = (Switch) view.findViewById(R.id.switch1);
+        listaET.add(emailET);
+        numeroET = (EditText) view.findViewById(R.id.phoneSitterReg);
+        listaET.add(numeroET);
+        dataNascitaET = (EditText) view.findViewById(R.id.nascitaSitterReg);
+        listaET.add(dataNascitaET);
+        genereRG = (RadioGroup) view.findViewById(R.id.groupGenderSitterReg);
+        autoSW = (Switch) view.findViewById(R.id.switch1);
         confRegistation = (Button) view.findViewById(R.id.buttonReg);
-        dataNascita = (EditText) view.findViewById(R.id.nascitaSitterReg);
     }
 
-    private boolean checkPass(String s1, String s2){
-        return s1.equals(s2);
+    private boolean confermaPassword(String password, String conferma){
+        return password.equals(conferma);
     }
+
+    private boolean checkEmail(String email){
+
+        Pattern emailPattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        return emailPattern.matcher(email).matches();
+    }
+
     private boolean isEmpty(){
-            boolean empty = true;
-        for ( EditText e : lista) {
-           if( e.getText().toString().equals("")|| e.getText() == null)
-                empty = false;
+
+        boolean empty = false;
+
+        for(EditText element : listaET){
+            if(element.getText().toString().equals(""))
+                empty = true;
         }
-    return empty;
+
+        if(genere.equals(""))
+            empty = true;
+
+        return empty;
     }
 
 
