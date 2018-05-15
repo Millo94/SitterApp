@@ -16,6 +16,7 @@ public class UtenteFamiglia {
     String nazione;
     String provincia;
     String citta;
+    String via;
     String civico;
     int numFigli;
     int animali;
@@ -30,6 +31,7 @@ public class UtenteFamiglia {
                         String nazione,
                         String provincia,
                         String citta,
+                        String via,
                         String civico,
                         int numFigli,
                         int animali)
@@ -44,6 +46,7 @@ public class UtenteFamiglia {
         this.nazione = nazione;
         this.provincia = provincia;
         this.citta = citta;
+        this.via = via;
         this.civico = civico;
         this.numFigli = numFigli;
         this.animali = animali;
