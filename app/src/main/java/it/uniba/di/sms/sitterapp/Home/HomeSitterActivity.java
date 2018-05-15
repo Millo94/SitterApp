@@ -32,7 +32,7 @@ import it.uniba.di.sms.sitterapp.MainActivity;
 import it.uniba.di.sms.sitterapp.R;
 
 public class HomeSitterActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, NoticeAdapter.NoticeAdapterListener  {
+        implements NavigationView.OnNavigationItemSelectedListener, NoticeAdapter.NoticeAdapterListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private RecyclerView recyclerView;
@@ -73,10 +73,10 @@ public class HomeSitterActivity extends AppCompatActivity
     }
 
 
-    private void addNotices(){
+    private void addNotices() {
         //TODO prendere i dati dal DB ( vedere come funziona Volley)
-        Notice notice1 = new Notice(1,"angarano",new Date(2018,10,31),new Time(18,0,0),new Time(20,0,0),"ho due figli stronzi");
-        Notice notice2 = new Notice(2,"fraro",new Date(2018,04,25),new Time(18,0,0),new Time(20,0,0),"ho due figli puzzolenti");
+        Notice notice1 = new Notice(1, "angarano", new Date(2018, 10, 31), new Time(18, 0, 0), new Time(20, 0, 0), "ho due figli stronzi");
+        Notice notice2 = new Notice(2, "fraro", new Date(2018, 04, 25), new Time(18, 0, 0), new Time(20, 0, 0), "ho due figli puzzolenti");
 
         noticeList.add(notice1);
         noticeList.add(notice2);
@@ -136,6 +136,8 @@ public class HomeSitterActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_engagements_sitter) {
 
+        } else if (id == R.id.nav_feedback_sitter) {
+
         } else if (id == R.id.nav_settings_sitter) {
 
         } else if (id == R.id.nav_exit_sitter) {
@@ -150,6 +152,6 @@ public class HomeSitterActivity extends AppCompatActivity
     //questo metodo fa partire un toast dell'annuncio selezionato
     @Override
     public void onNoticeSelected(Notice notice) {
-        Toast.makeText(getApplicationContext(), "Selected: " + notice.getId_notice()+ ", " + notice.getFamily() + ", " + notice.getDate()+ ", " + notice.getDescription(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Selected: " + notice.getId_notice() + ", " + notice.getFamily() + ", " + notice.getDate() + ", " + notice.getDescription(), Toast.LENGTH_LONG).show();
     }
 }

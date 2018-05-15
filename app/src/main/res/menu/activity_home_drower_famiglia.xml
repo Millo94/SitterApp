@@ -12,6 +12,10 @@
             android:id="@+id/nav_engagements_famiglia"
             android:icon="@drawable/ic_work_black_24dp"
             android:title="@string/engagements" />
+        <item
+            android:id="@+id/nav_feedback_famiglia"
+            android:icon="@drawable/ic_action_feedback"
+            android:title="@string/feedback" />
     </group>
 
     <item android:title="@string/other">

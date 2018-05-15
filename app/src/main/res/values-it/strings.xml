@@ -49,5 +49,6 @@
     <string name="settings">Impostazioni</string>
     <string name="createAccountSitter">Registrati come Babysitter</string>
     <string name="createAccountFamily">Registrati come Famiglia</string>
+    <string name="contattaSitter">Contatta Baby Sitter</string>
 
 </resources>

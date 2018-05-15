@@ -1,9 +1,11 @@
-package it.uniba.di.sms.sitterapp;
+package it.uniba.di.sms.sitterapp.Profilo;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity{
+import it.uniba.di.sms.sitterapp.R;
+
+public class ProfiloPubblicoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

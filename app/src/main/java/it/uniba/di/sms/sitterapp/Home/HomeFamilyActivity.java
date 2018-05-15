@@ -34,6 +34,7 @@ public class HomeFamilyActivity extends AppCompatActivity implements NavigationV
     private RecyclerView recyclerView;
     private List<UtenteSitter> sitterList;
     private ContactSitterAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +72,7 @@ public class HomeFamilyActivity extends AppCompatActivity implements NavigationV
 
     }
 
-    private void addNotices(){
+    private void addNotices() {
         //TODO prendere i dati dal DB ( vedere come funziona Volley)
         UtenteSitter sitter1 = new UtenteSitter("frappe", "333333333333", "che bella foto");
         UtenteSitter sitter2 = new UtenteSitter("alessia", "333333333333", "che brutta foto");
@@ -140,6 +141,8 @@ public class HomeFamilyActivity extends AppCompatActivity implements NavigationV
         if (id == R.id.nav_chat_famiglia) {
             // Handle the camera action
         } else if (id == R.id.nav_engagements_famiglia) {
+
+        } else if (id == R.id.nav_feedback_famiglia) {
 
         } else if (id == R.id.nav_settings_famiglia) {
 
