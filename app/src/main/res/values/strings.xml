@@ -68,6 +68,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="contattaSitter">Contact Baby Sitter</string>
+    <string name="modificaProfiloOn">Edit Profile</string>
+    <string name="modificaProfiloOff">Confirm Edit</string>
 
 
 </resources>

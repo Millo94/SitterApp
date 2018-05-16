@@ -21,275 +21,42 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imgPPSitter"
+                android:id="@+id/imgPrSitter"
                 android:layout_width="125dp"
                 android:layout_height="125dp"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:src="@drawable/ic_action_profilo"
+                app:layout_constraintEnd_toStartOf="@+id/usernamePuSitter"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/usernamePPFamiglia"
+            <RatingBar
+                android:id="@+id/ratingPuSitter"
                 android:layout_width="wrap_content"
-                android:layout_height="58dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="@color/colorPrimary"
+
+                app:layout_constraintBottom_toTopOf="@+id/descrizionePuSitter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imgPrSitter"
+                app:layout_constraintTop_toBottomOf="@+id/usernamePuSitter" />
+
+            <TextView
+                android:id="@+id/usernamePuSitter"
+                android:layout_width="240dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/username"
                 android:textSize="40sp"
+                app:layout_constraintBottom_toTopOf="@+id/ratingPuSitter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/imgPPSitter"
+                app:layout_constraintStart_toEndOf="@+id/imgPrSitter"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/descrizionePPFamiglia"
-                android:layout_width="339dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="TextView"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgPPSitter" />
-
-            <RatingBar
-                android:id="@+id/ratingPPSitter"
-                android:layout_width="wrap_content"
-                android:layout_height="59dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgPPSitter"
-                app:layout_constraintTop_toBottomOf="@+id/usernamePPFamiglia" />
-
-            <TextView
-                android:id="@+id/nomePPFamiglia"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="@string/nome"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/nomePPSitterFamiglia2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descrizionePPFamiglia" />
-
-            <TextView
-                android:id="@+id/nomePPSitterFamiglia2"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="@string/nome"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/nomePPFamiglia"
-                app:layout_constraintTop_toBottomOf="@+id/descrizionePPFamiglia" />
-
-            <TextView
-                android:id="@+id/cognomePPFamiglia"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/cognome"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/cognomePPFamiglia2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nomePPFamiglia" />
-
-            <TextView
-                android:id="@+id/cognomePPFamiglia2"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/cognome"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/cognomePPFamiglia"
-                app:layout_constraintTop_toBottomOf="@+id/nomePPSitterFamiglia2" />
-
-            <TextView
-                android:id="@+id/sessoPPSitter2"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/sesso"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/sessoPPSitter"
-                app:layout_constraintTop_toBottomOf="@+id/dataNascitaPPSitter2" />
-
-            <TextView
-                android:id="@+id/sessoPPSitter"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/sesso"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/sessoPPSitter2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dataNascitaPPSitter3" />
-
-            <TextView
-                android:id="@+id/emailPPSitter2"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/email"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/emailPPSitter"
-                app:layout_constraintTop_toBottomOf="@+id/telefonoPPFamiglia2" />
-
-            <TextView
-                android:id="@+id/emailPPSitter"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/email"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/emailPPSitter2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/telefonoPPFamiglia" />
-
-            <TextView
-                android:id="@+id/dataNascitaPPSitter3"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/datanascita"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/dataNascitaPPSitter2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cognomePPFamiglia" />
-
-            <TextView
-                android:id="@+id/dataNascitaPPSitter2"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/datanascita"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/dataNascitaPPSitter3"
-                app:layout_constraintTop_toBottomOf="@+id/cognomePPFamiglia2" />
-
-            <TextView
-                android:id="@+id/telefonoPPFamiglia"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/telefono"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/telefonoPPFamiglia2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sessoPPSitter" />
-
-            <TextView
-                android:id="@+id/telefonoPPFamiglia2"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/telefono"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/telefonoPPFamiglia"
-                app:layout_constraintTop_toBottomOf="@+id/sessoPPSitter2" />
-
-            <TextView
-                android:id="@+id/animaliPPFamiglia2"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/automunito"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/animaliPPFamiglia"
-                app:layout_constraintTop_toBottomOf="@+id/emailPPSitter2" />
-
-            <TextView
-                android:id="@+id/animaliPPFamiglia"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/automunito"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/animaliPPFamiglia2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailPPSitter" />
-
-            <TextView
-                android:id="@+id/emailPPFamiglia"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/tariffa"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/emailPPFamiglia2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/animaliPPFamiglia" />
-
-            <TextView
-                android:id="@+id/emailPPFamiglia2"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/tariffa"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/emailPPFamiglia"
-                app:layout_constraintTop_toBottomOf="@+id/animaliPPFamiglia2" />
-
-            <TextView
-                android:id="@+id/ingaggiPPFamiglia2"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/numlavori"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/ingaggiPPFamiglia"
-                app:layout_constraintTop_toBottomOf="@+id/emailPPFamiglia2" />
-
-            <TextView
-                android:id="@+id/ingaggiPPFamiglia"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/numlavori"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/ingaggiPPFamiglia2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailPPFamiglia" />
 
             <Button
                 android:id="@+id/contattaSitter"
@@ -303,8 +70,246 @@
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingaggiPPFamiglia2" />
+                app:layout_constraintTop_toBottomOf="@+id/ingaggiPuSitter" />
+
+
+            <TextView
+                android:id="@+id/descrizionePuSitter"
+                android:layout_width="337dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/descrizione"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingPuSitter" />
+
+            <TextView
+                android:id="@+id/nomePuSitter"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/nome"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/nomePuSitter2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/descrizionePuSitter" />
+
+            <TextView
+                android:id="@+id/nomePuSitter2"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/nome"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/nomePuSitter"
+                app:layout_constraintTop_toBottomOf="@+id/descrizionePuSitter" />
+
+            <TextView
+                android:id="@+id/cognomePuSitter"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/cognome"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/cognomePuSitter2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nomePuSitter" />
+
+            <TextView
+                android:id="@+id/cognomePuSitter2"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/cognome"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/cognomePuSitter"
+                app:layout_constraintTop_toBottomOf="@+id/nomePuSitter2" />
+
+            <TextView
+                android:id="@+id/emailPuSitter"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/email"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/emailPuSitter2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cognomePuSitter" />
+
+            <TextView
+                android:id="@+id/emailPuSitter2"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/email"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/emailPuSitter"
+                app:layout_constraintTop_toBottomOf="@+id/cognomePuSitter2" />
+
+            <TextView
+                android:id="@+id/telefonoPuSitter"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/telefono"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/telefonoPuSitter2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailPuSitter" />
+
+            <TextView
+                android:id="@+id/telefonoPuSitter2"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/telefono"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/telefonoPuSitter"
+                app:layout_constraintTop_toBottomOf="@+id/emailPuSitter2" />
+
+            <TextView
+                android:id="@+id/sessoPuSitter"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/sesso"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/sessoPuSitter2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/telefonoPuSitter" />
+
+            <TextView
+                android:id="@+id/sessoPuSitter2"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/sesso"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/sessoPuSitter"
+                app:layout_constraintTop_toBottomOf="@+id/telefonoPuSitter2" />
+
+            <TextView
+                android:id="@+id/nascitaPuSitter"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/datanascita"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/nascitaPuSitter2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sessoPuSitter" />
+
+            <TextView
+                android:id="@+id/nascitaPuSitter2"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/datanascita"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/nascitaPuSitter"
+                app:layout_constraintTop_toBottomOf="@+id/sessoPuSitter2" />
+
+            <TextView
+                android:id="@+id/autoPuSitter"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/automunito"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/autoPuSitter2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nascitaPuSitter" />
+
+            <TextView
+                android:id="@+id/autoPuSitter2"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/automunito"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/autoPuSitter"
+                app:layout_constraintTop_toBottomOf="@+id/nascitaPuSitter2" />
+
+            <TextView
+                android:id="@+id/tariffaPuSitter"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/tariffa"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tariffaPuSitter2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/autoPuSitter" />
+
+            <TextView
+                android:id="@+id/tariffaPuSitter2"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/tariffa"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tariffaPuSitter"
+                app:layout_constraintTop_toBottomOf="@+id/autoPuSitter2" />
+
+            <TextView
+                android:id="@+id/ingaggiPuSitter"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/numlavori"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/ingaggiPuSitter2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tariffaPuSitter" />
+
+            <TextView
+                android:id="@+id/ingaggiPuSitter2"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/numlavori"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/ingaggiPuSitter"
+                app:layout_constraintTop_toBottomOf="@+id/tariffaPuSitter2" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

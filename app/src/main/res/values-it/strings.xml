@@ -50,5 +50,7 @@
     <string name="createAccountSitter">Registrati come Babysitter</string>
     <string name="createAccountFamily">Registrati come Famiglia</string>
     <string name="contattaSitter">Contatta Baby Sitter</string>
+    <string name="modificaProfiloOn">Modifica Profilo</string>
+    <string name="modificaProfiloOff">Conferma Modifiche</string>
 
 </resources>

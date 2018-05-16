@@ -95,15 +95,11 @@ public class FamilyRegistrationFragment extends Fragment {
         return view;
     }
 
-
+    //controllo che l'activity che chiama il fragment implementi OnFragmentInteractionListener
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Activity activity = (Activity) context;
-        try{
-        }catch(ClassCastException e){
-            throw new ClassCastException(activity.toString() + "must override method");
-        }
+
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
