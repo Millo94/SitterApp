@@ -19,6 +19,10 @@ import it.uniba.di.sms.sitterapp.Utenti.UtenteSitter;
  */
 public class PubblicoSitterFragment extends Fragment {
 
+    /**
+     * TODO -> FOTO BABYSITTER
+     */
+
     View view;
     RatingBar ratingPuSitter;
     TextView usernamePuSit, descrPuSit, nomePuSit, cognomePuSit, emailPuSit, numeroPuSit, carPuSit, sessoPuSit, dataPuSit, tariffaPuSit, ingaggiPuSit;

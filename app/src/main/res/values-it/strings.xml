@@ -52,5 +52,6 @@
     <string name="contattaSitter">Contatta Baby Sitter</string>
     <string name="modificaProfiloOn">Modifica Profilo</string>
     <string name="modificaProfiloOff">Conferma Modifiche</string>
+    <string name="contattaFamiglia">Contatta Famiglia</string>
 
 </resources>

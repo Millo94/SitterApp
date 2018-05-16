@@ -1,19 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="it.uniba.di.sms.sitterapp.Profilo.ProfiloPubblicoActivity">
-
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -26,56 +19,38 @@
                 android:layout_height="125dp"
                 android:layout_marginTop="15dp"
                 android:src="@drawable/ic_action_profilo"
-                app:layout_constraintEnd_toStartOf="@+id/usernamePuSitter"
+                app:layout_constraintEnd_toStartOf="@+id/usernamePrSitter"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <RatingBar
-                android:id="@+id/ratingPuSitter"
+                android:id="@+id/ratingPrSitter"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_marginTop="5dp"
                 android:backgroundTint="@color/colorPrimary"
-                app:layout_constraintBottom_toTopOf="@+id/descrizionePuSitter"
+                app:layout_constraintBottom_toTopOf="@+id/descrizionePrSitter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imgPrSitter"
-                app:layout_constraintTop_toBottomOf="@+id/usernamePuSitter" />
+                app:layout_constraintTop_toBottomOf="@+id/usernamePrSitter" />
 
             <TextView
-                android:id="@+id/usernamePuSitter"
+                android:id="@+id/usernamePrSitter"
                 android:layout_width="240dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/username"
                 android:textSize="40sp"
-                app:layout_constraintBottom_toTopOf="@+id/ratingPuSitter"
+                app:layout_constraintBottom_toTopOf="@+id/ratingPrSitter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imgPrSitter"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
-            <Button
-                android:id="@+id/contattaSitter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
-                android:layout_marginTop="30dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:text="@string/contattaFamiglia"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.503"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingaggiPuSitter" />
-
-
             <TextView
-                android:id="@+id/descrizionePuSitter"
+                android:id="@+id/descrizionePrSitter"
                 android:layout_width="337dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -83,23 +58,23 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ratingPuSitter" />
+                app:layout_constraintTop_toBottomOf="@+id/ratingPrSitter" />
 
             <TextView
-                android:id="@+id/nomePuSitter"
+                android:id="@+id/nomePrSitter"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/nome"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/nomePuSitter2"
+                app:layout_constraintEnd_toStartOf="@+id/nomePrSitter2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descrizionePuSitter" />
+                app:layout_constraintTop_toBottomOf="@+id/descrizionePrSitter" />
 
             <TextView
-                android:id="@+id/nomePuSitter2"
+                android:id="@+id/nomePrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -107,24 +82,24 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/nomePuSitter"
-                app:layout_constraintTop_toBottomOf="@+id/descrizionePuSitter" />
+                app:layout_constraintStart_toEndOf="@+id/nomePrSitter"
+                app:layout_constraintTop_toBottomOf="@+id/descrizionePrSitter" />
 
             <TextView
-                android:id="@+id/cognomePuSitter"
+                android:id="@+id/cognomePrSitter"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/cognome"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/cognomePuSitter2"
+                app:layout_constraintEnd_toStartOf="@+id/cognomePrSitter2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nomePuSitter" />
+                app:layout_constraintTop_toBottomOf="@+id/nomePrSitter" />
 
             <TextView
-                android:id="@+id/cognomePuSitter2"
+                android:id="@+id/cognomePrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -132,24 +107,24 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/cognomePuSitter"
-                app:layout_constraintTop_toBottomOf="@+id/nomePuSitter2" />
+                app:layout_constraintStart_toEndOf="@+id/cognomePrSitter"
+                app:layout_constraintTop_toBottomOf="@+id/nomePrSitter2" />
 
             <TextView
-                android:id="@+id/emailPuSitter"
+                android:id="@+id/emailPrSitter"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/email"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/emailPuSitter2"
+                app:layout_constraintEnd_toStartOf="@+id/emailPrSitter2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cognomePuSitter" />
+                app:layout_constraintTop_toBottomOf="@+id/cognomePrSitter" />
 
             <TextView
-                android:id="@+id/emailPuSitter2"
+                android:id="@+id/emailPrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -157,24 +132,24 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/emailPuSitter"
-                app:layout_constraintTop_toBottomOf="@+id/cognomePuSitter2" />
+                app:layout_constraintStart_toEndOf="@+id/emailPrSitter"
+                app:layout_constraintTop_toBottomOf="@+id/cognomePrSitter2" />
 
             <TextView
-                android:id="@+id/telefonoPuSitter"
+                android:id="@+id/telefonoPrSitter"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/telefono"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/telefonoPuSitter2"
+                app:layout_constraintEnd_toStartOf="@+id/telefonoPrSitter2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailPuSitter" />
+                app:layout_constraintTop_toBottomOf="@+id/emailPrSitter" />
 
             <TextView
-                android:id="@+id/telefonoPuSitter2"
+                android:id="@+id/telefonoPrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -182,24 +157,24 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/telefonoPuSitter"
-                app:layout_constraintTop_toBottomOf="@+id/emailPuSitter2" />
+                app:layout_constraintStart_toEndOf="@+id/telefonoPrSitter"
+                app:layout_constraintTop_toBottomOf="@+id/emailPrSitter2" />
 
             <TextView
-                android:id="@+id/sessoPuSitter"
+                android:id="@+id/sessoPrSitter"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/sesso"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/sessoPuSitter2"
+                app:layout_constraintEnd_toStartOf="@+id/sessoPrSitter2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/telefonoPuSitter" />
+                app:layout_constraintTop_toBottomOf="@+id/telefonoPrSitter" />
 
             <TextView
-                android:id="@+id/sessoPuSitter2"
+                android:id="@+id/sessoPrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -207,24 +182,24 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/sessoPuSitter"
-                app:layout_constraintTop_toBottomOf="@+id/telefonoPuSitter2" />
+                app:layout_constraintStart_toEndOf="@+id/sessoPrSitter"
+                app:layout_constraintTop_toBottomOf="@+id/telefonoPrSitter2" />
 
             <TextView
-                android:id="@+id/nascitaPuSitter"
+                android:id="@+id/nascitaPrSitter"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/datanascita"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/nascitaPuSitter2"
+                app:layout_constraintEnd_toStartOf="@+id/nascitaPrSitter2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sessoPuSitter" />
+                app:layout_constraintTop_toBottomOf="@+id/sessoPrSitter" />
 
             <TextView
-                android:id="@+id/nascitaPuSitter2"
+                android:id="@+id/nascitaPrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -232,24 +207,24 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/nascitaPuSitter"
-                app:layout_constraintTop_toBottomOf="@+id/sessoPuSitter2" />
+                app:layout_constraintStart_toEndOf="@+id/nascitaPrSitter"
+                app:layout_constraintTop_toBottomOf="@+id/sessoPrSitter2" />
 
             <TextView
-                android:id="@+id/autoPuSitter"
+                android:id="@+id/autoPrSitter"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/automunito"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/autoPuSitter2"
+                app:layout_constraintEnd_toStartOf="@+id/autoPrSitter2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nascitaPuSitter" />
+                app:layout_constraintTop_toBottomOf="@+id/nascitaPrSitter" />
 
             <TextView
-                android:id="@+id/autoPuSitter2"
+                android:id="@+id/autoPrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -257,24 +232,24 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/autoPuSitter"
-                app:layout_constraintTop_toBottomOf="@+id/nascitaPuSitter2" />
+                app:layout_constraintStart_toEndOf="@+id/autoPrSitter"
+                app:layout_constraintTop_toBottomOf="@+id/nascitaPrSitter2" />
 
             <TextView
-                android:id="@+id/tariffaPuSitter"
+                android:id="@+id/tariffaPrSitter"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/tariffa"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/tariffaPuSitter2"
+                app:layout_constraintEnd_toStartOf="@+id/tariffaPrSitter2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/autoPuSitter" />
+                app:layout_constraintTop_toBottomOf="@+id/autoPrSitter" />
 
             <TextView
-                android:id="@+id/tariffaPuSitter2"
+                android:id="@+id/tariffaPrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -282,24 +257,24 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/tariffaPuSitter"
-                app:layout_constraintTop_toBottomOf="@+id/autoPuSitter2" />
+                app:layout_constraintStart_toEndOf="@+id/tariffaPrSitter"
+                app:layout_constraintTop_toBottomOf="@+id/autoPrSitter2" />
 
             <TextView
-                android:id="@+id/ingaggiPuSitter"
+                android:id="@+id/ingaggiPrSitter"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/numlavori"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/ingaggiPuSitter2"
+                app:layout_constraintEnd_toStartOf="@+id/ingaggiPrSitter2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tariffaPuSitter" />
+                app:layout_constraintTop_toBottomOf="@+id/tariffaPrSitter" />
 
             <TextView
-                android:id="@+id/ingaggiPuSitter2"
+                android:id="@+id/ingaggiPrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -307,12 +282,30 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/ingaggiPuSitter"
-                app:layout_constraintTop_toBottomOf="@+id/tariffaPuSitter2" />
+                app:layout_constraintStart_toEndOf="@+id/ingaggiPrSitter"
+                app:layout_constraintTop_toBottomOf="@+id/tariffaPrSitter2" />
 
+            <ToggleButton
+                android:id="@+id/modificaProfilo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:textAlignment="center"
+                android:textColorLink="@color/colorScritte"
+                android:textOff="@string/modificaProfiloOn"
+                android:textOn="@string/modificaProfiloOff"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.503"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ingaggiPrSitter" />
 
 
         </android.support.constraint.ConstraintLayout>
-    </ScrollView>
 
+
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>
