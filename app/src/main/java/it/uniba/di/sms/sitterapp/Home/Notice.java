@@ -4,15 +4,13 @@ import java.sql.Date;
 import java.sql.Time;
 
 public class Notice {
-    private int id_notice;
     private String family;
-    private Date date;
-    private Time start_time;
-    private Time end_time;
+    private String date;
+    private String start_time;
+    private String end_time;
     private String description;
 
-    public Notice(int id_notice,String family,Date date,Time start_time, Time end_time, String description){
-        this.id_notice = id_notice;
+    public Notice(String family,String date,String start_time, String end_time, String description){
         this.family = family;
         this.date = date;
         this.start_time = start_time;
@@ -20,11 +18,8 @@ public class Notice {
         this.description = description;
     }
 
-    public void setId_notice(int id_notice) {
-        this.id_notice = id_notice;
-    }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -32,7 +27,7 @@ public class Notice {
         this.description = description;
     }
 
-    public void setEnd_time(Time end_time) {
+    public void setEnd_time(String end_time) {
         this.end_time = end_time;
     }
 
@@ -40,16 +35,12 @@ public class Notice {
         this.family = family;
     }
 
-    public void setStart_time(Time start_time) {
+    public void setStart_time(String start_time) {
         this.start_time = start_time;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
-    }
-
-    public int getId_notice() {
-        return id_notice;
     }
 
     public String getDescription() {
@@ -60,11 +51,11 @@ public class Notice {
         return family;
     }
 
-    public Time getEnd_time() {
+    public String getEnd_time() {
         return end_time;
     }
 
-    public Time getStart_time() {
+    public String getStart_time() {
         return start_time;
     }
 }

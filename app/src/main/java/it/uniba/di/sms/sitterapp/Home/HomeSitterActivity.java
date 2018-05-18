@@ -17,14 +17,17 @@ import android.graphics.Color;
 import android.os.Build;
 import android.widget.Toast;
 
-/* da aggiugere quando prenderemo i dati dal DB
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-*/
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
-import java.sql.Date;
-import java.sql.Time;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +37,7 @@ import it.uniba.di.sms.sitterapp.R;
 public class HomeSitterActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NoticeAdapter.NoticeAdapterListener {
 
+    private static final String NOTICE_URL ="http://sitterapp.altervista.org/AnnunciFamiglie.php";
     private static final String TAG = MainActivity.class.getSimpleName();
     private RecyclerView recyclerView;
     private List<Notice> noticeList;
@@ -58,29 +62,51 @@ public class HomeSitterActivity extends AppCompatActivity
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         noticeList = new ArrayList<>();
-        mAdapter = new NoticeAdapter(this, noticeList, this);
-
         // white background notification bar
         whiteNotificationBar(recyclerView);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
-
         //prova caricamento di annunci
         addNotices();
     }
 
 
     private void addNotices() {
-        //TODO prendere i dati dal DB ( vedere come funziona Volley)
-        Notice notice1 = new Notice(1, "angarano", new Date(2018, 10, 31), new Time(18, 0, 0), new Time(20, 0, 0), "ho due figli stronzi");
-        Notice notice2 = new Notice(2, "fraro", new Date(2018, 04, 25), new Time(18, 0, 0), new Time(20, 0, 0), "ho due figli puzzolenti");
+        //TODO prendere i dati dal DB
 
-        noticeList.add(notice1);
-        noticeList.add(notice2);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, NOTICE_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray notice = new JSONArray(response);
+                            for(int i=0;i<notice.length();i++){
+                                JSONObject noticeObject = notice.getJSONObject(i);
+                                String famiglia = noticeObject.getString("usernameFamiglia");
+                                String data = noticeObject.getString("data");
+                                String oraInizio = noticeObject.getString("oraInizio");
+                                String oraFine = noticeObject.getString("oraFine");
+                                String descrizione = noticeObject.getString("descrizione");
+                                Notice n = new Notice(famiglia,data,oraInizio,oraFine,descrizione);
 
+                                noticeList.add(n);
+                            }
+                            mAdapter = new NoticeAdapter(HomeSitterActivity.this, noticeList, HomeSitterActivity.this);
+                            recyclerView.setAdapter(mAdapter);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(HomeSitterActivity.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+        Volley.newRequestQueue(this).add(stringRequest);
     }
 
     @Override
@@ -152,6 +178,6 @@ public class HomeSitterActivity extends AppCompatActivity
     //questo metodo fa partire un toast dell'annuncio selezionato
     @Override
     public void onNoticeSelected(Notice notice) {
-        Toast.makeText(getApplicationContext(), "Selected: " + notice.getId_notice() + ", " + notice.getFamily() + ", " + notice.getDate() + ", " + notice.getDescription(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Selected: "+ notice.getFamily() + ", " + notice.getDate() + ", " + notice.getDescription(), Toast.LENGTH_LONG).show();
     }
 }
