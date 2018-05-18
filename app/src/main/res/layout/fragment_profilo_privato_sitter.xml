@@ -36,7 +36,7 @@
                 app:layout_constraintStart_toEndOf="@+id/imgPrSitter"
                 app:layout_constraintTop_toBottomOf="@+id/usernamePrSitter" />
 
-            <TextView
+            <EditText
                 android:id="@+id/usernamePrSitter"
                 android:layout_width="240dp"
                 android:layout_height="60dp"
@@ -49,7 +49,7 @@
                 app:layout_constraintStart_toEndOf="@+id/imgPrSitter"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <EditText
                 android:id="@+id/descrizionePrSitter"
                 android:layout_width="337dp"
                 android:layout_height="wrap_content"
@@ -63,8 +63,9 @@
             <TextView
                 android:id="@+id/nomePrSitter"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/nome"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -73,7 +74,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/descrizionePrSitter" />
 
-            <TextView
+            <EditText
                 android:id="@+id/nomePrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -88,8 +89,9 @@
             <TextView
                 android:id="@+id/cognomePrSitter"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/cognome"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -98,7 +100,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nomePrSitter" />
 
-            <TextView
+            <EditText
                 android:id="@+id/cognomePrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -113,8 +115,9 @@
             <TextView
                 android:id="@+id/emailPrSitter"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/email"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -123,7 +126,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cognomePrSitter" />
 
-            <TextView
+            <EditText
                 android:id="@+id/emailPrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -138,8 +141,9 @@
             <TextView
                 android:id="@+id/telefonoPrSitter"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/telefono"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -148,7 +152,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/emailPrSitter" />
 
-            <TextView
+            <EditText
                 android:id="@+id/telefonoPrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -163,8 +167,9 @@
             <TextView
                 android:id="@+id/sessoPrSitter"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/sesso"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -173,7 +178,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/telefonoPrSitter" />
 
-            <TextView
+            <EditText
                 android:id="@+id/sessoPrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -188,8 +193,9 @@
             <TextView
                 android:id="@+id/nascitaPrSitter"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/datanascita"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -198,7 +204,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sessoPrSitter" />
 
-            <TextView
+            <EditText
                 android:id="@+id/nascitaPrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -213,8 +219,9 @@
             <TextView
                 android:id="@+id/autoPrSitter"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/automunito"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -223,7 +230,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nascitaPrSitter" />
 
-            <TextView
+            <EditText
                 android:id="@+id/autoPrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -238,8 +245,9 @@
             <TextView
                 android:id="@+id/tariffaPrSitter"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/tariffa"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -248,7 +256,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/autoPrSitter" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tariffaPrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -263,8 +271,9 @@
             <TextView
                 android:id="@+id/ingaggiPrSitter"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/numlavori"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -273,7 +282,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tariffaPrSitter" />
 
-            <TextView
+            <EditText
                 android:id="@+id/ingaggiPrSitter2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,8 +8,11 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -18,11 +20,12 @@
             android:orientation="vertical">
 
 
-            <TextView
+            <EditText
                 android:id="@+id/usernamePrFamiglia"
                 android:layout_width="wrap_content"
                 android:layout_height="58dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="40dp"
                 android:text="@string/username"
                 android:textSize="40sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +41,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/usernamePrFamiglia" />
 
-            <TextView
+            <EditText
                 android:id="@+id/descrizionePrFamiglia"
                 android:layout_width="337dp"
                 android:layout_height="wrap_content"
@@ -52,8 +55,9 @@
             <TextView
                 android:id="@+id/nomePrFamiglia"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/nome"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -62,7 +66,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/descrizionePrFamiglia" />
 
-            <TextView
+            <EditText
                 android:id="@+id/nomePrFamiglia2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -77,8 +81,9 @@
             <TextView
                 android:id="@+id/cognomePrFamiglia"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/cognome"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -87,7 +92,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nomePrFamiglia" />
 
-            <TextView
+            <EditText
                 android:id="@+id/cognomePrFamiglia2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -102,8 +107,9 @@
             <TextView
                 android:id="@+id/emailPrFamiglia"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/email"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -112,7 +118,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cognomePrFamiglia" />
 
-            <TextView
+            <EditText
                 android:id="@+id/emailPrFamiglia2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -127,8 +133,9 @@
             <TextView
                 android:id="@+id/telefonoPrFamiglia"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/telefono"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -137,7 +144,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/emailPrFamiglia" />
 
-            <TextView
+            <EditText
                 android:id="@+id/telefonoPrFamiglia2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -152,8 +159,9 @@
             <TextView
                 android:id="@+id/animaliPrFamiglia"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/animali"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -162,7 +170,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/telefonoPrFamiglia" />
 
-            <TextView
+            <EditText
                 android:id="@+id/animaliPrFamiglia2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -177,8 +185,9 @@
             <TextView
                 android:id="@+id/figliPrFamiglia"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/figlinum"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -187,7 +196,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/animaliPrFamiglia" />
 
-            <TextView
+            <EditText
                 android:id="@+id/figliPrFamiglia2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -202,8 +211,9 @@
             <TextView
                 android:id="@+id/nazionePrFamiglia"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/nazione"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -213,7 +223,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/figliPrFamiglia" />
 
 
-            <TextView
+            <EditText
                 android:id="@+id/nazionePrFamiglia2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -228,8 +238,9 @@
             <TextView
                 android:id="@+id/provinciaPrFamiglia"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/provincia"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -238,7 +249,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nazionePrFamiglia" />
 
-            <TextView
+            <EditText
                 android:id="@+id/provinciaPrFamiglia2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -253,8 +264,9 @@
             <TextView
                 android:id="@+id/cittaPrFamiglia"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/citta"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -263,7 +275,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/provinciaPrFamiglia" />
 
-            <TextView
+            <EditText
                 android:id="@+id/cittaPrFamiglia2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -278,8 +290,9 @@
             <TextView
                 android:id="@+id/viaPrFamiglia"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/via"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -288,7 +301,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cittaPrFamiglia" />
 
-            <TextView
+            <EditText
                 android:id="@+id/viaPrFamiglia2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -303,8 +316,9 @@
             <TextView
                 android:id="@+id/civicoPrFamiglia"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
                 android:text="@string/civico"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -313,7 +327,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/viaPrFamiglia" />
 
-            <TextView
+            <EditText
                 android:id="@+id/civicoPrFamiglia2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -332,10 +346,11 @@
                 android:layout_marginBottom="40dp"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/colorPrimary"
+                android:checked="true"
                 android:textAlignment="center"
-                android:textColorLink="@color/colorScritte"
-                android:textOff="@string/modificaProfiloOn"
-                android:textOn="@string/modificaProfiloOff"
+                android:textAppearance="@android:color/black"
+                android:textOff="@string/modificaProfiloOff"
+                android:textOn="@string/modificaProfiloOn"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

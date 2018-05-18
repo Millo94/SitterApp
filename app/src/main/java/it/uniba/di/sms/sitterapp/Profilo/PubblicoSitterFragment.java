@@ -16,17 +16,18 @@ import it.uniba.di.sms.sitterapp.Utenti.UtenteSitter;
 
 /**
  * FRAGMENT PROFILO PUBBLICO SITTER
+ *
+ * TODO -> COLLEGAMENTO AL DATABASE, DA CAPIRE LA FOTO BABYSITTER E RATING BAR, QUANDO FAREMO LA CHAT COLLEGARLA AL BOTTONE
  */
 public class PubblicoSitterFragment extends Fragment {
 
-    /**
-     * TODO -> FOTO BABYSITTER
-     */
-
     View view;
     RatingBar ratingPuSitter;
+    //QUESTE STRINGHE SONO STATICHE
     TextView usernamePuSit, descrPuSit, nomePuSit, cognomePuSit, emailPuSit, numeroPuSit, carPuSit, sessoPuSit, dataPuSit, tariffaPuSit, ingaggiPuSit;
+    //QUESTE STRINGHE SONO DA COLLEGARE AL DATABASE
     TextView nomePuSit2, cognomePuSit2, emailPuSit2, numeroPuSit2, carPuSit2, sessoPuSit2, dataPuSit2, tariffaPuSit2, ingaggiPuSit2;
+    //DA COLLEGARE QUANDO AVREMO AL CHAT
     Button contattaFamiglia;
 
     private OnFragmentInteractionListener mListener;

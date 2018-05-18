@@ -16,15 +16,20 @@ import it.uniba.di.sms.sitterapp.Utenti.UtenteFamiglia;
 
 /**
  * FRAGMENT PROFILO PUBBLICO FAMIGLIA
+ *
+ * TODO: COLLEGAMENTO CON IL DATABASE, QUANDO FAREMO LA CHAT COLLEGARE IL BOTTONE PER CONTATTARE LA BABYSITTER E DA CAPIRE IL RATINGBAR
+ *
  */
 public class PubblicoFamigliaFragment extends Fragment {
 
-
-
     View view;
+    //STRINGHE STATICHE DA NON TOCCARE
     TextView usernamePuFam, descrPuFam, nomePuFam, cognomePuFam, emailPuFam, numeroPuFam, nazionePuFam, provinciaPuFam, cittaPuFam, viaPuFam, civicoPuFam, numFigliPuFam, animaliPuFam;
+    //STRINGHE DA COLLEGARE AL DATABASE
     TextView nomePuFam2, cognomePuFam2, emailPuFam2, numeroPuFam2, nazionePuFam2, provinciaPuFam2, cittaPuFam2, viaPuFam2, civicoPuFam2, numFigliPuFam2, animaliPuFam2;
+    //DA COLLEGARE ALLA CHAT
     Button contattaSitter;
+    //DA CAPIRE
     RatingBar ratingPuFam;
 
 

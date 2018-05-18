@@ -71,7 +71,11 @@
     <string name="checkPassword">Passwords don\'t match.</string>
     <string name="invalidEmail">Invalid email.</string>
     <string name="usedUsername">Username already used.</string>
-
+    <string name="feedback" translatable="false">feedback</string>
+    <string name="modificaProfiloOn">Edit Profile</string>
+    <string name="contattaSitter">Contact Sitter</string>
+    <string name="modificaProfiloOff">Confirm Edit</string>
+    <string name="contattaFamiglia">Contact Family</string>
 
 
 </resources>
