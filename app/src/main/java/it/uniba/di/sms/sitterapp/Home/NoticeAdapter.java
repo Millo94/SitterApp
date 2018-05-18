@@ -60,10 +60,10 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final Notice notice = noticeListFiltered.get(position);
         holder.family_name.setText(notice.getFamily());
-        holder.date.setText(notice.getDate().toString());
+        holder.date.setText(notice.getDate());
         holder.description.setText(notice.getDescription());
-        holder.start_time.setText(notice.getStart_time().toString());
-        holder.end_time.setText(notice.getEnd_time().toString());
+        holder.start_time.setText(notice.getStart_time());
+        holder.end_time.setText(notice.getEnd_time());
     }
 
     @Override
@@ -85,7 +85,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
 
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name or phone number match
-                        if (row.getDate().toString().contains(charSequence)) {
+                        if (row.getDate().contains(charSequence)) {
                             filteredList.add(row);
                         }
                     }
