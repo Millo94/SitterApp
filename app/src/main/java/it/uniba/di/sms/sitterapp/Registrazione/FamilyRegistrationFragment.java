@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -31,7 +32,8 @@ public class FamilyRegistrationFragment extends Fragment {
     EditText usernameET,passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, provinciaET, cittaET, viaET, civicoET, numFigliET;
     TextView nazioneET;
     Switch animaliSW;
-    Button confRegistation;
+    String animali = "1";
+    Button confRegistration;
 
 
     private OnFragmentInteractionListener mListener;
@@ -58,39 +60,44 @@ public class FamilyRegistrationFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         nazioni.setAdapter(adapter);
 
-        confRegistation.setOnClickListener(new View.OnClickListener() {
+        // Gestione del flag animali
+        animaliSW.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    animali = "0";
+                else
+                    animali = "1";
+            }
+        });
+
+        confRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(isEmpty()) {
-                    Toast.makeText(getContext(),"Compilare i campi mancanti.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),R.string.missingFields, Toast.LENGTH_LONG).show();
                 } else if (!confermaPassword(passwordET.getText().toString(),confermaPasswordET.getText().toString())){
-                    Toast.makeText(getContext(),"Le password non corrispondono.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),R.string.checkPassword, Toast.LENGTH_LONG).show();
                 } else if (!checkEmail(emailET.getText().toString())){
-                    Toast.makeText(getContext(),"Email non valida.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),R.string.invalidEmail, Toast.LENGTH_LONG).show();
                 } else {
                     UtenteFamiglia famiglia = new UtenteFamiglia(usernameET.getText().toString(),
                             passwordET.getText().toString(),
-                            confermaPasswordET.getText().toString(),
                             nomeET.getText().toString(),
                             cognomeET.getText().toString(),
                             emailET.getText().toString(),
                             numeroET.getText().toString(),
-                            nazioneET.getText().toString(),
+                            nazioni.getSelectedItem().toString(),
                             provinciaET.getText().toString(),
                             cittaET.getText().toString(),
                             viaET.getText().toString(),
                             civicoET.getText().toString(),
-                            Integer.parseInt(numFigliET.getText().toString()),
-                            animaliSW.isChecked());
+                            numFigliET.getText().toString(),
+                            animali);
                     mListener.onFragmentInteraction(famiglia);
                 }
             }
         });
-
-
-
-
-
 
         return view;
     }
@@ -156,7 +163,7 @@ public class FamilyRegistrationFragment extends Fragment {
         listaET.add(numFigliET);
         nazioneET = (TextView) view.findViewById(R.id.nazioneFamiglia);
         animaliSW = (Switch) view.findViewById(R.id.petSwitchFamiglia);
-        confRegistation = (Button) view.findViewById(R.id.buttonReg);
+        confRegistration = (Button) view.findViewById(R.id.confermaButton);
     }
 
     private boolean confermaPassword(String password, String conferma){

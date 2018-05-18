@@ -37,7 +37,7 @@
     <string name="confermapassword">Conferma Password</string>
     <string name="uomo">Maschio</string>
     <string name="donna">Femmina</string>
-    <string name="figlinum">Numero Fligi</string>
+    <string name="figlinum">Numero Figli</string>
     <string name="confermaRegistrazione">Conferma Registrazione</string>
     <string name="registrazione">Registrazione</string>
     <string name="edit_profile">Modifica Profilo</string>
@@ -53,5 +53,13 @@
     <string name="modificaProfiloOn">Modifica Profilo</string>
     <string name="modificaProfiloOff">Conferma Modifiche</string>
     <string name="contattaFamiglia">Contatta Famiglia</string>
+    <string name="loginSuccess">Login effettuato con successo.</string>
+    <string name="loginerror">Username o Password incorretti.</string>
+    <string name="registrationSuccess">Registrazione effettuata con successo.</string>
+    <string name="registrationFail">Registrazione fallita.</string>
+    <string name="missingFields">Compila i campi mancanti.</string>
+    <string name="checkPassword">Le password non coincidono.</string>
+    <string name="invalidEmail">Email non valida.</string>
+    <string name="usedUsername">Username già utilizzato.</string>
 
 </resources>

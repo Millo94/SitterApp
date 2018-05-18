@@ -9,16 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.Toast;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.regex.Pattern;
-
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.Utenti.UtenteSitter;
 
@@ -30,8 +29,10 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
     EditText usernameET,passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, dataNascitaET;
     RadioGroup genereRG;
     Switch autoSW;
-    Button confRegistation;
-    String genere = new String("");
+    Button confRegistration;
+    String dataNascita;
+    String genere = "";
+    String auto = "1";
 
     private OnFragmentInteractionListener mListener;
 
@@ -43,8 +44,14 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
         dataNascitaET.setText(
                 new StringBuilder()
                         .append(dayOfMonth).append("-")
-                        .append(month).append("-")
-                        .append(year).append(" "));
+                        .append(month + 1).append("-")
+                        .append(year));
+
+        dataNascita = new StringBuilder()
+                .append(year).append("-")
+                .append(month + 1).append("-")
+                .append(dayOfMonth).toString();
+
     }
 
     @Override
@@ -85,28 +92,38 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
             }
         });
 
+        // Gestione dello switch auto
+        autoSW.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    auto = "0";
+                else
+                    auto = "1";
+            }
+        });
+
         // Click listener di conferma registrazione
-        confRegistation.setOnClickListener(new View.OnClickListener() {
+        confRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(isEmpty()) {
-                    Toast.makeText(getContext(),"Compilare i campi mancanti.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),R.string.missingFields, Toast.LENGTH_LONG).show();
                 } else if (!confermaPassword(passwordET.getText().toString(), confermaPasswordET.getText().toString())){
-                    Toast.makeText(getContext(),"Le password non corrispondono.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),R.string.checkPassword, Toast.LENGTH_LONG).show();
                 } else if (!checkEmail(emailET.getText().toString())){
-                    Toast.makeText(getContext(),"Email non valida.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),R.string.invalidEmail, Toast.LENGTH_LONG).show();
                 } else {
                     UtenteSitter sitter = new UtenteSitter(usernameET.getText().toString(),
                             passwordET.getText().toString(),
-                            confermaPasswordET.getText().toString(),
                             nomeET.getText().toString(),
                             cognomeET.getText().toString(),
-                            Date.valueOf(dataNascitaET.getText().toString()),
+                            dataNascita,
                             emailET.getText().toString(),
                             numeroET.getText().toString(),
                             genere,
-                            autoSW.isChecked());
+                            auto);
                     mListener.onFragmentInteraction(sitter);
                 }
             }
@@ -172,7 +189,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
         listaET.add(dataNascitaET);
         genereRG = (RadioGroup) view.findViewById(R.id.groupGenderSitterReg);
         autoSW = (Switch) view.findViewById(R.id.switch1);
-        confRegistation = (Button) view.findViewById(R.id.buttonReg);
+        confRegistration = (Button) view.findViewById(R.id.buttonReg);
     }
 
     private boolean confermaPassword(String password, String conferma){

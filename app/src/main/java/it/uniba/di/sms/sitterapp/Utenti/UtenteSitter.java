@@ -1,39 +1,34 @@
 package it.uniba.di.sms.sitterapp.Utenti;
 
-import java.sql.Date;
-
 /**
  * Classe che contiene i dati di una babysitter
  */
 
 public class UtenteSitter {
 
-    String username;
-    String password;
-    String confermaPassword;
-    String nome;
-    String cognome;
-    Date dataNascita;
-    String email;
-    String numero;
-    String foto;
-    String genere;
-    boolean auto;
+    private String username;
+    private String password;
+    private String nome;
+    private String cognome;
+    private String dataNascita;
+    private String email;
+    private String numero;
+    private String foto;
+    private String genere;
+    private String auto;
 
     public UtenteSitter(String username,
                         String password,
-                        String confermaPassword,
                         String nome,
                         String cognome,
-                        Date dataNascita,
+                        String dataNascita,
                         String email,
                         String numero,
                         String genere,
-                        boolean auto)
+                        String auto)
     {
         this.username = username;
         this.password = password;
-        this.confermaPassword = confermaPassword;
         this.nome = nome;
         this.cognome = cognome;
         this.dataNascita = dataNascita;
@@ -53,6 +48,26 @@ public class UtenteSitter {
         return username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCognome() {
+        return cognome;
+    }
+
+    public String getDataNascita() {
+        return dataNascita;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     public String getNumero() {
         return numero;
     }
@@ -60,4 +75,10 @@ public class UtenteSitter {
     public String getFoto() {
         return foto;
     }
+
+    public String getGenere() {
+        return genere;
+    }
+
+    public String getAuto() { return auto; }
 }

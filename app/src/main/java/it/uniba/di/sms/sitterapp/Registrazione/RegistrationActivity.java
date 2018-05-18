@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -12,13 +11,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import it.uniba.di.sms.sitterapp.LoginActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.Utenti.UtenteFamiglia;
@@ -27,42 +23,37 @@ import it.uniba.di.sms.sitterapp.Utenti.UtenteSitter;
 public class RegistrationActivity extends AppCompatActivity implements SitterRegistrationFragment.OnFragmentInteractionListener, FamilyRegistrationFragment.OnFragmentInteractionListener {
 
     /**
-     * Due classi: una famiglia con gli attributi di famiglia, e una sitter.
-     * Due funzioni on fragment interaction, che compilano le due classi
-     * in onReg mettere parametro di tipo che indica quale tipo registrare, dividere le due strad e da un if
-     * o uno switch
+     * URL dello script di registrazione
      */
+    private static final String REGISTRATION_URL = "http://sitterapp.altervista.org/register.php";
 
     /**
-     * Tipo di registrazione (0=family, 1=sitter)
+     * RequestQueue della registrazione
      */
-    private int type;
+    RequestQueue requestQueue;
 
     /**
-     * private  String username,password,confPassword,name,surname,email,phone;
-     *
-     * Questo elenco di parametri è sostituito da due oggetti di tipo famiglia e sitter,
-     * che saranno riempiti da oggetti restituiti dalle registrazioni
+     * Stringhe di tipo utente
      */
-    private UtenteFamiglia famiglia;
-    private UtenteSitter sitter;
-
-    private static final String register_url = "http://sitterapp.altervista.org/register.php";
-    private StringRequest request;
-    private com.android.volley.RequestQueue RequestQueue;
+    private static final String TYPE_SITTER = "1";
+    private static final String TYPE_FAMILY = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        RequestQueue =  Volley.newRequestQueue(this);
+
+        /**
+         * requestQueue valorizzato
+         */
+        requestQueue = Volley.newRequestQueue(this);
 
         /**
          * L'intent contiene un valore intero "type" che indica alla activity se il
          * fragment da visualizzare è quello della registrazione della famiglia, o quello della
          * registrazione della babysitter
          */
-        type = getIntent().getIntExtra(LoginActivity.TYPE, -1);
+        int type = getIntent().getIntExtra(LoginActivity.TYPE, -1);
 
         if (type == LoginActivity.TYPE_SITTER){
             getSupportFragmentManager().beginTransaction()
@@ -71,70 +62,126 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new FamilyRegistrationFragment()).commit();
         }
-    }
 
+
+    }
 
     // Interaction con il fragment Sitter
     @Override
-    public void onFragmentInteraction(UtenteFamiglia famiglia) {
-        type = LoginActivity.TYPE_SITTER;
-        this.famiglia = famiglia;
-    }
+    public void onFragmentInteraction(UtenteFamiglia famiglia) { register(famiglia); }
 
+    // Interaction con il fragment Family
     @Override
     public void onFragmentInteraction(UtenteSitter sitter) {
-        type = LoginActivity.TYPE_FAMILY;
-        this.sitter = sitter;
+        register(sitter);
     }
 
+    private void register(final UtenteFamiglia famiglia){
 
+        StringRequest registrationRequest = new StringRequest(Request.Method.POST, REGISTRATION_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-    public void onReg(){
+                try {
+                    JSONObject json = new JSONObject(response);
+                    String result = json.getString("response");
 
-        request = new StringRequest(Request.Method.POST, register_url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            if(jsonObject.names().get(0).equals("succes"))
-                            {
-                                Toast.makeText(getApplicationContext(),"SUCCES" + jsonObject.getString("succes"),Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                            {
-                                Toast.makeText(getApplicationContext(),"ERROR" ,Toast.LENGTH_SHORT).show();
-                            }
-                        }catch (JSONException e ){
-                            e.printStackTrace();
-                        }
+                    if (result.equals("true")) {
+                        Toast.makeText(getApplicationContext(), R.string.registrationSuccess, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent( RegistrationActivity.this, LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // termina tutte le activity sopra quella chiamata
+                        startActivity(intent);
+                    } else if(result.equals("username")){
+                        Toast.makeText(getApplicationContext(), R.string.usedUsername ,Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), R.string.registrationFail ,Toast.LENGTH_SHORT).show();
                     }
-                }, new Response.ErrorListener() {
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RegistrationActivity.this,"Error", Toast.LENGTH_LONG).show();
-                error.printStackTrace();
+                Toast.makeText(getApplicationContext(), R.string.registrationFail, Toast.LENGTH_SHORT).show();
             }
-        })
-        {
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
-                /*params.put("user_name",username);
-                params.put("password",password);*/
+                Map<String, String> params = new HashMap<>();
+                params.put("type", TYPE_FAMILY);
+                params.put("username", famiglia.getUsername());
+                params.put("password", famiglia.getPassword());
+                params.put("email", famiglia.getEmail());
+                params.put("nome", famiglia.getNome());
+                params.put("cognome", famiglia.getCognome());
+                params.put("telefono", famiglia.getNumero());
+                params.put("nazione", famiglia.getNazione());
+                params.put("provincia", famiglia.getProvincia());
+                params.put("citta", famiglia.getCitta());
+                params.put("via", famiglia.getVia());
+                params.put("civico", famiglia.getCivico());
+                params.put("numFigli", famiglia.getNumFigli());
+                params.put("animali", famiglia.getAnimali());
                 return params;
             }
         };
 
-        RequestQueue.add(request);
+        requestQueue.add(registrationRequest);
 
-        /**
-         String type = "register";
-         Backgroundworker backgroundworker = new Backgroundworker(this);
-         backgroundworker.execute(type,username,password);
-         */
     }
 
+    private void register(final UtenteSitter sitter){
+
+        StringRequest registrationRequest = new StringRequest(Request.Method.POST, REGISTRATION_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject json = new JSONObject(response);
+                    String result = json.getString("response");
+
+                    if(result.equals("true")){
+                        Toast.makeText(getApplicationContext(), R.string.registrationSuccess ,Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent( RegistrationActivity.this, LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // termina tutte le activity sopra quella chiamata
+                        startActivity(intent);
+                    } else if(result.equals("username")){
+                        Toast.makeText(getApplicationContext(), R.string.usedUsername ,Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), R.string.registrationFail ,Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), R.string.registrationFail ,Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("type", TYPE_SITTER);
+                params.put("username", sitter.getUsername());
+                params.put("password", sitter.getPassword());
+                params.put("email", sitter.getEmail());
+                params.put("nome", sitter.getNome());
+                params.put("cognome", sitter.getCognome());
+                params.put("telefono", sitter.getNumero());
+                params.put("dataNascita", sitter.getDataNascita());
+                params.put("genere", sitter.getGenere());
+                params.put("auto", sitter.getAuto());
+                return params;
+            }
+        };
+
+        requestQueue.add(registrationRequest);
+    }
 
 
 }
