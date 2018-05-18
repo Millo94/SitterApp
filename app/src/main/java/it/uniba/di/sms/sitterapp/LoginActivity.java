@@ -29,6 +29,8 @@ public class LoginActivity extends AppCompatActivity{
     private static final String login_url = "http://sitterapp.altervista.org/login.php";
     private StringRequest request;
     private RequestQueue RequestQueue;
+    private static final String QUERY_SUCCESS = "success";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,15 +48,15 @@ public class LoginActivity extends AppCompatActivity{
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            if(jsonObject.names().get(0).equals("succes"))
+                            if(jsonObject.names().get(0).equals(QUERY_SUCCESS))
                             {
-                                Toast.makeText(getApplicationContext(),"SUCCES" + jsonObject.getString("succes"),Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                Toast.makeText(getApplicationContext(), R.string.loginSuccess ,Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                             }
                             else
                             {
-                                Toast.makeText(getApplicationContext(),"ERROR" ,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), R.string.loginerror ,Toast.LENGTH_SHORT).show();
                             }
                         }catch (JSONException e ){
                             e.printStackTrace();
@@ -63,7 +65,7 @@ public class LoginActivity extends AppCompatActivity{
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(LoginActivity.this,"Error", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, R.string.loginerror, Toast.LENGTH_LONG).show();
                 error.printStackTrace();
             }
         })
@@ -71,17 +73,12 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("user_name",usernameEt.getText().toString());
+                params.put("username",usernameEt.getText().toString());
                 params.put("password",passwordEt.getText().toString());
                 return params;
             }
         };
         RequestQueue.add(request);
-        /**
-        String type = "login";
-        Backgroundworker backgroundworker = new Backgroundworker(this);
-        backgroundworker.execute(type,username,password);
-        */
     }
 
     public void createAccountSitter(View view){
