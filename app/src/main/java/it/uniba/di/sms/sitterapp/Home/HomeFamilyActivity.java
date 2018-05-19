@@ -18,6 +18,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -30,6 +40,7 @@ import static it.uniba.di.sms.sitterapp.R.id.drawer_layout_famiglia;
 
 public class HomeFamilyActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ContactSitterAdapter.ContactsSitterAdapterListener {
 
+    private static final String SITTER_URL ="http://sitterapp.altervista.org/AnnunciSitter.php";
     private static final String TAG = HomeFamilyActivity.class.getSimpleName();
     private RecyclerView recyclerView;
     private List<UtenteSitter> sitterList;
@@ -56,7 +67,6 @@ public class HomeFamilyActivity extends AppCompatActivity implements NavigationV
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         sitterList = new ArrayList<>();
-        mAdapter = new ContactSitterAdapter(this, sitterList, this);
 
         // white background notification bar
         whiteNotificationBar(recyclerView);
@@ -64,7 +74,6 @@ public class HomeFamilyActivity extends AppCompatActivity implements NavigationV
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
 
         //prova caricamento di annunci
         addNotices();
@@ -73,12 +82,35 @@ public class HomeFamilyActivity extends AppCompatActivity implements NavigationV
     }
 
     private void addNotices() {
-        //TODO prendere i dati dal DB ( vedere come funziona Volley)
-        UtenteSitter sitter1 = new UtenteSitter("frappe", "333333333333", "che bella foto");
-        UtenteSitter sitter2 = new UtenteSitter("alessia", "333333333333", "che brutta foto");
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, SITTER_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray sitter = new JSONArray(response);
+                            for(int i=0;i<sitter.length();i++){
+                                JSONObject sitterObject = sitter.getJSONObject(i);
+                                String username = sitterObject.getString("username");
+                                String nLavori = sitterObject.getString("numerolavori");
+                                String foto = sitterObject.getString("pathfoto");
+                                UtenteSitter s = new UtenteSitter(username,nLavori,foto);
 
-        sitterList.add(sitter1);
-        sitterList.add(sitter2);
+                                sitterList.add(s);
+                            }
+                            mAdapter = new ContactSitterAdapter(HomeFamilyActivity.this, sitterList, HomeFamilyActivity.this);
+                            recyclerView.setAdapter(mAdapter);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(HomeFamilyActivity.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+        Volley.newRequestQueue(this).add(stringRequest);
 
     }
 
@@ -160,7 +192,7 @@ public class HomeFamilyActivity extends AppCompatActivity implements NavigationV
      */
     @Override
     public void onSitterSelected(UtenteSitter sitter) {
-        Toast.makeText(getApplicationContext(), "Selected: " + sitter.getUsername() + ", " + sitter.getNumero() + ", " + sitter.getFoto(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Selected: " + sitter.getUsername() + ", " + sitter.getNumeroLavori() + ", " + sitter.getFoto(), Toast.LENGTH_LONG).show();
 
     }
 }

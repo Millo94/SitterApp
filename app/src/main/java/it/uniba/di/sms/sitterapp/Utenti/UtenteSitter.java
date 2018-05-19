@@ -13,6 +13,7 @@ public class UtenteSitter {
     private String dataNascita;
     private String email;
     private String numero;
+    private String numeroLavori;
     private String foto;
     private String genere;
     private String auto;
@@ -38,9 +39,9 @@ public class UtenteSitter {
         this.auto = auto;
     }
 
-    public UtenteSitter(String username, String numero, String foto){
+    public UtenteSitter(String username, String numeroLavori, String foto){
         this.username = username;
-        this.numero = numero;
+        this.numeroLavori = numeroLavori;
         this.foto = foto;
     }
 
@@ -81,4 +82,8 @@ public class UtenteSitter {
     }
 
     public String getAuto() { return auto; }
+
+    public String getNumeroLavori() {
+        return numeroLavori;
+    }
 }

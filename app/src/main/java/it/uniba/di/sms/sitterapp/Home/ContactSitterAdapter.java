@@ -74,9 +74,8 @@ public class ContactSitterAdapter extends RecyclerView.Adapter<ContactSitterAdap
         final UtenteSitter contact = sitterListFilter.get(position);
 
         holder.name.setText(contact.getUsername());
-        holder.phone.setText(contact.getNumero());
+        holder.phone.setText(contact.getNumeroLavori());
         Glide.with(context).load(contact.getFoto()).apply(RequestOptions.centerCropTransform()).into(holder.photo);
-
     }
 
     @Override
@@ -99,7 +98,7 @@ public class ContactSitterAdapter extends RecyclerView.Adapter<ContactSitterAdap
 
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name or phone number match
-                        if (row.getUsername().toLowerCase().contains(charString.toLowerCase()) || row.getNumero().contains(charSequence)) {
+                        if (row.getUsername().toLowerCase().contains(charString.toLowerCase()) || row.getNumeroLavori().contains(charSequence)) {
                             filteredList.add(row);
                         }
                     }
