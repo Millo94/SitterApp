@@ -32,8 +32,8 @@
     <string name="testocommento">Commento...</string>
     <string name="annuncio">Annuncio</string>
     <string name="data">Data</string>
-    <string name="orainizio">Inizio</string>
-    <string name="orafine">Fine</string>
+    <string name="orainizio">Ora Inizio</string>
+    <string name="orafine">Ora Fine</string>
     <string name="confermapassword">Conferma Password</string>
     <string name="uomo">Maschio</string>
     <string name="donna">Femmina</string>
@@ -61,5 +61,7 @@
     <string name="checkPassword">Le password non coincidono.</string>
     <string name="invalidEmail">Email non valida.</string>
     <string name="usedUsername">Username già utilizzato.</string>
+    <string name="nuovoUtente">Sei nuovo su SitterApp?</string>
+    <string name="dettaglioAnnuncio">Dettaglio Annuncio</string>
 
 </resources>

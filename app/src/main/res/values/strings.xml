@@ -39,8 +39,8 @@
     <string name="punteggio" translatable="false">Rating</string>
     <string name="annuncio">Notice</string>
     <string name="data">Date</string>
-    <string name="orainizio">Start</string>
-    <string name="orafine">End</string>
+    <string name="orainizio">Start Time</string>
+    <string name="orafine">End Time</string>
     <string name="uomo">Male</string>
     <string name="donna">Female</string>
     <string name="title_activity_home" translatable="false">HomeActivity</string>
@@ -76,6 +76,8 @@
     <string name="contattaSitter">Contact Sitter</string>
     <string name="modificaProfiloOff">Confirm Edit</string>
     <string name="contattaFamiglia">Contact Family</string>
+    <string name="nuovoUtente">Are you new on SitterApp?</string>
+    <string name="dettaglioAnnuncio">Notice Details</string>
 
 
 </resources>

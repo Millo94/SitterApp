@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -14,15 +15,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
+import it.uniba.di.sms.sitterapp.Home.HomeFamilyActivity;
+import it.uniba.di.sms.sitterapp.Home.HomeSitterActivity;
 import it.uniba.di.sms.sitterapp.Registrazione.RegistrationActivity;
 
-public class LoginActivity extends AppCompatActivity{
-    private EditText usernameEt,passwordEt;
+public class LoginActivity extends AppCompatActivity {
+
+    private EditText usernameEt, passwordEt;
     public static final int TYPE_FAMILY = 0;
     public static final int TYPE_SITTER = 1;
     public static final String TYPE = "type";
@@ -38,27 +44,26 @@ public class LoginActivity extends AppCompatActivity{
 
         usernameEt = (EditText) findViewById(R.id.lblUsername);
         passwordEt = (EditText) findViewById(R.id.lblPassword);
-        RequestQueue =  Volley.newRequestQueue(this);
+        RequestQueue = Volley.newRequestQueue(this);
     }
 
-    public void onLogin(View view){
-       request= new StringRequest(Request.Method.POST, login_url,
+    public void onLogin(View view) {
+        request = new StringRequest(Request.Method.POST, login_url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            if(jsonObject.names().get(0).equals(QUERY_SUCCESS))
-                            {
-                                Toast.makeText(getApplicationContext(), R.string.loginSuccess ,Toast.LENGTH_LONG).show();
+                            if (jsonObject.names().get(0).equals(QUERY_SUCCESS)) {
+                                Toast.makeText(getApplicationContext(), R.string.loginSuccess, Toast.LENGTH_LONG).show();
+
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), R.string.loginerror, Toast.LENGTH_SHORT).show();
                             }
-                            else
-                            {
-                                Toast.makeText(getApplicationContext(), R.string.loginerror ,Toast.LENGTH_SHORT).show();
-                            }
-                        }catch (JSONException e ){
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
@@ -68,20 +73,19 @@ public class LoginActivity extends AppCompatActivity{
                 Toast.makeText(LoginActivity.this, R.string.loginerror, Toast.LENGTH_LONG).show();
                 error.printStackTrace();
             }
-        })
-        {
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
-                params.put("username",usernameEt.getText().toString());
-                params.put("password",passwordEt.getText().toString());
+                Map<String, String> params = new HashMap<>();
+                params.put("username", usernameEt.getText().toString());
+                params.put("password", passwordEt.getText().toString());
                 return params;
             }
         };
         RequestQueue.add(request);
     }
 
-    public void createAccountSitter(View view){
+    public void createAccountSitter(View view) {
         Intent createAccountIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
         createAccountIntent.putExtra(TYPE, TYPE_SITTER);
         startActivity(createAccountIntent);
@@ -92,4 +96,19 @@ public class LoginActivity extends AppCompatActivity{
         createAccountIntent.putExtra(TYPE, TYPE_FAMILY);
         startActivity(createAccountIntent);
     }
+
+
+    /*
+    public void goHomeSitter(View view) {
+        Intent goHomeSitterIntent = new Intent(LoginActivity.this, HomeSitterActivity.class);
+        goHomeSitterIntent.putExtra(TYPE, TYPE_SITTER);
+        startActivity(goHomeSitterIntent);
+    }
+
+    public void goHomeFamily(View view) {
+        Intent goHomeFamilyIntent = new Intent(LoginActivity.this, HomeFamilyActivity.class);
+        goHomeFamilyIntent.putExtra(TYPE, TYPE_FAMILY);
+        startActivity(goHomeFamilyIntent);
+    }
+    */
 }
