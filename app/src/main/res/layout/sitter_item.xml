@@ -1,31 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
-    >
+    android:layout_margin="@dimen/activity_margin"
+    android:background="@drawable/customborder"
+    android:clickable="true">
 
     <ImageView
         android:id="@+id/thumbnail"
         android:layout_width="@dimen/thumbnail"
         android:layout_height="@dimen/thumbnail"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/row_padding" />
+        android:layout_marginRight="@dimen/row_padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/thumbnail"
+        android:layout_marginLeft="@dimen/row_padding"
         android:fontFamily="sans-serif-medium"
-        android:textSize="@dimen/contact_name" />
+        android:textSize="@dimen/contact_name"
+        app:layout_constraintLeft_toRightOf="@id/thumbnail"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/name"
-        android:layout_toRightOf="@id/thumbnail"
-        android:textSize="@dimen/contact_number" />
+        android:layout_marginLeft="@dimen/row_padding"
+        android:textSize="@dimen/contact_number"
+        app:layout_constraintLeft_toRightOf="@id/thumbnail"
+        app:layout_constraintTop_toBottomOf="@id/name" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
