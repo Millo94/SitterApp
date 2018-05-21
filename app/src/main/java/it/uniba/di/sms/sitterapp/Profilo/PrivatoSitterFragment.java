@@ -2,6 +2,9 @@ package it.uniba.di.sms.sitterapp.Profilo;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -22,10 +26,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -56,6 +63,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     TextView usernamePrSit, nomePrSit, cognomePrSit, emailPrSit, numeroPrSit, sessoPrSit, dataPrSit, tariffaPrSit, ingaggiPrSit;
     EditText descrPrSit, nomePrSit2, cognomePrSit2, emailPrSit2, numeroPrSit2, sessoPrSit2, dataPrSit2, tariffaPrSit2, ingaggiPrSit2;
     Switch carPrSit2;
+    ImageView profilePic;
 
     ToggleButton modificaProfilo;
     boolean edit = false;
@@ -127,6 +135,8 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                         dataPrSit2.setText(Constants.SQLtoDate(json.getString("dataNascita")));
                         tariffaPrSit2.setText(json.getString("tariffaOraria"));
                         ingaggiPrSit2.setText(json.getString("numeroLavori"));
+
+                        Glide.with(getContext()).load(json.getString("pathFoto")).into(profilePic);
 
                     } else if(result.equals("false")) {
                         Toast.makeText(getContext(), R.string.profileError ,Toast.LENGTH_SHORT).show();
@@ -206,7 +216,10 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         ingaggiPrSit2 = (EditText) view.findViewById(R.id.ingaggiPrSitter2);
         ingaggiPrSit2.setEnabled(false);
 
+        profilePic = (ImageView) view.findViewById(R.id.imgPrSitter);
+
         modificaProfilo = (ToggleButton) view.findViewById(R.id.modificaProfilo);
+
     }
 
     public View.OnClickListener goEditable = new View.OnClickListener() {
