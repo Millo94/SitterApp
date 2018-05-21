@@ -41,11 +41,11 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
             });
         }
     }
-    public NoticeAdapter(Context context, List<Notice> contactList, NoticeAdapterListener listener) {
+    public NoticeAdapter(Context context, List<Notice> noticeList, NoticeAdapterListener listener) {
         this.context = context;
         this.listener = listener;
-        this.noticeList = contactList;
-        this.noticeListFiltered = contactList;
+        this.noticeList = noticeList;
+        this.noticeListFiltered = noticeList;
     }
 
     @Override
