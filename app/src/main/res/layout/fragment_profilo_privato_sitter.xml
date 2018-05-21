@@ -229,7 +229,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/tariffaPrSitter2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/switch2" />
+                app:layout_constraintTop_toBottomOf="@+id/carPrSit" />
 
             <EditText
                 android:id="@+id/tariffaPrSitter2"
@@ -241,7 +241,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/tariffaPrSitter"
-                app:layout_constraintTop_toBottomOf="@+id/switch2" />
+                app:layout_constraintTop_toBottomOf="@+id/carPrSit" />
 
             <TextView
                 android:id="@+id/ingaggiPrSitter"
@@ -288,7 +288,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/ingaggiPrSitter" />
 
             <Switch
-                android:id="@+id/switch2"
+                android:id="@+id/carPrSit"
                 android:layout_width="340dp"
                 android:layout_height="45dp"
                 android:layout_marginTop="15dp"

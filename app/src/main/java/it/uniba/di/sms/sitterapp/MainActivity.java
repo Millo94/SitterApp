@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity{
@@ -25,7 +24,7 @@ public class MainActivity extends AppCompatActivity{
         }
 
         usernameET = (TextView) findViewById(R.id.usernameSession);
-        usernameET.setText(session.getSessionUsernam());
+        usernameET.setText(session.getSessionUsername());
 
         logoutbtn = (Button) findViewById(R.id.logoutbtn);
         logoutbtn.setOnClickListener(new View.OnClickListener() {
