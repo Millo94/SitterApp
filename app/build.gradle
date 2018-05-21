@@ -30,12 +30,15 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:25.4.0'
 
     //per le foto
-    implementation 'com.github.bumptech.glide:glide:4.3.1'
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
 
     // volley http library
     implementation 'com.android.volley:volley:1.0.0'
     //json manipulation library
     implementation 'com.google.code.gson:gson:2.8.0'
+
+    //per la progressbar circolare figa
+    implementation 'com.pnikosis:materialish-progress:1.7'
 
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

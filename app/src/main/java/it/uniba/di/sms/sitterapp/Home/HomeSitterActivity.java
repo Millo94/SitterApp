@@ -1,6 +1,8 @@
 package it.uniba.di.sms.sitterapp.Home;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +19,9 @@ import android.graphics.Color;
 import android.os.Build;
 import android.widget.Toast;
 
+import com.pnikosis.materialishprogress.ProgressWheel;
+
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -29,19 +34,41 @@ import org.json.JSONObject;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import it.uniba.di.sms.sitterapp.MainActivity;
 import it.uniba.di.sms.sitterapp.R;
 
 public class HomeSitterActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NoticeAdapter.NoticeAdapterListener {
-
-    private static final String NOTICE_URL ="http://sitterapp.altervista.org/AnnunciFamiglie.php";
+    
     private static final String TAG = MainActivity.class.getSimpleName();
     private RecyclerView recyclerView;
     private List<Notice> noticeList;
+    private Queue<Notice> remainingNoticeList;
     private NoticeAdapter mAdapter;
+
+    // we will be loading 15 items per page or per load
+    // you can change this to fit your specifications.
+    // When you change this, there will be no need to update your php page,
+    // as php will be ordered what to load and limit by android java
+    private static final int LOAD_LIMIT = 5;
+
+    // last date to be loaded from php page,
+    // we will need to keep track or database id field to know which id was loaded last
+    // and where to begin loading
+    private String lastDate = "1970-01-01"; // this will issued to php page, so no harm make it string
+
+    private String NOTICE_URL ="http://sitterapp.altervista.org/AnnunciFamiglie.php?limit="+LOAD_LIMIT;
+
+    // we need this variable to lock and unlock loading more
+    // e.g we should not load more when volley is already loading,
+    // loading will be activated when volley completes loading
+    private boolean itShouldLoadMore = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,27 +89,71 @@ public class HomeSitterActivity extends AppCompatActivity
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         noticeList = new ArrayList<>();
+        mAdapter = new NoticeAdapter(HomeSitterActivity.this, noticeList, HomeSitterActivity.this);
+        recyclerView.setAdapter(mAdapter);
+        remainingNoticeList = new LinkedList<>();
         // white background notification bar
         whiteNotificationBar(recyclerView);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         //prova caricamento di annunci
-        addNotices();
+        firstLoadNotices();
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                if (dy > 0) {
+                    // Recycle view scrolling downwards...
+                    // this if statement detects when user reaches the end of recyclerView, this is only time we should load more
+                    if (!recyclerView.canScrollVertically(RecyclerView.FOCUS_DOWN)) {
+                        // remember "!" is the same as "== false"
+                        // here we are now allowed to load more, but we need to be careful
+                        // we must check if itShouldLoadMore variable is true [unlocked]
+                        if (itShouldLoadMore) {
+
+                            loadMore();
+
+                        }
+                    }
+                }
+            }
+        });
     }
 
+    private int getNoticeToCharge(int noticeListLength){
+        return(noticeListLength<LOAD_LIMIT)?noticeListLength:LOAD_LIMIT;
+    }
+    private void firstLoadNotices() {
 
-    private void addNotices() {
-        //TODO prendere i dati dal DB
+        itShouldLoadMore = false; // lock this guy,(itShouldLoadMore) to make sure,
+        // user will not load more when volley is processing another request
+        // only load more when  volley is free
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, NOTICE_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
+                        progressDialog.dismiss();
+                        itShouldLoadMore = true;
                         try {
                             JSONArray notice = new JSONArray(response);
                             for(int i=0;i<notice.length();i++){
+
                                 JSONObject noticeObject = notice.getJSONObject(i);
                                 String famiglia = noticeObject.getString("usernameFamiglia");
                                 String data = noticeObject.getString("data");
@@ -91,10 +162,14 @@ public class HomeSitterActivity extends AppCompatActivity
                                 String descrizione = noticeObject.getString("descrizione");
                                 Notice n = new Notice(famiglia,data,oraInizio,oraFine,descrizione);
 
-                                noticeList.add(n);
+                                if(i<LOAD_LIMIT){
+                                    noticeList.add(n);
+                                }else{
+                                    remainingNoticeList.add(n);
+                                }
                             }
-                            mAdapter = new NoticeAdapter(HomeSitterActivity.this, noticeList, HomeSitterActivity.this);
-                            recyclerView.setAdapter(mAdapter);
+
+                            mAdapter.notifyDataSetChanged();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -107,6 +182,31 @@ public class HomeSitterActivity extends AppCompatActivity
             }
         });
         Volley.newRequestQueue(this).add(stringRequest);
+    }
+
+    private void loadMore() {
+
+        itShouldLoadMore = false; // lock this until volley completes processing
+
+        // progressWheel is just a loading spinner, please see the content_main.xml
+        final ProgressWheel progressWheel = (ProgressWheel) this.findViewById(R.id.progress_wheel);
+        progressWheel.setVisibility(View.VISIBLE);
+
+        itShouldLoadMore = true;
+
+        if(!remainingNoticeList.isEmpty()){
+            //todo aggiungere un ritardo (asynctask) per visualizzare la ruota figa di caricamento
+
+            final int remainingNoticeListSize = remainingNoticeList.size();
+            for(int i=0;i<remainingNoticeListSize;++i){
+                if(i<LOAD_LIMIT){
+                    noticeList.add(remainingNoticeList.remove());
+                }
+            }
+            mAdapter.notifyDataSetChanged();
+        }
+
+        progressWheel.setVisibility(View.GONE);
     }
 
     @Override
@@ -175,9 +275,13 @@ public class HomeSitterActivity extends AppCompatActivity
         return true;
     }
 
+
+
     //questo metodo fa partire un toast dell'annuncio selezionato
     @Override
     public void onNoticeSelected(Notice notice) {
         Toast.makeText(getApplicationContext(), "Selected: "+ notice.getFamily() + ", " + notice.getDate() + ", " + notice.getDescription(), Toast.LENGTH_LONG).show();
     }
+
+
 }
