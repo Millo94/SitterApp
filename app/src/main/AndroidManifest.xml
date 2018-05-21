@@ -33,7 +33,7 @@
             android:name=".Home.HomeFamilyActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".Profilo.ProfiloPubblicoActivity"></activity>
+        <activity android:name=".Profilo.ProfiloPrivatoActivity"></activity>
 
     </application>
 

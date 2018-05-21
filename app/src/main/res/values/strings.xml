@@ -78,6 +78,7 @@
     <string name="contattaFamiglia">Contact Family</string>
     <string name="nuovoUtente">Are you new on SitterApp?</string>
     <string name="dettaglioAnnuncio">Notice Details</string>
+    <string name="profileError">There was an error in opening the profile.</string>
 
 
 </resources>
