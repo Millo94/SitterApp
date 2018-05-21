@@ -127,6 +127,9 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                         dataPrSit2.setText(data);
                         tariffaPrSit2.setText(json.getString("tariffaOraria"));
                         ingaggiPrSit2.setText(json.getString("numeroLavori"));
+
+                        Toast.makeText(getContext(), "funziona",Toast.LENGTH_LONG).show();
+
                     } else if(result.equals("false")) {
                         Toast.makeText(getContext(), R.string.profileError ,Toast.LENGTH_SHORT).show();
                     }
