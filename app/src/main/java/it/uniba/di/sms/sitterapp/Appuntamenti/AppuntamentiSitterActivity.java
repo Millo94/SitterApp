@@ -102,7 +102,7 @@ public class AppuntamentiSitterActivity extends AppCompatActivity {
         }){
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username", session.getSessionUsernam());
+                params.put("username", session.getSessionUsername());
                 return params;
             }
         };
