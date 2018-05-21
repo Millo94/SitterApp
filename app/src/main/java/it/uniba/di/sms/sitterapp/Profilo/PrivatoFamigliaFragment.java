@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.Utenti.UtenteFamiglia;
 
@@ -21,8 +23,8 @@ public class PrivatoFamigliaFragment extends Fragment {
 
 
     View view;
-    TextView nomePrFam, cognomePrFam, emailPrFam, numeroPrFam, nazionePrFam, provinciaPrFam, cittaPrFam, viaPrFam, civicoPrFam, numFigliPrFam, animaliPrFam;
-    EditText usernamePrFam, descrPrFam, nomePrFam2, cognomePrFam2, emailPrFam2, numeroPrFam2, nazionePrFam2, provinciaPrFam2, cittaPrFam2, viaPrFam2, civicoPrFam2, numFigliPrFam2, animaliPrFam2;
+    TextView usernamePrFam, nomePrFam, cognomePrFam, emailPrFam, numeroPrFam, nazionePrFam, provinciaPrFam, cittaPrFam, viaPrFam, civicoPrFam, numFigliPrFam, animaliPrFam;
+    EditText descrPrFam, nomePrFam2, cognomePrFam2, emailPrFam2, numeroPrFam2, nazionePrFam2, provinciaPrFam2, cittaPrFam2, viaPrFam2, civicoPrFam2, numFigliPrFam2, animaliPrFam2;
     RatingBar ratingPrFam;
 
     Button modificaProfilo;
@@ -54,7 +56,7 @@ public class PrivatoFamigliaFragment extends Fragment {
         @Override
         public void onClick(View v) {
             if (!edit) {
-                usernamePrFam.setEnabled(true);
+
                 descrPrFam.setEnabled(true);
                 nomePrFam2.setEnabled(true);
                 cognomePrFam2.setEnabled(true);
@@ -71,7 +73,7 @@ public class PrivatoFamigliaFragment extends Fragment {
                 edit = true;
 
             } else {
-                usernamePrFam.setEnabled(false);
+
                 descrPrFam.setEnabled(false);
                 nomePrFam2.setEnabled(false);
                 cognomePrFam2.setEnabled(false);
@@ -91,8 +93,7 @@ public class PrivatoFamigliaFragment extends Fragment {
     };
 
     private void inizializzazione() {
-        usernamePrFam = (EditText) view.findViewById(R.id.usernamePrFamiglia);
-        usernamePrFam.setEnabled(false);
+        usernamePrFam = (TextView) view.findViewById(R.id.usernamePrFamiglia);
 
         descrPrFam = (EditText) view.findViewById(R.id.descrizionePrFamiglia);
         descrPrFam.setEnabled(false);
@@ -140,8 +141,7 @@ public class PrivatoFamigliaFragment extends Fragment {
         numFigliPrFam2.setEnabled(false);
 
         animaliPrFam = (TextView) view.findViewById(R.id.animaliPrFamiglia);
-        animaliPrFam2 = (EditText) view.findViewById(R.id.animaliPrFamiglia2);
-        animaliPrFam2.setEnabled(false);
+        animaliPrFam.setEnabled(false);
 
         modificaProfilo = (Button) view.findViewById(R.id.togglePrFamiglia);
         modificaProfilo.setOnClickListener(goEditable);

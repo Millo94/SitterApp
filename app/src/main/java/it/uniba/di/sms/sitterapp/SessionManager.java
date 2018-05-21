@@ -3,7 +3,6 @@ package it.uniba.di.sms.sitterapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 /**
  * Created by Enrico on 20/05/2018.
@@ -67,7 +66,7 @@ public class SessionManager {
      * Funzione che restituisce l'username di sessione
      * @return username
      */
-    public String getSessionUsernam(){
+    public String getSessionUsername(){
         return preferences.getString(USERNAME, null);
     }
 
