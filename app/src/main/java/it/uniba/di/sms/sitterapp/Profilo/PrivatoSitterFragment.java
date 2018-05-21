@@ -35,9 +35,6 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     ToggleButton modificaProfilo;
     boolean edit = false;
 
-
-
-
     private OnFragmentInteractionListener mListener;
 
     public PrivatoSitterFragment() {}
@@ -190,7 +187,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                 new StringBuilder()
                         .append(dayOfMonth).append("-")
                         .append(month).append("-")
-                        .append(year).append(" "));
+                        .append(year));
     }
 
     /**

@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -22,25 +21,25 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.uniba.di.sms.sitterapp.Home.HomeFamilyActivity;
-import it.uniba.di.sms.sitterapp.Home.HomeSitterActivity;
 import it.uniba.di.sms.sitterapp.Registrazione.RegistrationActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText usernameEt, passwordEt;
-    public static final int TYPE_FAMILY = 0;
-    public static final int TYPE_SITTER = 1;
-    public static final String TYPE = "type";
-    private static final String login_url = "http://sitterapp.altervista.org/login.php";
+
+    private static final String LOGIN_URL = Constants.BASE_URL + "login.php";
     private StringRequest request;
     private RequestQueue RequestQueue;
-    private static final String QUERY_SUCCESS = "success";
+    private SessionManager session;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // Creazione del nuovo manager di sessione
+        session = new SessionManager(getApplicationContext());
 
         usernameEt = (EditText) findViewById(R.id.lblUsername);
         passwordEt = (EditText) findViewById(R.id.lblPassword);
@@ -48,17 +47,22 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLogin(View view) {
-        request = new StringRequest(Request.Method.POST, login_url,
+        request = new StringRequest(Request.Method.POST, LOGIN_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.names().get(0).equals(QUERY_SUCCESS)) {
+                            if (jsonObject.names().get(0).equals(Constants.QUERY_SUCCESS)) {
                                 Toast.makeText(getApplicationContext(), R.string.loginSuccess, Toast.LENGTH_LONG).show();
 
+                                // Creazione della sessione di login
+                                session.createLoginSession(usernameEt.getText().toString());
+
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
+                                finish();
 
                             } else {
                                 Toast.makeText(getApplicationContext(), R.string.loginerror, Toast.LENGTH_SHORT).show();
@@ -87,13 +91,13 @@ public class LoginActivity extends AppCompatActivity {
 
     public void createAccountSitter(View view) {
         Intent createAccountIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
-        createAccountIntent.putExtra(TYPE, TYPE_SITTER);
+        createAccountIntent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
         startActivity(createAccountIntent);
     }
 
     public void createAccountFamily(View view) {
         Intent createAccountIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
-        createAccountIntent.putExtra(TYPE, TYPE_FAMILY);
+        createAccountIntent.putExtra(Constants.TYPE, Constants.TYPE_FAMILY);
         startActivity(createAccountIntent);
     }
 

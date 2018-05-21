@@ -3,6 +3,7 @@ package it.uniba.di.sms.sitterapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 /**
  * Created by Enrico on 20/05/2018.
@@ -74,15 +75,16 @@ public class SessionManager {
      * Controlla se l'utente è loggato o no. Se non lo è, riporta l'utente alla schermata di Login.
      * Altrimenti non fa niente.
      */
-    public void checkLogin(){
+    public boolean checkLogin(){
 
         if(!preferences.getBoolean(IS_LOGGED, false)){
             Intent login = new Intent(myContext, LoginActivity.class);
-            login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Pulisce lo stack
-            login.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);   // Inizio di una nuova "storia" d'uso
+            login.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);// Inizio di una nuova "storia" d'uso
             myContext.startActivity(login);
+            return true;
         }
 
+        return false;
     }
 
     /**
@@ -94,9 +96,9 @@ public class SessionManager {
         editor.commit();
 
         Intent login = new Intent(myContext, LoginActivity.class);
-        login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Pulisce lo stack
-        login.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);   // Inizio di una nuova "storia" d'uso
+        login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);// Inizio di una nuova "storia" d'uso
+        login.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         myContext.startActivity(login);
     }
-    
+
 }

@@ -15,6 +15,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
+
+import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.LoginActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.Utenti.UtenteFamiglia;
@@ -25,18 +27,12 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
     /**
      * URL dello script di registrazione
      */
-    private static final String REGISTRATION_URL = "http://sitterapp.altervista.org/register.php";
+    private static final String REGISTRATION_URL = Constants.BASE_URL + "register.php";
 
     /**
      * RequestQueue della registrazione
      */
     RequestQueue requestQueue;
-
-    /**
-     * Stringhe di tipo utente
-     */
-    private static final String TYPE_SITTER = "1";
-    private static final String TYPE_FAMILY = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +49,12 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
          * fragment da visualizzare è quello della registrazione della famiglia, o quello della
          * registrazione della babysitter
          */
-        int type = getIntent().getIntExtra(LoginActivity.TYPE, -1);
+        int type = getIntent().getIntExtra(Constants.TYPE, -1);
 
-        if (type == LoginActivity.TYPE_SITTER){
+        if (type == Constants.TYPE_SITTER){
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new SitterRegistrationFragment()).commit();
-        } else if(type == LoginActivity.TYPE_FAMILY) {
+        } else if(type == Constants.TYPE_FAMILY) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new FamilyRegistrationFragment()).commit();
         }
@@ -109,7 +105,7 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("type", TYPE_FAMILY);
+                params.put("type", String.valueOf(Constants.TYPE_FAMILY));
                 params.put("username", famiglia.getUsername());
                 params.put("password", famiglia.getPassword());
                 params.put("email", famiglia.getEmail());
@@ -166,7 +162,7 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("type", TYPE_SITTER);
+                params.put("type", String.valueOf(Constants.TYPE_SITTER));
                 params.put("username", sitter.getUsername());
                 params.put("password", sitter.getPassword());
                 params.put("email", sitter.getEmail());
