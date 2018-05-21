@@ -29,6 +29,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -110,25 +111,22 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                         cognomePrSit2.setText(json.getString("cognome"));
                         emailPrSit2.setText(json.getString("email"));
                         numeroPrSit2.setText(json.getString("telefono"));
+
+                        // Conversione del flag auto
                         if(json.getString("auto").equals("0"))
                             carPrSit2.setChecked(true);
                         else
                             carPrSit2.setChecked(false);
-                        sessoPrSit2.setText(json.getString("genere"));
 
-                        // Conversione della data
-                        String data = json.getString("dataNascita");
-                        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-                        try {
-                            data = format.parse(data).toString();
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        dataPrSit2.setText(data);
+                        // Conversione del flag genere
+                        if(json.getString("genere").equals(("M")))
+                            sessoPrSit2.setText("Uomo");
+                        else
+                            sessoPrSit2.setText("Donna");
+
+                        dataPrSit2.setText(Constants.SQLtoDate(json.getString("dataNascita")));
                         tariffaPrSit2.setText(json.getString("tariffaOraria"));
                         ingaggiPrSit2.setText(json.getString("numeroLavori"));
-
-                        Toast.makeText(getContext(), "funziona",Toast.LENGTH_LONG).show();
 
                     } else if(result.equals("false")) {
                         Toast.makeText(getContext(), R.string.profileError ,Toast.LENGTH_SHORT).show();
@@ -160,7 +158,6 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     public void inizializzazione(final DatePickerDialog datePickerDialog) {
 
         usernamePrSit = (TextView) view.findViewById(R.id.usernamePrSitter);
-        usernamePrSit.setEnabled(false);
 
         descrPrSit = (EditText) view.findViewById(R.id.descrizionePrSitter);
         descrPrSit.setEnabled(false);
@@ -216,7 +213,6 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         @Override
         public void onClick(View v) {
             if(!edit){
-                usernamePrSit.setEnabled(true);
                 descrPrSit.setEnabled(true);
                 nomePrSit2.setEnabled(true);
                 cognomePrSit2.setEnabled(true);
@@ -230,7 +226,6 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
                 edit = true;
             } else {
-                usernamePrSit.setEnabled(false);
                 descrPrSit.setEnabled(false);
                 nomePrSit2.setEnabled(false);
                 cognomePrSit2.setEnabled(false);
