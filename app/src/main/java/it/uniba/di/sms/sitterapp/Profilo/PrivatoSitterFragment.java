@@ -52,8 +52,8 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
      */
     View view;
     RatingBar ratingPrSitter;
-    TextView nomePrSit, cognomePrSit, emailPrSit, numeroPrSit, sessoPrSit, dataPrSit, tariffaPrSit, ingaggiPrSit;
-    EditText usernamePrSit, descrPrSit, nomePrSit2, cognomePrSit2, emailPrSit2, numeroPrSit2, sessoPrSit2, dataPrSit2, tariffaPrSit2, ingaggiPrSit2;
+    TextView usernamePrSit, nomePrSit, cognomePrSit, emailPrSit, numeroPrSit, sessoPrSit, dataPrSit, tariffaPrSit, ingaggiPrSit;
+    EditText descrPrSit, nomePrSit2, cognomePrSit2, emailPrSit2, numeroPrSit2, sessoPrSit2, dataPrSit2, tariffaPrSit2, ingaggiPrSit2;
     Switch carPrSit2;
 
     ToggleButton modificaProfilo;
@@ -159,7 +159,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
     public void inizializzazione(final DatePickerDialog datePickerDialog) {
 
-        usernamePrSit = (EditText) view.findViewById(R.id.usernamePrSitter);
+        usernamePrSit = (TextView) view.findViewById(R.id.usernamePrSitter);
         usernamePrSit.setEnabled(false);
 
         descrPrSit = (EditText) view.findViewById(R.id.descrizionePrSitter);
