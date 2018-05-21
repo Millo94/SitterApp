@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -217,32 +218,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/sessoPrSitter2" />
 
             <TextView
-                android:id="@+id/autoPrSitter"
-                android:layout_width="160dp"
-                android:layout_height="46dp"
-                android:layout_marginTop="15dp"
-                android:gravity="fill_vertical"
-                android:text="@string/automunito"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/autoPrSitter2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nascitaPrSitter" />
-
-            <EditText
-                android:id="@+id/autoPrSitter2"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/automunito"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/autoPrSitter"
-                app:layout_constraintTop_toBottomOf="@+id/nascitaPrSitter2" />
-
-            <TextView
                 android:id="@+id/tariffaPrSitter"
                 android:layout_width="160dp"
                 android:layout_height="45dp"
@@ -254,7 +229,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/tariffaPrSitter2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/autoPrSitter" />
+                app:layout_constraintTop_toBottomOf="@+id/switch2" />
 
             <EditText
                 android:id="@+id/tariffaPrSitter2"
@@ -266,7 +241,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/tariffaPrSitter"
-                app:layout_constraintTop_toBottomOf="@+id/autoPrSitter2" />
+                app:layout_constraintTop_toBottomOf="@+id/switch2" />
 
             <TextView
                 android:id="@+id/ingaggiPrSitter"
@@ -311,6 +286,20 @@
                 app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingaggiPrSitter" />
+
+            <Switch
+                android:id="@+id/switch2"
+                android:layout_width="340dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/automunito"
+                android:textColor="@color/colorScritte"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nascitaPrSitter2" />
 
 
         </android.support.constraint.ConstraintLayout>
