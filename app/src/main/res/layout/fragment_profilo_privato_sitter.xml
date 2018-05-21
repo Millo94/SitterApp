@@ -63,218 +63,218 @@
 
             <TextView
                 android:id="@+id/nomePrSitter"
-                android:layout_width="160dp"
+                android:layout_width="wrap_content"
                 android:layout_height="45dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:gravity="fill_vertical"
                 android:text="@string/nome"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/nomePrSitter2"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/descrizionePrSitter" />
 
             <EditText
                 android:id="@+id/nomePrSitter2"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/nome"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/nomePrSitter"
-                app:layout_constraintTop_toBottomOf="@+id/descrizionePrSitter" />
-
-            <TextView
-                android:id="@+id/cognomePrSitter"
-                android:layout_width="160dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="15dp"
-                android:gravity="fill_vertical"
-                android:text="@string/cognome"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/cognomePrSitter2"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nomePrSitter" />
 
+            <TextView
+                android:id="@+id/cognomePrSitter"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
+                android:text="@string/cognome"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nomePrSitter2" />
+
             <EditText
                 android:id="@+id/cognomePrSitter2"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/cognome"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/cognomePrSitter"
-                app:layout_constraintTop_toBottomOf="@+id/nomePrSitter2" />
-
-            <TextView
-                android:id="@+id/emailPrSitter"
-                android:layout_width="160dp"
-                android:layout_height="46dp"
-                android:layout_marginTop="15dp"
-                android:gravity="fill_vertical"
-                android:text="@string/email"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/emailPrSitter2"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cognomePrSitter" />
 
+            <TextView
+                android:id="@+id/emailPrSitter"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
+                android:text="@string/email"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.099"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cognomePrSitter2" />
+
             <EditText
                 android:id="@+id/emailPrSitter2"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/email"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/emailPrSitter"
-                app:layout_constraintTop_toBottomOf="@+id/cognomePrSitter2" />
-
-            <TextView
-                android:id="@+id/telefonoPrSitter"
-                android:layout_width="160dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="15dp"
-                android:gravity="fill_vertical"
-                android:text="@string/telefono"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/telefonoPrSitter2"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/emailPrSitter" />
 
+            <TextView
+                android:id="@+id/telefonoPrSitter"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
+                android:text="@string/telefono"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.107"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailPrSitter2" />
+
             <EditText
                 android:id="@+id/telefonoPrSitter2"
-                android:layout_width="160dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/telefono"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/telefonoPrSitter"
-                app:layout_constraintTop_toBottomOf="@+id/emailPrSitter2" />
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/telefonoPrSitter" />
 
             <TextView
                 android:id="@+id/sessoPrSitter"
-                android:layout_width="160dp"
-                android:layout_height="46dp"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
                 android:gravity="fill_vertical"
                 android:text="@string/sesso"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/sessoPrSitter2"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.107"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/telefonoPrSitter" />
+                app:layout_constraintTop_toBottomOf="@+id/telefonoPrSitter2" />
 
             <EditText
                 android:id="@+id/sessoPrSitter2"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/sesso"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/sessoPrSitter"
-                app:layout_constraintTop_toBottomOf="@+id/telefonoPrSitter2" />
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sessoPrSitter" />
 
             <TextView
                 android:id="@+id/nascitaPrSitter"
-                android:layout_width="160dp"
+                android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:layout_marginTop="15dp"
                 android:gravity="fill_vertical"
                 android:text="@string/datanascita"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/nascitaPrSitter2"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.107"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sessoPrSitter" />
+                app:layout_constraintTop_toBottomOf="@+id/sessoPrSitter2" />
 
             <EditText
                 android:id="@+id/nascitaPrSitter2"
-                android:layout_width="160dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/datanascita"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/nascitaPrSitter"
-                app:layout_constraintTop_toBottomOf="@+id/sessoPrSitter2" />
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nascitaPrSitter" />
 
             <TextView
                 android:id="@+id/tariffaPrSitter"
-                android:layout_width="160dp"
+                android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:layout_marginTop="15dp"
                 android:gravity="fill_vertical"
                 android:text="@string/tariffa"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/tariffaPrSitter2"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/switch2" />
 
             <EditText
                 android:id="@+id/tariffaPrSitter2"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/tariffa"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/tariffaPrSitter"
-                app:layout_constraintTop_toBottomOf="@+id/switch2" />
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tariffaPrSitter" />
 
             <TextView
                 android:id="@+id/ingaggiPrSitter"
-                android:layout_width="160dp"
-                android:layout_height="46dp"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
                 android:gravity="fill_vertical"
                 android:text="@string/numlavori"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/ingaggiPrSitter2"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.107"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tariffaPrSitter" />
+                app:layout_constraintTop_toBottomOf="@+id/tariffaPrSitter2" />
 
             <EditText
                 android:id="@+id/ingaggiPrSitter2"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/numlavori"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/ingaggiPrSitter"
-                app:layout_constraintTop_toBottomOf="@+id/tariffaPrSitter2" />
+                app:layout_constraintHorizontal_bias="0.107"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ingaggiPrSitter" />
 
             <ToggleButton
                 android:id="@+id/modificaProfilo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:textAlignment="center"
                 android:textColorLink="@color/colorScritte"
@@ -283,9 +283,8 @@
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingaggiPrSitter" />
+                app:layout_constraintTop_toBottomOf="@+id/ingaggiPrSitter2" />
 
             <Switch
                 android:id="@+id/switch2"
@@ -297,7 +296,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nascitaPrSitter2" />
 
