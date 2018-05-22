@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import it.uniba.di.sms.sitterapp.Profilo.ProfiloPrivatoActivity;
 import it.uniba.di.sms.sitterapp.Registrazione.RegistrationActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -59,7 +60,8 @@ public class LoginActivity extends AppCompatActivity {
                                 // Creazione della sessione di login
                                 session.createLoginSession(usernameEt.getText().toString());
 
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, ProfiloPrivatoActivity.class);
+                                intent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 finish();

@@ -18,6 +18,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.regex.Pattern;
+
+import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.Utenti.UtenteSitter;
 
@@ -30,7 +32,6 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
     RadioGroup genereRG;
     Switch autoSW;
     Button confRegistration;
-    String dataNascita;
     String genere = "";
     String auto = "1";
 
@@ -46,11 +47,6 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                         .append(dayOfMonth).append("-")
                         .append(month + 1).append("-")
                         .append(year));
-
-        dataNascita = new StringBuilder()
-                .append(year).append("-")
-                .append(month + 1).append("-")
-                .append(dayOfMonth).toString();
 
     }
 
@@ -119,7 +115,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                             passwordET.getText().toString(),
                             nomeET.getText().toString(),
                             cognomeET.getText().toString(),
-                            dataNascita,
+                            Constants.dateToSQL(dataNascitaET.getText().toString()),
                             emailET.getText().toString(),
                             numeroET.getText().toString(),
                             genere,

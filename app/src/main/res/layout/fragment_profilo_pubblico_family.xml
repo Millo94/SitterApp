@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="it.uniba.di.sms.sitterapp.Profilo.ProfiloPubblicoActivity">
+    tools:context="it.uniba.di.sms.sitterapp.Profilo.ProfiloPrivatoActivity">
 
 
     <ScrollView
@@ -25,24 +25,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:text="@string/contattaSitter"
                 android:textAlignment="center"
+                android:textColor="@android:color/background_light"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/civicoPuFamily"
-                app:layout_constraintVertical_bias="0.386" />
+                app:layout_constraintTop_toBottomOf="@+id/civicoPuFamily2" />
 
             <TextView
                 android:id="@+id/usernamePuFamiglia"
                 android:layout_width="wrap_content"
                 android:layout_height="58dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="40dp"
                 android:text="@string/username"
                 android:textSize="40sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,9 +50,9 @@
 
             <TextView
                 android:id="@+id/descrizionePuFamiglia"
-                android:layout_width="337dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="30dp"
                 android:text="@string/descrizione"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -63,7 +63,7 @@
                 android:id="@+id/ratingPuFamiglia"
                 android:layout_width="wrap_content"
                 android:layout_height="59dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="40dp"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/colorPrimary"
                 app:layout_constraintStart_toStartOf="parent"
@@ -71,279 +71,282 @@
 
             <TextView
                 android:id="@+id/nomePuFamiglia"
-                android:layout_width="160dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="30dp"
                 android:text="@string/nome"
+                android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/nomePuFamiglia2"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/descrizionePuFamiglia" />
 
             <TextView
                 android:id="@+id/nomePuFamiglia2"
-                android:layout_width="160dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/nome"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/nomePuFamiglia"
-                app:layout_constraintTop_toBottomOf="@+id/descrizionePuFamiglia" />
-
-            <TextView
-                android:id="@+id/cognomePuFamiglia"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/cognome"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/cognomePuFamiglia2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nomePuFamiglia" />
 
             <TextView
-                android:id="@+id/cognomePuFamiglia2"
-                android:layout_width="160dp"
+                android:id="@+id/cognomePuFamiglia"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/cognome"
+                android:textColor="@color/colorScritte"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/cognomePuFamiglia"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nomePuFamiglia2" />
 
             <TextView
-                android:id="@+id/emailPuFamiglia"
-                android:layout_width="160dp"
+                android:id="@+id/cognomePuFamiglia2"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/email"
+                android:layout_marginTop="10dp"
+                android:text="@string/cognome"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/emailPuFamiglia2"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cognomePuFamiglia" />
 
             <TextView
-                android:id="@+id/emailPuFamiglia2"
-                android:layout_width="160dp"
+                android:id="@+id/emailPuFamiglia"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/email"
+                android:textColor="@color/colorScritte"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/emailPuFamiglia"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cognomePuFamiglia2" />
 
             <TextView
-                android:id="@+id/telefonoPuFamiglia"
-                android:layout_width="160dp"
+                android:id="@+id/emailPuFamiglia2"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/telefono"
+                android:layout_marginTop="10dp"
+                android:text="@string/email"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/telefonoPuFamiglia2"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/emailPuFamiglia" />
 
             <TextView
-                android:id="@+id/telefonoPuFamiglia2"
-                android:layout_width="160dp"
+                android:id="@+id/telefonoPuFamiglia"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/telefono"
+                android:textColor="@color/colorScritte"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/telefonoPuFamiglia"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/emailPuFamiglia2" />
 
             <TextView
-                android:id="@+id/animaliPuFamiglia2"
-                android:layout_width="160dp"
+                android:id="@+id/telefonoPuFamiglia2"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/animali"
+                android:layout_marginTop="10dp"
+                android:text="@string/telefono"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/animaliPuFamiglia"
-                app:layout_constraintTop_toBottomOf="@+id/telefonoPuFamiglia2" />
-
-            <TextView
-                android:id="@+id/animaliPuFamiglia"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/animali"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/animaliPuFamiglia2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/telefonoPuFamiglia" />
 
             <TextView
-                android:id="@+id/figliPuFamiglia"
-                android:layout_width="160dp"
+                android:id="@+id/animaliPuFamiglia2"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/figlinum"
+                android:layout_marginTop="10dp"
+                android:text="@string/animali"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/figliPuFamiglia2"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/animaliPuFamiglia" />
 
             <TextView
-                android:id="@+id/figliPuFamiglia2"
-                android:layout_width="160dp"
+                android:id="@+id/animaliPuFamiglia"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/animali"
+                android:textColor="@color/colorScritte"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/telefonoPuFamiglia2" />
+
+            <TextView
+                android:id="@+id/figliPuFamiglia"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/figlinum"
+                android:textColor="@color/colorScritte"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/figliPuFamiglia"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/animaliPuFamiglia2" />
 
             <TextView
-                android:id="@+id/nazionePuFamiglia2"
-                android:layout_width="160dp"
+                android:id="@+id/figliPuFamiglia2"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/nazione"
+                android:layout_marginTop="10dp"
+                android:text="@string/figlinum"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/nazionePuFamiglia"
-                app:layout_constraintTop_toBottomOf="@+id/figliPuFamiglia2" />
-
-            <TextView
-                android:id="@+id/nazionePuFamiglia"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/nazione"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/nazionePuFamiglia2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/figliPuFamiglia" />
 
             <TextView
+                android:id="@+id/nazionePuFamiglia2"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/nazione"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nazionePuFamiglia" />
+
+            <TextView
+                android:id="@+id/nazionePuFamiglia"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/nazione"
+                android:textColor="@color/colorScritte"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/figliPuFamiglia2" />
+
+            <TextView
                 android:id="@+id/cittaPuFamily2"
-                android:layout_width="160dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/citta"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/cittaPuFamily"
-                app:layout_constraintTop_toBottomOf="@+id/provinciaPuFamily2" />
-
-            <TextView
-                android:id="@+id/cittaPuFamily"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/citta"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/cittaPuFamily2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/provinciaPuFamily" />
-
-            <TextView
-                android:id="@+id/civicoPuFamily"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/civico"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/civicoPuFamily2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viaPuFamily" />
-
-            <TextView
-                android:id="@+id/civicoPuFamily2"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/civico"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/civicoPuFamily"
-                app:layout_constraintTop_toBottomOf="@+id/viaPuFamily2" />
-
-            <TextView
-                android:id="@+id/viaPuFamily"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/via"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/viaPuFamily2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cittaPuFamily" />
 
             <TextView
-                android:id="@+id/viaPuFamily2"
-                android:layout_width="160dp"
+                android:id="@+id/cittaPuFamily"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:text="@string/citta"
+                android:textColor="@color/colorScritte"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/provinciaPuFamily2" />
+
+            <TextView
+                android:id="@+id/civicoPuFamily"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/civico"
+                android:textColor="@color/colorScritte"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viaPuFamily2" />
+
+            <TextView
+                android:id="@+id/civicoPuFamily2"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/civico"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/civicoPuFamily" />
+
+            <TextView
+                android:id="@+id/viaPuFamily"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/via"
+                android:textColor="@color/colorScritte"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cittaPuFamily2" />
+
+            <TextView
+                android:id="@+id/viaPuFamily2"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="@string/via"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/viaPuFamily"
-                app:layout_constraintTop_toBottomOf="@+id/cittaPuFamily2" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viaPuFamily" />
 
             <TextView
                 android:id="@+id/provinciaPuFamily2"
-                android:layout_width="160dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/provincia"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/provinciaPuFamily"
-                app:layout_constraintTop_toBottomOf="@+id/nazionePuFamiglia2" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/provinciaPuFamily" />
 
             <TextView
                 android:id="@+id/provinciaPuFamily"
-                android:layout_width="160dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/provincia"
+                android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/provinciaPuFamily2"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nazionePuFamiglia" />
-
+                app:layout_constraintTop_toBottomOf="@+id/nazionePuFamiglia2" />
 
 
         </android.support.constraint.ConstraintLayout>
