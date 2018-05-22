@@ -1,6 +1,7 @@
 package it.uniba.di.sms.sitterapp.Home;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,8 +17,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.graphics.Color;
 import android.os.Build;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 
@@ -38,17 +42,22 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ExecutionException;
 
+import it.uniba.di.sms.sitterapp.Constants;
+import it.uniba.di.sms.sitterapp.LoginActivity;
 import it.uniba.di.sms.sitterapp.MainActivity;
+import it.uniba.di.sms.sitterapp.Profilo.ProfiloPrivatoActivity;
 import it.uniba.di.sms.sitterapp.R;
+import it.uniba.di.sms.sitterapp.SessionManager;
 
 public class HomeSitterActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NoticeAdapter.NoticeAdapterListener {
-    
+
     private static final String TAG = MainActivity.class.getSimpleName();
     private RecyclerView recyclerView;
     private List<Notice> noticeList;
     private Queue<Notice> remainingNoticeList;
     private NoticeAdapter mAdapter;
+    private SessionManager sessionManager;
 
     // we will be loading 15 items per page or per load
     // you can change this to fit your specifications.
@@ -56,7 +65,7 @@ public class HomeSitterActivity extends AppCompatActivity
     // as php will be ordered what to load and limit by android java
     public static final int LOAD_LIMIT = 5;
 
-    private String NOTICE_URL ="http://sitterapp.altervista.org/AnnunciFamiglie.php";
+    private String NOTICE_URL = "http://sitterapp.altervista.org/AnnunciFamiglie.php";
 
     // we need this variable to lock and unlock loading more
     // e.g we should not load more when volley is already loading,
@@ -85,6 +94,17 @@ public class HomeSitterActivity extends AppCompatActivity
         noticeList = new ArrayList<>();
         mAdapter = new NoticeAdapter(HomeSitterActivity.this, noticeList, HomeSitterActivity.this);
         remainingNoticeList = new LinkedList<>();
+
+        // Valorizzo il session manager
+        sessionManager = new SessionManager(getApplicationContext());
+
+        ImageView profile_image = (ImageView) findViewById(R.id.ProfileImageView);
+        TextView profile_username = (TextView) findViewById(R.id.ProfileUsernameView);
+
+        //todo aggiungere caricamento del nome_profilo e immagine_profilo nell'header del drawer
+        //Glide.with(this).load(sessionManager.getSessionProfilePic()).into(profile_image);
+        //profile_username.setText(sessionManager.getSessionUsername());
+
 
         recyclerView.setAdapter(mAdapter);
 
@@ -144,7 +164,7 @@ public class HomeSitterActivity extends AppCompatActivity
                         itShouldLoadMore = true;
                         try {
                             JSONArray notice = new JSONArray(response);
-                            for(int i=0;i<notice.length();i++){
+                            for (int i = 0; i < notice.length(); i++) {
 
                                 JSONObject noticeObject = notice.getJSONObject(i);
                                 String famiglia = noticeObject.getString("usernameFamiglia");
@@ -152,11 +172,11 @@ public class HomeSitterActivity extends AppCompatActivity
                                 String oraInizio = noticeObject.getString("oraInizio");
                                 String oraFine = noticeObject.getString("oraFine");
                                 String descrizione = noticeObject.getString("descrizione");
-                                Notice n = new Notice(famiglia,data,oraInizio,oraFine,descrizione);
+                                Notice n = new Notice(famiglia, data, oraInizio, oraFine, descrizione);
 
-                                if(i<LOAD_LIMIT){
+                                if (i < LOAD_LIMIT) {
                                     noticeList.add(n);
-                                }else{
+                                } else {
                                     remainingNoticeList.add(n);
                                 }
                             }
@@ -170,7 +190,7 @@ public class HomeSitterActivity extends AppCompatActivity
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(HomeSitterActivity.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeSitterActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         Volley.newRequestQueue(this).add(stringRequest);
@@ -186,11 +206,11 @@ public class HomeSitterActivity extends AppCompatActivity
 
         itShouldLoadMore = true;
 
-        if(!remainingNoticeList.isEmpty()){
+        if (!remainingNoticeList.isEmpty()) {
             //todo aggiungere un ritardo (asynctask) per visualizzare la ruota figa di caricamento
             final int remainingNoticeListSize = remainingNoticeList.size();
-            for(int i=0;i<remainingNoticeListSize;++i){
-                if(i<LOAD_LIMIT){
+            for (int i = 0; i < remainingNoticeListSize; ++i) {
+                if (i < LOAD_LIMIT) {
                     noticeList.add(remainingNoticeList.remove());
                 }
             }
@@ -267,12 +287,16 @@ public class HomeSitterActivity extends AppCompatActivity
     }
 
 
-
     //questo metodo fa partire un toast dell'annuncio selezionato
     @Override
     public void onNoticeSelected(Notice notice) {
-        Toast.makeText(getApplicationContext(), "Selected: "+ notice.getFamily() + ", " + notice.getDate() + ", " + notice.getDescription(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Selected: " + notice.getFamily() + ", " + notice.getDate() + ", " + notice.getDescription(), Toast.LENGTH_LONG).show();
     }
 
 
+    public void goProfile(View view) {
+        Intent intent = new Intent(HomeSitterActivity.this, ProfiloPrivatoActivity.class);
+        intent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
+        startActivity(intent);
+    }
 }
