@@ -2,7 +2,6 @@ package it.uniba.di.sms.sitterapp.Home;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,11 +33,10 @@ import org.json.JSONObject;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.ExecutionException;
 
 import it.uniba.di.sms.sitterapp.MainActivity;
 import it.uniba.di.sms.sitterapp.R;
@@ -56,14 +54,9 @@ public class HomeSitterActivity extends AppCompatActivity
     // you can change this to fit your specifications.
     // When you change this, there will be no need to update your php page,
     // as php will be ordered what to load and limit by android java
-    private static final int LOAD_LIMIT = 5;
+    public static final int LOAD_LIMIT = 5;
 
-    // last date to be loaded from php page,
-    // we will need to keep track or database id field to know which id was loaded last
-    // and where to begin loading
-    private String lastDate = "1970-01-01"; // this will issued to php page, so no harm make it string
-
-    private String NOTICE_URL ="http://sitterapp.altervista.org/AnnunciFamiglie.php?limit="+LOAD_LIMIT;
+    private String NOTICE_URL ="http://sitterapp.altervista.org/AnnunciFamiglie.php";
 
     // we need this variable to lock and unlock loading more
     // e.g we should not load more when volley is already loading,
@@ -88,10 +81,13 @@ public class HomeSitterActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
         noticeList = new ArrayList<>();
         mAdapter = new NoticeAdapter(HomeSitterActivity.this, noticeList, HomeSitterActivity.this);
-        recyclerView.setAdapter(mAdapter);
         remainingNoticeList = new LinkedList<>();
+
+        recyclerView.setAdapter(mAdapter);
+
         // white background notification bar
         whiteNotificationBar(recyclerView);
 
@@ -99,7 +95,7 @@ public class HomeSitterActivity extends AppCompatActivity
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        //prova caricamento di annunci
+        //caricamento di annunci
         firstLoadNotices();
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -121,7 +117,6 @@ public class HomeSitterActivity extends AppCompatActivity
                         if (itShouldLoadMore) {
 
                             loadMore();
-
                         }
                     }
                 }
@@ -129,9 +124,6 @@ public class HomeSitterActivity extends AppCompatActivity
         });
     }
 
-    private int getNoticeToCharge(int noticeListLength){
-        return(noticeListLength<LOAD_LIMIT)?noticeListLength:LOAD_LIMIT;
-    }
     private void firstLoadNotices() {
 
         itShouldLoadMore = false; // lock this guy,(itShouldLoadMore) to make sure,
@@ -196,7 +188,6 @@ public class HomeSitterActivity extends AppCompatActivity
 
         if(!remainingNoticeList.isEmpty()){
             //todo aggiungere un ritardo (asynctask) per visualizzare la ruota figa di caricamento
-
             final int remainingNoticeListSize = remainingNoticeList.size();
             for(int i=0;i<remainingNoticeListSize;++i){
                 if(i<LOAD_LIMIT){
