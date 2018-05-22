@@ -27,7 +27,7 @@ public class AppuntamentoAdapter extends RecyclerView.Adapter<AppuntamentoAdapte
     @Override
     public AppuntamentoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.notice_item, null);
+        View view = inflater.inflate(R.layout.appuntamento_sitter_item, null);
         return new AppuntamentoViewHolder(view);
     }
 
