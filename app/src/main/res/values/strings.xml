@@ -79,6 +79,9 @@
     <string name="nuovoUtente">Are you new on SitterApp?</string>
     <string name="dettaglioAnnuncio">Notice Details</string>
     <string name="profileError">There was an error in opening the profile.</string>
+    <string name="missingdescription">Describe yourself...</string>
+    <string name="genericError">An error occurred.</string>
+    <string name="modifySuccess">Edit complete</string>
 
 
 </resources>

@@ -7,9 +7,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,6 +30,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.TransitionOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,7 +65,6 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     EditText descrPrSit, nomePrSit2, cognomePrSit2, emailPrSit2, numeroPrSit2, sessoPrSit2, dataPrSit2, tariffaPrSit2, ingaggiPrSit2;
     Switch carPrSit2;
     ImageView profilePic;
-
     ToggleButton modificaProfilo;
     boolean edit = false;
 
@@ -93,8 +96,14 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
         inizializzazione(datePickerDialog);
         openProfile();
-        modificaProfilo.setOnClickListener(goEditable);
 
+        // Modifica
+        modificaProfilo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goEditable();
+            }
+        });
 
         return view;
     }
@@ -110,12 +119,18 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
                 try {
                     JSONObject json = new JSONObject(response);
-                    String result = json.getString("response");
+                    String result = json.getString("open");
 
                     if (result.equals("true")){
                         usernamePrSit.setText(json.getString("username"));
-                        ratingPrSitter.setRating((float)json.getDouble("rating"));
-                        descrPrSit.setText(json.getString("descrizione"));
+                        if(!json.getString("rating").equals("null")) {
+                            ratingPrSitter.setRating((float) json.getDouble("rating"));
+                        }
+                        if(json.getString("descrizione").equals("null")){
+                            descrPrSit.setHint(R.string.missingdescription);
+                        } else {
+                            descrPrSit.setText(json.getString("descrizione"));
+                        }
                         nomePrSit2.setText(json.getString("nome"));
                         cognomePrSit2.setText(json.getString("cognome"));
                         emailPrSit2.setText(json.getString("email"));
@@ -156,6 +171,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
+                params.put("operation", "open");
                 params.put("type", String.valueOf(Constants.TYPE_SITTER));
                 params.put("username", sessionManager.getSessionUsername());
                 return params;
@@ -165,6 +181,56 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         requestQueue.add(profileRequest);
     }
 
+    private void modifyProfile(){
+
+        StringRequest modify = new StringRequest(Request.Method.POST, PROFILE_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject json = new JSONObject(response);
+                    String result = json.getString("modify");
+
+                    if(result.equals("true")){
+                        Toast.makeText(getContext(), R.string.modifySuccess,Toast.LENGTH_SHORT).show();
+                    } else if (result.equals("false")) {
+                        Toast.makeText(getContext(), R.string.genericError,Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), R.string.genericError,Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("operation", "modify");
+                params.put("type", String.valueOf(Constants.TYPE_SITTER));
+                params.put("username", sessionManager.getSessionUsername());
+                params.put("descrizione", descrPrSit.getText().toString());
+                params.put("nome", nomePrSit2.getText().toString());
+                params.put("cognome", cognomePrSit2.getText().toString());
+                params.put("email", emailPrSit2.getText().toString());
+                params.put("telefono", numeroPrSit2.getText().toString());
+                params.put("dataNascita", Constants.dateToSQL(dataPrSit2.getText().toString()));
+                // Conversione del flag auto
+                if(carPrSit2.isChecked())
+                    params.put("auto", "0");
+                else
+                    params.put("auto", "1");
+                params.put("tariffaOraria", tariffaPrSit2.getText().toString());
+                return params;
+            }
+        };
+
+        requestQueue.add(modify);
+    }
 
     public void inizializzazione(final DatePickerDialog datePickerDialog) {
 
@@ -221,43 +287,32 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         profilePic = (ImageView) view.findViewById(R.id.imgPrSitter);
 
         modificaProfilo = (ToggleButton) view.findViewById(R.id.modificaProfilo);
-
     }
 
-    public View.OnClickListener goEditable = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if(!edit){
-                descrPrSit.setEnabled(true);
-                nomePrSit2.setEnabled(true);
-                cognomePrSit2.setEnabled(true);
-                emailPrSit2.setEnabled(true);
-                numeroPrSit2.setEnabled(true);
-                carPrSit2.setEnabled(true);
-                sessoPrSit2.setEnabled(true);
-                tariffaPrSit2.setEnabled(true);
-                dataPrSit2.setEnabled(true);
-                ingaggiPrSit2.setEnabled(true);
-
-                edit = true;
-            } else {
-                descrPrSit.setEnabled(false);
-                nomePrSit2.setEnabled(false);
-                cognomePrSit2.setEnabled(false);
-                emailPrSit2.setEnabled(false);
-                numeroPrSit2.setEnabled(false);
-                carPrSit2.setEnabled(false);
-                sessoPrSit2.setEnabled(false);
-                dataPrSit2.setEnabled(false);
-                tariffaPrSit2.setEnabled(false);
-                ingaggiPrSit2.setEnabled(false);
-
-                edit = false;
-            }
+    private void goEditable() {
+        if(!edit){
+            descrPrSit.setEnabled(true);
+            nomePrSit2.setEnabled(true);
+            cognomePrSit2.setEnabled(true);
+            emailPrSit2.setEnabled(true);
+            numeroPrSit2.setEnabled(true);
+            carPrSit2.setEnabled(true);
+            tariffaPrSit2.setEnabled(true);
+            dataPrSit2.setEnabled(true);
+            edit = true;
+        } else {
+            descrPrSit.setEnabled(false);
+            nomePrSit2.setEnabled(false);
+            cognomePrSit2.setEnabled(false);
+            emailPrSit2.setEnabled(false);
+            numeroPrSit2.setEnabled(false);
+            carPrSit2.setEnabled(false);
+            dataPrSit2.setEnabled(false);
+            tariffaPrSit2.setEnabled(false);
+            edit = false;
+            modifyProfile();
         }
-    };
-
-
+    }
 
     @Override
     public void onAttach(Context context) {
