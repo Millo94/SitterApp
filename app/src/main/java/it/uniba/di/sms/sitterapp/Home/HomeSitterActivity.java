@@ -2,6 +2,7 @@ package it.uniba.di.sms.sitterapp.Home;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.drm.DrmStore;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,6 +43,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ExecutionException;
 
+import it.uniba.di.sms.sitterapp.Appuntamenti.AppuntamentiSitterActivity;
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.LoginActivity;
 import it.uniba.di.sms.sitterapp.MainActivity;
@@ -273,13 +275,22 @@ public class HomeSitterActivity extends AppCompatActivity
         if (id == R.id.nav_chat_sitter) {
             // Handle the camera action
         } else if (id == R.id.nav_engagements_sitter) {
+            //collegamento alla sezione degli appuntamenti
+
+            Intent menuIngaggi = new Intent(HomeSitterActivity.this, AppuntamentiSitterActivity.class);
+            menuIngaggi.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
+            startActivity(menuIngaggi);
 
         } else if (id == R.id.nav_feedback_sitter) {
 
         } else if (id == R.id.nav_settings_sitter) {
 
         } else if (id == R.id.nav_exit_sitter) {
+            //EXIT
 
+            Intent exit = new Intent(HomeSitterActivity.this, LoginActivity.class);
+            exit.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
+            startActivity(exit);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_sitter);

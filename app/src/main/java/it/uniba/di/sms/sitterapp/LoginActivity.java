@@ -120,11 +120,5 @@ public class LoginActivity extends AppCompatActivity {
         goHomeSitterIntent.putExtra(TYPE, TYPE_SITTER);
         startActivity(goHomeSitterIntent);
     }
-
-    public void goHomeFamily(View view) {
-        Intent goHomeFamilyIntent = new Intent(LoginActivity.this, HomeFamilyActivity.class);
-        goHomeFamilyIntent.putExtra(TYPE, TYPE_FAMILY);
-        startActivity(goHomeFamilyIntent);
-    }
-    */
+*/
 }
