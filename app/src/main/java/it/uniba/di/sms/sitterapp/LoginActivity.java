@@ -113,12 +113,4 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(createAccountIntent);
     }
 
-
-    /*
-    public void goHomeSitter(View view) {
-        Intent goHomeSitterIntent = new Intent(LoginActivity.this, HomeSitterActivity.class);
-        goHomeSitterIntent.putExtra(TYPE, TYPE_SITTER);
-        startActivity(goHomeSitterIntent);
-    }
-*/
 }

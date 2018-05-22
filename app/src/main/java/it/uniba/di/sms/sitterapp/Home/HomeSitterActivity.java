@@ -67,7 +67,7 @@ public class HomeSitterActivity extends AppCompatActivity
     // as php will be ordered what to load and limit by android java
     public static final int LOAD_LIMIT = 5;
 
-    private String NOTICE_URL = "http://sitterapp.altervista.org/AnnunciFamiglie.php";
+    private String NOTICE_URL = Constants.BASE_URL + "AnnunciFamiglie.php";
 
     // we need this variable to lock and unlock loading more
     // e.g we should not load more when volley is already loading,
@@ -286,11 +286,9 @@ public class HomeSitterActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings_sitter) {
 
         } else if (id == R.id.nav_exit_sitter) {
-            //EXIT
 
-            Intent exit = new Intent(HomeSitterActivity.this, LoginActivity.class);
-            exit.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
-            startActivity(exit);
+            // Chiama la funzione di logout
+            sessionManager.logout();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_sitter);
