@@ -21,6 +21,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import it.uniba.di.sms.sitterapp.Home.HomeFamilyActivity;
+import it.uniba.di.sms.sitterapp.Home.HomeSitterActivity;
 import it.uniba.di.sms.sitterapp.Profilo.ProfiloPrivatoActivity;
 import it.uniba.di.sms.sitterapp.Registrazione.RegistrationActivity;
 
@@ -32,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     private StringRequest request;
     private RequestQueue RequestQueue;
     private SessionManager session;
+    private static final String sitter = "1";
+    private static final String famiglia = "0";
 
 
     @Override
@@ -55,17 +59,23 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.names().get(0).equals(Constants.QUERY_SUCCESS)) {
-                                Toast.makeText(getApplicationContext(), R.string.loginSuccess, Toast.LENGTH_LONG).show();
-
                                 // Creazione della sessione di login
                                 session.createLoginSession(usernameEt.getText().toString());
+                                Toast.makeText(getApplicationContext(), R.string.loginSuccess, Toast.LENGTH_LONG).show();
 
-                                Intent intent = new Intent(LoginActivity.this, ProfiloPrivatoActivity.class);
-                                intent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                                finish();
-
+                                    if(jsonObject.getString("tipoutente").equals(sitter)){
+                                        Intent intent = new Intent(LoginActivity.this, HomeSitterActivity.class);
+                                        intent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                        finish();
+                                    }else if(jsonObject.getString("tipoutente").equals(famiglia)){
+                                        Intent intent = new Intent(LoginActivity.this, HomeFamilyActivity.class);
+                                        intent.putExtra(Constants.TYPE, Constants.TYPE_FAMILY);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                        finish();
+                                    }
                             } else {
                                 Toast.makeText(getApplicationContext(), R.string.loginerror, Toast.LENGTH_SHORT).show();
                             }
