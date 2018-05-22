@@ -55,9 +55,6 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     private RequestQueue requestQueue;
     private SessionManager sessionManager;
 
-    /**
-     * TODO -> FOTO BABYSITTER
-     */
     View view;
     RatingBar ratingPrSitter;
     TextView usernamePrSit, nomePrSit, cognomePrSit, emailPrSit, numeroPrSit, sessoPrSit, dataPrSit, tariffaPrSit, ingaggiPrSit;
@@ -102,6 +99,9 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         return view;
     }
 
+    /**
+     * Funzione che inizializza i dati del profilo all'apertura.
+     */
     private void openProfile(){
 
         StringRequest profileRequest = new StringRequest(Request.Method.POST, PROFILE_URL, new Response.Listener<String>() {
@@ -114,6 +114,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
                     if (result.equals("true")){
                         usernamePrSit.setText(json.getString("username"));
+                        ratingPrSitter.setRating((float)json.getDouble("rating"));
                         descrPrSit.setText(json.getString("descrizione"));
                         nomePrSit2.setText(json.getString("nome"));
                         cognomePrSit2.setText(json.getString("cognome"));
@@ -173,6 +174,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         descrPrSit.setEnabled(false);
 
         ratingPrSitter = (RatingBar) view.findViewById(R.id.ratingPrSitter);
+        ratingPrSitter.setEnabled(false);
 
         nomePrSit = (TextView) view.findViewById(R.id.nomePrSitter);
         nomePrSit2 = (EditText) view.findViewById(R.id.nomePrSitter2);
