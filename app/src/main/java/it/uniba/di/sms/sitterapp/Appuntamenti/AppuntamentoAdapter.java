@@ -27,7 +27,7 @@ public class AppuntamentoAdapter extends RecyclerView.Adapter<AppuntamentoAdapte
     @Override
     public AppuntamentoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.notice_item, null);
+        View view = inflater.inflate(R.layout.appuntamento_sitter_item, null);
         return new AppuntamentoViewHolder(view);
     }
 
@@ -39,6 +39,7 @@ public class AppuntamentoAdapter extends RecyclerView.Adapter<AppuntamentoAdapte
         holder.description.setText(appuntamento.getDescription());
         holder.start_time.setText(appuntamento.getStart_time());
         holder.end_time.setText(appuntamento.getEnd_time());
+
     }
 
     @Override
@@ -52,11 +53,11 @@ public class AppuntamentoAdapter extends RecyclerView.Adapter<AppuntamentoAdapte
 
         public AppuntamentoViewHolder(View view) {
             super(view);
-            family_name = (TextView) view.findViewById(R.id.family_name);
-            description = (TextView) view.findViewById(R.id.notice_detail);
-            start_time = (TextView) view.findViewById(R.id.start_time);
-            end_time = (TextView) view.findViewById(R.id.end_time);
-            date = (TextView) view.findViewById(R.id.date);
+            family_name = (TextView) view.findViewById(R.id.noticeSittername);
+            description = (TextView) view.findViewById(R.id.noticeSitterDetails2);
+            start_time = (TextView) view.findViewById(R.id.noticeSitterStart2);
+            end_time = (TextView) view.findViewById(R.id.noticeSitterEnd2);
+            date = (TextView) view.findViewById(R.id.noticeSitterData2);
         }
     }
 }

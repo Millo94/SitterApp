@@ -84,6 +84,7 @@ public class AppuntamentiSitterActivity extends AppCompatActivity {
                                 String oraInizio = noticeObject.getString("oraInizio");
                                 String oraFine = noticeObject.getString("oraFine");
                                 String descrizione = noticeObject.getString("descrizione");
+                                descrizione = (descrizione.length()>100)?descrizione.substring(0,100)+"...":descrizione;
                                 Appuntamento a = new Appuntamento(famiglia, data, oraInizio, oraFine, descrizione);
 
                                 appuntamentiList.add(a);

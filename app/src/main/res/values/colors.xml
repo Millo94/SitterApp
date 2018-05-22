@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#dbac00</color>
     <color name="colorAccent">#ffc800</color>
     <color name="colorScritte">#1f1f1f</color>
+    <color name="colorBackgroundMenu">#a5e7e7e7</color>
 </resources>

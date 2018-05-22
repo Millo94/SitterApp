@@ -1,5 +1,6 @@
 package it.uniba.di.sms.sitterapp.Home;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -31,6 +32,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.uniba.di.sms.sitterapp.Appuntamenti.AppuntamentiFamigliaActivity;
+import it.uniba.di.sms.sitterapp.Appuntamenti.AppuntamentiSitterActivity;
+import it.uniba.di.sms.sitterapp.Constants;
+import it.uniba.di.sms.sitterapp.LoginActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.Utenti.UtenteSitter;
 
@@ -171,13 +176,22 @@ public class HomeFamilyActivity extends AppCompatActivity implements NavigationV
         if (id == R.id.nav_chat_famiglia) {
             // Handle the camera action
         } else if (id == R.id.nav_engagements_famiglia) {
+            //collegamento alla sezione degli appuntamenti
+
+            Intent menuIngaggi = new Intent(HomeFamilyActivity.this, AppuntamentiFamigliaActivity.class);
+            menuIngaggi.putExtra(Constants.TYPE, Constants.TYPE_FAMILY);
+            startActivity(menuIngaggi);
 
         } else if (id == R.id.nav_feedback_famiglia) {
 
         } else if (id == R.id.nav_settings_famiglia) {
 
         } else if (id == R.id.nav_exit_famiglia) {
+            //EXIT
 
+            Intent exit = new Intent(HomeFamilyActivity.this, LoginActivity.class);
+            exit.putExtra(Constants.TYPE, Constants.TYPE_FAMILY);
+            startActivity(exit);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_famiglia);

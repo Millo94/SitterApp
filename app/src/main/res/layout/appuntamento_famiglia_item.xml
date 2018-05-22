@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/activity_horizontal_margin"
     android:background="@drawable/customborder"
     android:clickable="true"
     android:focusable="true">
 
     <TextView
         android:id="@+id/family_name"
-        android:layout_width="384dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -56,7 +55,7 @@
         android:textAlignment="center"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/endTimeNoticeItem"
-        app:layout_constraintHorizontal_bias="0.616"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toEndOf="@+id/dataNoticeItem"
         app:layout_constraintTop_toBottomOf="@+id/family_name" />
 
@@ -78,7 +77,7 @@
         android:id="@+id/endTimeNoticeItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="52dp"
+        android:layout_marginEnd="44dp"
         android:text="@string/orafine"
         android:textAlignment="center"
         android:textStyle="bold"
