@@ -80,6 +80,7 @@
     <string name="dettaglioAnnuncio">Notice Details</string>
     <string name="profileError">There was an error in opening the profile.</string>
     <string name="visualizzaProfilo">Open Profile</string>
+    <string name="candidami">Cadidate me</string>
 
 
 </resources>

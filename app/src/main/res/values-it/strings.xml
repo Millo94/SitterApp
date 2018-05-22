@@ -65,5 +65,6 @@
     <string name="dettaglioAnnuncio">Dettaglio Annuncio</string>
     <string name="profileError">Errore nell\'apertura del profilo.</string>
     <string name="visualizzaProfilo">Visualizza Profilo</string>
+    <string name="candidami">Candidami</string>
 
 </resources>
