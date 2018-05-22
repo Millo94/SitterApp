@@ -37,6 +37,9 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Profilo.ProfiloPrivatoActivity"></activity>
 
+        <activity android:name=".Appuntamenti.AppuntamentiSitterActivity"></activity>
+        <activity android:name=".Appuntamenti.AppuntamentiFamigliaActivity"></activity>
+
     </application>
 
 </manifest>
