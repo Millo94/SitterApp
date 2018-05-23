@@ -66,5 +66,8 @@
     <string name="profileError">Errore nell\'apertura del profilo.</string>
     <string name="visualizzaProfilo">Visualizza Profilo</string>
     <string name="candidami">Candidami</string>
+    <string name="missingdescription">Su di te...</string>
+    <string name="genericError">C\'è stato un errore.</string>
+    <string name="modifySuccess">Modifiche effettuate</string>
 
 </resources>

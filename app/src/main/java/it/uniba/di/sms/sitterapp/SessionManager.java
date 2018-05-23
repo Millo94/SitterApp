@@ -35,6 +35,7 @@ public class SessionManager {
      */
     public static final String IS_LOGGED = "IsLoggedIn";
     public static final String USERNAME = "username";
+    public static final String PATHFOTO = "pathfoto";
 
     /**
      * Valore per acquisire le preferenze in modalità privata
@@ -62,12 +63,25 @@ public class SessionManager {
         editor.commit();
     }
 
+    public void setProfilePic(String pathfoto) {
+        editor.putString(PATHFOTO, pathfoto);
+        editor.commit();
+    }
+
     /**
      * Funzione che restituisce l'username di sessione
      * @return username
      */
     public String getSessionUsername(){
         return preferences.getString(USERNAME, null);
+    }
+
+    /**
+     * Funzione che restituisce l'url della foto profilo
+     * @return url foto profilo
+     */
+    public String getProfilePic(){
+        return preferences.getString(PATHFOTO, null);
     }
 
     /**

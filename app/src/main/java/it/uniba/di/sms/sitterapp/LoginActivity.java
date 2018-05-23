@@ -30,13 +30,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText usernameEt, passwordEt;
 
-    private static final String LOGIN_URL = Constants.BASE_URL + "login.php";
+    // TODO vedere il login php e scegliere quale usare, in caso aggiornare il nome
+    private static final String LOGIN_URL = Constants.BASE_URL + "loginEnrico.php";
     private StringRequest request;
     private RequestQueue RequestQueue;
     private SessionManager session;
-    private static final String sitter = "1";
-    private static final String famiglia = "0";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +56,38 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.names().get(0).equals(Constants.QUERY_SUCCESS)) {
+                            String result = jsonObject.getString("login");
+
+                            if(result.equals("true")){
+
+                                Toast.makeText(getApplicationContext(), R.string.loginSuccess, Toast.LENGTH_LONG).show();
+                                session.createLoginSession(usernameEt.getText().toString());
+
+                                if(jsonObject.getString("tipoutente").equals(String.valueOf(Constants.TYPE_SITTER))){
+
+                                    session.setProfilePic(jsonObject.getString("pathFoto"));
+                                    Intent intent = new Intent(LoginActivity.this, HomeSitterActivity.class);
+                                    intent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                    finish();
+
+                                } else if(jsonObject.getString("tipoutente").equals(String.valueOf(Constants.TYPE_FAMILY))){
+
+                                    Intent intent = new Intent(LoginActivity.this, HomeFamilyActivity.class);
+                                    intent.putExtra(Constants.TYPE, Constants.TYPE_FAMILY);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                    finish();
+                                }
+
+                            } else if(result.equals("false")){
+
+                                Toast.makeText(getApplicationContext(), R.string.loginerror, Toast.LENGTH_SHORT).show();
+                            }
+
+                            // TODO se utilizziamo loginenrico questo codice si può eliminare
+                            /*if (jsonObject.names().get(0).equals(Constants.QUERY_SUCCESS)) {
                                 // Creazione della sessione di login
                                 session.createLoginSession(usernameEt.getText().toString());
                                 Toast.makeText(getApplicationContext(), R.string.loginSuccess, Toast.LENGTH_LONG).show();
@@ -78,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                             } else {
                                 Toast.makeText(getApplicationContext(), R.string.loginerror, Toast.LENGTH_SHORT).show();
-                            }
+                            }*/
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -113,12 +142,4 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(createAccountIntent);
     }
 
-
-    /*
-    public void goHomeSitter(View view) {
-        Intent goHomeSitterIntent = new Intent(LoginActivity.this, HomeSitterActivity.class);
-        goHomeSitterIntent.putExtra(TYPE, TYPE_SITTER);
-        startActivity(goHomeSitterIntent);
-    }
-*/
 }

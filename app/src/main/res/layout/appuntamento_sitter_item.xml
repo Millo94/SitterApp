@@ -1,132 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/activity_horizontal_margin"
     android:background="@drawable/customborder"
     android:clickable="true"
     android:focusable="true">
 
     <TextView
-        android:id="@+id/family_name"
-        android:layout_width="384dp"
+        android:id="@+id/noticeSittername"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:padding="10dp"
         android:text="@string/username"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/dataNoticeItem"
+        android:id="@+id/noticeSitterData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="10dp"
         android:text="@string/data"
         android:textAlignment="center"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/family_name" />
+        app:layout_constraintTop_toBottomOf="@+id/noticeSittername" />
 
     <TextView
-        android:id="@+id/date"
-        android:layout_width="128dp"
+        android:id="@+id/noticeSitterData2"
+        android:layout_width="105dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/family_name"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/noticeSittername"
         android:padding="10dp"
         android:text="@string/data"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/notice_detail"
-        app:layout_constraintEnd_toStartOf="@+id/start_time"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/noticeSitterDetails2"
+        app:layout_constraintEnd_toStartOf="@+id/noticeSitterStart2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dataNoticeItem"
+        app:layout_constraintTop_toBottomOf="@+id/noticeSitterData"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/startTimeNoticeItem"
+        android:id="@+id/noticeSitterStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/orainizio"
         android:textAlignment="center"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/endTimeNoticeItem"
-        app:layout_constraintHorizontal_bias="0.616"
-        app:layout_constraintStart_toEndOf="@+id/dataNoticeItem"
-        app:layout_constraintTop_toBottomOf="@+id/family_name" />
+        app:layout_constraintEnd_toStartOf="@+id/noticeSitterEnd"
+        app:layout_constraintHorizontal_bias="0.672"
+        app:layout_constraintStart_toEndOf="@+id/noticeSitterData"
+        app:layout_constraintTop_toBottomOf="@+id/noticeSittername" />
 
     <TextView
-        android:id="@+id/start_time"
-        android:layout_width="128dp"
+        android:id="@+id/noticeSitterStart2"
+        android:layout_width="105dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/date"
+        android:layout_toEndOf="@+id/noticeSitterData2"
         android:padding="10dp"
         android:text="@string/orainizio"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/end_time"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/noticeSitterEnd2"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/date"
-        app:layout_constraintTop_toBottomOf="@+id/startTimeNoticeItem" />
+        app:layout_constraintStart_toEndOf="@+id/noticeSitterData2"
+        app:layout_constraintTop_toBottomOf="@+id/noticeSitterStart" />
 
     <TextView
-        android:id="@+id/endTimeNoticeItem"
+        android:id="@+id/noticeSitterEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="52dp"
+        android:layout_marginEnd="54dp"
         android:text="@string/orafine"
         android:textAlignment="center"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/family_name" />
+        app:layout_constraintTop_toBottomOf="@+id/noticeSittername" />
 
     <TextView
-        android:id="@+id/end_time"
-        android:layout_width="128dp"
+        android:id="@+id/noticeSitterEnd2"
+        android:layout_width="105dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:layout_marginEnd="10dp"
         android:padding="10dp"
         android:text="@string/orafine"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/start_time"
-        app:layout_constraintTop_toBottomOf="@+id/endTimeNoticeItem" />
+        app:layout_constraintStart_toEndOf="@+id/noticeSitterStart2"
+        app:layout_constraintTop_toBottomOf="@+id/noticeSitterEnd" />
 
     <TextView
-        android:id="@+id/detailsNoticeItem"
+        android:id="@+id/noticeSitterDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="10dp"
         android:text="@string/dettaglioAnnuncio"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/notice_detail"
+        app:layout_constraintBottom_toTopOf="@+id/noticeSitterDetails2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.004"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date" />
+        app:layout_constraintTop_toBottomOf="@+id/noticeSitterData2" />
 
     <TextView
-        android:id="@+id/notice_detail"
-        android:layout_width="match_parent"
+        android:id="@+id/noticeSitterDetails2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/date"
-        android:padding="10dp"
+        android:layout_below="@+id/noticeSitterData2"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:text="@string/dettaglioAnnuncio"
-        android:textSize="18sp"
+        android:textAllCaps="false"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.03"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detailsNoticeItem" />
+        app:layout_constraintTop_toBottomOf="@+id/noticeSitterDetails" />
 
 </android.support.constraint.ConstraintLayout>

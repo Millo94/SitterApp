@@ -67,7 +67,7 @@ public class HomeSitterActivity extends AppCompatActivity
     // as php will be ordered what to load and limit by android java
     public static final int LOAD_LIMIT = 5;
 
-    private String NOTICE_URL = "http://sitterapp.altervista.org/AnnunciFamiglie.php";
+    private String NOTICE_URL = Constants.BASE_URL + "AnnunciFamiglie.php";
 
     // we need this variable to lock and unlock loading more
     // e.g we should not load more when volley is already loading,
@@ -82,6 +82,9 @@ public class HomeSitterActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
+        /*
+        Drawer Layout
+         */
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_sitter);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -91,6 +94,10 @@ public class HomeSitterActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_sitter);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        /*
+        DA QUI INIZIA LA PARTE DEL CARICAMENTO DEGLI ANNUNCI
+         */
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         noticeList = new ArrayList<>();
@@ -104,7 +111,7 @@ public class HomeSitterActivity extends AppCompatActivity
         TextView profile_username = (TextView) findViewById(R.id.ProfileUsernameView);
 
         //todo aggiungere caricamento del nome_profilo e immagine_profilo nell'header del drawer
-        //Glide.with(this).load(sessionManager.getSessionProfilePic()).into(profile_image);
+        //Glide.with(this).load(sessionManager.getProfilePic()).into(profile_image);
         //profile_username.setText(sessionManager.getSessionUsername());
 
 
@@ -174,7 +181,7 @@ public class HomeSitterActivity extends AppCompatActivity
                                 String oraInizio = noticeObject.getString("oraInizio");
                                 String oraFine = noticeObject.getString("oraFine");
                                 String descrizione = noticeObject.getString("descrizione");
-                                descrizione = (descrizione.length()>100)?descrizione.substring(0,100)+"...":descrizione;
+                                descrizione = (descrizione.length() > 100) ? descrizione.substring(0, 100) + "..." : descrizione;
                                 Notice n = new Notice(famiglia, data, oraInizio, oraFine, descrizione);
 
                                 if (i < LOAD_LIMIT) {
@@ -274,6 +281,9 @@ public class HomeSitterActivity extends AppCompatActivity
 
         if (id == R.id.nav_chat_sitter) {
             // Handle the camera action
+        } else if (id == R.id.nav_home_sitter) {
+
+
         } else if (id == R.id.nav_engagements_sitter) {
             //collegamento alla sezione degli appuntamenti
 
@@ -286,15 +296,14 @@ public class HomeSitterActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings_sitter) {
 
         } else if (id == R.id.nav_exit_sitter) {
-            //EXIT
 
-            Intent exit = new Intent(HomeSitterActivity.this, LoginActivity.class);
-            exit.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
-            startActivity(exit);
+            // Chiama la funzione di logout
+            sessionManager.logout();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_sitter);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 

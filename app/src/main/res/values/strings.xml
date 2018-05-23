@@ -81,6 +81,10 @@
     <string name="profileError">There was an error in opening the profile.</string>
     <string name="visualizzaProfilo">Open Profile</string>
     <string name="candidami">Cadidate me</string>
+    <string name="missingdescription">Describe yourself...</string>
+    <string name="genericError">An error occurred.</string>
+    <string name="modifySuccess">Edit complete</string>
+    <string name="Home" translatable="false">Home</string>
 
 
 </resources>
