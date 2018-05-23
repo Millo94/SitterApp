@@ -82,6 +82,9 @@ public class HomeSitterActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
+        /*
+        Drawer Layout
+         */
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_sitter);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -91,6 +94,10 @@ public class HomeSitterActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_sitter);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        /*
+        DA QUI INIZIA LA PARTE DEL CARICAMENTO DEGLI ANNUNCI
+         */
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         noticeList = new ArrayList<>();
@@ -174,7 +181,7 @@ public class HomeSitterActivity extends AppCompatActivity
                                 String oraInizio = noticeObject.getString("oraInizio");
                                 String oraFine = noticeObject.getString("oraFine");
                                 String descrizione = noticeObject.getString("descrizione");
-                                descrizione = (descrizione.length()>100)?descrizione.substring(0,100)+"...":descrizione;
+                                descrizione = (descrizione.length() > 100) ? descrizione.substring(0, 100) + "..." : descrizione;
                                 Notice n = new Notice(famiglia, data, oraInizio, oraFine, descrizione);
 
                                 if (i < LOAD_LIMIT) {
@@ -274,6 +281,9 @@ public class HomeSitterActivity extends AppCompatActivity
 
         if (id == R.id.nav_chat_sitter) {
             // Handle the camera action
+        } else if (id == R.id.nav_home_sitter) {
+
+
         } else if (id == R.id.nav_engagements_sitter) {
             //collegamento alla sezione degli appuntamenti
 
@@ -293,6 +303,7 @@ public class HomeSitterActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_sitter);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 

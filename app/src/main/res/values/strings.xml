@@ -84,6 +84,7 @@
     <string name="missingdescription">Describe yourself...</string>
     <string name="genericError">An error occurred.</string>
     <string name="modifySuccess">Edit complete</string>
+    <string name="Home" translatable="false">Home</string>
 
 
 </resources>
