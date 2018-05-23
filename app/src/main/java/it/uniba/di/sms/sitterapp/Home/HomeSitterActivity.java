@@ -104,7 +104,7 @@ public class HomeSitterActivity extends AppCompatActivity
         TextView profile_username = (TextView) findViewById(R.id.ProfileUsernameView);
 
         //todo aggiungere caricamento del nome_profilo e immagine_profilo nell'header del drawer
-        //Glide.with(this).load(sessionManager.getSessionProfilePic()).into(profile_image);
+        //Glide.with(this).load(sessionManager.getProfilePic()).into(profile_image);
         //profile_username.setText(sessionManager.getSessionUsername());
 
 
