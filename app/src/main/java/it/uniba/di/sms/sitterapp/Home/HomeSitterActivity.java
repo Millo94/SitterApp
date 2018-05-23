@@ -298,11 +298,19 @@ public class HomeSitterActivity extends AppCompatActivity
         return true;
     }
 
-
-    //questo metodo fa partire un toast dell'annuncio selezionato
+    /**
+     * @param notice
+     * al click su un annuncio visualizza i dettagli
+     */
     @Override
     public void onNoticeSelected(Notice notice) {
-        Toast.makeText(getApplicationContext(), "Selected: " + notice.getFamily() + ", " + notice.getDate() + ", " + notice.getDescription(), Toast.LENGTH_LONG).show();
+        Intent detailIntent = new Intent(HomeSitterActivity.this,NoticeDetail.class);
+        detailIntent.putExtra("famiglia",notice.getFamily());
+        detailIntent.putExtra("data",notice.getDate());
+        detailIntent.putExtra("oraInizio",notice.getStart_time());
+        detailIntent.putExtra("oraFine",notice.getEnd_time());
+        detailIntent.putExtra("descrizione",notice.getDescription());
+        startActivity(detailIntent);
     }
 
 
