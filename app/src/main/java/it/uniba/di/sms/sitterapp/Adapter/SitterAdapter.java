@@ -1,4 +1,4 @@
-package it.uniba.di.sms.sitterapp.Home;
+package it.uniba.di.sms.sitterapp.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -17,13 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.uniba.di.sms.sitterapp.R;
-import it.uniba.di.sms.sitterapp.Utenti.UtenteSitter;
+import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
 
 /**
  * Classe Adapter per gestire la lista delle babySitter nel menù della famiglia
  */
 
-public class ContactSitterAdapter extends RecyclerView.Adapter<ContactSitterAdapter.MyViewHolder>
+public class SitterAdapter extends RecyclerView.Adapter<SitterAdapter.MyViewHolder>
         implements Filterable {
 
     private Context context;
@@ -31,7 +31,7 @@ public class ContactSitterAdapter extends RecyclerView.Adapter<ContactSitterAdap
     private List<UtenteSitter> sitterListFilter;
     private ContactsSitterAdapterListener listener;
 
-    public ContactSitterAdapter(Context context, List<UtenteSitter> sitterList, ContactsSitterAdapterListener listener) {
+    public SitterAdapter(Context context, List<UtenteSitter> sitterList, ContactsSitterAdapterListener listener) {
         this.context = context;
         this.sitterList = sitterList;
         this.sitterListFilter = sitterList;

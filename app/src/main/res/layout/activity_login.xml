@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="it.uniba.di.sms.sitterapp.LoginActivity"
+    tools:context="it.uniba.di.sms.sitterapp.Principale.LoginActivity"
     tools:layout_editor_absoluteY="81dp">
 
     <TextView
@@ -32,7 +32,7 @@
         android:ems="10"
         android:hint="Username"
         android:inputType="textPersonName"
-        android:text=""
+        android:text="frappe"
         app:layout_constraintBottom_toTopOf="@+id/lblPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -49,6 +49,7 @@
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
+        android:text="1234"
         app:layout_constraintBottom_toTopOf="@+id/btnlogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"

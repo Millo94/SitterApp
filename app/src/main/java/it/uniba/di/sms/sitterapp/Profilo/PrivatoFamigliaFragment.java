@@ -11,10 +11,8 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import it.uniba.di.sms.sitterapp.R;
-import it.uniba.di.sms.sitterapp.Utenti.UtenteFamiglia;
+import it.uniba.di.sms.sitterapp.Oggetti.UtenteFamiglia;
 
 /**
  * PROFILO PRIVATO FAMIGLIA

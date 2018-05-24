@@ -1,6 +1,5 @@
 package it.uniba.di.sms.sitterapp.Registrazione;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import it.uniba.di.sms.sitterapp.R;
-import it.uniba.di.sms.sitterapp.Utenti.UtenteFamiglia;
+import it.uniba.di.sms.sitterapp.Oggetti.UtenteFamiglia;
 
 
 public class FamilyRegistrationFragment extends Fragment {

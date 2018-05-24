@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/activity_horizontal_margin"
@@ -10,7 +9,7 @@
     android:focusable="true">
 
     <TextView
-        android:id="@+id/family_name"
+        android:id="@+id/appuntamento_item_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -23,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/dataNoticeItem"
+        android:id="@+id/appuntamento_item_data_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -31,54 +30,54 @@
         android:textAlignment="center"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/family_name" />
+        app:layout_constraintTop_toBottomOf="@+id/appuntamento_item_username" />
 
     <TextView
-        android:id="@+id/date"
+        android:id="@+id/appuntamento_item_data"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="12dp"
-        android:layout_toEndOf="@+id/family_name"
+        android:layout_toEndOf="@+id/appuntamento_item_username"
         android:padding="10dp"
         android:text="@string/data"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/notice_detail"
-        app:layout_constraintEnd_toStartOf="@+id/start_time"
+        app:layout_constraintBottom_toTopOf="@+id/appuntamento_item_detail"
+        app:layout_constraintEnd_toStartOf="@+id/appuntamento_item_start"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dataNoticeItem"
+        app:layout_constraintTop_toBottomOf="@+id/appuntamento_item_data_label"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/startTimeNoticeItem"
+        android:id="@+id/appuntamento_item_start_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/orainizio"
         android:textAlignment="center"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/endTimeNoticeItem"
+        app:layout_constraintEnd_toStartOf="@+id/appuntamento_item_end_label"
         app:layout_constraintHorizontal_bias="0.612"
-        app:layout_constraintStart_toEndOf="@+id/dataNoticeItem"
-        app:layout_constraintTop_toBottomOf="@+id/family_name" />
+        app:layout_constraintStart_toEndOf="@+id/appuntamento_item_data_label"
+        app:layout_constraintTop_toBottomOf="@+id/appuntamento_item_username" />
 
     <TextView
-        android:id="@+id/start_time"
+        android:id="@+id/appuntamento_item_start"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/date"
+        android:layout_toEndOf="@+id/appuntamento_item_data"
         android:padding="10dp"
         android:text="@string/orainizio"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/end_time"
+        app:layout_constraintEnd_toStartOf="@+id/appuntamento_item_end"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/date"
-        app:layout_constraintTop_toBottomOf="@+id/startTimeNoticeItem" />
+        app:layout_constraintStart_toEndOf="@+id/appuntamento_item_data"
+        app:layout_constraintTop_toBottomOf="@+id/appuntamento_item_start_label" />
 
     <TextView
-        android:id="@+id/endTimeNoticeItem"
+        android:id="@+id/appuntamento_item_end_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
@@ -86,10 +85,10 @@
         android:textAlignment="center"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/family_name" />
+        app:layout_constraintTop_toBottomOf="@+id/appuntamento_item_username" />
 
     <TextView
-        android:id="@+id/end_time"
+        android:id="@+id/appuntamento_item_end"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -99,27 +98,27 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/start_time"
-        app:layout_constraintTop_toBottomOf="@+id/endTimeNoticeItem" />
+        app:layout_constraintStart_toEndOf="@+id/appuntamento_item_start"
+        app:layout_constraintTop_toBottomOf="@+id/appuntamento_item_end_label" />
 
     <TextView
-        android:id="@+id/detailsNoticeItem"
+        android:id="@+id/appuntamento_item_details_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dettaglioAnnuncio"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/notice_detail"
+        app:layout_constraintBottom_toTopOf="@+id/appuntamento_item_detail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date" />
+        app:layout_constraintTop_toBottomOf="@+id/appuntamento_item_data" />
 
     <TextView
-        android:id="@+id/notice_detail"
+        android:id="@+id/appuntamento_item_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/date"
+        android:layout_below="@+id/appuntamento_item_data"
         android:padding="10dp"
         android:text="@string/dettaglioAnnuncio"
         android:textSize="16sp"
@@ -127,6 +126,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detailsNoticeItem" />
+        app:layout_constraintTop_toBottomOf="@+id/appuntamento_item_details_label" />
 
 </android.support.constraint.ConstraintLayout>

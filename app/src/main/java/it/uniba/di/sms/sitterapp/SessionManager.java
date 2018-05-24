@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import it.uniba.di.sms.sitterapp.Principale.LoginActivity;
+
 /**
  * Created by Enrico on 20/05/2018.
  */
@@ -35,6 +37,7 @@ public class SessionManager {
      */
     public static final String IS_LOGGED = "IsLoggedIn";
     public static final String USERNAME = "username";
+    public static final String TYPE = "type";
     public static final String PATHFOTO = "pathfoto";
 
     /**
@@ -57,9 +60,10 @@ public class SessionManager {
     /**
      * Funzione che salva i dati nel file di sessione
      */
-    public void createLoginSession(String username){
+    public void createLoginSession(String username, int type){
         editor.putBoolean(IS_LOGGED, true);
         editor.putString(USERNAME, username);
+        editor.putInt(TYPE, type);
         editor.commit();
     }
 
@@ -75,6 +79,12 @@ public class SessionManager {
     public String getSessionUsername(){
         return preferences.getString(USERNAME, null);
     }
+
+    /**
+     * Funzione che resituisce il tipo di sessione
+     * @return tipo utente
+     */
+    public int getSessionType() { return preferences.getInt(TYPE, -1);}
 
     /**
      * Funzione che restituisce l'url della foto profilo

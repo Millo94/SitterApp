@@ -1,4 +1,4 @@
-package it.uniba.di.sms.sitterapp.Home;
+package it.uniba.di.sms.sitterapp.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.uniba.di.sms.sitterapp.Oggetti.Notice;
 import it.uniba.di.sms.sitterapp.R;
 
 public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHolder>
@@ -26,11 +27,11 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
 
         public MyViewHolder(View view) {
             super(view);
-            family_name = (TextView) view.findViewById(R.id.family_name);
-            description = (TextView) view.findViewById(R.id.notice_detail);
-            start_time = (TextView) view.findViewById(R.id.start_time);
-            end_time = (TextView) view.findViewById(R.id.end_time);
-            date = (TextView) view.findViewById(R.id.date);
+            family_name = (TextView) view.findViewById(R.id.appuntamento_item_username);
+            description = (TextView) view.findViewById(R.id.appuntamento_item_detail);
+            start_time = (TextView) view.findViewById(R.id.appuntamento_item_start);
+            end_time = (TextView) view.findViewById(R.id.appuntamento_item_end);
+            date = (TextView) view.findViewById(R.id.appuntamento_item_data);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override

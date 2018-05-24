@@ -4,8 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.R;
-import it.uniba.di.sms.sitterapp.Utenti.UtenteFamiglia;
-import it.uniba.di.sms.sitterapp.Utenti.UtenteSitter;
+import it.uniba.di.sms.sitterapp.Oggetti.UtenteFamiglia;
+import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
 
 public class ProfiloPrivatoActivity extends AppCompatActivity implements PrivatoFamigliaFragment.OnFragmentInteractionListener, PrivatoSitterFragment.OnFragmentInteractionListener{
 

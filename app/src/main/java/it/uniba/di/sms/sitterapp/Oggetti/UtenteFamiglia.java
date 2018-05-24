@@ -1,6 +1,4 @@
-package it.uniba.di.sms.sitterapp.Utenti;
-
-import com.android.volley.toolbox.StringRequest;
+package it.uniba.di.sms.sitterapp.Oggetti;
 
 /**
  * Classe che contiene i dati di una famiglia

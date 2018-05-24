@@ -17,10 +17,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.uniba.di.sms.sitterapp.Constants;
-import it.uniba.di.sms.sitterapp.LoginActivity;
+import it.uniba.di.sms.sitterapp.Principale.LoginActivity;
 import it.uniba.di.sms.sitterapp.R;
-import it.uniba.di.sms.sitterapp.Utenti.UtenteFamiglia;
-import it.uniba.di.sms.sitterapp.Utenti.UtenteSitter;
+import it.uniba.di.sms.sitterapp.Oggetti.UtenteFamiglia;
+import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
 
 public class RegistrationActivity extends AppCompatActivity implements SitterRegistrationFragment.OnFragmentInteractionListener, FamilyRegistrationFragment.OnFragmentInteractionListener {
 

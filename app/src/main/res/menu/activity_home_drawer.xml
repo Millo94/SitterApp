@@ -5,15 +5,21 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_chat_famiglia"
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="@string/Home"
+            />
+
+        <item
+            android:id="@+id/nav_chat"
             android:icon="@drawable/ic_chat_black_24dp"
             android:title="@string/chat" />
         <item
-            android:id="@+id/nav_engagements_famiglia"
+            android:id="@+id/nav_engagements"
             android:icon="@drawable/ic_work_black_24dp"
             android:title="@string/engagements" />
         <item
-            android:id="@+id/nav_feedback_famiglia"
+            android:id="@+id/nav_feedback"
             android:icon="@drawable/ic_action_feedback"
             android:title="@string/feedback" />
     </group>
@@ -21,11 +27,11 @@
     <item android:title="@string/other">
         <menu>
             <item
-                android:id="@+id/nav_settings_famiglia"
+                android:id="@+id/nav_settings"
                 android:icon="@drawable/ic_settings_black_24dp"
                 android:title="@string/settings" />
             <item
-                android:id="@+id/nav_exit_famiglia"
+                android:id="@+id/nav_exit"
                 android:icon="@drawable/ic_exit_to_app_black_24dp"
                 android:title="@string/exit" />
         </menu>

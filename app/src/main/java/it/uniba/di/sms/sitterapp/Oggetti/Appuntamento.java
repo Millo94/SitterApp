@@ -1,4 +1,4 @@
-package it.uniba.di.sms.sitterapp.Appuntamenti;
+package it.uniba.di.sms.sitterapp.Oggetti;
 
 /**
  * Created by Feder on 21/05/2018.

@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.R;
-import it.uniba.di.sms.sitterapp.Utenti.UtenteSitter;
+import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
 
 
 public class SitterRegistrationFragment extends Fragment implements DatePickerDialog.OnDateSetListener {

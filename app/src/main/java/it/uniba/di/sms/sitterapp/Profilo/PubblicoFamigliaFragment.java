@@ -1,7 +1,6 @@
 package it.uniba.di.sms.sitterapp.Profilo;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,7 +11,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import it.uniba.di.sms.sitterapp.R;
-import it.uniba.di.sms.sitterapp.Utenti.UtenteFamiglia;
+import it.uniba.di.sms.sitterapp.Oggetti.UtenteFamiglia;
 
 /**
  * FRAGMENT PROFILO PUBBLICO FAMIGLIA

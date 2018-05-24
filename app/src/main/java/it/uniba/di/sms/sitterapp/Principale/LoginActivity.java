@@ -1,4 +1,4 @@
-package it.uniba.di.sms.sitterapp;
+package it.uniba.di.sms.sitterapp.Principale;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -21,10 +21,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.uniba.di.sms.sitterapp.Home.HomeFamilyActivity;
-import it.uniba.di.sms.sitterapp.Home.HomeSitterActivity;
-import it.uniba.di.sms.sitterapp.Profilo.ProfiloPrivatoActivity;
+import it.uniba.di.sms.sitterapp.Constants;
+import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.Registrazione.RegistrationActivity;
+import it.uniba.di.sms.sitterapp.SessionManager;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -61,12 +61,12 @@ public class LoginActivity extends AppCompatActivity {
                             if(result.equals("true")){
 
                                 Toast.makeText(getApplicationContext(), R.string.loginSuccess, Toast.LENGTH_LONG).show();
-                                session.createLoginSession(usernameEt.getText().toString());
+                                session.createLoginSession(usernameEt.getText().toString(), jsonObject.getInt("tipoutente"));
 
                                 if(jsonObject.getString("tipoutente").equals(String.valueOf(Constants.TYPE_SITTER))){
 
                                     session.setProfilePic(jsonObject.getString("pathFoto"));
-                                    Intent intent = new Intent(LoginActivity.this, HomeSitterActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                     intent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 } else if(jsonObject.getString("tipoutente").equals(String.valueOf(Constants.TYPE_FAMILY))){
 
-                                    Intent intent = new Intent(LoginActivity.this, HomeFamilyActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                     intent.putExtra(Constants.TYPE, Constants.TYPE_FAMILY);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
@@ -85,29 +85,6 @@ public class LoginActivity extends AppCompatActivity {
 
                                 Toast.makeText(getApplicationContext(), R.string.loginerror, Toast.LENGTH_SHORT).show();
                             }
-
-                            // TODO se utilizziamo loginenrico questo codice si può eliminare
-                            /*if (jsonObject.names().get(0).equals(Constants.QUERY_SUCCESS)) {
-                                // Creazione della sessione di login
-                                session.createLoginSession(usernameEt.getText().toString());
-                                Toast.makeText(getApplicationContext(), R.string.loginSuccess, Toast.LENGTH_LONG).show();
-
-                                    if(jsonObject.getString("tipoutente").equals(sitter)){
-                                        Intent intent = new Intent(LoginActivity.this, HomeSitterActivity.class);
-                                        intent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
-                                        finish();
-                                    }else if(jsonObject.getString("tipoutente").equals(famiglia)){
-                                        Intent intent = new Intent(LoginActivity.this, HomeFamilyActivity.class);
-                                        intent.putExtra(Constants.TYPE, Constants.TYPE_FAMILY);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                            } else {
-                                Toast.makeText(getApplicationContext(), R.string.loginerror, Toast.LENGTH_SHORT).show();
-                            }*/
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
