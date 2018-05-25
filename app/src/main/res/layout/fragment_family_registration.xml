@@ -138,7 +138,7 @@
                 android:inputType="number"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addressFamiglia" />
+                app:layout_constraintTop_toBottomOf="@+id/CAPFamiglia" />
 
             <TextView
                 android:id="@+id/nazioneFamiglia"
@@ -151,6 +151,19 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/emailFamiglia" />
+
+            <EditText
+                android:id="@+id/CAPFamiglia"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="@string/cap"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerNationFamiglia" />
 
             <Spinner
                 android:id="@+id/spinnerNationFamiglia"
@@ -173,60 +186,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/petSwitchFamiglia" />
-
-            <EditText
-                android:id="@+id/cittaFamiglia"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/citta"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toStartOf="@+id/provinciaFamiglia"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerNationFamiglia" />
-
-            <EditText
-                android:id="@+id/provinciaFamiglia"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/provincia"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/cittaFamiglia"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerNationFamiglia" />
-
-            <EditText
-                android:id="@+id/addressFamiglia"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/via"
-                android:inputType="textPostalAddress"
-                app:layout_constraintEnd_toStartOf="@+id/civicoFamiglia"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cittaFamiglia" />
-
-            <EditText
-                android:id="@+id/civicoFamiglia"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/civico"
-                android:inputType="number"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/addressFamiglia"
-                app:layout_constraintTop_toBottomOf="@+id/provinciaFamiglia" />
 
             <Switch
                 android:id="@+id/petSwitchFamiglia"

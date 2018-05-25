@@ -37,7 +37,7 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
+        setContentView(R.layout.frame_layout);
 
         /**
          * requestQueue valorizzato
@@ -113,10 +113,7 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
                 params.put("cognome", famiglia.getCognome());
                 params.put("telefono", famiglia.getNumero());
                 params.put("nazione", famiglia.getNazione());
-                params.put("provincia", famiglia.getProvincia());
-                params.put("citta", famiglia.getCitta());
-                params.put("via", famiglia.getVia());
-                params.put("civico", famiglia.getCivico());
+                params.put("cap", famiglia.getCap());
                 params.put("numFigli", famiglia.getNumFigli());
                 params.put("animali", famiglia.getAnimali());
                 return params;
@@ -171,6 +168,8 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
                 params.put("telefono", sitter.getNumero());
                 params.put("dataNascita", sitter.getDataNascita());
                 params.put("genere", sitter.getGenere());
+                params.put("nazione", sitter.getNazione());
+                params.put("cap", sitter.getCap());
                 params.put("auto", sitter.getAuto());
                 return params;
             }

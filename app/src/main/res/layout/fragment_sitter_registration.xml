@@ -150,9 +150,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:ems="10"
+                android:focusableInTouchMode="false"
                 android:hint="@string/datanascita"
                 android:inputType="date"
-                android:focusableInTouchMode="false"
                 android:textColorLink="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -161,7 +161,7 @@
 
             <TextView
                 android:id="@+id/genderSitterReg"
-                android:layout_width="290dp"
+                android:layout_width="300dp"
                 android:layout_height="31dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="@android:color/darker_gray"
@@ -186,9 +186,8 @@
                 android:textColorLink="@color/colorPrimary"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/groupGenderSitterReg" />
+                app:layout_constraintTop_toBottomOf="@+id/CAPSitterReg" />
 
             <RadioGroup
                 android:id="@+id/groupGenderSitterReg"
@@ -231,6 +230,37 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/switch1" />
+
+            <EditText
+                android:id="@+id/CAPSitterReg"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="@string/cap"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerSitterReg" />
+
+            <Spinner
+                android:id="@+id/spinnerSitterReg"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nazioneSitterReg" />
+
+            <TextView
+                android:id="@+id/nazioneSitterReg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/nazione"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.122"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/genderSitterReg" />
 
 
         </android.support.constraint.ConstraintLayout>

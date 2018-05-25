@@ -16,6 +16,8 @@ public class UtenteSitter {
     private String numeroLavori;
     private String foto;
     private String genere;
+    private String nazione;
+    private String cap;
     private String auto;
 
     public UtenteSitter(String username,
@@ -26,6 +28,8 @@ public class UtenteSitter {
                         String email,
                         String numero,
                         String genere,
+                        String nazione,
+                        String cap,
                         String auto)
     {
         this.username = username;
@@ -36,6 +40,8 @@ public class UtenteSitter {
         this.email = email;
         this.numero = numero;
         this.genere = genere;
+        this.nazione = nazione;
+        this.cap = cap;
         this.auto = auto;
     }
 
@@ -82,6 +88,10 @@ public class UtenteSitter {
     }
 
     public String getAuto() { return auto; }
+
+    public String getNazione() { return nazione; }
+
+    public String getCap() { return cap; }
 
     public String getNumeroLavori() {
         return numeroLavori;

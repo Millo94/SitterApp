@@ -8,13 +8,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.regex.Pattern;
@@ -28,16 +32,19 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
 
     ArrayList<EditText> listaET = new ArrayList<>();
     View view;
-    EditText usernameET,passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, dataNascitaET;
+    EditText usernameET, passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, dataNascitaET, capET;
     RadioGroup genereRG;
     Switch autoSW;
     Button confRegistration;
     String genere = "";
     String auto = "1";
+    Spinner nazioni;
+    String arraypaesi[];
 
     private OnFragmentInteractionListener mListener;
 
-    public SitterRegistrationFragment() {}
+    public SitterRegistrationFragment() {
+    }
 
     // Creazione della stringa dalla data scelta con il DatePicker
     @Override
@@ -61,6 +68,13 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_sitter_registration, container, false);
 
+        // Generatore dello spinner di scelta della nazione
+        nazioni = (Spinner) view.findViewById(R.id.spinnerSitterReg);
+        arraypaesi = getResources().getStringArray(R.array.paesi);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.paesi, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        nazioni.setAdapter(adapter);
+
         // Inizializzazione del layout
         initialization();
 
@@ -81,9 +95,9 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
         genereRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId == R.id.maleSitterReg)
+                if (checkedId == R.id.maleSitterReg)
                     genere = "M";
-                else if(checkedId == R.id.femaleSitterReg)
+                else if (checkedId == R.id.femaleSitterReg)
                     genere = "F";
             }
         });
@@ -92,7 +106,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
         autoSW.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if (isChecked)
                     auto = "0";
                 else
                     auto = "1";
@@ -104,12 +118,12 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
             @Override
             public void onClick(View v) {
 
-                if(isEmpty()) {
-                    Toast.makeText(getContext(),R.string.missingFields, Toast.LENGTH_LONG).show();
-                } else if (!confermaPassword(passwordET.getText().toString(), confermaPasswordET.getText().toString())){
-                    Toast.makeText(getContext(),R.string.checkPassword, Toast.LENGTH_LONG).show();
-                } else if (!checkEmail(emailET.getText().toString())){
-                    Toast.makeText(getContext(),R.string.invalidEmail, Toast.LENGTH_LONG).show();
+                if (isEmpty()) {
+                    Toast.makeText(getContext(), R.string.missingFields, Toast.LENGTH_LONG).show();
+                } else if (!confermaPassword(passwordET.getText().toString(), confermaPasswordET.getText().toString())) {
+                    Toast.makeText(getContext(), R.string.checkPassword, Toast.LENGTH_LONG).show();
+                } else if (!checkEmail(emailET.getText().toString())) {
+                    Toast.makeText(getContext(), R.string.invalidEmail, Toast.LENGTH_LONG).show();
                 } else {
                     UtenteSitter sitter = new UtenteSitter(usernameET.getText().toString(),
                             passwordET.getText().toString(),
@@ -119,6 +133,8 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                             emailET.getText().toString(),
                             numeroET.getText().toString(),
                             genere,
+                            nazioni.getSelectedItem().toString(),
+                            capET.getText().toString(),
                             auto);
                     mListener.onFragmentInteraction(sitter);
                 }
@@ -129,13 +145,12 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
     }
 
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         Activity activity = (Activity) context;
-        try{
-        }catch(ClassCastException e){
+        try {
+        } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + "must override method");
         }
         if (context instanceof OnFragmentInteractionListener) {
@@ -166,7 +181,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
         void onFragmentInteraction(UtenteSitter sitter);
     }
 
-    public void initialization(){
+    public void initialization() {
         usernameET = (EditText) view.findViewById(R.id.usernameSitterReg);
         listaET.add(usernameET);
         passwordET = (EditText) view.findViewById(R.id.passwordSitterReg);
@@ -177,36 +192,38 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
         listaET.add(nomeET);
         cognomeET = (EditText) view.findViewById(R.id.cognomeSitterReg);
         listaET.add(cognomeET);
-        emailET= (EditText) view.findViewById(R.id.emailSitterReg);
+        emailET = (EditText) view.findViewById(R.id.emailSitterReg);
         listaET.add(emailET);
         numeroET = (EditText) view.findViewById(R.id.phoneSitterReg);
         listaET.add(numeroET);
         dataNascitaET = (EditText) view.findViewById(R.id.nascitaSitterReg);
         listaET.add(dataNascitaET);
         genereRG = (RadioGroup) view.findViewById(R.id.groupGenderSitterReg);
+        capET = (EditText) view.findViewById(R.id.CAPSitterReg);
+        listaET.add(capET);
         autoSW = (Switch) view.findViewById(R.id.switch1);
         confRegistration = (Button) view.findViewById(R.id.buttonReg);
     }
 
-    private boolean confermaPassword(String password, String conferma){
+    private boolean confermaPassword(String password, String conferma) {
         return password.equals(conferma);
     }
 
-    private boolean checkEmail(String email){
+    private boolean checkEmail(String email) {
         Pattern emailPattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
         return emailPattern.matcher(email).matches();
     }
 
-    private boolean isEmpty(){
+    private boolean isEmpty() {
 
         boolean empty = false;
 
-        for(EditText element : listaET){
-            if(element.getText().toString().equals(""))
+        for (EditText element : listaET) {
+            if (element.getText().toString().equals(""))
                 empty = true;
         }
 
-        if(genere.equals(""))
+        if (genere.equals(""))
             empty = true;
 
         return empty;

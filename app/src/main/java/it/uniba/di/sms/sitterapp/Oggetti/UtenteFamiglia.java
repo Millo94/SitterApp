@@ -13,9 +13,7 @@ public class UtenteFamiglia {
     private String email;
     private String numero;
     private String nazione;
-    private String provincia;
-    private String citta;
-    private String via;
+    private String cap;
     private String civico;
     private String numFigli;
     private String animali;
@@ -27,10 +25,7 @@ public class UtenteFamiglia {
                         String email,
                         String numero,
                         String nazione,
-                        String provincia,
-                        String citta,
-                        String via,
-                        String civico,
+                        String cap,
                         String numFigli,
                         String animali)
     {
@@ -41,10 +36,7 @@ public class UtenteFamiglia {
         this.email = email;
         this.numero = numero;
         this.nazione = nazione;
-        this.provincia = provincia;
-        this.citta = citta;
-        this.via = via;
-        this.civico = civico;
+        this.cap = cap;
         this.numFigli = numFigli;
         this.animali = animali;
     }
@@ -77,16 +69,8 @@ public class UtenteFamiglia {
         return nazione;
     }
 
-    public String getProvincia() {
-        return provincia;
-    }
-
-    public String getCitta() {
-        return citta;
-    }
-
-    public String getVia() {
-        return via;
+    public String getCap() {
+        return cap;
     }
 
     public String getCivico() {

@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -28,7 +29,7 @@ public class FamilyRegistrationFragment extends Fragment {
     View view;
     Spinner nazioni;
     String arraypaesi[];
-    EditText usernameET,passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, provinciaET, cittaET, viaET, civicoET, numFigliET;
+    EditText usernameET, passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, capET, numFigliET;
     TextView nazioneET;
     Switch animaliSW;
     String animali = "1";
@@ -37,7 +38,8 @@ public class FamilyRegistrationFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public FamilyRegistrationFragment() {}
+    public FamilyRegistrationFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +65,7 @@ public class FamilyRegistrationFragment extends Fragment {
         animaliSW.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if (isChecked)
                     animali = "0";
                 else
                     animali = "1";
@@ -73,12 +75,12 @@ public class FamilyRegistrationFragment extends Fragment {
         confRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isEmpty()) {
-                    Toast.makeText(getContext(),R.string.missingFields, Toast.LENGTH_LONG).show();
-                } else if (!confermaPassword(passwordET.getText().toString(),confermaPasswordET.getText().toString())){
-                    Toast.makeText(getContext(),R.string.checkPassword, Toast.LENGTH_LONG).show();
-                } else if (!checkEmail(emailET.getText().toString())){
-                    Toast.makeText(getContext(),R.string.invalidEmail, Toast.LENGTH_LONG).show();
+                if (isEmpty()) {
+                    Toast.makeText(getContext(), R.string.missingFields, Toast.LENGTH_LONG).show();
+                } else if (!confermaPassword(passwordET.getText().toString(), confermaPasswordET.getText().toString())) {
+                    Toast.makeText(getContext(), R.string.checkPassword, Toast.LENGTH_LONG).show();
+                } else if (!checkEmail(emailET.getText().toString())) {
+                    Toast.makeText(getContext(), R.string.invalidEmail, Toast.LENGTH_LONG).show();
                 } else {
                     UtenteFamiglia famiglia = new UtenteFamiglia(usernameET.getText().toString(),
                             passwordET.getText().toString(),
@@ -87,10 +89,7 @@ public class FamilyRegistrationFragment extends Fragment {
                             emailET.getText().toString(),
                             numeroET.getText().toString(),
                             nazioni.getSelectedItem().toString(),
-                            provinciaET.getText().toString(),
-                            cittaET.getText().toString(),
-                            viaET.getText().toString(),
-                            civicoET.getText().toString(),
+                            capET.getText().toString(),
                             numFigliET.getText().toString(),
                             animali);
                     mListener.onFragmentInteraction(famiglia);
@@ -134,7 +133,7 @@ public class FamilyRegistrationFragment extends Fragment {
         void onFragmentInteraction(UtenteFamiglia famiglia);
     }
 
-    public void initialization(){
+    public void initialization() {
 
         usernameET = (EditText) view.findViewById(R.id.usernameFamiglia);
         listaET.add(usernameET);
@@ -146,18 +145,12 @@ public class FamilyRegistrationFragment extends Fragment {
         listaET.add(nomeET);
         cognomeET = (EditText) view.findViewById(R.id.cognomeFamiglia);
         listaET.add(cognomeET);
-        emailET= (EditText) view.findViewById(R.id.emailFamiglia);
+        emailET = (EditText) view.findViewById(R.id.emailFamiglia);
         listaET.add(emailET);
         numeroET = (EditText) view.findViewById(R.id.telefonoFamiglia);
         listaET.add(numeroET);
-        provinciaET = (EditText) view.findViewById(R.id.provinciaFamiglia);
-        listaET.add(provinciaET);
-        cittaET = (EditText) view.findViewById(R.id.cittaFamiglia);
-        listaET.add(cittaET);
-        viaET = (EditText) view.findViewById(R.id.addressFamiglia);
-        listaET.add(viaET);
-        civicoET = (EditText) view.findViewById(R.id.civicoFamiglia);
-        listaET.add(civicoET);
+        capET = (EditText) view.findViewById(R.id.CAPFamiglia);
+        listaET.add(capET);
         numFigliET = (EditText) view.findViewById(R.id.numeroFigliFamiglia);
         listaET.add(numFigliET);
         nazioneET = (TextView) view.findViewById(R.id.nazioneFamiglia);
@@ -165,21 +158,21 @@ public class FamilyRegistrationFragment extends Fragment {
         confRegistration = (Button) view.findViewById(R.id.confermaButton);
     }
 
-    private boolean confermaPassword(String password, String conferma){
+    private boolean confermaPassword(String password, String conferma) {
         return password.equals(conferma);
     }
 
-    private boolean checkEmail(String email){
+    private boolean checkEmail(String email) {
         Pattern emailPattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
         return emailPattern.matcher(email).matches();
     }
 
-    private boolean isEmpty(){
+    private boolean isEmpty() {
 
         boolean empty = false;
 
-        for(EditText element : listaET){
-            if(element.getText().toString().equals(""))
+        for (EditText element : listaET) {
+            if (element.getText().toString().equals(""))
                 empty = true;
         }
 
