@@ -25,7 +25,7 @@
         android:id="@+id/appuntamento_item_data_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="7dp"
         android:text="@string/data"
         android:textAlignment="center"
         android:textStyle="bold"
@@ -34,7 +34,7 @@
 
     <TextView
         android:id="@+id/appuntamento_item_data"
-        android:layout_width="128dp"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="12dp"
@@ -58,13 +58,13 @@
         android:textAlignment="center"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/appuntamento_item_end_label"
-        app:layout_constraintHorizontal_bias="0.612"
+        app:layout_constraintHorizontal_bias="0.61"
         app:layout_constraintStart_toEndOf="@+id/appuntamento_item_data_label"
         app:layout_constraintTop_toBottomOf="@+id/appuntamento_item_username" />
 
     <TextView
         android:id="@+id/appuntamento_item_start"
-        android:layout_width="128dp"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/appuntamento_item_data"
@@ -80,7 +80,7 @@
         android:id="@+id/appuntamento_item_end_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="32dp"
         android:text="@string/orafine"
         android:textAlignment="center"
         android:textStyle="bold"
@@ -89,7 +89,7 @@
 
     <TextView
         android:id="@+id/appuntamento_item_end"
-        android:layout_width="128dp"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
@@ -109,7 +109,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/appuntamento_item_detail"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintHorizontal_bias="0.03"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appuntamento_item_data" />
 

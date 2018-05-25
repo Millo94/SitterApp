@@ -69,5 +69,7 @@
     <string name="missingdescription">Su di te...</string>
     <string name="genericError">C\'è stato un errore.</string>
     <string name="modifySuccess">Modifiche effettuate</string>
+    <string name="lasciaFeedback">Scrivi Recensione</string>
+    <string name="feedback" translatable="false">Recensioni</string>
 
 </resources>

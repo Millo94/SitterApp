@@ -29,7 +29,7 @@ import java.util.Queue;
 import it.uniba.di.sms.sitterapp.Adapter.NoticeAdapter;
 import it.uniba.di.sms.sitterapp.Adapter.SitterAdapter;
 import it.uniba.di.sms.sitterapp.Constants;
-import it.uniba.di.sms.sitterapp.NoticeDetailActivity;
+import it.uniba.di.sms.sitterapp.Appuntamenti.NoticeDetailActivity;
 import it.uniba.di.sms.sitterapp.Oggetti.Notice;
 import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
 import it.uniba.di.sms.sitterapp.R;

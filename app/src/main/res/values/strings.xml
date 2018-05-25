@@ -71,7 +71,7 @@
     <string name="checkPassword">Passwords don\'t match.</string>
     <string name="invalidEmail">Invalid email.</string>
     <string name="usedUsername">Username already used.</string>
-    <string name="feedback" translatable="false">feedback</string>
+    <string name="feedback" translatable="false">Feedback</string>
     <string name="modificaProfiloOn">Edit Profile</string>
     <string name="contattaSitter">Contact Sitter</string>
     <string name="modificaProfiloOff">Confirm Edit</string>
@@ -85,6 +85,7 @@
     <string name="genericError">An error occurred.</string>
     <string name="modifySuccess">Edit complete</string>
     <string name="Home" translatable="false">Home</string>
+    <string name="lasciaFeedback">Write Feedback</string>
 
 
 </resources>
