@@ -1,10 +1,12 @@
-package it.uniba.di.sms.sitterapp;
+package it.uniba.di.sms.sitterapp.Appuntamenti;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
+
+import it.uniba.di.sms.sitterapp.R;
 
 /**
  * Created by Feder on 22/05/2018.
