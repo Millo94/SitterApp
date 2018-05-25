@@ -62,7 +62,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
         final Notice notice = noticeListFiltered.get(position);
         holder.family_name.setText(notice.getFamily());
         holder.date.setText(notice.getDate());
-        holder.description.setText(notice.getDescription());
+        holder.description.setText((notice.getDescription().length() > 100) ? notice.getDescription().substring(0, 100) + "..." : notice.getDescription());
         holder.start_time.setText(notice.getStart_time());
         holder.end_time.setText(notice.getEnd_time());
     }
