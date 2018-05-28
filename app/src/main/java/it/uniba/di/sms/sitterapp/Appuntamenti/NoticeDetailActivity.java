@@ -12,7 +12,7 @@ import it.uniba.di.sms.sitterapp.R;
 public class NoticeDetailActivity extends AppCompatActivity {
 
     TextView user,dataDet,start,end,desc;
-    Button  contFamily,openProfile,candidate;
+    Button  openProfile,candidate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,9 +36,6 @@ public class NoticeDetailActivity extends AppCompatActivity {
         end.setText(oraFine);
         desc = (TextView) findViewById(R.id.descrizioneDettagliSit2);
         desc.setText(descrizione);
-
-
-        contFamily = (Button) findViewById(R.id.contattaDettagli);
 
         openProfile = (Button) findViewById(R.id.visualProfiloDettagliSit);
 

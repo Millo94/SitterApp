@@ -88,6 +88,9 @@
     <string name="lasciaFeedback">Write Feedback</string>
     <string name="eliminaAnnuncio">Delete Notice</string>
     <string name="visualizzaCandidate">Show Responses</string>
+    <string name="giudizio">Your overall rating of this experience</string>
+    <string name="yourReview">Your Review:</string>
+    <string name="inviaRecensione">Submit your review</string>
 
 
 </resources>
