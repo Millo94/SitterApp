@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import it.uniba.di.sms.sitterapp.R;
 
@@ -13,12 +12,12 @@ import it.uniba.di.sms.sitterapp.R;
 public class NoticeDetailActivity extends AppCompatActivity {
 
     TextView user,dataDet,start,end,desc;
-    Button  contF,openP,candidate;
+    Button  contFamily,openProfile,candidate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.details_annuncio_sitter);
+        setContentView(R.layout.details_notice_sitter);
 
 
         String famiglia = getIntent().getStringExtra("famiglia");
@@ -27,21 +26,23 @@ public class NoticeDetailActivity extends AppCompatActivity {
         String oraFine = getIntent().getStringExtra("oraFine");
         String descrizione = getIntent().getStringExtra("descrizione");
 
-        user = (TextView) findViewById(R.id.usernameDettagli2);
+        user = (TextView) findViewById(R.id.usernameDettagliSit2);
         user.setText(famiglia);
-        dataDet= (TextView) findViewById(R.id.dataDettagli2);
+        dataDet= (TextView) findViewById(R.id.dataDettagliSit2);
         dataDet.setText(data);
-        start =(TextView)findViewById(R.id.oraInizioDettagli2);
+        start =(TextView)findViewById(R.id.oraInizioDettagliSit2);
         start.setText(oraInizio);
-        end = (TextView) findViewById(R.id.oraFineDettagli2);
+        end = (TextView) findViewById(R.id.oraFineDettagliSit2);
         end.setText(oraFine);
-        desc = (TextView) findViewById(R.id.descrizioneDettagli2);
+        desc = (TextView) findViewById(R.id.descrizioneDettagliSit2);
         desc.setText(descrizione);
-        contF = (Button) findViewById(R.id.contattaDettagli);
 
-        openP = (Button) findViewById(R.id.visualProfiloDettagli);
 
-        candidate = (Button) findViewById(R.id.candidami);
+        contFamily = (Button) findViewById(R.id.contattaDettagli);
+
+        openProfile = (Button) findViewById(R.id.visualProfiloDettagliSit);
+
+        candidate = (Button) findViewById(R.id.candidamiSit);
 
 
     }

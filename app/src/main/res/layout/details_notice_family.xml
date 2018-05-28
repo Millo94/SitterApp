@@ -5,35 +5,47 @@
     android:layout_height="match_parent">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/eliminaAnnuncio"
+                android:layout_width="150dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="60dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="@string/eliminaAnnuncio"
+                android:textColor="@android:color/background_light"
+                app:layout_constraintEnd_toStartOf="@+id/visualCandidate"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tableNoticeFam" />
 
             <Button
-                android:id="@+id/candidami"
+                android:id="@+id/visualCandidate"
                 android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="60dp"
                 android:backgroundTint="@color/colorPrimary"
-                android:text="@string/candidami"
+                android:text="@string/visualizzaCandidate"
                 android:textColor="@android:color/background_light"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/contattaDettagli" />
+                app:layout_constraintStart_toEndOf="@+id/eliminaAnnuncio"
+                app:layout_constraintTop_toBottomOf="@+id/tableNoticeFam" />
 
             <TextView
-                android:id="@+id/titleDettagli"
+                android:id="@+id/titleDettagliFam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
@@ -47,13 +59,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TableLayout
-                android:id="@+id/tableLayout"
+                android:id="@+id/tableNoticeFam"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/titleDettagli">
+                app:layout_constraintTop_toBottomOf="@+id/titleDettagliFam">
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -61,20 +73,20 @@
                     android:padding="@dimen/nav_header_vertical_spacing">
 
                     <TextView
-                        android:id="@+id/usernameDettagli"
+                        android:id="@+id/usernameDettagliFam"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/contact_number"
                         android:text="@string/username"
                         android:textColor="@color/colorScritte"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"/>
 
                     <TextView
-                        android:id="@+id/usernameDettagli2"
+                        android:id="@+id/usernameDettagliFam2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/username"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"/>
                 </TableRow>
 
                 <TableRow
@@ -83,20 +95,21 @@
                     android:padding="@dimen/nav_header_vertical_spacing">
 
                     <TextView
-                        android:id="@+id/dataDettagli"
+                        android:id="@+id/dataDettagliSit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/contact_number"
                         android:text="@string/data"
                         android:textColor="@color/colorScritte"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"/>
 
                     <TextView
-                        android:id="@+id/dataDettagli2"
+                        android:id="@+id/dataDettagliSit2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/data"
                         android:textSize="18sp" />
+
                 </TableRow>
 
                 <TableRow
@@ -105,20 +118,20 @@
                     android:padding="@dimen/nav_header_vertical_spacing">
 
                     <TextView
-                        android:id="@+id/oraInizioDettagli"
+                        android:id="@+id/oraInizioDettagliSit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/contact_number"
                         android:text="@string/orainizio"
                         android:textColor="@color/colorScritte"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"/>
 
                     <TextView
-                        android:id="@+id/oraInizioDettagli2"
+                        android:id="@+id/oraInizioDettagliSit2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/orainizio"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"/>
 
                 </TableRow>
 
@@ -128,7 +141,7 @@
                     android:padding="@dimen/nav_header_vertical_spacing">
 
                     <TextView
-                        android:id="@+id/oraFineDettagli"
+                        android:id="@+id/oraFineDettagliSit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/contact_number"
@@ -137,11 +150,11 @@
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/oraFineDettagli2"
+                        android:id="@+id/oraFineDettagliSit2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/orafine"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"/>
 
                 </TableRow>
 
@@ -151,50 +164,25 @@
                     android:padding="@dimen/nav_header_vertical_spacing">
 
                     <TextView
-                        android:id="@+id/descrizioneDettagli"
+                        android:id="@+id/descrizioneDettagliSit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/contact_number"
                         android:text="@string/descrizione"
                         android:textColor="@color/colorScritte"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"/>
 
                     <TextView
-                        android:id="@+id/descrizioneDettagli2"
+                        android:id="@+id/descrizioneeDettagliSit2"
                         android:layout_width="235dp"
                         android:layout_height="wrap_content"
                         android:text="@string/descrizione"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"/>
 
                 </TableRow>
 
             </TableLayout>
 
-            <Button
-                android:id="@+id/contattaDettagli"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:text="@string/contattaFamiglia"
-                android:textColor="@android:color/background_light"
-                app:layout_constraintEnd_toStartOf="@+id/visualProfiloDettagli"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
-
-            <Button
-                android:id="@+id/visualProfiloDettagli"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:text="@string/visualizzaProfilo"
-                android:textColor="@android:color/background_light"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/contattaDettagli"
-                app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
         </android.support.constraint.ConstraintLayout>
 
     </ScrollView>
