@@ -133,7 +133,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                                 String oraInizio = noticeObject.getString("oraInizio");
                                 String oraFine = noticeObject.getString("oraFine");
                                 String descrizione = noticeObject.getString("descrizione");
-                                descrizione = (descrizione.length() > 100) ? descrizione.substring(0, 100) + "..." : descrizione;
                                 Notice n = new Notice(famiglia, data, oraInizio, oraFine, descrizione);
 
                                 if (i < LOAD_LIMIT) {

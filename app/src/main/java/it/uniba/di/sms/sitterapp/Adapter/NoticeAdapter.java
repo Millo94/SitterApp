@@ -21,6 +21,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
     private List<Notice> noticeList;
     private List<Notice> noticeListFiltered;
     private NoticeAdapterListener listener;
+    private final static int TEXT_TO_SHOW = 100;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView family_name, date,start_time,end_time,description;
@@ -52,7 +53,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-               .inflate(R.layout.item_notice, parent, false);
+               .inflate(R.layout.notice_item, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -62,7 +63,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
         final Notice notice = noticeListFiltered.get(position);
         holder.family_name.setText(notice.getFamily());
         holder.date.setText(notice.getDate());
-        holder.description.setText((notice.getDescription().length() > 100) ? notice.getDescription().substring(0, 100) + "..." : notice.getDescription());
+        holder.description.setText((notice.getDescription().length()> TEXT_TO_SHOW?notice.getDescription().substring(0,TEXT_TO_SHOW)+"...":notice.getDescription()));
         holder.start_time.setText(notice.getStart_time());
         holder.end_time.setText(notice.getEnd_time());
     }

@@ -95,16 +95,16 @@
                     android:padding="@dimen/nav_header_vertical_spacing">
 
                     <TextView
-                        android:id="@+id/dataDettagliSit"
+                        android:id="@+id/dataDettagliFamiglia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/contact_number"
                         android:text="@string/data"
                         android:textColor="@color/colorScritte"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/dataDettagliSit2"
+                        android:id="@+id/dataDettagliFamiglia2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/data"
@@ -118,20 +118,20 @@
                     android:padding="@dimen/nav_header_vertical_spacing">
 
                     <TextView
-                        android:id="@+id/oraInizioDettagliSit"
+                        android:id="@+id/oraInizioDettagliFamiglia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/contact_number"
                         android:text="@string/orainizio"
                         android:textColor="@color/colorScritte"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/oraInizioDettagliSit2"
+                        android:id="@+id/oraInizioDettagliFamiglia2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/orainizio"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp" />
 
                 </TableRow>
 
@@ -141,7 +141,7 @@
                     android:padding="@dimen/nav_header_vertical_spacing">
 
                     <TextView
-                        android:id="@+id/oraFineDettagliSit"
+                        android:id="@+id/oraFineDettagliFamiglia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/contact_number"
@@ -150,11 +150,11 @@
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/oraFineDettagliSit2"
+                        android:id="@+id/oraFineDettagliFamiglia2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/orafine"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp" />
 
                 </TableRow>
 
@@ -164,20 +164,20 @@
                     android:padding="@dimen/nav_header_vertical_spacing">
 
                     <TextView
-                        android:id="@+id/descrizioneDettagliSit"
+                        android:id="@+id/descrizioneDettagliFamiglia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/contact_number"
                         android:text="@string/descrizione"
                         android:textColor="@color/colorScritte"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/descrizioneeDettagliSit2"
+                        android:id="@+id/descrizioneeDettagliFamiglia2"
                         android:layout_width="235dp"
                         android:layout_height="wrap_content"
                         android:text="@string/descrizione"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp" />
 
                 </TableRow>
 
