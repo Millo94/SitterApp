@@ -75,7 +75,7 @@ public class HomeActivity extends DrawerActivity
          */
         recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
 
-        if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
+        if ((sessionManager.getSessionType() == Constants.TYPE_SITTER)) {
 
             noticeList = new ArrayList<>();
             noticeAdapter = new NoticeAdapter(HomeActivity.this, noticeList, HomeActivity.this);
@@ -188,62 +188,7 @@ public class HomeActivity extends DrawerActivity
             }
         });
         Volley.newRequestQueue(this).add(stringRequest);
-    }
-
-    /**
-     * Caricamento incrementale degli annunci
-     */
-    private void loadMore() {
-
-        itShouldLoadMore = false; // lock this until volley completes processing
-
-        // progressWheel is just a loading spinner, please see the content_main.xml
-        final ProgressWheel progressWheel = (ProgressWheel) this.findViewById(R.id.progress_wheel);
-        progressWheel.setVisibility(View.VISIBLE);
-
-        itShouldLoadMore = true;
-
-        if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
-            if (!remainingNoticeList.isEmpty()) {
-                //todo aggiungere un ritardo (asynctask) per visualizzare la ruota figa di caricamento
-                final int remainingNoticeListSize = remainingNoticeList.size();
-                for (int i = 0; i < remainingNoticeListSize; ++i) {
-                    if (i < LOAD_LIMIT) {
-                        noticeList.add(remainingNoticeList.remove());
-                    }
-                }
-                noticeAdapter.notifyDataSetChanged();
-            }
-
-        } else if (sessionManager.getSessionType() == Constants.TYPE_FAMILY) {
-            if (!remainingSitterList.isEmpty()) {
-                //todo aggiungere un ritardo (asynctask) per visualizzare la ruota figa di caricamento
-                final int remainingSitterListSize = remainingSitterList.size();
-                for (int i = 0; i < remainingSitterListSize; ++i) {
-                    if (i < LOAD_LIMIT) {
-                        sitterList.add(remainingSitterList.remove());
-                    }
-                }
-                sitterAdapter.notifyDataSetChanged();
-            }
-        }
-
-
-        progressWheel.setVisibility(View.GONE);
-    }
-
-    /**
-     * @param notice al click su un annuncio visualizza i dettagli
-     */
-    @Override
-    public void onNoticeSelected(Notice notice) {
-        Intent detailIntent = new Intent(HomeActivity.this, NoticeDetailActivity.class);
-        detailIntent.putExtra("famiglia", notice.getFamily());
-        detailIntent.putExtra("data", notice.getDate());
-        detailIntent.putExtra("oraInizio", notice.getStart_time());
-        detailIntent.putExtra("oraFine", notice.getEnd_time());
-        detailIntent.putExtra("descrizione", notice.getDescription());
-        startActivity(detailIntent);
+        progressDialog.hide();
     }
 
     /**
@@ -297,12 +242,76 @@ public class HomeActivity extends DrawerActivity
             }
         });
         Volley.newRequestQueue(this).add(stringRequest);
+        progressDialog.hide();
     }
+
+    /**
+     * Caricamento incrementale degli annunci
+     */
+    private void loadMore() {
+
+        itShouldLoadMore = false; // lock this until volley completes processing
+
+        // progressWheel is just a loading spinner, please see the content_main.xml
+        final ProgressWheel progressWheel = (ProgressWheel) this.findViewById(R.id.progress_wheel);
+        progressWheel.setVisibility(View.VISIBLE);
+
+        itShouldLoadMore = true;
+
+        if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
+
+            if (!remainingNoticeList.isEmpty()) {
+
+                final int remainingNoticeListSize = remainingNoticeList.size();
+
+                for (int i = 0; i < remainingNoticeListSize; ++i) {
+
+                    if (i < LOAD_LIMIT) {
+                        noticeList.add(remainingNoticeList.remove());
+                    }
+                }
+
+                noticeAdapter.notifyDataSetChanged();
+            }
+
+        } else if (sessionManager.getSessionType() == Constants.TYPE_FAMILY) {
+            if (!remainingSitterList.isEmpty()) {
+
+                final int remainingSitterListSize = remainingSitterList.size();
+                for (int i = 0; i < remainingSitterListSize; ++i) {
+                    if (i < LOAD_LIMIT) {
+                        sitterList.add(remainingSitterList.remove());
+                    }
+                }
+                sitterAdapter.notifyDataSetChanged();
+            }
+        }
+
+        progressWheel.setVisibility(View.GONE);
+    }
+
+    /**
+     * @param notice al click su un annuncio visualizza i dettagli
+     */
+    @Override
+    public void onNoticeSelected(Notice notice) {
+        Intent detailIntent = new Intent(HomeActivity.this, NoticeDetailActivity.class);
+        detailIntent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
+        detailIntent.putExtra("famiglia", notice.getFamily());
+        detailIntent.putExtra("data", notice.getDate());
+        detailIntent.putExtra("oraInizio", notice.getStart_time());
+        detailIntent.putExtra("oraFine", notice.getEnd_time());
+        detailIntent.putExtra("descrizione", notice.getDescription());
+        startActivity(detailIntent);
+    }
+
+
 
     @Override
     public void onSitterSelected(UtenteSitter sitter) {
 
-        //TODO dovrà caricare il profilo pubblico delle babysitter
-        Toast.makeText(getApplicationContext(), "Selected: " + sitter.getUsername() + ", " + sitter.getNumeroLavori() + ", " + sitter.getFoto(), Toast.LENGTH_LONG).show();
+        //Intent detailIntent = new Intent(HomeActivity.this, SitterDetailActivity.class);
+        //detailIntent.putExtra(Constants.TYPE, Constants.TYPE_FAMILY);
+        //startActivity(detailIntent);
     }
 }

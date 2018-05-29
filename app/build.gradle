@@ -16,6 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 }
 
 dependencies {
@@ -25,21 +29,16 @@ dependencies {
     implementation 'com.android.support:support-v4:25.4.0'
     implementation 'com.android.support:design:25.4.0'
     testImplementation 'junit:junit:4.12'
-
     // recycler view
     implementation 'com.android.support:recyclerview-v7:25.4.0'
-
     //per le foto
     implementation 'com.github.bumptech.glide:glide:4.3.1'
-
     // volley http library
     implementation 'com.android.volley:volley:1.0.0'
     //json manipulation library
     implementation 'com.google.code.gson:gson:2.8.0'
-
     //per la progressbar circolare figa
     implementation 'com.pnikosis:materialish-progress:1.7'
-
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
