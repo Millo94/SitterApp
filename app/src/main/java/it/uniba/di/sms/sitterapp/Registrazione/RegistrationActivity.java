@@ -17,17 +17,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.uniba.di.sms.sitterapp.Constants;
+import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.Principale.LoginActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.Oggetti.UtenteFamiglia;
 import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
 
 public class RegistrationActivity extends AppCompatActivity implements SitterRegistrationFragment.OnFragmentInteractionListener, FamilyRegistrationFragment.OnFragmentInteractionListener {
-
-    /**
-     * URL dello script di registrazione
-     */
-    private static final String REGISTRATION_URL = Constants.BASE_URL + "register.php";
 
     /**
      * RequestQueue della registrazione
@@ -74,7 +70,7 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
 
     private void register(final UtenteFamiglia famiglia){
 
-        StringRequest registrationRequest = new StringRequest(Request.Method.POST, REGISTRATION_URL, new Response.Listener<String>() {
+        StringRequest registrationRequest = new StringRequest(Request.Method.POST, Php.REGISTRAZIONE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -126,7 +122,7 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
 
     private void register(final UtenteSitter sitter){
 
-        StringRequest registrationRequest = new StringRequest(Request.Method.POST, REGISTRATION_URL, new Response.Listener<String>() {
+        StringRequest registrationRequest = new StringRequest(Request.Method.POST, Php.REGISTRAZIONE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 

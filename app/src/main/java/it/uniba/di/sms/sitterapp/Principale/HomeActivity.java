@@ -165,7 +165,6 @@ public class HomeActivity extends DrawerActivity
                                 String oraInizio = noticeObject.getString("oraInizio");
                                 String oraFine = noticeObject.getString("oraFine");
                                 String descrizione = noticeObject.getString("descrizione");
-                                descrizione = (descrizione.length() > 100) ? descrizione.substring(0, 100) + "..." : descrizione;
                                 Notice n = new Notice(famiglia, data, oraInizio, oraFine, descrizione);
 
                                 if (i < LOAD_LIMIT) {
@@ -253,7 +252,7 @@ public class HomeActivity extends DrawerActivity
         itShouldLoadMore = false; // lock this until volley completes processing
 
         // progressWheel is just a loading spinner, please see the content_main.xml
-        final ProgressWheel progressWheel = (ProgressWheel) this.findViewById(R.id.progress_wheel);
+        final ProgressWheel progressWheel = (ProgressWheel) this.findViewById(R.id.progress_wheel_home);
         progressWheel.setVisibility(View.VISIBLE);
 
         itShouldLoadMore = true;

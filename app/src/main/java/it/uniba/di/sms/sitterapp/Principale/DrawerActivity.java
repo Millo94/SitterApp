@@ -105,7 +105,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
     public void goProfile(View view) {
         Intent intent = new Intent(DrawerActivity.this, ProfiloPrivatoActivity.class);
-        intent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
+        intent.putExtra(Constants.TYPE, sessionManager.getSessionType());
         startActivity(intent);
     }
 }

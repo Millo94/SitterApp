@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -66,7 +65,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_sitter_registration, container, false);
+        view = inflater.inflate(R.layout.fragment_registration_sitter, container, false);
 
         // Generatore dello spinner di scelta della nazione
         nazioni = (Spinner) view.findViewById(R.id.spinnerSitterReg);

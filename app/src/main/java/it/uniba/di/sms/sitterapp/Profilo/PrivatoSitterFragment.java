@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.uniba.di.sms.sitterapp.Constants;
+import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
@@ -42,8 +43,6 @@ import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
  */
 public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
-
-    private static final String PROFILE_URL = Constants.BASE_URL + "profile.php";
     private RequestQueue requestQueue;
     private SessionManager sessionManager;
 
@@ -101,7 +100,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
      */
     private void openProfile(){
 
-        StringRequest profileRequest = new StringRequest(Request.Method.POST, PROFILE_URL, new Response.Listener<String>() {
+        StringRequest profileRequest = new StringRequest(Request.Method.POST, Php.PROFILO , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -171,13 +170,16 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
     private void modifyProfile(){
 
-        StringRequest modify = new StringRequest(Request.Method.POST, PROFILE_URL, new Response.Listener<String>() {
+        StringRequest modify = new StringRequest(Request.Method.POST, Php.PROFILO, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 try {
                     JSONObject json = new JSONObject(response);
                     String result = json.getString("modify");
+
+                    if(json.getString("response").equals("error"))
+                        Toast.makeText(getContext(), "Fatal Error", Toast.LENGTH_SHORT).show();
 
                     if(result.equals("true")){
                         Toast.makeText(getContext(), R.string.modifySuccess,Toast.LENGTH_SHORT).show();
