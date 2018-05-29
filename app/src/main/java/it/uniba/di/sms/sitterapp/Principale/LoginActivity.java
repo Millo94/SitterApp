@@ -59,9 +59,9 @@ public class LoginActivity extends AppCompatActivity {
                             if(result.equals("true")){
 
                                 Toast.makeText(getApplicationContext(), R.string.loginSuccess, Toast.LENGTH_LONG).show();
-                                session.createLoginSession(usernameEt.getText().toString(), jsonObject.getInt("tipoutente"));
+                                session.createLoginSession(usernameEt.getText().toString(), jsonObject.getInt("tipoUtente"));
 
-                                if(jsonObject.getString("tipoutente").equals(String.valueOf(Constants.TYPE_SITTER))){
+                                if(jsonObject.getString("tipoUtente").equals(String.valueOf(Constants.TYPE_SITTER))){
 
                                     session.setProfilePic(jsonObject.getString("pathFoto"));
                                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                                     startActivity(intent);
                                     finish();
 
-                                } else if(jsonObject.getString("tipoutente").equals(String.valueOf(Constants.TYPE_FAMILY))){
+                                } else if(jsonObject.getString("tipoUtente").equals(String.valueOf(Constants.TYPE_FAMILY))){
 
                                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                     intent.putExtra(Constants.TYPE, Constants.TYPE_FAMILY);

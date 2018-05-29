@@ -139,7 +139,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                         tariffaPrSit2.setText(json.getString("tariffaOraria"));
                         ingaggiPrSit2.setText(json.getString("numeroLavori"));
 
-                        Glide.with(getContext()).load(json.getString("pathFoto")).into(profilePic);
+                        Glide.with(getContext()).load(sessionManager.getProfilePic()).into(profilePic);
 
                     } else if(result.equals("false")) {
                         Toast.makeText(getContext(), R.string.profileError ,Toast.LENGTH_SHORT).show();
