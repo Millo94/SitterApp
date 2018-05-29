@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.uniba.di.sms.sitterapp.Constants;
+import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.Registrazione.RegistrationActivity;
 import it.uniba.di.sms.sitterapp.SessionManager;
@@ -29,9 +30,6 @@ import it.uniba.di.sms.sitterapp.SessionManager;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText usernameEt, passwordEt;
-
-    // TODO vedere il login php e scegliere quale usare, in caso aggiornare il nome
-    private static final String LOGIN_URL = Constants.BASE_URL + "loginEnrico.php";
     private StringRequest request;
     private RequestQueue RequestQueue;
     private SessionManager session;
@@ -50,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLogin(View view) {
-        request = new StringRequest(Request.Method.POST, LOGIN_URL,
+        request = new StringRequest(Request.Method.POST, Php.LOGIN,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

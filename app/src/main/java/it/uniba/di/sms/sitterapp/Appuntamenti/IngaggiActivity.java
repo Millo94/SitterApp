@@ -31,13 +31,11 @@ import java.util.Queue;
 import it.uniba.di.sms.sitterapp.Adapter.NoticeAdapter;
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Oggetti.Notice;
+import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.Principale.DrawerActivity;
 import it.uniba.di.sms.sitterapp.R;
 
 public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.NoticeAdapterListener{
-
-    // URL da dove prende gli appuntamenti
-    private static final String URL_INGAGGI = Constants.BASE_URL + "ingaggi.php";
 
     // Vista
     private RecyclerView recyclerView;
@@ -118,7 +116,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_INGAGGI,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Php.INGAGGI,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
