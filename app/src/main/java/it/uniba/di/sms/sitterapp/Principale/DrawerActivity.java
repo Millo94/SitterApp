@@ -55,7 +55,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         ImageView profile_image = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.ProfileImageView);
         TextView profile_username = (TextView) navigationView.getHeaderView(0).findViewById(R.id.ProfileUsernameView);
 
-        Glide.with(this).load(sessionManager.getProfilePic()).into(profile_image);
+        Glide.with(this).load((sessionManager.getSessionType() == Constants.TYPE_SITTER)?sessionManager.getProfilePic():Constants.BASE_URL+"profilePicture/family.png").into(profile_image);
         profile_username.setText(sessionManager.getSessionUsername());
     }
 

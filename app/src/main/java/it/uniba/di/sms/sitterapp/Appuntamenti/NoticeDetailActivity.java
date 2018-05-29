@@ -21,7 +21,6 @@ public class NoticeDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         SessionManager sessionManager = new SessionManager(getApplicationContext());
-        sessionManager.createLoginSession("angarano",Constants.TYPE_SITTER);
 
         String famiglia = getIntent().getStringExtra("famiglia");
         String data = getIntent().getStringExtra("data");
@@ -61,7 +60,7 @@ public class NoticeDetailActivity extends AppCompatActivity {
         }
 
         user.setText(famiglia);
-        dataDet.setText(data);
+        dataDet.setText(Constants.SQLtoDate(data));
         start.setText(oraInizio);
         end.setText(oraFine);
         desc.setText(descrizione);
