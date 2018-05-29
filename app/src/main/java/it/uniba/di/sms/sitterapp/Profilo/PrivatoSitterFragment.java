@@ -24,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.annotation.GlideModule;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +42,7 @@ import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
 /**
  * FRAGMENT PROFILO PRIVATO SITTER
  */
+
 public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
     private RequestQueue requestQueue;
@@ -109,7 +111,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                     String result = json.getString("open");
 
                     if (result.equals("true")){
-                        usernamePrSit.setText(json.getString("username"));
+                        usernamePrSit.setText(sessionManager.getSessionUsername());
                         if(!json.getString("rating").equals("null")) {
                             ratingPrSitter.setRating((float) json.getDouble("rating"));
                         }
@@ -137,9 +139,8 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
                         dataPrSit2.setText(Constants.SQLtoDate(json.getString("dataNascita")));
                         tariffaPrSit2.setText(json.getString("tariffaOraria"));
-                        ingaggiPrSit2.setText(json.getString("numeroLavori"));
 
-                        Glide.with(getContext()).load(sessionManager.getProfilePic()).into(profilePic);
+                        Glide.with(PrivatoSitterFragment.this).load(sessionManager.getProfilePic()).into(profilePic);
 
                     } else if(result.equals("false")) {
                         Toast.makeText(getContext(), R.string.profileError ,Toast.LENGTH_SHORT).show();

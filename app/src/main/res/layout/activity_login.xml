@@ -32,7 +32,7 @@
         android:ems="10"
         android:hint="Username"
         android:inputType="textPersonName"
-        android:text="frappe"
+        android:text="Eladi96"
         app:layout_constraintBottom_toTopOf="@+id/lblPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

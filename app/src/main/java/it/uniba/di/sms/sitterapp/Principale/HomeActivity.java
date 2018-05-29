@@ -32,6 +32,7 @@ import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Appuntamenti.NoticeDetailActivity;
 import it.uniba.di.sms.sitterapp.Oggetti.Notice;
 import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
+import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 
 public class HomeActivity extends DrawerActivity
@@ -57,9 +58,6 @@ public class HomeActivity extends DrawerActivity
     // as php will be ordered what to load and limit by android java
     public static final int LOAD_LIMIT = 5;
 
-    // Url per il caricamento degli items
-    private static final String NOTICE_URL = Constants.BASE_URL + "AnnunciFamiglie.php";
-    private static final String SITTER_URL = Constants.BASE_URL + "AnnunciSitter.php";
 
     // we need this variable to lock and unlock loading more
     // e.g we should not load more when volley is already loading,
@@ -148,7 +146,7 @@ public class HomeActivity extends DrawerActivity
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, NOTICE_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Php.ANNUNCI,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -204,7 +202,7 @@ public class HomeActivity extends DrawerActivity
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, SITTER_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Php.ELENCO_SITTER,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -217,9 +215,8 @@ public class HomeActivity extends DrawerActivity
                             for(int i=0;i<sitter.length();i++){
                                 JSONObject sitterObject = sitter.getJSONObject(i);
                                 String username = sitterObject.getString("username");
-                                String nLavori = sitterObject.getString("numerolavori");
                                 String foto = sitterObject.getString("pathfoto");
-                                UtenteSitter s = new UtenteSitter(username,nLavori,foto);
+                                UtenteSitter s = new UtenteSitter(username, foto);
 
                                 if(i < LOAD_LIMIT) {
                                     sitterList.add(s);
