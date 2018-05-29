@@ -20,6 +20,86 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/contattaSitter"
+                android:layout_width="130dp"
+                android:layout_height="70dp"
+                android:layout_marginBottom="40dp"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="@string/contattaSitter"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/feedbackSitter"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/capPuSitter2" />
+
+            <Button
+                android:id="@+id/feedbackSitter"
+                android:layout_width="130dp"
+                android:layout_height="70dp"
+                android:layout_marginBottom="40dp"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="@string/feedback"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/contattaSitter"
+                app:layout_constraintTop_toBottomOf="@+id/capPuSitter2" />
+
+            <TextView
+                android:id="@+id/nazionePuSitter"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/nazione"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ingaggiPuSitter2" />
+
+            <TextView
+                android:id="@+id/nazionePuSitter2"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/nazione"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nazionePuSitter" />
+
+            <TextView
+                android:id="@+id/capPuSitter"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/cap"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nazionePuSitter2" />
+
+            <TextView
+                android:id="@+id/capPuSitter2"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/cap"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/capPuSitter" />
+
             <ImageView
                 android:id="@+id/imgPrSitter"
                 android:layout_width="125dp"
@@ -58,24 +138,6 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imgPrSitter"
                 app:layout_constraintTop_toTopOf="parent" />
-
-
-            <Button
-                android:id="@+id/contattaSitter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
-                android:layout_marginTop="40dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:text="@string/contattaFamiglia"
-                android:textAlignment="center"
-                android:textColor="@android:color/background_light"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.503"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingaggiPuSitter2" />
 
 
             <TextView

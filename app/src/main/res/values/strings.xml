@@ -71,7 +71,7 @@
     <string name="checkPassword">Passwords don\'t match.</string>
     <string name="invalidEmail">Invalid email.</string>
     <string name="usedUsername">Username already used.</string>
-    <string name="feedback" translatable="false">feedback</string>
+    <string name="feedback">Feedback</string>
     <string name="modificaProfiloOn">Edit Profile</string>
     <string name="contattaSitter">Contact Sitter</string>
     <string name="modificaProfiloOff">Confirm Edit</string>
@@ -79,12 +79,18 @@
     <string name="nuovoUtente">Are you new on SitterApp?</string>
     <string name="dettaglioAnnuncio">Notice Details</string>
     <string name="profileError">There was an error in opening the profile.</string>
-    <string name="visualizzaProfilo">Open Profile</string>
+    <string name="visualizzaProfiloSitter">Open Sitter Profile</string>
     <string name="candidami">Cadidate me</string>
     <string name="missingdescription">Describe yourself...</string>
     <string name="genericError">An error occurred.</string>
     <string name="modifySuccess">Edit complete</string>
     <string name="Home" translatable="false">Home</string>
+    <string name="lasciaFeedback">Write Feedback</string>
+    <string name="eliminaAnnuncio">Delete Notice</string>
+    <string name="visualizzaCandidate">Show Responses</string>
+    <string name="giudizio">Your overall rating of this experience</string>
+    <string name="yourReview">Your Review:</string>
+    <string name="inviaRecensione">Submit your review</string>
 
 
 </resources>

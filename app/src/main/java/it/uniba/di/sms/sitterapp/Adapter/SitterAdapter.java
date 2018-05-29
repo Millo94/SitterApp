@@ -64,7 +64,7 @@ public class SitterAdapter extends RecyclerView.Adapter<SitterAdapter.MyViewHold
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.sitter_item, parent, false);
+                .inflate(R.layout.item_sitter, parent, false);
 
         return new MyViewHolder(itemView);
     }

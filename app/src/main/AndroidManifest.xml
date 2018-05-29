@@ -25,7 +25,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Registrazione.RegistrationActivity" />
         <activity android:name=".Profilo.ProfiloPrivatoActivity" />
-        <activity android:name=".Appuntamenti.NoticeDetailActivity" />
+
+        <activity android:name=".Appuntamenti.NoticeDetailActivity"
+            android:parentActivityName=".Appuntamenti.IngaggiActivity"/>
         <activity
             android:name=".Principale.DrawerActivity"
             android:theme="@style/AppTheme.NoActionBar" />

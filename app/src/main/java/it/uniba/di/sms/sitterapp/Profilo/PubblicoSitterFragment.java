@@ -23,11 +23,12 @@ public class PubblicoSitterFragment extends Fragment {
     View view;
     RatingBar ratingPuSitter;
     //QUESTE STRINGHE SONO STATICHE
-    TextView usernamePuSit, descrPuSit, nomePuSit, cognomePuSit, emailPuSit, numeroPuSit, carPuSit, sessoPuSit, dataPuSit, tariffaPuSit, ingaggiPuSit;
+    TextView usernamePuSit, descrPuSit, nomePuSit, cognomePuSit, emailPuSit, numeroPuSit, carPuSit, sessoPuSit, dataPuSit, tariffaPuSit, ingaggiPuSit, nazionePuSit, capPuSit;
     //QUESTE STRINGHE SONO DA COLLEGARE AL DATABASE
-    TextView nomePuSit2, cognomePuSit2, emailPuSit2, numeroPuSit2, carPuSit2, sessoPuSit2, dataPuSit2, tariffaPuSit2, ingaggiPuSit2;
+    TextView nomePuSit2, cognomePuSit2, emailPuSit2, numeroPuSit2, carPuSit2, sessoPuSit2, dataPuSit2, tariffaPuSit2, ingaggiPuSit2, nazionePuSit2, capPuSit2;
     //DA COLLEGARE QUANDO AVREMO AL CHAT
-    Button contattaFamiglia;
+    Button contattaFamiglia, feedbackSit;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -92,7 +93,14 @@ public class PubblicoSitterFragment extends Fragment {
         ingaggiPuSit = (TextView) view.findViewById(R.id.ingaggiPuSitter);
         ingaggiPuSit2 = (TextView) view.findViewById(R.id.ingaggiPuSitter2);
 
+        nazionePuSit = (TextView) view.findViewById(R.id.nazionePuSitter);
+        nazionePuSit2 = (TextView) view.findViewById(R.id.nazionePuSitter2);
+
+        capPuSit = (TextView) view.findViewById(R.id.capPuSitter);
+        capPuSit2 = (TextView) view.findViewById(R.id.capPuSitter2);
+
         contattaFamiglia = (Button) view.findViewById(R.id.contattaFamiglia);
+        feedbackSit = (Button) view.findViewById(R.id.feedbackSitter);
     }
 
 

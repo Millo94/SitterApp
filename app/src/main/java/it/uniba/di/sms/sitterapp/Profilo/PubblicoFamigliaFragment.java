@@ -23,11 +23,12 @@ public class PubblicoFamigliaFragment extends Fragment {
 
     View view;
     //STRINGHE STATICHE DA NON TOCCARE
-    TextView usernamePuFam, descrPuFam, nomePuFam, cognomePuFam, emailPuFam, numeroPuFam, nazionePuFam, provinciaPuFam, cittaPuFam, viaPuFam, civicoPuFam, numFigliPuFam, animaliPuFam;
+    TextView usernamePuFam, descrPuFam, nomePuFam, cognomePuFam, emailPuFam, numeroPuFam, nazionePuFam, capPuFam, numFigliPuFam, animaliPuFam;
     //STRINGHE DA COLLEGARE AL DATABASE
-    TextView nomePuFam2, cognomePuFam2, emailPuFam2, numeroPuFam2, nazionePuFam2, provinciaPuFam2, cittaPuFam2, viaPuFam2, civicoPuFam2, numFigliPuFam2, animaliPuFam2;
+    TextView nomePuFam2, cognomePuFam2, emailPuFam2, numeroPuFam2, nazionePuFam2, capPuFam2, numFigliPuFam2, animaliPuFam2;
     //DA COLLEGARE ALLA CHAT
     Button contattaSitter;
+    Button feedbackFam;
     //DA CAPIRE
     RatingBar ratingPuFam;
 
@@ -76,17 +77,9 @@ public class PubblicoFamigliaFragment extends Fragment {
         nazionePuFam = (TextView) view.findViewById(R.id.nazionePuFamiglia);
         nazionePuFam2 = (TextView) view.findViewById(R.id.nazionePuFamiglia2);
 
-        provinciaPuFam = (TextView) view.findViewById(R.id.provinciaPuFamily);
-        provinciaPuFam2 = (TextView) view.findViewById(R.id.provinciaPuFamily2);
+        capPuFam = (TextView) view.findViewById(R.id.capPuFamily);
+        capPuFam2 = (TextView) view.findViewById(R.id.capPuFamily2);
 
-        cittaPuFam = (TextView) view.findViewById(R.id.cittaPuFamily);
-        cittaPuFam2 = (TextView) view.findViewById(R.id.cittaPuFamily2);
-
-        viaPuFam = (TextView) view.findViewById(R.id.viaPuFamily);
-        viaPuFam2 = (TextView) view.findViewById(R.id.viaPuFamily2);
-
-        civicoPuFam = (TextView) view.findViewById(R.id.civicoPuFamily);
-        civicoPuFam2 = (TextView) view.findViewById(R.id.civicoPuFamily2);
 
         numFigliPuFam = (TextView) view.findViewById(R.id.figliPuFamiglia);
         numFigliPuFam2 = (TextView) view.findViewById(R.id.figliPuFamiglia2);
@@ -95,6 +88,7 @@ public class PubblicoFamigliaFragment extends Fragment {
         animaliPuFam2 = (TextView) view.findViewById(R.id.animaliPuFamiglia2);
 
         contattaSitter = (Button) view.findViewById(R.id.contattaSitter);
+        feedbackFam = (Button) view.findViewById(R.id.FeedbackFamiglia);
     }
 
     @Override

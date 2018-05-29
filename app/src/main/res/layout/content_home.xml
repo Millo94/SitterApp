@@ -16,7 +16,7 @@
 
     <!-- We need this loading wheel, only when loading more -->
     <com.pnikosis.materialishprogress.ProgressWheel
-        android:id="@+id/progress_wheel"
+        android:id="@+id/progress_wheel_home"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"

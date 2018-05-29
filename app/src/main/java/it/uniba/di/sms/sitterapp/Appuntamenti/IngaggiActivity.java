@@ -174,7 +174,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         itShouldLoadMore = false; // lock this until volley completes processing
 
         // progressWheel is just a loading spinner, please see the content_main.xml
-        final ProgressWheel progressWheel = (ProgressWheel) this.findViewById(R.id.progress_wheel);
+        final ProgressWheel progressWheel = (ProgressWheel) this.findViewById(R.id.progress_wheel_home);
         progressWheel.setVisibility(View.VISIBLE);
 
         itShouldLoadMore = true;
