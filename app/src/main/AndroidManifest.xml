@@ -10,7 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:process="it.uniba.di.sms.sitterapp">
         <activity
             android:name=".Principale.LoginActivity"
             android:clearTaskOnLaunch="true">
@@ -24,6 +25,7 @@
             android:name=".Principale.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Registrazione.RegistrationActivity" />
+
         <activity android:name=".Profilo.ProfiloPrivatoActivity"
             android:parentActivityName=".Principale.HomeActivity"
             android:windowSoftInputMode="stateHidden"/>

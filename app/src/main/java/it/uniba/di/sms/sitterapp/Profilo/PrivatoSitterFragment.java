@@ -177,15 +177,11 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
                 try {
                     JSONObject json = new JSONObject(response);
-                    String result = json.getString("modify");
-
-                    if(json.getString("response").equals("error"))
-                        Toast.makeText(getContext(), "Fatal Error", Toast.LENGTH_SHORT).show();
-
-                    if(result.equals("true")){
-                        Toast.makeText(getContext(), R.string.modifySuccess,Toast.LENGTH_SHORT).show();
+                    String result = json.optString("modify");
+                    if(json.getString("modify").equals("true")){
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.modifySuccess,Toast.LENGTH_SHORT).show();
                     } else if (result.equals("false")) {
-                        Toast.makeText(getContext(), R.string.genericError,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.genericError,Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
