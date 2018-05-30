@@ -91,6 +91,8 @@
     <string name="giudizio">Your overall rating of this experience</string>
     <string name="yourReview">Your Review:</string>
     <string name="inviaRecensione">Submit your review</string>
+    <string name="tariffaAssente">Hourly pay not defined.</string>
+    <string name="descrizioneAssente">Ask directly for more info!</string>
 
 
 </resources>

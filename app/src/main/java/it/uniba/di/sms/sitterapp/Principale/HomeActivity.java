@@ -3,6 +3,7 @@ package it.uniba.di.sms.sitterapp.Principale;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +34,7 @@ import it.uniba.di.sms.sitterapp.Appuntamenti.NoticeDetailActivity;
 import it.uniba.di.sms.sitterapp.Oggetti.Notice;
 import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
 import it.uniba.di.sms.sitterapp.Php;
+import it.uniba.di.sms.sitterapp.Profilo.ProfiloPubblicoActivity;
 import it.uniba.di.sms.sitterapp.R;
 
 public class HomeActivity extends DrawerActivity
@@ -292,7 +294,6 @@ public class HomeActivity extends DrawerActivity
     @Override
     public void onNoticeSelected(Notice notice) {
         Intent detailIntent = new Intent(HomeActivity.this, NoticeDetailActivity.class);
-        detailIntent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
         detailIntent.putExtra("famiglia", notice.getFamily());
         detailIntent.putExtra("data", notice.getDate());
         detailIntent.putExtra("oraInizio", notice.getStart_time());
@@ -306,8 +307,9 @@ public class HomeActivity extends DrawerActivity
     @Override
     public void onSitterSelected(UtenteSitter sitter) {
 
-        //Intent detailIntent = new Intent(HomeActivity.this, SitterDetailActivity.class);
-        //detailIntent.putExtra(Constants.TYPE, Constants.TYPE_FAMILY);
-        //startActivity(detailIntent);
+        Intent detailIntent = new Intent(HomeActivity.this, ProfiloPubblicoActivity.class);
+        detailIntent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
+        detailIntent.putExtra("username", sitter.getUsername());
+        startActivity(detailIntent);
     }
 }

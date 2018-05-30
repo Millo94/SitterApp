@@ -2,12 +2,13 @@ package it.uniba.di.sms.sitterapp.Profilo;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import it.uniba.di.sms.sitterapp.Constants;
-import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.Oggetti.UtenteFamiglia;
 import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
+import it.uniba.di.sms.sitterapp.R;
 
-public class ProfiloPrivatoActivity extends AppCompatActivity implements PrivatoFamigliaFragment.OnFragmentInteractionListener, PrivatoSitterFragment.OnFragmentInteractionListener{
+public class ProfiloPubblicoActivity extends AppCompatActivity implements PubblicoFamigliaFragment.OnFragmentInteractionListener, PubblicoSitterFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,15 +20,16 @@ public class ProfiloPrivatoActivity extends AppCompatActivity implements Privato
         int type = getIntent().getIntExtra(Constants.TYPE, -1);
         if (type == Constants.TYPE_SITTER){
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PrivatoSitterFragment()).commit();
+                    .add(R.id.container, new PubblicoSitterFragment()).commit();
         } else if(type == Constants.TYPE_FAMILY) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PrivatoFamigliaFragment()).commit();
+                    .add(R.id.container, new PubblicoFamigliaFragment()).commit();
         }
     }
 
     @Override
-    public void onFragmentInteraction(UtenteFamiglia famiglia) {
+    public void onFragmentInteraction(UtenteFamiglia family) {
+
     }
 
     @Override

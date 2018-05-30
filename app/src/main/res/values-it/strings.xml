@@ -76,5 +76,7 @@
     <string name="giudizio">Il tuo giudizio complessivo sull\'esperienza:</string>
     <string name="yourReview">La tua recensione</string>
     <string name="inviaRecensione">Invia la tua recensione</string>
+    <string name="tariffaAssente">Tariffa oraria non definita.</string>
+    <string name="descrizioneAssente">Richiedi direttamente all\'utente maggiori informazioni!</string>
 
 </resources>
