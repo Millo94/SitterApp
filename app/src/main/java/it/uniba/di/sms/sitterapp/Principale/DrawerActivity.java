@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import it.uniba.di.sms.sitterapp.Appuntamenti.IngaggiActivity;
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Profilo.ProfiloPrivatoActivity;
@@ -50,14 +52,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         // Valorizzo il session manager
         sessionManager = new SessionManager(getApplicationContext());
 
-        ImageView profile_image = (ImageView) findViewById(R.id.ProfileImageView);
-        TextView profile_username = (TextView) findViewById(R.id.ProfileUsernameView);
+        ImageView profile_image = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.ProfileImageView);
+        TextView profile_username = (TextView) navigationView.getHeaderView(0).findViewById(R.id.ProfileUsernameView);
 
-        //todo aggiungere caricamento del nome_profilo e immagine_profilo nell'header del drawer
-        //Glide.with(this).load(sessionManager.getProfilePic()).into(profile_image);
-        //profile_username.setText(sessionManager.getSessionUsername());
-
-
+        Glide.with(this).load((sessionManager.getSessionType() == Constants.TYPE_SITTER)?sessionManager.getProfilePic():Constants.BASE_URL+"profilePicture/family.png").into(profile_image);
+        profile_username.setText(sessionManager.getSessionUsername());
     }
 
     @Override
