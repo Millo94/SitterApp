@@ -25,7 +25,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Registrazione.RegistrationActivity" />
         <activity android:name=".Profilo.ProfiloPrivatoActivity"
-            android:parentActivityName=".Principale.HomeActivity"/>
+            android:parentActivityName=".Principale.HomeActivity"
+            android:windowSoftInputMode="stateHidden"/>
 
         <activity android:name=".Appuntamenti.NoticeDetailActivity"
             android:parentActivityName=".Appuntamenti.IngaggiActivity"/>
