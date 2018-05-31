@@ -45,6 +45,11 @@
             android:name=".RecensioniScritteActivity"
             android:label="@string/title_activity_recensioni_scritte"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Feedback.FeedbackActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Feedback.ReviewpageActivity"
+            android:parentActivityName=".Feedback.FeedbackActivity" />
+
     </application>
 
 </manifest>

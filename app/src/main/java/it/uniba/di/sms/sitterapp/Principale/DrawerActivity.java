@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 
 import it.uniba.di.sms.sitterapp.Appuntamenti.IngaggiActivity;
 import it.uniba.di.sms.sitterapp.Constants;
+import it.uniba.di.sms.sitterapp.Feedback.FeedbackActivity;
 import it.uniba.di.sms.sitterapp.Profilo.ProfiloPrivatoActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
@@ -87,7 +88,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             startActivity(menuIngaggi);
 
         } else if (id == R.id.nav_scrivi_feedback) {
-
+                Intent scrivirecIntent = new Intent(DrawerActivity.this, FeedbackActivity.class);
+                startActivity(scrivirecIntent);
         } else if (id == R.id.nav_exit) {
 
             // Chiama la funzione di logout
