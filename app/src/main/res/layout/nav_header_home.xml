@@ -14,12 +14,12 @@
 
     <ImageView
         android:id="@+id/ProfileImageView"
-        android:layout_width="48dp"
-        android:layout_height="55dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:contentDescription="@string/nav_header_desc"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:cropToPadding="true"
         android:onClick="goProfile"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        app:srcCompat="@drawable/ic_action_profilo" />
 
     <TextView
         android:id="@+id/ProfileUsernameView"
@@ -29,6 +29,9 @@
         android:text="@string/username"
         android:onClick="goProfile"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+       />
+
+
 
 </LinearLayout>

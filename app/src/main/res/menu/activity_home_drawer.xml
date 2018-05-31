@@ -11,17 +11,19 @@
             />
 
         <item
-            android:id="@+id/nav_chat"
-            android:icon="@drawable/ic_chat_black_24dp"
-            android:title="@string/chat" />
-        <item
             android:id="@+id/nav_engagements"
             android:icon="@drawable/ic_work_black_24dp"
             android:title="@string/engagements" />
+
         <item
-            android:id="@+id/nav_feedback"
+            android:id="@+id/nav_recensioni_mie"
             android:icon="@drawable/ic_action_feedback"
-            android:title="@string/feedback" />
+            android:title="@string/miei_feedback" />
+
+        <item
+            android:id="@+id/nav_scrivi_feedback"
+            android:icon="@drawable/ic_scrivi_recensione"
+            android:title="@string/scrivi_recensione" />
     </group>
 
     <item android:title="@string/other">

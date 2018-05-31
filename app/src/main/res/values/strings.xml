@@ -93,6 +93,8 @@
     <string name="inviaRecensione">Submit your review</string>
     <string name="tariffaAssente">Hourly pay not defined.</string>
     <string name="descrizioneAssente">Ask directly for more info!</string>
+    <string name="miei_feedback">My Review</string>
+    <string name="scrivi_recensione">Write Review</string>
 
 
 </resources>

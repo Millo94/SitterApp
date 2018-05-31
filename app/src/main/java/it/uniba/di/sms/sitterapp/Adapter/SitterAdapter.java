@@ -40,13 +40,12 @@ public class SitterAdapter extends RecyclerView.Adapter<SitterAdapter.MyViewHold
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, phone;
+        public TextView name;
         public ImageView photo;
 
         public MyViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.name);
-            phone = (TextView) view.findViewById(R.id.phone);
             photo = (ImageView) view.findViewById(R.id.thumbnail);
 
             view.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +73,6 @@ public class SitterAdapter extends RecyclerView.Adapter<SitterAdapter.MyViewHold
         final UtenteSitter contact = sitterListFilter.get(position);
 
         holder.name.setText(contact.getUsername());
-        holder.phone.setText(contact.getNumero());
         Glide.with(context).load(contact.getFoto()).apply(RequestOptions.centerCropTransform()).into(holder.photo);
     }
 
