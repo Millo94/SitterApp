@@ -12,14 +12,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ProfileImageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:adjustViewBounds="false"
+        android:background="@drawable/customborder"
+        android:baselineAlignBottom="false"
         android:contentDescription="@string/nav_header_desc"
-        android:cropToPadding="true"
+        android:cropToPadding="false"
         android:onClick="goProfile"
-        app:srcCompat="@drawable/ic_action_profilo" />
+        android:paddingTop="8dp"
+        android:src="@mipmap/ic_launcher_round" />
 
     <TextView
         android:id="@+id/ProfileUsernameView"

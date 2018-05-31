@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
@@ -18,7 +18,6 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="1500dp"
             android:orientation="vertical">
 
 
@@ -115,6 +114,7 @@
                 android:layout_marginTop="15dp"
                 android:gravity="fill_vertical"
                 android:text="@string/email"
+                android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -213,12 +213,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/nazionePrFamiglia" />
 
             <TextView
-                android:id="@+id/provinciaPrFamiglia"
+                android:id="@+id/capPrFamiglia"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:gravity="fill_vertical"
-                android:text="@string/provincia"
+                android:text="@string/cap"
                 android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -228,102 +227,24 @@
                 app:layout_constraintTop_toBottomOf="@+id/nazionePrFamiglia2" />
 
             <EditText
-                android:id="@+id/provinciaPrFamiglia2"
+                android:id="@+id/capPrFamiglia2"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/provincia"
-                android:textSize="18sp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/cap"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/provinciaPrFamiglia" />
-
-            <TextView
-                android:id="@+id/cittaPrFamiglia"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:gravity="fill_vertical"
-                android:text="@string/citta"
-                android:textColor="@color/colorScritte"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/provinciaPrFamiglia2" />
-
-            <EditText
-                android:id="@+id/cittaPrFamiglia2"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/citta"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cittaPrFamiglia" />
-
-            <TextView
-                android:id="@+id/viaPrFamiglia"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:gravity="fill_vertical"
-                android:text="@string/via"
-                android:textColor="@color/colorScritte"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cittaPrFamiglia2" />
-
-            <EditText
-                android:id="@+id/viaPrFamiglia2"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/via"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viaPrFamiglia" />
-
-            <TextView
-                android:id="@+id/civicoPrFamiglia"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:gravity="fill_vertical"
-                android:text="@string/civico"
-                android:textColor="@color/colorScritte"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viaPrFamiglia2" />
-
-            <EditText
-                android:id="@+id/civicoPrFamiglia2"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/civico"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/civicoPrFamiglia" />
+                app:layout_constraintTop_toBottomOf="@+id/capPrFamiglia" />
 
             <ToggleButton
                 android:id="@+id/togglePrFamiglia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
+                android:layout_marginTop="40dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:checked="true"
                 android:textColor="@android:color/background_light"
@@ -331,7 +252,8 @@
                 android:textOn="@string/modificaProfiloOn"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/capPrFamiglia2" />
 
             <Switch
                 android:id="@+id/animaliPrFamiglia"

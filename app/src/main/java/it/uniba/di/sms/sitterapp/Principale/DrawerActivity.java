@@ -88,8 +88,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         } else if (id == R.id.nav_scrivi_feedback) {
 
-        } else if (id == R.id.nav_settings) {
-
         } else if (id == R.id.nav_exit) {
 
             // Chiama la funzione di logout

@@ -21,8 +21,8 @@ public class PrivatoFamigliaFragment extends Fragment {
 
 
     View view;
-    TextView usernamePrFam, nomePrFam, cognomePrFam, emailPrFam, numeroPrFam, nazionePrFam, provinciaPrFam, cittaPrFam, viaPrFam, civicoPrFam, numFigliPrFam, animaliPrFam;
-    EditText descrPrFam, nomePrFam2, cognomePrFam2, emailPrFam2, numeroPrFam2, nazionePrFam2, provinciaPrFam2, cittaPrFam2, viaPrFam2, civicoPrFam2, numFigliPrFam2, animaliPrFam2;
+    TextView usernamePrFam, nomePrFam, cognomePrFam, emailPrFam, numeroPrFam, nazionePrFam, capPrFam, numFigliPrFam, animaliPrFam;
+    EditText descrPrFam, nomePrFam2, cognomePrFam2, emailPrFam2, numeroPrFam2, nazionePrFam2, capPrFam2,  numFigliPrFam2, animaliPrFam2;
     RatingBar ratingPrFam;
 
     Button modificaProfilo;
@@ -62,10 +62,7 @@ public class PrivatoFamigliaFragment extends Fragment {
                 numeroPrFam2.setEnabled(true);
                 animaliPrFam2.setEnabled(true);
                 nazionePrFam2.setEnabled(true);
-                provinciaPrFam2.setEnabled(true);
-                cittaPrFam2.setEnabled(true);
-                viaPrFam2.setEnabled(true);
-                civicoPrFam2.setEnabled(true);
+                capPrFam2.setEnabled(true);
                 numFigliPrFam2.setEnabled(true);
 
                 edit = true;
@@ -79,10 +76,7 @@ public class PrivatoFamigliaFragment extends Fragment {
                 numeroPrFam2.setEnabled(false);
                 animaliPrFam2.setEnabled(false);
                 nazionePrFam2.setEnabled(false);
-                provinciaPrFam2.setEnabled(false);
-                cittaPrFam2.setEnabled(false);
-                viaPrFam2.setEnabled(false);
-                civicoPrFam2.setEnabled(false);
+                capPrFam2.setEnabled(false);
                 numFigliPrFam2.setEnabled(false);
 
                 edit = false;
@@ -118,21 +112,9 @@ public class PrivatoFamigliaFragment extends Fragment {
         nazionePrFam2 = (EditText) view.findViewById(R.id.nazionePrFamiglia2);
         nazionePrFam2.setEnabled(false);
 
-        provinciaPrFam = (TextView) view.findViewById(R.id.provinciaPrFamiglia);
-        provinciaPrFam2 = (EditText) view.findViewById(R.id.provinciaPrFamiglia2);
-        provinciaPrFam2.setEnabled(false);
-
-        cittaPrFam = (TextView) view.findViewById(R.id.cittaPrFamiglia);
-        cittaPrFam2 = (EditText) view.findViewById(R.id.cittaPrFamiglia2);
-        cittaPrFam2.setEnabled(false);
-
-        viaPrFam = (TextView) view.findViewById(R.id.viaPrFamiglia);
-        viaPrFam2 = (EditText) view.findViewById(R.id.viaPrFamiglia2);
-        viaPrFam2.setEnabled(false);
-
-        civicoPrFam = (TextView) view.findViewById(R.id.civicoPrFamiglia);
-        civicoPrFam2 = (EditText) view.findViewById(R.id.civicoPrFamiglia2);
-        civicoPrFam2.setEnabled(false);
+        capPrFam = (TextView) view.findViewById(R.id.capPrFamiglia);
+        capPrFam2 = (EditText) view.findViewById(R.id.capPrFamiglia2);
+        capPrFam2.setEnabled(false);
 
         numFigliPrFam = (TextView) view.findViewById(R.id.figliPrFamiglia);
         numFigliPrFam2 = (EditText) view.findViewById(R.id.figliPrFamiglia2);
