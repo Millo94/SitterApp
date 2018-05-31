@@ -9,14 +9,30 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import it.uniba.di.sms.sitterapp.Constants;
+import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.Oggetti.UtenteFamiglia;
 
 /**
  * FRAGMENT PROFILO PUBBLICO FAMIGLIA
- *
- * TODO: COLLEGAMENTO CON IL DATABASE, QUANDO FAREMO LA CHAT COLLEGARE IL BOTTONE PER CONTATTARE LA BABYSITTER E DA CAPIRE IL RATINGBAR
  *
  */
 public class PubblicoFamigliaFragment extends Fragment {
@@ -31,6 +47,8 @@ public class PubblicoFamigliaFragment extends Fragment {
     Button feedbackFam;
     //DA CAPIRE
     RatingBar ratingPuFam;
+
+    RequestQueue requestQueue;
 
 
     private OnFragmentInteractionListener mListener;
@@ -47,11 +65,76 @@ public class PubblicoFamigliaFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profilo_pubblico_family, container, false);
 
+        requestQueue = Volley.newRequestQueue(getContext());
         inizializzazione();
-
-        //manca il collegamento al database
-
+        showProfile(getActivity().getIntent().getStringExtra("username"));
         return view;
+    }
+
+    private void showProfile(final String username){
+
+        StringRequest request = new StringRequest(Request.Method.POST, Php.PROFILO, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject json = new JSONObject(response);
+                    String result = json.optString("show");
+
+                    if(result.equals("true")){
+                        usernamePuFam.setText(username);
+                        emailPuFam2.setText(json.getString("email"));
+                        nomePuFam2.setText(json.getString("nome"));
+                        cognomePuFam2.setText(json.getString("cognome"));
+                        numeroPuFam2.setText(json.getString("telefono"));
+                        nazionePuFam2.setText(json.getString("nazione"));
+                        capPuFam2.setText(json.getString("cap"));
+                        // Rating bar
+                        if(!json.getString("rating").equals("null")) {
+                            ratingPuFam.setRating((float) json.getDouble("rating"));
+                        }
+                        // Setta animali
+                        if(json.getString("animali").equals("0"))
+                            animaliPuFam2.setText("Si");
+                        else
+                            animaliPuFam2.setText("No");
+                        // Setta numero figli
+                        if(!json.getString("numFigli").equals("null"))
+                            numFigliPuFam2.setText(json.getString("numFigli"));
+                        else
+                            numFigliPuFam2.setText("0");
+                        // Check descrizione
+                        if(!json.getString("descrizione").equals("null"))
+                            descrPuFam.setText(json.getString("descrizione"));
+                        else
+                            descrPuFam.setText(R.string.descrizioneAssente);
+
+                    } else if (result.equals("false")) {
+                        Toast.makeText(getContext(), R.string.profileError, Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), R.string.profileError, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("operation", "show");
+                params.put("type", String.valueOf(Constants.TYPE_FAMILY));
+                params.put("username", username);
+                return params;
+            }
+        };
+
+        requestQueue.add(request);
     }
 
     public void inizializzazione() {

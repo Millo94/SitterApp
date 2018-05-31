@@ -1,5 +1,6 @@
 package it.uniba.di.sms.sitterapp.Appuntamenti;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import it.uniba.di.sms.sitterapp.Constants;
+import it.uniba.di.sms.sitterapp.Principale.HomeActivity;
+import it.uniba.di.sms.sitterapp.Profilo.ProfiloPubblicoActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 
@@ -70,21 +73,27 @@ public class NoticeDetailActivity extends AppCompatActivity {
     View.OnClickListener openProfileListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            Intent detailIntent = new Intent(NoticeDetailActivity.this, ProfiloPubblicoActivity.class);
+            detailIntent.putExtra(Constants.TYPE, Constants.TYPE_FAMILY);
+            detailIntent.putExtra("username", user.getText().toString());
+            startActivity(detailIntent);
         }
     };
+
     View.OnClickListener candidateListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
         }
     };
+
     View.OnClickListener deleteNoticeListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
         }
     };
+
     View.OnClickListener viewCandidateListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
