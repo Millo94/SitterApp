@@ -38,7 +38,7 @@ public class NoticeDetailActivity extends AppCompatActivity {
             end = (TextView) findViewById(R.id.oraFineDettagliSit2);
             desc = (TextView) findViewById(R.id.descrizioneDettagliSit2);
 
-            Button openProfile = (Button) findViewById(R.id.visualProfiloDettagliSit);
+            Button openProfile = (Button) findViewById(R.id.openFamilyProfile);
             openProfile.setOnClickListener(openProfileListener);
             Button candidate = (Button) findViewById(R.id.candidamiSit);
             candidate.setOnClickListener(candidateListener);

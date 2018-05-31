@@ -27,7 +27,7 @@
                 android:backgroundTint="@color/colorPrimary"
                 android:text="@string/candidami"
                 android:textColor="@android:color/background_light"
-                app:layout_constraintEnd_toStartOf="@+id/visualProfiloDettagliSit"
+                app:layout_constraintEnd_toStartOf="@+id/openFamilyProfile"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tableNoticeSit" />
@@ -171,17 +171,18 @@
             </TableLayout>
 
             <Button
-                android:id="@+id/visualProfiloDettagliSit"
+                android:id="@+id/openFamilyProfile"
                 android:layout_width="150dp"
                 android:layout_height="70dp"
                 android:layout_marginTop="60dp"
                 android:backgroundTint="@color/colorPrimary"
-                android:text="@string/visualizzaProfiloSitter"
+                android:text="@string/visualizzaProfiloFamiglia"
                 android:textColor="@android:color/background_light"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/candidamiSit"
                 app:layout_constraintTop_toBottomOf="@+id/tableNoticeSit" />
+
         </android.support.constraint.ConstraintLayout>
 
     </ScrollView>

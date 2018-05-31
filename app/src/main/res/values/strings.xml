@@ -79,7 +79,7 @@
     <string name="nuovoUtente">Are you new on SitterApp?</string>
     <string name="dettaglioAnnuncio">Notice Details</string>
     <string name="profileError">There was an error in opening the profile.</string>
-    <string name="visualizzaProfiloSitter">Open Sitter Profile</string>
+    <string name="visualizzaProfiloFamiglia">Open Family Profile</string>
     <string name="candidami">Cadidate me</string>
     <string name="missingdescription">Describe yourself...</string>
     <string name="genericError">An error occurred.</string>

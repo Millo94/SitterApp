@@ -36,7 +36,7 @@ import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
 /**
  * FRAGMENT PROFILO PUBBLICO SITTER
  *
- * TODO -> COLLEGAMENTO AL DATABASE, DA CAPIRE LA FOTO BABYSITTER E RATING BAR, QUANDO FAREMO LA CHAT COLLEGARLA AL BOTTONE
+ * TODO -> COLLEGARE I BOTTONI
  */
 public class PubblicoSitterFragment extends Fragment {
 
@@ -55,8 +55,6 @@ public class PubblicoSitterFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public PubblicoSitterFragment() {}
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,6 +91,10 @@ public class PubblicoSitterFragment extends Fragment {
                         numeroPuSit2.setText(json.getString("telefono"));
                         nazionePuSit2.setText(json.getString("nazione"));
                         capPuSit2.setText(json.getString("cap"));
+                        // Rating bar
+                        if(!json.getString("rating").equals("null")) {
+                            ratingPuSitter.setRating((float) json.getDouble("rating"));
+                        }
                         // Setta numero ingaggi
                         if(!json.getString("ingaggi").equals("null"))
                             ingaggiPuSit2.setText(json.getString("ingaggi"));
@@ -148,7 +150,6 @@ public class PubblicoSitterFragment extends Fragment {
         requestQueue.add(request);
     }
 
-
     public void inizializzazione(){
 
         usernamePuSit = (TextView) view.findViewById(R.id.usernamePuSitter);
@@ -198,7 +199,6 @@ public class PubblicoSitterFragment extends Fragment {
         contattaFamiglia = (Button) view.findViewById(R.id.contattaFamiglia);
         feedbackSit = (Button) view.findViewById(R.id.feedbackSitter);
     }
-
 
     @Override
     public void onAttach(Context context) {
