@@ -48,9 +48,9 @@
                 android:layout_width="241dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:isIndicator="true"
                 android:numStars="5"
-                android:stepSize="5"
+                android:stepSize="1"
+                android:rating="0"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/giudizioText" />

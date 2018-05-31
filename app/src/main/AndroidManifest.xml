@@ -39,6 +39,12 @@
             android:name=".Appuntamenti.IngaggiActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Profilo.ProfiloPubblicoActivity"></activity>
+
+        <activity android:name=".Feedback.FeedbackActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Feedback.ReviewpageActivity"
+            android:parentActivityName=".Feedback.FeedbackActivity" />
+
     </application>
 
 </manifest>

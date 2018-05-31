@@ -20,4 +20,11 @@ public class Php {
 
     public static final String ANNUNCI = BASE_URL + "annunci.php";
 
+    public static final String UTENZE = BASE_URL + "elencoutenze.php";
+
+    public static final String RECENSIONE = BASE_URL + "recensione.php";
+
+
+
+
 }
