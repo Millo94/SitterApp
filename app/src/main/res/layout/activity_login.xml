@@ -87,8 +87,8 @@
 
     <Button
         android:id="@+id/btnNewAccountSitter"
-        android:layout_width="160dp"
-        android:layout_height="60dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/colorPrimary"
         android:onClick="createAccountSitter"
@@ -101,8 +101,8 @@
 
     <Button
         android:id="@+id/btnNewAccountFamily"
-        android:layout_width="160dp"
-        android:layout_height="60dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/colorPrimary"
         android:onClick="createAccountFamily"

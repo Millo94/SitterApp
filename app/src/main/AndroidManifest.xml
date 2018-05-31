@@ -38,13 +38,13 @@
         <activity
             android:name=".Appuntamenti.IngaggiActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Profilo.ProfiloPubblicoActivity"></activity>
-
-        <activity android:name=".Feedback.FeedbackActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Feedback.ReviewpageActivity"
-            android:parentActivityName=".Feedback.FeedbackActivity" />
-
+        <activity
+            android:name=".Profilo.ProfiloPubblicoActivity"
+            android:parentActivityName=".Appuntamenti.NoticeDetailActivity" />
+        <activity
+            android:name=".RecensioniScritteActivity"
+            android:label="@string/title_activity_recensioni_scritte"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

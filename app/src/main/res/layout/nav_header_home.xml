@@ -12,14 +12,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ProfileImageView"
-        android:layout_width="48dp"
-        android:layout_height="55dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:adjustViewBounds="false"
+        android:background="@drawable/customborder"
+        android:baselineAlignBottom="false"
         android:contentDescription="@string/nav_header_desc"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:cropToPadding="false"
         android:onClick="goProfile"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        android:paddingTop="8dp"
+        android:src="@mipmap/ic_launcher_round" />
 
     <TextView
         android:id="@+id/ProfileUsernameView"
@@ -29,6 +33,9 @@
         android:text="@string/username"
         android:onClick="goProfile"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+       />
+
+
 
 </LinearLayout>
