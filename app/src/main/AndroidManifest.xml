@@ -38,7 +38,9 @@
         <activity
             android:name=".Appuntamenti.IngaggiActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Profilo.ProfiloPubblicoActivity"></activity>
+
+        <activity android:name=".Profilo.ProfiloPubblicoActivity"
+            android:parentActivityName=".Appuntamenti.NoticeDetailActivity"/>
     </application>
 
 </manifest>

@@ -75,7 +75,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_chat) {
+        if (id == R.id.nav_recensioni_mie) {
             // Handle the camera action
         } else if (id == R.id.nav_home) {
 
@@ -86,7 +86,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             Intent menuIngaggi = new Intent(DrawerActivity.this, IngaggiActivity.class);
             startActivity(menuIngaggi);
 
-        } else if (id == R.id.nav_feedback) {
+        } else if (id == R.id.nav_scrivi_feedback) {
 
         } else if (id == R.id.nav_settings) {
 
