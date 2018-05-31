@@ -72,7 +72,7 @@ public class PubblicoSitterFragment extends Fragment {
         return view;
     }
 
-    public void showProfile(final String username){
+    private void showProfile(final String username){
 
         StringRequest request = new StringRequest(Request.Method.POST, Php.PROFILO, new Response.Listener<String>() {
             @Override
