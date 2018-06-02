@@ -3,10 +3,13 @@ package it.uniba.di.sms.sitterapp.Appuntamenti;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -33,12 +36,14 @@ import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Oggetti.Notice;
 import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.Principale.DrawerActivity;
+import it.uniba.di.sms.sitterapp.Principale.NewNoticeActivity;
 import it.uniba.di.sms.sitterapp.R;
 
 public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.NoticeAdapterListener{
 
     // Vista
     private RecyclerView recyclerView;
+    private FloatingActionButton addNotice;
 
     //Items ingaggi
     private List<Notice> noticeList;
@@ -59,8 +64,20 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
+        if(sessionManager.getSessionType() == Constants.TYPE_FAMILY){
+            addNotice = (FloatingActionButton) findViewById(R.id.addNotice);
+            addNotice.setVisibility(View.VISIBLE);
+            addNotice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(IngaggiActivity.this, NewNoticeActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
+
 
         noticeList = new ArrayList<>();
         noticeAdapter = new NoticeAdapter(IngaggiActivity.this, noticeList, IngaggiActivity.this);
@@ -71,9 +88,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        //caricamento di annunci
-        loadNotices();
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -102,8 +116,16 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        remainingNoticeList.clear();
+        noticeList.clear();
+        loadNotices();
+    }
+
     /**
-     * Caricamento degli annunci (per la home delle babysitter)
+     * Caricamento degli annunci
      */
     private void loadNotices() {
 
@@ -209,4 +231,5 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
             Toast.makeText(IngaggiActivity.this,"Ancora da implementare", Toast.LENGTH_SHORT).show();
         }
     }
+
 }

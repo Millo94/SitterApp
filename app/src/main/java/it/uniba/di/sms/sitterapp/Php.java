@@ -18,7 +18,7 @@ public class Php {
 
     public static final String ELENCO_SITTER = BASE_URL + "elencoSitter.php";
 
-    public static final String ANNUNCI = BASE_URL + "annunci.php";
+    public static final String ANNUNCI = BASE_URL + "annunciProva.php";
 
     public static final String UTENZE = BASE_URL + "elencoutenze.php";
 

@@ -82,7 +82,7 @@
     <string name="visualizzaProfiloFamiglia">Open Family Profile</string>
     <string name="candidami">Cadidate me</string>
     <string name="missingdescription">Describe yourself...</string>
-    <string name="genericError">An error occurred.</string>
+    <string name="genericError">An error occurred. Retry.</string>
     <string name="modifySuccess">Edit complete</string>
     <string name="Home" translatable="false">Home</string>
     <string name="lasciaFeedback">Write Feedback</string>
@@ -100,6 +100,10 @@
     <string name="tab_text_2">Tab 2</string>
     <string name="tab_text_3">Tab 3</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="nuovoAnnuncio">New Notice</string>
+    <string name="pubblicaAnnuncio">Post Notice</string>
+    <string name="selezionaOra">Select Time</string>
+    <string name="annuncioPubblicato">Notice published.</string>
 
 
 </resources>
