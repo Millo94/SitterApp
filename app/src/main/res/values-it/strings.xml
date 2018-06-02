@@ -67,7 +67,7 @@
     <string name="visualizzaProfiloFamiglia">Visualizza Famiglia</string>
     <string name="candidami">Candidami</string>
     <string name="missingdescription">Su di te...</string>
-    <string name="genericError">C\'è stato un errore.</string>
+    <string name="genericError">C\'è stato un errore. Riprova.</string>
     <string name="modifySuccess">Modifiche effettuate</string>
     <string name="lasciaFeedback">Scrivi Recensione</string>
     <string name="feedback" translatable="false">Recensioni</string>
@@ -80,6 +80,10 @@
     <string name="descrizioneAssente">Richiedi direttamente all\'utente maggiori informazioni!</string>
     <string name="miei_feedback">Le mie recensioni</string>
     <string name="scrivi_recensione">Scrivi Recensione</string>
+    <string name="nuovoAnnuncio">Nuovo Annuncio</string>
+    <string name="pubblicaAnnuncio">Pubblica Annuncio</string>
+    <string name="selezionaOra">Seleziona Orario</string>
+    <string name="annuncioPubblicato">Annuncio pubblicato.</string>
     <string name="recensioniScritte">Recensioni Scritte</string>
     <string name="recensioniRicevute">Recensioni Ricevute</string>
 

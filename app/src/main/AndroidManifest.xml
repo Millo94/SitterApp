@@ -51,6 +51,10 @@
         <activity android:name=".Feedback.ReviewpageActivity"
             android:parentActivityName=".Feedback.FeedbackActivity" />
 
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Principale.NewNoticeActivity"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>
