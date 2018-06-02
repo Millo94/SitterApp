@@ -21,6 +21,7 @@ import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Feedback.FeedbackActivity;
 import it.uniba.di.sms.sitterapp.Profilo.ProfiloPrivatoActivity;
 import it.uniba.di.sms.sitterapp.R;
+import it.uniba.di.sms.sitterapp.Recensioni.RecensioniActivity;
 import it.uniba.di.sms.sitterapp.SessionManager;
 
 /**
@@ -77,9 +78,16 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         int id = item.getItemId();
 
         if (id == R.id.nav_recensioni_mie) {
-            // Handle the camera action
+
+            //collegamento alla sezione recensioni
+            Intent recensioni = new Intent(DrawerActivity.this, RecensioniActivity.class);
+            startActivity(recensioni);
+
         } else if (id == R.id.nav_home) {
 
+            //collegamento alla Home
+            Intent home = new Intent (DrawerActivity.this, HomeActivity.class);
+            startActivity(home);
 
         } else if (id == R.id.nav_engagements) {
 

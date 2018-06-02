@@ -49,10 +49,10 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
 
         if (type == Constants.TYPE_SITTER){
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new SitterRegistrationFragment()).commit();
+                    .add(R.id.viewPager, new SitterRegistrationFragment()).commit();
         } else if(type == Constants.TYPE_FAMILY) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new FamilyRegistrationFragment()).commit();
+                    .add(R.id.viewPager, new FamilyRegistrationFragment()).commit();
         }
 
 

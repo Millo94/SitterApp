@@ -20,10 +20,10 @@ public class ProfiloPubblicoActivity extends AppCompatActivity implements Pubbli
         int type = getIntent().getIntExtra(Constants.TYPE, -1);
         if (type == Constants.TYPE_SITTER){
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PubblicoSitterFragment()).commit();
+                    .add(R.id.viewPager, new PubblicoSitterFragment()).commit();
         } else if(type == Constants.TYPE_FAMILY) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PubblicoFamigliaFragment()).commit();
+                    .add(R.id.viewPager, new PubblicoFamigliaFragment()).commit();
         }
     }
 

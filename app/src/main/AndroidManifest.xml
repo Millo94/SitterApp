@@ -41,8 +41,13 @@
         <activity
             android:name=".Profilo.ProfiloPubblicoActivity"
             android:parentActivityName=".Appuntamenti.NoticeDetailActivity" />
+        <activity
+            android:name=".Recensioni.RecensioniActivity"
+            android:parentActivityName=".Principale.HomeActivity" />
+
         <activity android:name=".Feedback.FeedbackActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName=".Principale.HomeActivity" />
+
         <activity android:name=".Feedback.ReviewpageActivity"
             android:parentActivityName=".Feedback.FeedbackActivity" />
 

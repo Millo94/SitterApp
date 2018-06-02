@@ -84,5 +84,7 @@
     <string name="pubblicaAnnuncio">Pubblica Annuncio</string>
     <string name="selezionaOra">Seleziona Orario</string>
     <string name="annuncioPubblicato">Annuncio pubblicato.</string>
+    <string name="recensioniScritte">Recensioni Scritte</string>
+    <string name="recensioniRicevute">Recensioni Ricevute</string>
 
 </resources>
