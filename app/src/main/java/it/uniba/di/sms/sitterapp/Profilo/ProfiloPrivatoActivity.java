@@ -19,10 +19,10 @@ public class ProfiloPrivatoActivity extends AppCompatActivity implements Privato
         int type = getIntent().getIntExtra(Constants.TYPE, -1);
         if (type == Constants.TYPE_SITTER){
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PrivatoSitterFragment()).commit();
+                    .add(R.id.viewPager, new PrivatoSitterFragment()).commit();
         } else if(type == Constants.TYPE_FAMILY) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PrivatoFamigliaFragment()).commit();
+                    .add(R.id.viewPager, new PrivatoFamigliaFragment()).commit();
         }
     }
 

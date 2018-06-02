@@ -80,5 +80,7 @@
     <string name="descrizioneAssente">Richiedi direttamente all\'utente maggiori informazioni!</string>
     <string name="miei_feedback">Le mie recensioni</string>
     <string name="scrivi_recensione">Scrivi Recensione</string>
+    <string name="recensioniScritte">Recensioni Scritte</string>
+    <string name="recensioniRicevute">Recensioni Ricevute</string>
 
 </resources>
