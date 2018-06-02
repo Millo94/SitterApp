@@ -24,6 +24,7 @@ public class Php {
 
     public static final String RECENSIONE = BASE_URL + "recensione.php";
 
+    public static final String RECENSIONI = BASE_URL + "recensioniProva.php";
 
 
 

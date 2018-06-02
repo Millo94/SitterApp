@@ -11,7 +11,7 @@
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/usernameRecensione"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="246dp"
@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RatingBar
-        android:id="@+id/ratingBarVisualRecensione"
+        android:id="@+id/ratingBarRecensione"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -33,15 +33,15 @@
         android:isIndicator="true"
         android:numStars="5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameRecensione" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/descrizioneRecensione"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/descrizione"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBarVisualRecensione" />
+        app:layout_constraintTop_toBottomOf="@+id/ratingBarRecensione" />
 </android.support.constraint.ConstraintLayout>

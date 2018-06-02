@@ -4,10 +4,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toolbar;
 
-import it.uniba.di.sms.sitterapp.Adapter.RecensioniAdapter;
-import it.uniba.di.sms.sitterapp.Oggetti.Notice;
+import it.uniba.di.sms.sitterapp.Adapter.PageViewAdapter;
 import it.uniba.di.sms.sitterapp.R;
 
 public class RecensioniActivity extends AppCompatActivity {
@@ -27,7 +25,7 @@ public class RecensioniActivity extends AppCompatActivity {
 
         viewPager = (ViewPager) findViewById(R.id.pager);
 
-         RecensioniAdapter adapter = new RecensioniAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+         PageViewAdapter adapter = new PageViewAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
