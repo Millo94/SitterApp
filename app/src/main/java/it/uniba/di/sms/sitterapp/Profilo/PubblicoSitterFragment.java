@@ -159,6 +159,7 @@ public class PubblicoSitterFragment extends Fragment {
         descrPuSit = (TextView) view.findViewById(R.id.descrizionePuSitter);
 
         ratingPuSitter = (RatingBar) view.findViewById(R.id.ratingPuSitter);
+        ratingPuSitter.setEnabled(false);
 
         nomePuSit = (TextView) view.findViewById(R.id.nomePuSitter);
         nomePuSit2 = (TextView) view.findViewById(R.id.nomePuSitter2);
