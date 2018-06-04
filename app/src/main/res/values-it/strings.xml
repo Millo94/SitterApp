@@ -89,6 +89,7 @@
     <string name="sceltaAzione">Scegli come eseguire l\' azione:</string>
     <string name="sms">SMS</string>
     <string name="chiamata">call</string>
+    <string name="profilo">Profilo</string>
 
 
 </resources>

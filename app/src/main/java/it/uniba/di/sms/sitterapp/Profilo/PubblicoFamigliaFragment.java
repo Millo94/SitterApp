@@ -155,6 +155,7 @@ public class PubblicoFamigliaFragment extends Fragment {
         descrPuFam = (TextView) view.findViewById(R.id.descrizionePuFamiglia);
 
         ratingPuFam = (RatingBar) view.findViewById(R.id.ratingPuFamiglia);
+        ratingPuFam.setEnabled(false);
 
         nomePuFam = (TextView) view.findViewById(R.id.nomePuFamiglia);
         nomePuFam2 = (TextView) view.findViewById(R.id.nomePuFamiglia2);
