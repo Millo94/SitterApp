@@ -50,7 +50,7 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".Feedback.ReviewpageActivity"
-            android:parentActivityName=".Feedback.FeedbackActivity"
+            android:parentActivityName=".Principale.HomeActivity"
             />
 
         <activity

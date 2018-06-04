@@ -137,7 +137,8 @@ public class FeedbackActivity extends DrawerActivity implements NoticeAdapter.No
                                 String oraInizio = noticeObject.getString("oraInizio");
                                 String oraFine = noticeObject.getString("oraFine");
                                 String descrizione = noticeObject.getString("descrizione");
-                                Notice n = new Notice(idAnnuncio,famiglia, data, oraInizio, oraFine, descrizione);
+                                String sitter = noticeObject.getString("babysitter");
+                                Notice n = new Notice(idAnnuncio,famiglia, data, oraInizio, oraFine, descrizione,sitter);
 
                                 if (i < LOAD_LIMIT) {
                                     noticeList.add(n);
@@ -162,7 +163,7 @@ public class FeedbackActivity extends DrawerActivity implements NoticeAdapter.No
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("username", sessionManager.getSessionUsername());
-                params.put("tipoutente", String.valueOf(sessionManager.getSessionType()));
+                params.put("type", String.valueOf(sessionManager.getSessionType()));
                 return params;
             }
         };
@@ -201,13 +202,10 @@ public class FeedbackActivity extends DrawerActivity implements NoticeAdapter.No
     @Override
     public void onNoticeSelected(Notice notice) {
 
-        if(sessionManager.getSessionType() == Constants.TYPE_SITTER) {
             Intent familyRev = new Intent(it.uniba.di.sms.sitterapp.Feedback.FeedbackActivity.this, ReviewpageActivity.class);
             familyRev.putExtra("famiglia", notice.getFamily());
             familyRev.putExtra("idAnnuncio",notice.getIdAnnuncio());
+            familyRev.putExtra("sitter",notice.getSitter());
             startActivity(familyRev);
-        } else {
-            Toast.makeText(it.uniba.di.sms.sitterapp.Feedback.FeedbackActivity.this,"Ancora da implementare", Toast.LENGTH_SHORT).show();
-        }
     }
 }
