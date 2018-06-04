@@ -3,7 +3,6 @@ package it.uniba.di.sms.sitterapp.Recensioni;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.pnikosis.materialishprogress.ProgressWheel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,10 +23,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 
 import it.uniba.di.sms.sitterapp.Adapter.RecensioniAdapter;
 import it.uniba.di.sms.sitterapp.Constants;
@@ -38,34 +34,16 @@ import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 
 
-public class RecensioniRicevuteFragment extends Fragment implements RecensioniAdapter.RecensioniAdapterListener {
+public class RecensioniRicevuteFragment extends Fragment {
 
-    // Vista
-    private RecyclerView recyclerView;
 
-    //Items ingaggi
+    private RecyclerView recycler;
+    private RecensioniAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
     private List<Recensione> recensioneList;
-    private Queue<Recensione> remainingRecensioneList;
-    private RecensioniAdapter recensioneAdapter;
 
-
-    // we will be loading 15 items per page or per load
-    // you can change this to fit your specifications.
-    // When you change this, there will be no need to update your php page,
-    // as php will be ordered what to load and limit by android java
-    public static final int LOAD_LIMIT = 5;
-
-    // we need this variable to lock and unlock loading more
-    // e.g we should not load more when volley is already loading,
-    // loading will be activated when volley completes loading
-    private boolean itShouldLoadMore = true;
-
+    boolean itShouldLoadMore;
     private SessionManager sessionManager;
-
-
-    public RecensioniRicevuteFragment() {
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,55 +54,26 @@ public class RecensioniRicevuteFragment extends Fragment implements RecensioniAd
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.content_home, container, false);
+        View view = inflater.inflate(R.layout.content_home, container, false);
 
         sessionManager = new SessionManager(getActivity().getApplicationContext());
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerHome);
+        recycler = (RecyclerView) view.findViewById(R.id.recyclerHome);
+        recycler.setHasFixedSize(true);
+
+        layoutManager = new LinearLayoutManager(getContext());
+
+        recycler.setLayoutManager(layoutManager);
 
         recensioneList = new ArrayList<>();
-        remainingRecensioneList = new LinkedList<>();
-        recensioneAdapter = new RecensioniAdapter(recensioneList);
+        adapter = new RecensioniAdapter(recensioneList);
+        recycler.setAdapter(adapter);
 
-
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        recyclerView.setAdapter(recensioneAdapter);
-
-
-        //caricamento di annunci
         loadNotices();
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
-                if (dy > 0) {
-                    // Recycle view scrolling downwards...
-                    // this if statement detects when user reaches the end of recyclerView, this is only time we should load more
-                    if (!recyclerView.canScrollVertically(RecyclerView.FOCUS_DOWN)) {
-                        // remember "!" is the same as "== false"
-                        // here we are now allowed to load more, but we need to be careful
-                        // we must check if itShouldLoadMore variable is true [unlocked]
-                        if (itShouldLoadMore) {
-
-                            loadMore(view);
-                        }
-                    }
-                }
-            }
-        });
-
 
         return view;
     }
+
 
     /**
      * Caricamento degli annunci (per la home delle babysitter)
@@ -140,8 +89,6 @@ public class RecensioniRicevuteFragment extends Fragment implements RecensioniAd
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-
-        //todo -> inserire php giusto
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Php.RECENSIONI,
                 new Response.Listener<String>() {
                     @Override
@@ -152,7 +99,7 @@ public class RecensioniRicevuteFragment extends Fragment implements RecensioniAd
                         try {
                             JSONArray recensione = new JSONArray(response);
 
-                            for (int i = 0; i < recensione.length() - 1; i++) {
+                            for (int i = 0; i < recensione.length(); i++) {
 
                                 JSONObject recensioneObject = recensione.getJSONObject(i);
                                 String username;
@@ -169,15 +116,12 @@ public class RecensioniRicevuteFragment extends Fragment implements RecensioniAd
 
                                 Recensione r = new Recensione(username, descrizione, rating);
 
-                                if (i < LOAD_LIMIT) {
-                                    recensioneList.add(r);
-                                } else {
-                                    remainingRecensioneList.add(r);
-                                }
+                                recensioneList.add(r);
+
                             }
 
 
-                            recensioneAdapter.notifyDataSetChanged();
+                            adapter.notifyDataSetChanged();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -201,37 +145,14 @@ public class RecensioniRicevuteFragment extends Fragment implements RecensioniAd
         Volley.newRequestQueue(getContext()).add(stringRequest);
     }
 
-    /**
-     * Caricamento incrementale degli annunci
-     */
-    private void loadMore(View view) {
-
-        itShouldLoadMore = false; // lock this until volley completes processing
-
-        // progressWheel is just a loading spinner, please see the content_main.xml
-        final ProgressWheel progressWheel = (ProgressWheel) view.findViewById(R.id.progress_wheel_home);
-        progressWheel.setVisibility(View.VISIBLE);
-
-        itShouldLoadMore = true;
-
-        if (!remainingRecensioneList.isEmpty()) {
-            //todo aggiungere un ritardo (asynctask) per visualizzare la ruota figa di caricamento
-            final int remainingRecensioneListSize = remainingRecensioneList.size();
-            for (int i = 0; i < remainingRecensioneListSize; ++i) {
-                if (i < LOAD_LIMIT) {
-                    recensioneList.add(remainingRecensioneList.remove());
-                }
-            }
-            recensioneAdapter.notifyDataSetChanged();
-        }
-        progressWheel.setVisibility(View.GONE);
-    }
 
 
-    @Override
+    /*@Override
     public void onRecensioniSelected(Recensione recensione) {
         Toast.makeText(getContext(), "da implementare", Toast.LENGTH_SHORT).show();
-    }
+    }*/
+
+
 }
 
 

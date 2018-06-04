@@ -25,7 +25,7 @@ public class RecensioniActivity extends AppCompatActivity {
 
         viewPager = (ViewPager) findViewById(R.id.pager);
 
-         PageViewAdapter adapter = new PageViewAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        PageViewAdapter adapter = new PageViewAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

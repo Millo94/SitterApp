@@ -46,12 +46,10 @@
             android:parentActivityName=".Principale.HomeActivity" />
 
         <activity android:name=".Feedback.FeedbackActivity"
-            android:parentActivityName=".Principale.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:parentActivityName=".Principale.HomeActivity" />
 
         <activity android:name=".Feedback.ReviewpageActivity"
-            android:parentActivityName=".Feedback.FeedbackActivity"
-           />
+            android:parentActivityName=".Feedback.FeedbackActivity" />
 
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

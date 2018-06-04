@@ -20,13 +20,11 @@ import it.uniba.di.sms.sitterapp.R;
  * Adapter per le recensioni
  */
 
-public class RecensioniAdapter extends RecyclerView.Adapter<RecensioniAdapter.MyViewHolder>
-        implements Filterable {
+public class RecensioniAdapter extends RecyclerView.Adapter<RecensioniAdapter.MyViewHolder> {
 
 
 
     private List<Recensione> recensioneList;
-    private List<Recensione> recensioneListFiltered;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -45,7 +43,6 @@ public class RecensioniAdapter extends RecyclerView.Adapter<RecensioniAdapter.My
 
     public RecensioniAdapter(List<Recensione> recensioneList) {
         this.recensioneList = recensioneList;
-        this.recensioneListFiltered = recensioneList;
     }
 
     @Override
@@ -59,7 +56,7 @@ public class RecensioniAdapter extends RecyclerView.Adapter<RecensioniAdapter.My
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        final Recensione recensione = recensioneListFiltered.get(position);
+        final Recensione recensione = recensioneList.get(position);
         holder.username.setText(recensione.getUsername());
         holder.description.setText(recensione.getDescrizione());
         holder.ratingBar.setRating(recensione.getRating());
@@ -67,41 +64,10 @@ public class RecensioniAdapter extends RecyclerView.Adapter<RecensioniAdapter.My
 
     @Override
     public int getItemCount() {
-        return recensioneListFiltered.size();
+        return recensioneList.size();
     }
 
 
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
-                if (charString.isEmpty()) {
-                    recensioneListFiltered = recensioneList;
-                } else {
-                    List<Recensione> filteredList = new ArrayList<>();
-                    for (Recensione r : recensioneList) {
-                        filteredList.add(r);
-                    }
-                    recensioneListFiltered = filteredList;
-                }
 
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = recensioneListFiltered;
-                return filterResults;
 
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                recensioneListFiltered = (ArrayList<Recensione>) results.values;
-                notifyDataSetChanged();
-            }
-        };
-    }
-
-    public interface RecensioniAdapterListener {
-        void onRecensioniSelected(Recensione recensione);
-    }
 }

@@ -230,6 +230,7 @@ public class PrivatoFamigliaFragment extends Fragment {
         descrPrFam.setEnabled(false);
 
         ratingPrFam = (RatingBar) view.findViewById(R.id.ratingPrFamiglia);
+        ratingPrFam.setEnabled(false);
 
         nomePrFam = (TextView) view.findViewById(R.id.nomePrFamiglia);
         nomePrFam2 = (EditText) view.findViewById(R.id.nomePrFamiglia2);
