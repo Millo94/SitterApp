@@ -43,7 +43,7 @@ public class PubblicoFamigliaFragment extends Fragment {
     //STRINGHE DA COLLEGARE AL DATABASE
     TextView nomePuFam2, cognomePuFam2, emailPuFam2, numeroPuFam2, nazionePuFam2, capPuFam2, numFigliPuFam2, animaliPuFam2;
     //DA COLLEGARE ALLA CHAT
-    Button contattaSitter;
+    Button contattaFamiglia;
     Button feedbackFam;
     //DA CAPIRE
     RatingBar ratingPuFam;
@@ -170,7 +170,7 @@ public class PubblicoFamigliaFragment extends Fragment {
         animaliPuFam = (TextView) view.findViewById(R.id.animaliPuFamiglia);
         animaliPuFam2 = (TextView) view.findViewById(R.id.animaliPuFamiglia2);
 
-        contattaSitter = (Button) view.findViewById(R.id.contattaSitter);
+        contattaFamiglia = (Button) view.findViewById(R.id.contattaFamiglia);
         feedbackFam = (Button) view.findViewById(R.id.FeedbackFamiglia);
     }
 
