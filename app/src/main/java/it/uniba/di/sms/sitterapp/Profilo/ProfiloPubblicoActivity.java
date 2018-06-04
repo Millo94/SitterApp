@@ -1,7 +1,9 @@
 package it.uniba.di.sms.sitterapp.Profilo;
 
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Oggetti.UtenteFamiglia;
@@ -15,6 +17,8 @@ public class ProfiloPubblicoActivity extends AppCompatActivity implements Pubbli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frame_layout);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // Selezione del fragment in base al tipo dell'intent
 
         int type = getIntent().getIntExtra(Constants.TYPE, -1);
@@ -25,6 +29,18 @@ public class ProfiloPubblicoActivity extends AppCompatActivity implements Pubbli
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.viewPager, new PubblicoFamigliaFragment()).commit();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
