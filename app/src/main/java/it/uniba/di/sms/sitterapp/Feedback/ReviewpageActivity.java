@@ -47,6 +47,7 @@ public class ReviewpageActivity extends AppCompatActivity {
     Button scriviRec;
     SessionManager sessionManager;
     String famiglia;
+    String id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class ReviewpageActivity extends AppCompatActivity {
         sessionManager = new SessionManager(getApplicationContext());
 
          famiglia = getIntent().getStringExtra("famiglia");
+         id =getIntent().getStringExtra("idAnnuncio");
 
         if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
 
@@ -118,6 +120,7 @@ public class ReviewpageActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
+                params.put("idAnnuncio",id);
                 params.put("usernameFamiglia",user);
                 params.put("usernameSitter", sessionManager.getSessionUsername());
                 params.put("commento", commento);

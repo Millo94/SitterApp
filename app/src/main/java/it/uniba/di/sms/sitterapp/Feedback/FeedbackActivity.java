@@ -131,12 +131,13 @@ public class FeedbackActivity extends DrawerActivity implements NoticeAdapter.No
                             for (int i = 0; i < notice.length(); i++) {
 
                                 JSONObject noticeObject = notice.getJSONObject(i);
+                                String idAnnuncio = noticeObject.getString("idAnnuncio");
                                 String famiglia = noticeObject.getString("usernameFamiglia");
                                 String data = noticeObject.getString("data");
                                 String oraInizio = noticeObject.getString("oraInizio");
                                 String oraFine = noticeObject.getString("oraFine");
                                 String descrizione = noticeObject.getString("descrizione");
-                                Notice n = new Notice(famiglia, data, oraInizio, oraFine, descrizione);
+                                Notice n = new Notice(idAnnuncio,famiglia, data, oraInizio, oraFine, descrizione);
 
                                 if (i < LOAD_LIMIT) {
                                     noticeList.add(n);
@@ -203,6 +204,7 @@ public class FeedbackActivity extends DrawerActivity implements NoticeAdapter.No
         if(sessionManager.getSessionType() == Constants.TYPE_SITTER) {
             Intent familyRev = new Intent(it.uniba.di.sms.sitterapp.Feedback.FeedbackActivity.this, ReviewpageActivity.class);
             familyRev.putExtra("famiglia", notice.getFamily());
+            familyRev.putExtra("idAnnuncio",notice.getIdAnnuncio());
             startActivity(familyRev);
         } else {
             Toast.makeText(it.uniba.di.sms.sitterapp.Feedback.FeedbackActivity.this,"Ancora da implementare", Toast.LENGTH_SHORT).show();
