@@ -32,7 +32,10 @@ import java.util.Map;
 import java.util.Queue;
 
 import it.uniba.di.sms.sitterapp.Adapter.NoticeAdapter;
+import it.uniba.di.sms.sitterapp.Adapter.RecensioniAdapter;
+import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Oggetti.Notice;
+import it.uniba.di.sms.sitterapp.Oggetti.Recensione;
 import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
@@ -41,7 +44,13 @@ import it.uniba.di.sms.sitterapp.SessionManager;
 public class RecensioniScritteFragment extends Fragment {
 
 
-    View view;
+    private RecyclerView recycler;
+    private RecensioniAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private List<Recensione> recensioneList;
+
+    boolean itShouldLoadMore;
+    private SessionManager sessionManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,11 +61,91 @@ public class RecensioniScritteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_recensioni_scritte, container, false);
+        View view = inflater.inflate(R.layout.content_home, container, false);
 
+        sessionManager = new SessionManager(getActivity().getApplicationContext());
 
+        recycler = (RecyclerView) view.findViewById(R.id.recyclerHome);
+        recycler.setHasFixedSize(true);
+
+        layoutManager = new LinearLayoutManager(getContext());
+
+        recycler.setLayoutManager(layoutManager);
+
+        recensioneList = new ArrayList<>();
+        adapter = new RecensioniAdapter(recensioneList);
+        recycler.setAdapter(adapter);
+
+        loadNotices();
 
         return view;
+    }
+
+
+    private void loadNotices() {
+
+        itShouldLoadMore = false; // lock this guy,(itShouldLoadMore) to make sure,
+        // user will not load more when volley is processing another request
+        // only load more when  volley is free
+
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Php.RECENSIONI,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        progressDialog.dismiss();
+                        itShouldLoadMore = true;
+                        try {
+                            JSONArray recensione = new JSONArray(response);
+
+                            for (int i = 0; i < recensione.length(); i++) {
+
+                                JSONObject recensioneObject = recensione.getJSONObject(i);
+                                String username;
+
+                                if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
+                                    username = recensioneObject.getString("famiglia");
+                                } else {
+                                    username = recensioneObject.getString("babysitter");
+                                }
+
+
+                                String descrizione = recensioneObject.getString("commento");
+                                Float rating = (float) recensioneObject.getDouble("rating");
+
+                                Recensione r = new Recensione(username, descrizione, rating);
+                                recensioneList.add(r);
+                            }
+
+
+                            adapter.notifyDataSetChanged();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("username", sessionManager.getSessionUsername());
+                params.put("tipoUtente", String.valueOf(sessionManager.getSessionType()));
+                params.put("operation", "sent");
+                return params;
+            }
+        };
+        Volley.newRequestQueue(getContext()).add(stringRequest);
     }
 }
 
