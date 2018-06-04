@@ -86,5 +86,9 @@
     <string name="annuncioPubblicato">Annuncio pubblicato.</string>
     <string name="recensioniScritte">Recensioni Scritte</string>
     <string name="recensioniRicevute">Recensioni Ricevute</string>
+    <string name="sceltaAzione">Scegli come eseguire l\' azione:</string>
+    <string name="sms">SMS</string>
+    <string name="chiamata">call</string>
+
 
 </resources>

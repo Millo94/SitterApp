@@ -4,6 +4,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Oggetti.UtenteFamiglia;
@@ -52,4 +53,5 @@ public class ProfiloPubblicoActivity extends AppCompatActivity implements Pubbli
     public void onFragmentInteraction(UtenteSitter sitter) {
 
     }
+
 }

@@ -103,6 +103,13 @@
     <string name="pubblicaAnnuncio">Post Notice</string>
     <string name="selezionaOra">Select Time</string>
     <string name="annuncioPubblicato">Notice published.</string>
+    <string name="sceltaAzione">choose how to perform the action</string>
+    <string name="sms">SMS</string>
+    <string name="chiamata">call</string>
+
+
+
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
