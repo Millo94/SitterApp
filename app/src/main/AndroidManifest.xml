@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Principale.LoginActivity"
-            android:clearTaskOnLaunch="true">
+            android:clearTaskOnLaunch="true"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,34 +29,42 @@
         <activity
             android:name=".Profilo.ProfiloPrivatoActivity"
             android:parentActivityName=".Principale.HomeActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:label="@string/profilo"/>
         <activity
             android:name=".Appuntamenti.NoticeDetailActivity"
-            android:parentActivityName=".Appuntamenti.IngaggiActivity" />
+            android:parentActivityName=".Appuntamenti.IngaggiActivity"
+            android:label="@string/dettaglioAnnuncio"/>
         <activity
             android:name=".Principale.DrawerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Appuntamenti.IngaggiActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/engagements"/>
         <activity
             android:name=".Profilo.ProfiloPubblicoActivity"
-            android:parentActivityName=".Appuntamenti.NoticeDetailActivity" />
+            android:parentActivityName=".Appuntamenti.NoticeDetailActivity"
+            android:label="@string/profilo"/>
         <activity
             android:name=".Recensioni.RecensioniActivity"
-            android:parentActivityName=".Principale.HomeActivity" />
+            android:parentActivityName=".Principale.HomeActivity"
+            android:label="@string/feedback"/>
 
         <activity android:name=".Feedback.FeedbackActivity"
             android:parentActivityName=".Principale.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/scrivi_recensione"/>
 
         <activity android:name=".Feedback.ReviewpageActivity"
             android:parentActivityName=".Principale.HomeActivity"
+            android:label="@string/feedback"
             />
 
         <activity
             android:name=".Principale.NewNoticeActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:label="@string/nuovoAnnuncio"/>
     </application>
 
 </manifest>
