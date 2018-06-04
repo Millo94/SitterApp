@@ -22,8 +22,10 @@
             android:id="@+id/imageViewData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/appuntamento_item_data"
             android:layout_alignParentStart="true"
             android:layout_alignTop="@+id/trattino"
+            android:paddingLeft="8dp"
             app:srcCompat="@drawable/ic_data" />
 
         <TextView
@@ -32,16 +34,18 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:padding="10dp"
+            android:padding="8dp"
             android:text="@string/username"
+            android:textColor="@android:color/black"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageViewOrario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/trattino"
+            android:layout_alignBottom="@+id/appuntamento_item_start"
+            android:layout_alignTop="@+id/appuntamento_item_start"
             android:layout_toStartOf="@+id/appuntamento_item_start"
             app:srcCompat="@drawable/ic_time" />
 
@@ -59,10 +63,10 @@
             android:id="@+id/appuntamento_item_data"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_below="@+id/appuntamento_item_detail"
+            android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/imageViewData"
-            android:padding="10dp"
+            android:padding="8dp"
             android:text="@string/data"
             android:textSize="14sp" />
 
@@ -70,10 +74,9 @@
             android:id="@+id/appuntamento_item_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/appuntamento_item_data"
-            android:layout_alignBottom="@+id/appuntamento_item_data"
+            android:layout_below="@+id/appuntamento_item_detail"
             android:layout_toStartOf="@+id/trattino"
-            android:padding="10dp"
+            android:padding="8dp"
             android:text="@string/orainizio"
             android:textSize="14sp" />
 
@@ -84,7 +87,7 @@
             android:layout_alignBaseline="@+id/appuntamento_item_start"
             android:layout_alignBottom="@+id/appuntamento_item_start"
             android:layout_alignParentEnd="true"
-            android:padding="10dp"
+            android:padding="8dp"
             android:text="@string/orafine"
             android:textSize="14sp" />
 
@@ -94,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/appuntamento_item_username"
-            android:padding="10dp"
+            android:padding="8dp"
             android:text="@string/dettaglioAnnuncio"
             android:textSize="16sp" />
 
