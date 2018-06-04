@@ -10,6 +10,7 @@ public class Notice {
     private String end_time;
     private String description;
     private String idAnnuncio;
+    private String sitter;
 
     public Notice(String family,String date,String start_time, String end_time, String description){
         this.family = family;
@@ -18,13 +19,14 @@ public class Notice {
         this.end_time = end_time;
         this.description = description;
     }
-    public Notice(String id , String family,String date,String start_time, String end_time, String description){
+    public Notice(String id , String family,String date,String start_time, String end_time, String description,String sitter){
         this.idAnnuncio = id;
         this.family = family;
         this.date = date;
         this.start_time = start_time;
         this.end_time = end_time;
         this.description = description;
+        this.sitter=sitter;
     }
 
 
@@ -69,4 +71,6 @@ public class Notice {
     }
 
     public String getIdAnnuncio(){return this.idAnnuncio;}
+
+    public String getSitter() {return sitter;}
 }

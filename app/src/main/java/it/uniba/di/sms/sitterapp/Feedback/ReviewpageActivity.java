@@ -48,6 +48,7 @@ public class ReviewpageActivity extends AppCompatActivity {
     SessionManager sessionManager;
     String famiglia;
     String id;
+    String sitter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,25 +56,23 @@ public class ReviewpageActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         sessionManager = new SessionManager(getApplicationContext());
-
          famiglia = getIntent().getStringExtra("famiglia");
          id =getIntent().getStringExtra("idAnnuncio");
+         sitter=getIntent().getStringExtra("sitter");
+         setContentView(R.layout.scrivi_recensione);
+         user = (TextView) findViewById(R.id.usernameRecensione);
+         desc = (EditText) findViewById(R.id.editRecensione);
+         rating = (RatingBar) findViewById(R.id.ratingBarRecensione);
+         rating.setEnabled(true);
+         scriviRec = (Button) findViewById(R.id.inviaRecensione);
+         scriviRec.setOnClickListener(inviarecListener);
 
-        if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
-
-            setContentView(R.layout.scrivi_recensione);
-            user = (TextView) findViewById(R.id.usernameRecensione);
-            desc = (EditText) findViewById(R.id.editRecensione);
-            rating = (RatingBar) findViewById(R.id.ratingBarRecensione);
-            rating.setEnabled(true);
-            scriviRec = (Button) findViewById(R.id.inviaRecensione);
-            scriviRec.setOnClickListener(inviarecListener);
-
+         if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
+            user.setText(famiglia);
         } else if (sessionManager.getSessionType() == Constants.TYPE_FAMILY) {
-            //implementare lato famiglia
+             user.setText(sitter);
         }
 
-        user.setText(famiglia);
     }
 
     View.OnClickListener inviarecListener = new View.OnClickListener() {
@@ -92,7 +91,7 @@ public class ReviewpageActivity extends AppCompatActivity {
 
     public void inviadati(final String commento , final double rating, final String user){
 
-        StringRequest registrationRequest = new StringRequest(Request.Method.POST, Php.RECENSIONE, new Response.Listener<String>() {
+        StringRequest commentoRequest = new StringRequest(Request.Method.POST, Php.RECENSIONE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -125,10 +124,11 @@ public class ReviewpageActivity extends AppCompatActivity {
                 params.put("usernameSitter", sessionManager.getSessionUsername());
                 params.put("commento", commento);
                 params.put("rating", Double.valueOf(rating).toString());
+                params.put("type",String.valueOf(sessionManager.getSessionType()));
                 return params;
             }
         };
+        requestQueue.add(commentoRequest);
 
-        requestQueue.add(registrationRequest);
     }
 }
