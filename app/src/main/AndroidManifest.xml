@@ -39,8 +39,7 @@
             android:name=".Appuntamenti.IngaggiActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Profilo.ProfiloPubblicoActivity"
-            android:parentActivityName=".Appuntamenti.NoticeDetailActivity" />
+            android:name=".Profilo.ProfiloPubblicoActivity"/>
         <activity
             android:name=".Recensioni.RecensioniActivity"
             android:parentActivityName=".Principale.HomeActivity" />
@@ -49,11 +48,12 @@
             android:parentActivityName=".Principale.HomeActivity" />
 
         <activity android:name=".Feedback.ReviewpageActivity"
-            android:parentActivityName=".Feedback.FeedbackActivity" />
-
+            android:parentActivityName=".Feedback.FeedbackActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".Principale.NewNoticeActivity"
+            android:parentActivityName=".Appuntamenti.IngaggiActivity"
             android:windowSoftInputMode="stateHidden" />
     </application>
 
