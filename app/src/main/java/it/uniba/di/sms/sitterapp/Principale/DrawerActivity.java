@@ -31,6 +31,7 @@ import it.uniba.di.sms.sitterapp.SessionManager;
 public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     protected SessionManager sessionManager;
+    private static final String SELECTED = "selected";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +52,16 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // Evidenzio l'elemento selezionato del drawer
+        navigationView.getMenu().findItem(getIntent().getIntExtra(SELECTED, R.id.nav_home)).setChecked(true);
+
         // Valorizzo il session manager
         sessionManager = new SessionManager(getApplicationContext());
 
         ImageView profile_image = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.ProfileImageView);
         TextView profile_username = (TextView) navigationView.getHeaderView(0).findViewById(R.id.ProfileUsernameView);
 
-        Glide.with(this).load((sessionManager.getSessionType() == Constants.TYPE_SITTER)?sessionManager.getProfilePic():Constants.BASE_URL+"profilePicture/family.png").into(profile_image);
+        Glide.with(this).load((sessionManager.getSessionType() == Constants.TYPE_SITTER) ? sessionManager.getProfilePic() : Constants.BASE_URL + "profilePicture/family.png").into(profile_image);
         profile_username.setText(sessionManager.getSessionUsername());
     }
 
@@ -74,38 +78,53 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_recensioni_mie) {
-
-            //collegamento alla sezione recensioni
-            Intent recensioni = new Intent(DrawerActivity.this, RecensioniActivity.class);
-            startActivity(recensioni);
-
-        } else if (id == R.id.nav_home) {
-
-            //collegamento alla Home
-            Intent home = new Intent (DrawerActivity.this, HomeActivity.class);
-            startActivity(home);
-
-        } else if (id == R.id.nav_engagements) {
-
-            //collegamento alla sezione degli appuntamenti
-            Intent menuIngaggi = new Intent(DrawerActivity.this, IngaggiActivity.class);
-            startActivity(menuIngaggi);
-
-        } else if (id == R.id.nav_scrivi_feedback) {
-                Intent scrivirecIntent = new Intent(DrawerActivity.this, FeedbackActivity.class);
-                startActivity(scrivirecIntent);
-        } else if (id == R.id.nav_exit) {
-
-            // Chiama la funzione di logout
-            sessionManager.logout();
-        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        if(!item.isChecked()){
+
+            // Gestisce la navigazione al click del menu
+            int id = item.getItemId();
+            if (id == R.id.nav_recensioni_mie) {
+
+                //collegamento alla sezione recensioni
+                Intent recensioni = new Intent(DrawerActivity.this, RecensioniActivity.class);
+                startActivity(recensioni);
+
+            } else if (id == R.id.nav_home) {
+
+                /*//collegamento alla Home
+                Intent home = new Intent(DrawerActivity.this, HomeActivity.class);
+                home.putExtra(SELECTED, id);
+                startActivity(home);*/
+                finish();
+
+            } else if (id == R.id.nav_engagements) {
+
+                //collegamento alla sezione degli appuntamenti
+                Intent menuIngaggi = new Intent(DrawerActivity.this, IngaggiActivity.class);
+                menuIngaggi.putExtra(SELECTED, id);
+                startActivity(menuIngaggi);
+
+            } else if (id == R.id.nav_scrivi_feedback) {
+
+                Intent scrivirecIntent = new Intent(DrawerActivity.this, FeedbackActivity.class);
+                scrivirecIntent.putExtra(SELECTED, id);
+                startActivity(scrivirecIntent);
+
+            } else if (id == R.id.nav_exit) {
+
+                // Chiama la funzione di logout
+                sessionManager.logout();
+            }
+            drawer.closeDrawer(GravityCompat.START);
+
+        } else {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+
+
+
+
 
         return false;
     }
