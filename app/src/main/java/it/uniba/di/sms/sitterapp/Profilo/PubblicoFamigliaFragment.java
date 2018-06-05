@@ -1,8 +1,11 @@
 package it.uniba.di.sms.sitterapp.Profilo;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +22,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
+import android.content.Intent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,6 +53,11 @@ public class PubblicoFamigliaFragment extends Fragment {
     RatingBar ratingPuFam;
 
     RequestQueue requestQueue;
+
+    //numero di telefono di sanzone
+    String telefono;
+    //EMAIL ANNUNCIO
+    String email;
 
 
     private OnFragmentInteractionListener mListener;
@@ -84,9 +93,11 @@ public class PubblicoFamigliaFragment extends Fragment {
                     if(result.equals("true")){
                         usernamePuFam.setText(username);
                         emailPuFam2.setText(json.getString("email"));
+                        email = json.getString("email");
                         nomePuFam2.setText(json.getString("nome"));
                         cognomePuFam2.setText(json.getString("cognome"));
                         numeroPuFam2.setText(json.getString("telefono"));
+                        telefono = json.getString("telefono");
                         nazionePuFam2.setText(json.getString("nazione"));
                         capPuFam2.setText(json.getString("cap"));
                         // Rating bar
@@ -172,6 +183,55 @@ public class PubblicoFamigliaFragment extends Fragment {
         animaliPuFam2 = (TextView) view.findViewById(R.id.animaliPuFamiglia2);
 
         contattaFamiglia = (Button) view.findViewById(R.id.contattaFamiglia);
+        contattaFamiglia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                CharSequence servizi[] = new CharSequence[] {getString(R.string.chiamata),getString(R.string.email),getString(R.string.sms)};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                builder.setTitle(R.string.sceltaAzione);
+                builder.setItems(servizi, new DialogInterface.OnClickListener(){
+                    /**
+                     * Questo metodo serve per eseguire un azione tra chiamata sms e e-mail
+                     * per contattare la famiglia dell'annuncio
+                     * @param dialog
+                     * @param which
+                     */
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+
+                                //chiamata
+                                case 0:
+                                    Intent chiamaIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+telefono));
+                                    startActivity(chiamaIntent);
+                                    break;
+                                //invio e-mail
+                                case 1:
+                                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                                    emailIntent.putExtra(Intent.EXTRA_EMAIL,email );
+                                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Oggetto Email");
+                                    emailIntent.putExtra(Intent.EXTRA_TEXT, "testo da mostrare");
+                                    emailIntent.setType("text/plain");
+                                    startActivity(emailIntent);
+                                    break;
+                                //invio sms
+                                case 2:
+                                    Intent smsIntent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms",telefono,null));
+                                    startActivity(smsIntent);
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                    }
+                });
+                builder.show();
+
+            }
+        });
         feedbackFam = (Button) view.findViewById(R.id.FeedbackFamiglia);
     }
 
@@ -204,5 +264,8 @@ public class PubblicoFamigliaFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(UtenteFamiglia family);
+
     }
+
+
 }

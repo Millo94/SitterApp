@@ -150,12 +150,13 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                             for (int i = 0; i < notice.length(); i++) {
 
                                 JSONObject noticeObject = notice.getJSONObject(i);
+                                String idAnnuncio = noticeObject.getString("idAnnuncio");
                                 String famiglia = noticeObject.getString("usernameFamiglia");
                                 String data = noticeObject.getString("data");
                                 String oraInizio = noticeObject.getString("oraInizio");
                                 String oraFine = noticeObject.getString("oraFine");
                                 String descrizione = noticeObject.getString("descrizione");
-                                Notice n = new Notice(famiglia, data, oraInizio, oraFine, descrizione);
+                                Notice n = new Notice(idAnnuncio,famiglia, data, oraInizio, oraFine, descrizione);
 
                                 if (i < LOAD_LIMIT) {
                                     noticeList.add(n);
@@ -163,7 +164,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                                     remainingNoticeList.add(n);
                                 }
                             }
-
                             noticeAdapter.notifyDataSetChanged();
 
                         } catch (JSONException e) {
@@ -221,6 +221,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
 
         if(sessionManager.getSessionType() == Constants.TYPE_SITTER) {
             Intent detailIntent = new Intent(IngaggiActivity.this, NoticeDetailActivity.class);
+            detailIntent.putExtra("idAnnuncio", notice.getIdAnnuncio());
             detailIntent.putExtra("famiglia", notice.getFamily());
             detailIntent.putExtra("data", notice.getDate());
             detailIntent.putExtra("oraInizio", notice.getStart_time());
@@ -228,7 +229,16 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
             detailIntent.putExtra("descrizione", notice.getDescription());
             startActivity(detailIntent);
         } else {
-            Toast.makeText(IngaggiActivity.this,"Ancora da implementare", Toast.LENGTH_SHORT).show();
+            if(sessionManager.getSessionType() == Constants.TYPE_FAMILY) {
+                Intent detailIntentFam = new Intent(IngaggiActivity.this,NoticeDetailActivity.class);
+                detailIntentFam.putExtra("idAnnuncio", notice.getIdAnnuncio());
+                detailIntentFam.putExtra("famiglia", notice.getFamily());
+                detailIntentFam.putExtra("data", notice.getDate());
+                detailIntentFam.putExtra("oraInizio", notice.getStart_time());
+                detailIntentFam.putExtra("oraFine", notice.getEnd_time());
+                detailIntentFam.putExtra("descrizione", notice.getDescription());
+                startActivity(detailIntentFam);
+            }
         }
     }
 

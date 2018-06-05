@@ -3,6 +3,7 @@
     <string name="app_name">SitterApp</string>
 
     <!-- Stringhe Login form  -->
+    <string name="login">Entra</string>
     <string name= "lblMyAccount">Account personale</string>
 
     <string name="nome">Nome</string>
@@ -85,7 +86,15 @@
     <string name="annuncioPubblicato">Annuncio pubblicato.</string>
     <string name="recensioniScritte">Recensioni Scritte</string>
     <string name="recensioniRicevute">Recensioni Ricevute</string>
+    <string name="sceltaAzione">Scegli come eseguire l\' azione:</string>
+    <string name="sms">SMS</string>
+    <string name="chiamata">chiama</string>
     <string name="profilo">Profilo</string>
+    <string name="deleteSuccess">Eliminazione effettuata correttamente.</string>
+    <string name="deletefail">Impossibile eliminare l\' annuncio.</string>
+
+
+
     <string name="login">Accedi</string>
     <string name="nuovoUtente">Nuovo Utente</string>
     <string name="nuovaFamiglia">Nuova Famiglia</string>

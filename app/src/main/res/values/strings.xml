@@ -103,6 +103,16 @@
     <string name="pubblicaAnnuncio">Post Notice</string>
     <string name="selezionaOra">Select Time</string>
     <string name="annuncioPubblicato">Notice published.</string>
+    <string name="sceltaAzione">choose how to perform the action</string>
+    <string name="sms">SMS</string>
+    <string name="chiamata">call</string>
+    <string name="deleteSuccess">Elimination was successfull.</string>
+    <string name="deletefail"> can not delete the ad.</string>
+
+
+
+
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="profilo">Profile</string>

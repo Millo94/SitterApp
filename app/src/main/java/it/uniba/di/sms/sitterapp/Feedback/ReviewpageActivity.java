@@ -119,12 +119,21 @@ public class ReviewpageActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("idAnnuncio",id);
-                params.put("usernameFamiglia",user);
-                params.put("usernameSitter", sessionManager.getSessionUsername());
-                params.put("commento", commento);
-                params.put("rating", Double.valueOf(rating).toString());
-                params.put("type",String.valueOf(sessionManager.getSessionType()));
+                if(sessionManager.getSessionType()== Constants.TYPE_SITTER) {
+                    params.put("idAnnuncio", id);
+                    params.put("usernameFamiglia", user);
+                    params.put("usernameSitter", sessionManager.getSessionUsername());
+                    params.put("commento", commento);
+                    params.put("rating", Double.valueOf(rating).toString());
+                    params.put("type", String.valueOf(sessionManager.getSessionType()));
+                }else if(sessionManager.getSessionType()== Constants.TYPE_FAMILY){
+                    params.put("idAnnuncio", id);
+                    params.put("usernameFamiglia", sessionManager.getSessionUsername());
+                    params.put("usernameSitter", sitter);
+                    params.put("commento", commento);
+                    params.put("rating", Double.valueOf(rating).toString());
+                    params.put("type", String.valueOf(sessionManager.getSessionType()));
+                }
                 return params;
             }
         };
