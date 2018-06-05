@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +11,8 @@
         android:id="@+id/textAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-smallcaps"
         android:text="@string/app_name"
         android:textAlignment="center"
@@ -22,25 +23,28 @@
         android:id="@+id/lblUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
+        android:layout_below="@id/textAccount"
+        android:layout_marginTop="64dp"
         android:hint="Username"
         android:inputType="textPersonName"
-        android:text="Eladi96"/>
+        android:text="Eladi96" />
 
     <EditText
         android:id="@+id/lblPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/lblUsername"
         android:layout_marginTop="8dp"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:text="1234"/>
+        android:text="1234" />
 
     <Button
         android:id="@+id/btnlogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_below="@id/lblPassword"
+        android:layout_marginTop="16dp"
         android:background="@drawable/button_shape"
         android:elevation="8dp"
         android:onClick="onLogin"
@@ -50,6 +54,7 @@
         android:id="@+id/nuovoUtente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/btnlogin"
         android:layout_marginTop="64dp"
         android:text="@string/nuovoUtente"
         android:textAlignment="center"
@@ -61,8 +66,11 @@
         android:id="@+id/btnNewAccountSitter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/nuovoUtente"
+        android:layout_marginTop="16dp"
         android:background="@drawable/button_shape"
+        android:elevation="8dp"
         android:onClick="createAccountSitter"
         android:text="@string/createAccountSitter" />
 
@@ -70,9 +78,13 @@
         android:id="@+id/btnNewAccountFamily"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btnNewAccountSitter"
+        android:layout_marginBottom="16dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_shape"
+        android:elevation="8dp"
         android:onClick="createAccountFamily"
         android:text="@string/createAccountFamily" />
 
-</LinearLayout>
+</RelativeLayout>
