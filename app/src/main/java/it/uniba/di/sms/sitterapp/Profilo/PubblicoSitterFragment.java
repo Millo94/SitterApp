@@ -1,8 +1,12 @@
 package it.uniba.di.sms.sitterapp.Profilo;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +52,11 @@ public class PubblicoSitterFragment extends Fragment {
     //QUESTE STRINGHE SONO DA COLLEGARE AL DATABASE
     TextView nomePuSit2, cognomePuSit2, emailPuSit2, numeroPuSit2, carPuSit2, sessoPuSit2, dataPuSit2, tariffaPuSit2, ingaggiPuSit2, nazionePuSit2, capPuSit2;
     //DA COLLEGARE QUANDO AVREMO AL CHAT
-    Button contattaFamiglia, feedbackSit;
+    Button contattaSitter, feedbackSit;
+
+    //
+    private String telefono;
+    private String email;
 
     RequestQueue requestQueue;
 
@@ -86,9 +94,11 @@ public class PubblicoSitterFragment extends Fragment {
                         Glide.with(getContext()).load(json.getString("pathFoto")).into(profilePic);
                         usernamePuSit.setText(username);
                         emailPuSit2.setText(json.getString("email"));
+                        email = json.getString("email");
                         nomePuSit2.setText(json.getString("nome"));
                         cognomePuSit2.setText(json.getString("cognome"));
                         numeroPuSit2.setText(json.getString("telefono"));
+                        telefono = json.getString("telefono");
                         nazionePuSit2.setText(json.getString("nazione"));
                         capPuSit2.setText(json.getString("cap"));
                         // Rating bar
@@ -197,7 +207,56 @@ public class PubblicoSitterFragment extends Fragment {
         capPuSit = (TextView) view.findViewById(R.id.capPuSitter);
         capPuSit2 = (TextView) view.findViewById(R.id.capPuSitter2);
 
-        contattaFamiglia = (Button) view.findViewById(R.id.contattaFamiglia);
+        contattaSitter = (Button) view.findViewById(R.id.contattaSitter);
+        contattaSitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                CharSequence servizi[] = new CharSequence[] {getString(R.string.chiamata),getString(R.string.email),getString(R.string.sms)};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                builder.setTitle(R.string.sceltaAzione);
+                builder.setItems(servizi, new DialogInterface.OnClickListener(){
+                    /**
+                     * Questo metodo serve per eseguire un azione tra chiamata sms e e-mail
+                     * per contattare la famiglia dell'annuncio
+                     * @param dialog
+                     * @param which
+                     */
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+
+                            //chiamata
+                            case 0:
+                                Intent chiamaIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+telefono));
+                                startActivity(chiamaIntent);
+                                break;
+                            //invio e-mail
+                            case 1:
+                                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                                emailIntent.putExtra(Intent.EXTRA_EMAIL,email );
+                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Oggetto Email");
+                                emailIntent.putExtra(Intent.EXTRA_TEXT, "testo da mostrare");
+                                emailIntent.setType("text/plain");
+                                startActivity(emailIntent);
+                                break;
+                            //invio sms
+                            case 2:
+                                Intent smsIntent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms",telefono,null));
+                                startActivity(smsIntent);
+                                break;
+                            default:
+                                break;
+                        }
+
+                    }
+                });
+                builder.show();
+
+            }
+        });
         feedbackSit = (Button) view.findViewById(R.id.feedbackSitter);
     }
 

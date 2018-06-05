@@ -32,6 +32,10 @@ import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.Registrazione.RegistrationActivity;
 import it.uniba.di.sms.sitterapp.SessionManager;
 
+/**
+ * Created by Feder on 31/05/2018.
+ */
+
 public class ReviewpageActivity extends AppCompatActivity {
 
     RequestQueue requestQueue;
@@ -39,7 +43,7 @@ public class ReviewpageActivity extends AppCompatActivity {
     EditText desc;
     double rate = (double) 0.00;
     RatingBar rating;
-    String commento = "null";
+    String commento ="null";
     Button scriviRec;
     SessionManager sessionManager;
     String famiglia;
@@ -52,21 +56,21 @@ public class ReviewpageActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         sessionManager = new SessionManager(getApplicationContext());
-        famiglia = getIntent().getStringExtra("famiglia");
-        id = getIntent().getStringExtra("idAnnuncio");
-        sitter = getIntent().getStringExtra("sitter");
-        setContentView(R.layout.scrivi_recensione);
-        user = (TextView) findViewById(R.id.usernameRecensione);
-        desc = (EditText) findViewById(R.id.editRecensione);
-        rating = (RatingBar) findViewById(R.id.ratingBarRecensione);
-        rating.setEnabled(true);
-        scriviRec = (Button) findViewById(R.id.inviaRecensione);
-        scriviRec.setOnClickListener(inviarecListener);
+         famiglia = getIntent().getStringExtra("famiglia");
+         id =getIntent().getStringExtra("idAnnuncio");
+         sitter=getIntent().getStringExtra("sitter");
+         setContentView(R.layout.scrivi_recensione);
+         user = (TextView) findViewById(R.id.usernameRecensione);
+         desc = (EditText) findViewById(R.id.editRecensione);
+         rating = (RatingBar) findViewById(R.id.ratingBarRecensione);
+         rating.setEnabled(true);
+         scriviRec = (Button) findViewById(R.id.inviaRecensione);
+         scriviRec.setOnClickListener(inviarecListener);
 
-        if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
+         if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
             user.setText(famiglia);
         } else if (sessionManager.getSessionType() == Constants.TYPE_FAMILY) {
-            user.setText(sitter);
+             user.setText(sitter);
         }
 
     }
@@ -75,16 +79,17 @@ public class ReviewpageActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             commento = desc.getText().toString();
-            rate = (double) Float.valueOf(rating.getRating());
+            rate = (double ) Float.valueOf(rating.getRating());
 
-            if (rate == 0.0 || commento.isEmpty()) {
-                Toast.makeText(it.uniba.di.sms.sitterapp.Feedback.ReviewpageActivity.this, "Riempire i campi", Toast.LENGTH_SHORT).show();
-            } else
-                inviadati(commento, rate, famiglia);
+            if(rate == 0.0 || commento.isEmpty()){
+                Toast.makeText(it.uniba.di.sms.sitterapp.Feedback.ReviewpageActivity.this,"Riempire i campi", Toast.LENGTH_SHORT).show();
+            }
+            else
+                inviadati(commento,rate,famiglia);
         }
     };
 
-    public void inviadati(final String commento, final double rating, final String user) {
+    public void inviadati(final String commento , final double rating, final String user){
 
         StringRequest commentoRequest = new StringRequest(Request.Method.POST, Php.RECENSIONE, new Response.Listener<String>() {
             @Override
@@ -99,7 +104,7 @@ public class ReviewpageActivity extends AppCompatActivity {
                         Intent backIntent = new Intent(ReviewpageActivity.this, FeedbackActivity.class);
                         startActivity(backIntent);
                     } else {
-                        Toast.makeText(getApplicationContext(), "ERRORE", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "ERRORE" ,Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -114,12 +119,21 @@ public class ReviewpageActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("idAnnuncio", id);
-                params.put("usernameFamiglia", user);
-                params.put("usernameSitter", sessionManager.getSessionUsername());
-                params.put("commento", commento);
-                params.put("rating", Double.valueOf(rating).toString());
-                params.put("type", String.valueOf(sessionManager.getSessionType()));
+                if(sessionManager.getSessionType()== Constants.TYPE_SITTER) {
+                    params.put("idAnnuncio", id);
+                    params.put("usernameFamiglia", user);
+                    params.put("usernameSitter", sessionManager.getSessionUsername());
+                    params.put("commento", commento);
+                    params.put("rating", Double.valueOf(rating).toString());
+                    params.put("type", String.valueOf(sessionManager.getSessionType()));
+                }else if(sessionManager.getSessionType()== Constants.TYPE_FAMILY){
+                    params.put("idAnnuncio", id);
+                    params.put("usernameFamiglia", sessionManager.getSessionUsername());
+                    params.put("usernameSitter", sitter);
+                    params.put("commento", commento);
+                    params.put("rating", Double.valueOf(rating).toString());
+                    params.put("type", String.valueOf(sessionManager.getSessionType()));
+                }
                 return params;
             }
         };
