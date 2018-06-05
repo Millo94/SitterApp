@@ -34,6 +34,7 @@ import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.Oggetti.UtenteFamiglia;
+import it.uniba.di.sms.sitterapp.Recensioni.RecensioniPubblicoActivity;
 
 /**
  * FRAGMENT PROFILO PUBBLICO FAMIGLIA
@@ -58,7 +59,6 @@ public class PubblicoFamigliaFragment extends Fragment {
     String telefono;
     //EMAIL ANNUNCIO
     String email;
-
 
     private OnFragmentInteractionListener mListener;
 
@@ -233,6 +233,15 @@ public class PubblicoFamigliaFragment extends Fragment {
             }
         });
         feedbackFam = (Button) view.findViewById(R.id.FeedbackFamiglia);
+        feedbackFam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent showfeedIntent = new Intent(getContext(), RecensioniPubblicoActivity.class);
+                showfeedIntent.putExtra("username",getActivity().getIntent().getStringExtra("username"));
+                startActivity(showfeedIntent);
+            }
+        });
+
     }
 
     @Override

@@ -68,6 +68,8 @@
             android:name=".Principale.NewNoticeActivity"
             android:windowSoftInputMode="stateHidden"
             android:label="@string/nuovoAnnuncio"/>
+        <activity android:name=".Recensioni.RecensioniPubblicoActivity"
+            />
     </application>
 
 </manifest>
