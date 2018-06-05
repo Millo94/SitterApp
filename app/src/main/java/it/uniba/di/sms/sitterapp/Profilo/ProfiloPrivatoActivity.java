@@ -1,11 +1,12 @@
 package it.uniba.di.sms.sitterapp.Profilo;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
 import it.uniba.di.sms.sitterapp.Constants;
-import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.Oggetti.UtenteFamiglia;
 import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
+import it.uniba.di.sms.sitterapp.R;
 
 public class ProfiloPrivatoActivity extends AppCompatActivity implements PrivatoFamigliaFragment.OnFragmentInteractionListener, PrivatoSitterFragment.OnFragmentInteractionListener{
 
@@ -23,6 +24,7 @@ public class ProfiloPrivatoActivity extends AppCompatActivity implements Privato
         } else if(type == Constants.TYPE_FAMILY) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.viewPager, new PrivatoFamigliaFragment()).commit();
+
         }
     }
 
@@ -34,4 +36,5 @@ public class ProfiloPrivatoActivity extends AppCompatActivity implements Privato
     public void onFragmentInteraction(UtenteSitter sitter) {
 
     }
+
 }

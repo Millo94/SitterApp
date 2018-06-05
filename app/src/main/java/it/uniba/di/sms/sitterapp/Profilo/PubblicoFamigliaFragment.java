@@ -264,10 +264,8 @@ public class PubblicoFamigliaFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(UtenteFamiglia family);
-    }
-
-    public void contatta(View view) {
-
 
     }
+
+
 }
