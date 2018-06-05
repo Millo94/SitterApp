@@ -76,7 +76,7 @@
     <string name="contattaSitter">Contact Sitter</string>
     <string name="modificaProfiloOff">Confirm Edit</string>
     <string name="contattaFamiglia">Contact Family</string>
-    <string name="nuovoUtente">Are you new on SitterApp?</string>
+    <string name="nuovoUtenteDomanda">Are you new on SitterApp?</string>
     <string name="dettaglioAnnuncio">Notice Details</string>
     <string name="profileError">There was an error in opening the profile.</string>
     <string name="visualizzaProfiloFamiglia">Open Family Profile</string>
@@ -106,6 +106,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="profilo">Profile</string>
+    <string name="nuovoUtente">New User</string>
+    <string name="nuovaFamiglia">New Family</string>
+    <string name="newSitter">New Baby Sitter</string>
 
 
 </resources>

@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:text="@string/nuovoUtente"
+        android:text="@string/nuovoUtenteDomanda"
         android:textAlignment="center"
         android:textColor="@color/colorScritte"
         android:textSize="18sp"
