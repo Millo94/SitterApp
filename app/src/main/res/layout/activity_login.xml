@@ -1,118 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    tools:context="it.uniba.di.sms.sitterapp.Principale.LoginActivity"
-    tools:layout_editor_absoluteY="81dp">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/colorPrimary">
 
     <TextView
         android:id="@+id/textAccount"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_margin="16dp"
         android:fontFamily="sans-serif-smallcaps"
         android:text="@string/app_name"
         android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/lblUsername"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.066" />
+        android:textColor="@color/colorScritte"
+        android:textSize="40sp" />
 
     <EditText
         android:id="@+id/lblUsername"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:ems="10"
+        android:layout_marginTop="128dp"
         android:hint="Username"
         android:inputType="textPersonName"
-        android:text="Eladi96"
-        app:layout_constraintBottom_toTopOf="@+id/lblPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAccount"
-        app:layout_constraintVertical_bias="0.219"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
+        android:text="Eladi96"/>
 
     <EditText
         android:id="@+id/lblPassword"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
+        android:layout_marginTop="8dp"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:text="1234"
-        app:layout_constraintBottom_toTopOf="@+id/btnlogin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblUsername"
-        app:layout_constraintVertical_bias="0.376" />
+        android:text="1234"/>
+
+    <Button
+        android:id="@+id/btnlogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_shape"
+        android:elevation="8dp"
+        android:onClick="onLogin"
+        android:text="@string/login" />
 
     <TextView
         android:id="@+id/nuovoUtente"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="64dp"
         android:text="@string/nuovoUtente"
         android:textAlignment="center"
         android:textColor="@color/colorScritte"
         android:textSize="18sp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnlogin" />
-
-    <Button
-        android:id="@+id/btnlogin"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@android:color/background_light"
-        android:onClick="onLogin"
-        android:text="@string/login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblPassword" />
+        android:textStyle="italic" />
 
     <Button
         android:id="@+id/btnNewAccountSitter"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="@android:color/background_light"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_shape"
         android:onClick="createAccountSitter"
-        android:text="@string/createAccountSitter"
-        android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnNewAccountFamily"
-        app:layout_constraintTop_toBottomOf="@+id/nuovoUtente" />
+        android:text="@string/createAccountSitter" />
 
     <Button
         android:id="@+id/btnNewAccountFamily"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="@android:color/background_light"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_shape"
         android:onClick="createAccountFamily"
-        android:text="@string/createAccountFamily"
-        android:textColor="@android:color/black"
-        app:layout_constraintEnd_toStartOf="@+id/btnNewAccountSitter"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nuovoUtente" />
+        android:text="@string/createAccountFamily" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
