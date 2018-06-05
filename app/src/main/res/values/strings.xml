@@ -106,6 +106,9 @@
     <string name="sceltaAzione">choose how to perform the action</string>
     <string name="sms">SMS</string>
     <string name="chiamata">call</string>
+    <string name="deleteSuccess">Elimination was successfull.</string>
+    <string name="deletefail"> can not delete the ad.</string>
+
 
 
 

@@ -88,8 +88,12 @@
     <string name="recensioniRicevute">Recensioni Ricevute</string>
     <string name="sceltaAzione">Scegli come eseguire l\' azione:</string>
     <string name="sms">SMS</string>
-    <string name="chiamata">call</string>
+    <string name="chiamata">chiama</string>
     <string name="profilo">Profilo</string>
+    <string name="deleteSuccess">Eliminazione effettuata correttamente.</string>
+    <string name="deletefail">Impossibile eliminare l\' annuncio.</string>
+
+
 
 
 </resources>

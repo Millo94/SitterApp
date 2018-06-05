@@ -7,17 +7,37 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import it.uniba.di.sms.sitterapp.Constants;
+import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.Principale.HomeActivity;
+import it.uniba.di.sms.sitterapp.Principale.LoginActivity;
 import it.uniba.di.sms.sitterapp.Profilo.ProfiloPubblicoActivity;
 import it.uniba.di.sms.sitterapp.R;
+import it.uniba.di.sms.sitterapp.Registrazione.RegistrationActivity;
 import it.uniba.di.sms.sitterapp.SessionManager;
 
 
 public class NoticeDetailActivity extends AppCompatActivity {
 
     TextView user,dataDet,start,end,desc;
+    private static final String elimina = "ELIMINA";
+    private String idAnnuncio;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,6 +50,7 @@ public class NoticeDetailActivity extends AppCompatActivity {
         String oraInizio = getIntent().getStringExtra("oraInizio");
         String oraFine = getIntent().getStringExtra("oraFine");
         String descrizione = getIntent().getStringExtra("descrizione");
+        idAnnuncio = getIntent().getStringExtra("idAnnuncio");
 
         if (sessionManager.getSessionType() == Constants.TYPE_SITTER){
 
@@ -48,7 +69,7 @@ public class NoticeDetailActivity extends AppCompatActivity {
 
         } else if(sessionManager.getSessionType() == Constants.TYPE_FAMILY){
 
-            setContentView(R.layout.details_notice_sitter);
+            setContentView(R.layout.details_notice_family);
 
             user = (TextView) findViewById(R.id.usernameDettagliFam2);
             dataDet= (TextView) findViewById(R.id.dataDettagliFamiglia2);
@@ -90,7 +111,7 @@ public class NoticeDetailActivity extends AppCompatActivity {
     View.OnClickListener deleteNoticeListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            eliminaAnnuncio();
         }
     };
 
@@ -100,5 +121,43 @@ public class NoticeDetailActivity extends AppCompatActivity {
 
         }
     };
+
+    public void eliminaAnnuncio(){
+        StringRequest deleteRequest = new StringRequest(Request.Method.POST, Php.INGAGGI, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject json = new JSONObject(response);
+                    String result = json.getString("response");
+
+                    if (result.equals("true")) {
+                        Toast.makeText(getApplicationContext(), R.string.deleteSuccess, Toast.LENGTH_LONG).show();
+                        Intent intentback = new Intent(NoticeDetailActivity.this,IngaggiActivity.class);
+                        startActivity(intentback);
+                    } else if(result.equals("false")){
+                        Toast.makeText(getApplicationContext(), R.string.deletefail ,Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), R.string.deletefail ,Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), R.string.deletefail, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("richiesta", elimina);
+                params.put("idAnnuncioElimina",idAnnuncio);
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(deleteRequest);
+    }
 
 }

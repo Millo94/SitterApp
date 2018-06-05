@@ -29,25 +29,18 @@ public class Notice {
         this.sitter=sitter;
     }
 
+    public Notice(String idAnnuncio, String famiglia, String data, String oraInizio, String oraFine, String descrizione) {
+        this.idAnnuncio = idAnnuncio;
+        this.family = famiglia;
+        this.date = data;
+        this.start_time = oraInizio;
+        this.end_time = oraFine;
+        this.description = descrizione;
+    }
+
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setEnd_time(String end_time) {
-        this.end_time = end_time;
-    }
-
-    public void setFamily(String family) {
-        this.family = family;
-    }
-
-    public void setStart_time(String start_time) {
-        this.start_time = start_time;
     }
 
     public String getDate() {
