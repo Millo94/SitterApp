@@ -36,6 +36,7 @@ import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
+import it.uniba.di.sms.sitterapp.Recensioni.RecensioniPubblicoActivity;
 
 /**
  * FRAGMENT PROFILO PUBBLICO SITTER
@@ -258,6 +259,14 @@ public class PubblicoSitterFragment extends Fragment {
             }
         });
         feedbackSit = (Button) view.findViewById(R.id.feedbackSitter);
+        feedbackSit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent showfeedIntent = new Intent(getContext(), RecensioniPubblicoActivity.class);
+                showfeedIntent.putExtra("username",getActivity().getIntent().getStringExtra("username"));
+                startActivity(showfeedIntent);
+            }
+        });
     }
 
     @Override
