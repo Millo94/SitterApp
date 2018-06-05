@@ -219,27 +219,12 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
     @Override
     public void onNoticeSelected(Notice notice) {
 
-        if(sessionManager.getSessionType() == Constants.TYPE_SITTER) {
-            Intent detailIntent = new Intent(IngaggiActivity.this, NoticeDetailActivity.class);
-            detailIntent.putExtra("idAnnuncio", notice.getIdAnnuncio());
-            detailIntent.putExtra("famiglia", notice.getFamily());
-            detailIntent.putExtra("data", notice.getDate());
-            detailIntent.putExtra("oraInizio", notice.getStart_time());
-            detailIntent.putExtra("oraFine", notice.getEnd_time());
-            detailIntent.putExtra("descrizione", notice.getDescription());
-            startActivity(detailIntent);
-        } else {
-            if(sessionManager.getSessionType() == Constants.TYPE_FAMILY) {
-                Intent detailIntentFam = new Intent(IngaggiActivity.this,NoticeDetailActivity.class);
-                detailIntentFam.putExtra("idAnnuncio", notice.getIdAnnuncio());
-                detailIntentFam.putExtra("famiglia", notice.getFamily());
-                detailIntentFam.putExtra("data", notice.getDate());
-                detailIntentFam.putExtra("oraInizio", notice.getStart_time());
-                detailIntentFam.putExtra("oraFine", notice.getEnd_time());
-                detailIntentFam.putExtra("descrizione", notice.getDescription());
-                startActivity(detailIntentFam);
-            }
-        }
+        DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice);
+        dialogs.show(getSupportFragmentManager(), "dialog");
+
+
+
+
     }
 
 }

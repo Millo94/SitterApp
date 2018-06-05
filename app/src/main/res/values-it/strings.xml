@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">SitterApp</string>
 
-    <!-- Stringhe Login form  -->
-    <string name="login">Entra</string>
+    <!-- Stringhe Login form
+    <string name="login">Accedi</string>-->
     <string name= "lblMyAccount">Account personale</string>
 
     <string name="nome">Nome</string>
