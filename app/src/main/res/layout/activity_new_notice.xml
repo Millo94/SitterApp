@@ -1,121 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="it.uniba.di.sms.sitterapp.Principale.NewNoticeActivity">
+    android:orientation="vertical">
+
+
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView3">
+
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/titoloNewNotice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
-                android:layout_marginTop="46dp"
-                android:fontFamily="sans-serif-smallcaps"
-                android:text="@string/nuovoAnnuncio"
-                android:textAlignment="center"
-                android:textColor="@color/colorScritte"
-                android:textSize="50sp"
-                app:layout_constraintBottom_toTopOf="@+id/descrizioneNewNotice"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/descrizioneNewNotice"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/descrizione"
-                android:inputType="text"
-                android:textColorLink="@color/colorPrimary"
-                app:layout_constraintBottom_toTopOf="@+id/dataNewNotice"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/titoloNewNotice" />
 
-            <EditText
-                android:id="@+id/dataNewNotice"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:focusableInTouchMode="false"
-                android:hint="@string/data"
-                android:inputType="date"
-                android:textColorLink="@color/colorPrimary"
-                app:layout_constraintBottom_toTopOf="@+id/oraInizioNewNotice"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descrizioneNewNotice" />
+        <TableLayout
+            android:id="@+id/tableNewNotice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <EditText
-                android:id="@+id/oraInizioNewNotice"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="18dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:focusableInTouchMode="false"
-                android:hint="@string/orainizio"
-                android:inputType="date"
-                android:textColorLink="@color/colorPrimary"
-                app:layout_constraintBottom_toTopOf="@+id/confermaNewNotice"
-                app:layout_constraintEnd_toStartOf="@+id/oraFineNewNotice"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dataNewNotice" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/nav_header_vertical_spacing">
 
-            <EditText
-                android:id="@+id/oraFineNewNotice"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="42dp"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:focusableInTouchMode="false"
-                android:hint="@string/orafine"
-                android:inputType="date"
-                android:textColorLink="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/oraInizioNewNotice"
-                app:layout_constraintTop_toBottomOf="@+id/dataNewNotice" />
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="8dp"
+                    app:srcCompat="@drawable/ic_descrizione" />
 
-            <Button
-                android:id="@+id/confermaNewNotice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
-                android:layout_marginTop="32dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:text="@string/pubblicaAnnuncio"
-                android:textColor="@android:color/background_light"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/oraInizioNewNotice" />
+                <EditText
+                    android:id="@+id/descrizioneNewNotice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:hint="@string/descrizione"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/nav_header_vertical_spacing">
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="8dp"
+                    app:srcCompat="@drawable/ic_data" />
+
+                <EditText
+                    android:id="@+id/dataNewNotice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="false"
+                    android:gravity="center_vertical"
+                    android:hint="@string/data"
+                    android:inputType="date"
+                    android:textColorLink="@color/colorPrimary"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:padding="@dimen/nav_header_vertical_spacing">
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="8dp"
+                    app:srcCompat="@drawable/ic_time" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
+
+                    <EditText
+                        android:id="@+id/oraInizioNewNotice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:focusableInTouchMode="false"
+                        android:gravity="center_vertical"
+                        android:hint="@string/orainizio"
+                        android:inputType="date"
+                        android:textColorLink="@color/colorPrimary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="-" />
+
+                    <EditText
+                        android:id="@+id/oraFineNewNotice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:focusableInTouchMode="false"
+                        android:gravity="center_vertical"
+                        android:hint="@string/orafine"
+                        android:inputType="date"
+                        android:textColorLink="@color/colorPrimary"
+                        android:textSize="14sp" />
+                </TableRow>
+
+            </TableRow>
+
+        </TableLayout>
 
         </android.support.constraint.ConstraintLayout>
 
     </ScrollView>
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/confermaNewNotice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/scrollView3"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:elevation="2dp"
+        android:text="@string/pubblicaAnnuncio"
+        android:textColor="@android:color/background_light" />
+
+</RelativeLayout>

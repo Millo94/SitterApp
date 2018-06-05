@@ -29,6 +29,7 @@ import java.util.Queue;
 
 import it.uniba.di.sms.sitterapp.Adapter.NoticeAdapter;
 import it.uniba.di.sms.sitterapp.Adapter.SitterAdapter;
+import it.uniba.di.sms.sitterapp.Appuntamenti.DialogsNoticeDetails;
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Appuntamenti.NoticeDetailActivity;
 import it.uniba.di.sms.sitterapp.Oggetti.Notice;
@@ -293,13 +294,8 @@ public class HomeActivity extends DrawerActivity
      */
     @Override
     public void onNoticeSelected(Notice notice) {
-        Intent detailIntent = new Intent(HomeActivity.this, NoticeDetailActivity.class);
-        detailIntent.putExtra("famiglia", notice.getFamily());
-        detailIntent.putExtra("data", notice.getDate());
-        detailIntent.putExtra("oraInizio", notice.getStart_time());
-        detailIntent.putExtra("oraFine", notice.getEnd_time());
-        detailIntent.putExtra("descrizione", notice.getDescription());
-        startActivity(detailIntent);
+        DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice);
+        dialogs.show(getSupportFragmentManager(), "dialog");
     }
 
 

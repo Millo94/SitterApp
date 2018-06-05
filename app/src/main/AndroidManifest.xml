@@ -26,7 +26,9 @@
         <activity
             android:name=".Principale.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Registrazione.RegistrationActivity" />
+        <activity android:name=".Registrazione.RegistrationActivity"
+            android:label="@string/registrazione"
+            android:parentActivityName=".Principale.LoginActivity"/>
         <activity
             android:name=".Profilo.ProfiloPrivatoActivity"
             android:parentActivityName=".Principale.HomeActivity"

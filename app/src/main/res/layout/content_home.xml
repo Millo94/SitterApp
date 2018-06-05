@@ -37,6 +37,6 @@
         android:background="@color/colorPrimary"
         android:clickable="true"
         android:visibility="gone"
-        app:elevation="4dp"
+        app:elevation="6dp"
         wheel:srcCompat="@drawable/ic_action_add" />
 </RelativeLayout>

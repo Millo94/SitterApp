@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">SitterApp</string>
 
-    <!-- Stringhe Login form  -->
-    <string name="login">Entra</string>
+    <!-- Stringhe Login form
+    <string name="login">Accedi</string>-->
     <string name= "lblMyAccount">Account personale</string>
 
     <string name="nome">Nome</string>
@@ -61,7 +61,7 @@
     <string name="checkPassword">Le password non coincidono.</string>
     <string name="invalidEmail">Email non valida.</string>
     <string name="usedUsername">Username già utilizzato.</string>
-    <string name="nuovoUtente">Sei nuovo su SitterApp?</string>
+    <string name="nuovoUtenteDomanda">Sei nuovo su SitterApp?</string>
     <string name="dettaglioAnnuncio">Dettaglio Annuncio</string>
     <string name="profileError">Errore nell\'apertura del profilo.</string>
     <string name="visualizzaProfiloFamiglia">Visualizza Famiglia</string>
@@ -95,5 +95,9 @@
 
 
 
+    <string name="login">Accedi</string>
+    <string name="nuovoUtente">Nuovo Utente</string>
+    <string name="nuovaFamiglia">Nuova Famiglia</string>
+    <string name="newSitter">Nuova Baby Sitter</string>
 
 </resources>

@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -25,11 +24,8 @@ import java.util.Map;
 
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Php;
-import it.uniba.di.sms.sitterapp.Principale.HomeActivity;
-import it.uniba.di.sms.sitterapp.Principale.LoginActivity;
 import it.uniba.di.sms.sitterapp.Profilo.ProfiloPubblicoActivity;
 import it.uniba.di.sms.sitterapp.R;
-import it.uniba.di.sms.sitterapp.Registrazione.RegistrationActivity;
 import it.uniba.di.sms.sitterapp.SessionManager;
 
 
@@ -71,11 +67,10 @@ public class NoticeDetailActivity extends AppCompatActivity {
 
             setContentView(R.layout.details_notice_family);
 
-            user = (TextView) findViewById(R.id.usernameDettagliFam2);
             dataDet= (TextView) findViewById(R.id.dataDettagliFamiglia2);
             start =(TextView)findViewById(R.id.oraInizioDettagliFamiglia2);
             end = (TextView) findViewById(R.id.oraFineDettagliFamiglia2);
-            desc = (TextView) findViewById(R.id.descrizioneeDettagliFamiglia2);
+            desc = (TextView) findViewById(R.id.descrizioneDettagliFamiglia2);
 
             Button delete_notice = (Button) findViewById(R.id.eliminaAnnuncio);
             delete_notice.setOnClickListener(deleteNoticeListener);
