@@ -28,9 +28,11 @@ import java.util.Map;
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Oggetti.Notice;
 import it.uniba.di.sms.sitterapp.Php;
+import it.uniba.di.sms.sitterapp.Principale.HomeActivity;
 import it.uniba.di.sms.sitterapp.Profilo.ProfiloPubblicoActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
+import com.android.volley.RequestQueue;
 
 /**
  * Created by Francesca on 05/06/18.
@@ -42,6 +44,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     SessionManager sessionManager;
     private static final String elimina = "delete";
     private String idAnnuncio;
+    RequestQueue requestQueue;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
+        requestQueue = Volley.newRequestQueue(getContext());
 
 
         if (sessionManager.getSessionType() == Constants.TYPE_SITTER){
@@ -146,7 +150,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     View.OnClickListener candidateListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            candidami();
         }
     };
 
@@ -200,6 +204,47 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
             }
         };
         Volley.newRequestQueue(getContext()).add(deleteRequest);
+    }
+
+    public void candidami(){
+        StringRequest request = new StringRequest(Request.Method.POST, Php.CANDIDAMI, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject json = new JSONObject(response);
+                    String result = json.optString("response");
+
+                    if (result.equals("true")) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.candidateSucces, Toast.LENGTH_SHORT).show();
+                        Intent intentback = new Intent(getContext(),HomeActivity.class);
+                        startActivity(intentback);
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.candidatefail, Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity().getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("richiesta","CANDIDAMI");
+                params.put("username", sessionManager.getSessionUsername());
+                params.put("idAnnuncio", idAnnuncio);
+                return params;
+            }
+        };
+
+        requestQueue.add(request);
     }
 
 }
