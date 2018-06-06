@@ -192,6 +192,12 @@ public class PubblicoFamigliaFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                 builder.setTitle(R.string.sceltaAzione);
+                builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
                 builder.setItems(servizi, new DialogInterface.OnClickListener(){
                     /**
                      * Questo metodo serve per eseguire un azione tra chiamata sms e e-mail
