@@ -22,7 +22,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import android.content.Intent;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,7 +40,6 @@ import it.uniba.di.sms.sitterapp.Recensioni.RecensioniPubblicoActivity;
 
 /**
  * FRAGMENT PROFILO PUBBLICO FAMIGLIA
- *
  */
 public class PubblicoFamigliaFragment extends Fragment {
 
@@ -62,7 +63,8 @@ public class PubblicoFamigliaFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public PubblicoFamigliaFragment() {}
+    public PubblicoFamigliaFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,7 +82,7 @@ public class PubblicoFamigliaFragment extends Fragment {
         return view;
     }
 
-    private void showProfile(final String username){
+    private void showProfile(final String username) {
 
         StringRequest request = new StringRequest(Request.Method.POST, Php.PROFILO, new Response.Listener<String>() {
             @Override
@@ -90,7 +92,7 @@ public class PubblicoFamigliaFragment extends Fragment {
                     JSONObject json = new JSONObject(response);
                     String result = json.optString("show");
 
-                    if(result.equals("true")){
+                    if (result.equals("true")) {
                         usernamePuFam.setText(username);
                         emailPuFam2.setText(json.getString("email"));
                         email = json.getString("email");
@@ -101,21 +103,21 @@ public class PubblicoFamigliaFragment extends Fragment {
                         nazionePuFam2.setText(json.getString("nazione"));
                         capPuFam2.setText(json.getString("cap"));
                         // Rating bar
-                        if(!json.getString("rating").equals("null")) {
+                        if (!json.getString("rating").equals("null")) {
                             ratingPuFam.setRating((float) json.getDouble("rating"));
                         }
                         // Setta animali
-                        if(json.getString("animali").equals("0"))
+                        if (json.getString("animali").equals("0"))
                             animaliPuFam2.setText("Si");
                         else
                             animaliPuFam2.setText("No");
                         // Setta numero figli
-                        if(!json.getString("numFigli").equals("null"))
+                        if (!json.getString("numFigli").equals("null"))
                             numFigliPuFam2.setText(json.getString("numFigli"));
                         else
                             numFigliPuFam2.setText("0");
                         // Check descrizione
-                        if(!json.getString("descrizione").equals("null"))
+                        if (!json.getString("descrizione").equals("null"))
                             descrPuFam.setText(json.getString("descrizione"));
                         else
                             descrPuFam.setText(R.string.descrizioneAssente);
@@ -187,7 +189,7 @@ public class PubblicoFamigliaFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                CharSequence servizi[] = new CharSequence[] {getString(R.string.chiamata),getString(R.string.email),getString(R.string.sms)};
+                CharSequence servizi[] = new CharSequence[]{getString(R.string.chiamata), getString(R.string.email), getString(R.string.sms)};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -198,7 +200,7 @@ public class PubblicoFamigliaFragment extends Fragment {
 
                     }
                 });
-                builder.setItems(servizi, new DialogInterface.OnClickListener(){
+                builder.setItems(servizi, new DialogInterface.OnClickListener() {
                     /**
                      * Questo metodo serve per eseguire un azione tra chiamata sms e e-mail
                      * per contattare la famiglia dell'annuncio
@@ -207,34 +209,39 @@ public class PubblicoFamigliaFragment extends Fragment {
                      */
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                            switch (which){
+                        switch (which) {
 
-                                //chiamata
-                                case 0:
-                                    Intent chiamaIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+telefono));
-                                    startActivity(chiamaIntent);
-                                    break;
-                                //invio e-mail
-                                case 1:
-                                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                                    emailIntent.putExtra(Intent.EXTRA_EMAIL,email );
-                                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Oggetto Email");
-                                    emailIntent.putExtra(Intent.EXTRA_TEXT, "testo da mostrare");
-                                    emailIntent.setType("text/plain");
-                                    startActivity(emailIntent);
-                                    break;
-                                //invio sms
-                                case 2:
-                                    Intent smsIntent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms",telefono,null));
-                                    startActivity(smsIntent);
-                                    break;
-                                default:
-                                    break;
-                            }
+                            //chiamata
+                            case 0:
+                                Intent chiamaIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + telefono));
+                                startActivity(chiamaIntent);
+                                break;
+                            //invio e-mail
+                            case 1:
+                                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                                emailIntent.putExtra(Intent.EXTRA_EMAIL, email);
+                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Oggetto Email");
+                                emailIntent.putExtra(Intent.EXTRA_TEXT, "testo da mostrare");
+                                emailIntent.setType("text/plain");
+                                startActivity(emailIntent);
+                                break;
+                            //invio sms
+                            case 2:
+                                Intent smsIntent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", telefono, null));
+                                startActivity(smsIntent);
+                                break;
+                            default:
+                                break;
+                        }
 
                     }
                 });
-                builder.show();
+
+                AlertDialog alert = builder.create();
+                alert.show();
+                Button btn = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+                btn.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
 
             }
         });
@@ -243,7 +250,7 @@ public class PubblicoFamigliaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent showfeedIntent = new Intent(getContext(), RecensioniPubblicoActivity.class);
-                showfeedIntent.putExtra("username",getActivity().getIntent().getStringExtra("username"));
+                showfeedIntent.putExtra("username", getActivity().getIntent().getStringExtra("username"));
                 startActivity(showfeedIntent);
             }
         });

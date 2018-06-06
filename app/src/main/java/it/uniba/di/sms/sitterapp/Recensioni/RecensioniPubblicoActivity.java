@@ -105,9 +105,9 @@ public class RecensioniPubblicoActivity extends AppCompatActivity{
                                 String username;
 
                                 if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
-                                    username = recensioneObject.getString("famiglia");
-                                } else {
                                     username = recensioneObject.getString("babysitter");
+                                } else {
+                                    username = recensioneObject.getString("famiglia");
                                 }
 
 
@@ -137,7 +137,13 @@ public class RecensioniPubblicoActivity extends AppCompatActivity{
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("username", user);
-                params.put("tipoUtente", String.valueOf(sessionManager.getSessionType()));
+
+                if (sessionManager.getSessionType() == Constants.TYPE_SITTER){
+                    params.put("tipoUtente", String.valueOf(Constants.TYPE_FAMILY));
+                } else {
+                    params.put("tipoUtente", String.valueOf(Constants.TYPE_SITTER));
+                }
+
                 params.put("operation", "received");
                 return params;
             }

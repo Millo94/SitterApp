@@ -1,5 +1,6 @@
 package it.uniba.di.sms.sitterapp.Appuntamenti;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -222,7 +223,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
 
         DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice);
         dialogs.show(getSupportFragmentManager(), "dialog");
-
 
 
 
