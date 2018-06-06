@@ -221,10 +221,8 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
     public void onNoticeSelected(Notice notice) {
 
         DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice);
+        dialogs.hideButton();
         dialogs.show(getSupportFragmentManager(), "dialog");
-
-
-
 
     }
 

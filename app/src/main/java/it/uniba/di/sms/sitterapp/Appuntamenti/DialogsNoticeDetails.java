@@ -39,6 +39,7 @@ import it.uniba.di.sms.sitterapp.SessionManager;
 public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
     TextView user,dataDet,start,end,desc;
+    int visibility = View.VISIBLE;
     SessionManager sessionManager;
     private static final String elimina = "delete";
     private String idAnnuncio;
@@ -73,6 +74,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
             Button openProfile = (Button) view.findViewById(R.id.openFamilyProfile);
             openProfile.setOnClickListener(openProfileListener);
             Button candidate = (Button) view.findViewById(R.id.candidamiSit);
+            candidate.setVisibility(visibility);
             candidate.setOnClickListener(candidateListener);
 
             user.setText(getArguments().getString("username"));
@@ -200,6 +202,13 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
             }
         };
         Volley.newRequestQueue(getContext()).add(deleteRequest);
+    }
+
+    /**
+     * Nascondere il pulsante "candidami" quando si apre il dialog da "i miei annunci"
+     */
+    public void hideButton(){
+        visibility = View.GONE;
     }
 
 }
