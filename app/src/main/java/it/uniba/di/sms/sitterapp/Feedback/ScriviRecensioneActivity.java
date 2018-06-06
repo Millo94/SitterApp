@@ -27,16 +27,14 @@ import java.util.Map;
 
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Php;
-import it.uniba.di.sms.sitterapp.Principale.LoginActivity;
 import it.uniba.di.sms.sitterapp.R;
-import it.uniba.di.sms.sitterapp.Registrazione.RegistrationActivity;
 import it.uniba.di.sms.sitterapp.SessionManager;
 
 /**
  * Created by Feder on 31/05/2018.
  */
 
-public class ReviewpageActivity extends AppCompatActivity {
+public class ScriviRecensioneActivity extends AppCompatActivity {
 
     RequestQueue requestQueue;
     TextView user;
@@ -82,7 +80,7 @@ public class ReviewpageActivity extends AppCompatActivity {
             rate = (double ) Float.valueOf(rating.getRating());
 
             if(rate == 0.0 || commento.isEmpty()){
-                Toast.makeText(it.uniba.di.sms.sitterapp.Feedback.ReviewpageActivity.this,"Riempire i campi", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ScriviRecensioneActivity.this, R.string.missingFields, Toast.LENGTH_SHORT).show();
             }
             else
                 inviadati(commento,rate,famiglia);
@@ -91,20 +89,20 @@ public class ReviewpageActivity extends AppCompatActivity {
 
     public void inviadati(final String commento , final double rating, final String user){
 
-        StringRequest commentoRequest = new StringRequest(Request.Method.POST, Php.RECENSIONE, new Response.Listener<String>() {
+        StringRequest commentoRequest = new StringRequest(Request.Method.POST, Php.RECENSIONI, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 try {
                     JSONObject json = new JSONObject(response);
-                    String result = json.getString("response");
+                    String result = json.getString("write");
 
                     if (result.equals("true")) {
-                        Toast.makeText(getApplicationContext(), "RECENSIONE EFFETTUATA CORRETTAMENTE", Toast.LENGTH_LONG).show();
-                        Intent backIntent = new Intent(ReviewpageActivity.this, FeedbackActivity.class);
+                        Toast.makeText(getApplicationContext(), R.string.recensioneEffettuata, Toast.LENGTH_LONG).show();
+                        Intent backIntent = new Intent(ScriviRecensioneActivity.this, IngaggiSvoltiActivity.class);
                         startActivity(backIntent);
                     } else {
-                        Toast.makeText(getApplicationContext(), "ERRORE" ,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.genericError ,Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -113,31 +111,32 @@ public class ReviewpageActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), R.string.registrationFail, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
+                params.put("operation", "write");
                 if(sessionManager.getSessionType()== Constants.TYPE_SITTER) {
                     params.put("idAnnuncio", id);
                     params.put("usernameFamiglia", user);
                     params.put("usernameSitter", sessionManager.getSessionUsername());
                     params.put("commento", commento);
                     params.put("rating", Double.valueOf(rating).toString());
-                    params.put("type", String.valueOf(sessionManager.getSessionType()));
+                    params.put("tipoUtente", String.valueOf(sessionManager.getSessionType()));
                 }else if(sessionManager.getSessionType()== Constants.TYPE_FAMILY){
                     params.put("idAnnuncio", id);
                     params.put("usernameFamiglia", sessionManager.getSessionUsername());
                     params.put("usernameSitter", sitter);
                     params.put("commento", commento);
                     params.put("rating", Double.valueOf(rating).toString());
-                    params.put("type", String.valueOf(sessionManager.getSessionType()));
+                    params.put("tipoUtente", String.valueOf(sessionManager.getSessionType()));
                 }
                 return params;
             }
         };
-        requestQueue.add(commentoRequest);
 
+        requestQueue.add(commentoRequest);
     }
 }

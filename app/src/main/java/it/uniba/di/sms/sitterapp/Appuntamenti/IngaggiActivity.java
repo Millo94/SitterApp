@@ -179,6 +179,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
+                params.put("operation", "load");
                 params.put("username", sessionManager.getSessionUsername());
                 params.put("tipoutente", String.valueOf(sessionManager.getSessionType()));
                 return params;

@@ -29,14 +29,13 @@ import java.util.Map;
 import java.util.Queue;
 
 import it.uniba.di.sms.sitterapp.Adapter.NoticeAdapter;
-import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Oggetti.Notice;
 import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.Principale.DrawerActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 
-public class FeedbackActivity extends DrawerActivity implements NoticeAdapter.NoticeAdapterListener{
+public class IngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapter.NoticeAdapterListener{
 
     protected SessionManager sessionManager;
 
@@ -66,7 +65,7 @@ public class FeedbackActivity extends DrawerActivity implements NoticeAdapter.No
         recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
 
         noticeList = new ArrayList<>();
-        noticeAdapter = new NoticeAdapter(it.uniba.di.sms.sitterapp.Feedback.FeedbackActivity.this, noticeList, it.uniba.di.sms.sitterapp.Feedback.FeedbackActivity.this);
+        noticeAdapter = new NoticeAdapter(IngaggiSvoltiActivity.this, noticeList, IngaggiSvoltiActivity.this);
         remainingNoticeList = new LinkedList<>();
 
         recyclerView.setAdapter(noticeAdapter);
@@ -156,7 +155,7 @@ public class FeedbackActivity extends DrawerActivity implements NoticeAdapter.No
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(it.uniba.di.sms.sitterapp.Feedback.FeedbackActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(IngaggiSvoltiActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -202,7 +201,7 @@ public class FeedbackActivity extends DrawerActivity implements NoticeAdapter.No
     @Override
     public void onNoticeSelected(Notice notice) {
 
-            Intent familyRev = new Intent(it.uniba.di.sms.sitterapp.Feedback.FeedbackActivity.this, ReviewpageActivity.class);
+            Intent familyRev = new Intent(IngaggiSvoltiActivity.this, ScriviRecensioneActivity.class);
             familyRev.putExtra("famiglia", notice.getFamily());
             familyRev.putExtra("idAnnuncio",notice.getIdAnnuncio());
             familyRev.putExtra("sitter",notice.getSitter());

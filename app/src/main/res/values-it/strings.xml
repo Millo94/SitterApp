@@ -87,7 +87,7 @@
     <string name="recensioniScritte">Recensioni Scritte</string>
     <string name="recensioniRicevute">Recensioni Ricevute</string>
     <string name="sceltaAzione">Scegli come eseguire l\' azione:</string>
-    <string name="sms">SMS</string>
+    <string name="sms">Manda un messaggio</string>
     <string name="chiamata">chiama</string>
     <string name="profilo">Profilo</string>
     <string name="deleteSuccess">Eliminazione effettuata correttamente.</string>
@@ -99,5 +99,6 @@
     <string name="nuovoUtente">Nuovo Utente</string>
     <string name="nuovaFamiglia">Nuova Famiglia</string>
     <string name="newSitter">Nuova Baby Sitter</string>
+    <string name="recensioneEffettuata">Recensione inviata correttamente!</string>
 
 </resources>

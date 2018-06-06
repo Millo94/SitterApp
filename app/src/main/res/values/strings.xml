@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">SitterApp</string>
-    <string name="Enricoisindahouse" translatable="false">ECCOMIIII GENTEEEE</string>
-    <string name="Francescosindahouse" translatable="false">hI EvERiBadII</string>
     <string name="babySitter" translatable="false">Baby Sitter</string>
 
     <!-- Stringhe form registrazione -->
@@ -95,17 +93,15 @@
     <string name="descrizioneAssente">Ask directly for more info!</string>
     <string name="miei_feedback">My Review</string>
     <string name="scrivi_recensione">Write Review</string>
-    <string name="title_activity_recensioni_scritte">RecensioniScritteActivity</string>
     <string name="recensioniScritte">Reviews Written</string>
     <string name="recensioniRicevute">Reviews Received</string>
-    <string name="section_format">Hello World from section: %1$d</string>
     <string name="nuovoAnnuncio">New Notice</string>
     <string name="pubblicaAnnuncio">Post Notice</string>
     <string name="selezionaOra">Select Time</string>
     <string name="annuncioPubblicato">Notice published.</string>
-    <string name="sceltaAzione">choose how to perform the action</string>
-    <string name="sms">SMS</string>
-    <string name="chiamata">call</string>
+    <string name="sceltaAzione">Choose how to perform the action:</string>
+    <string name="sms">Write a messagge</string>
+    <string name="chiamata">Call the contact</string>
     <string name="deleteSuccess">Elimination was successfull.</string>
     <string name="deletefail"> can not delete the ad.</string>
 
@@ -119,6 +115,7 @@
     <string name="nuovoUtente">New User</string>
     <string name="nuovaFamiglia">New Family</string>
     <string name="newSitter">New Baby Sitter</string>
+    <string name="recensioneEffettuata">Review sent correctly!</string>
 
 
 </resources>

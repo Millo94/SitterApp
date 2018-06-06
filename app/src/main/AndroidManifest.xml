@@ -35,10 +35,6 @@
             android:windowSoftInputMode="stateHidden"
             android:label="@string/profilo"/>
         <activity
-            android:name=".Appuntamenti.NoticeDetailActivity"
-            android:parentActivityName=".Appuntamenti.IngaggiActivity"
-            android:label="@string/dettaglioAnnuncio"/>
-        <activity
             android:name=".Principale.DrawerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -47,19 +43,18 @@
             android:label="@string/engagements"/>
         <activity
             android:name=".Profilo.ProfiloPubblicoActivity"
-            android:parentActivityName=".Appuntamenti.NoticeDetailActivity"
             android:label="@string/profilo"/>
         <activity
             android:name=".Recensioni.RecensioniActivity"
             android:parentActivityName=".Principale.HomeActivity"
             android:label="@string/feedback"/>
 
-        <activity android:name=".Feedback.FeedbackActivity"
+        <activity android:name=".Feedback.IngaggiSvoltiActivity"
             android:parentActivityName=".Principale.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/scrivi_recensione"/>
 
-        <activity android:name=".Feedback.ReviewpageActivity"
+        <activity android:name=".Feedback.ScriviRecensioneActivity"
             android:parentActivityName=".Principale.HomeActivity"
             android:label="@string/feedback"
             />

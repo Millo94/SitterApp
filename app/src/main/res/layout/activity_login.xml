@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/btnlogin"
         android:layout_marginTop="64dp"
-        android:text="@string/nuovoUtente"
+        android:text="@string/nuovoUtenteDomanda"
         android:textAlignment="center"
         android:textColor="@color/colorScritte"
         android:textSize="18sp"

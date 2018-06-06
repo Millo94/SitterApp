@@ -28,11 +28,6 @@ public class Constants {
     public static final String TYPE = "type";
 
     /**
-     * Valore di ritorno di query con successo
-     */
-    public static final String QUERY_SUCCESS = "success";
-
-    /**
      * Url di base per accesso agli script
      */
     public static final String BASE_URL = "http://sitterapp.altervista.org/";

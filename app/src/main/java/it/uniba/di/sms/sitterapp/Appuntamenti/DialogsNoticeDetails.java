@@ -40,7 +40,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
     TextView user,dataDet,start,end,desc;
     SessionManager sessionManager;
-    private static final String elimina = "ELIMINA";
+    private static final String elimina = "delete";
     private String idAnnuncio;
 
     @Override
@@ -172,15 +172,13 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
             public void onResponse(String response) {
                 try {
                     JSONObject json = new JSONObject(response);
-                    String result = json.getString("response");
+                    String result = json.getString(elimina);
 
                     if (result.equals("true")) {
                         Toast.makeText(getContext(), R.string.deleteSuccess, Toast.LENGTH_LONG).show();
                         Intent intentback = new Intent(getContext(),IngaggiActivity.class);
                         startActivity(intentback);
                     } else if(result.equals("false")){
-                        Toast.makeText(getContext(), R.string.deletefail ,Toast.LENGTH_SHORT).show();
-                    } else {
                         Toast.makeText(getContext(), R.string.deletefail ,Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
@@ -196,7 +194,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("richiesta", elimina);
+                params.put("operation", elimina);
                 params.put("idAnnuncioElimina",idAnnuncio);
                 return params;
             }
