@@ -65,6 +65,9 @@
             android:label="@string/nuovoAnnuncio"/>
         <activity android:name=".Recensioni.RecensioniPubblicoActivity"
             />
+        <activity android:name=".Appuntamenti.candidati"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

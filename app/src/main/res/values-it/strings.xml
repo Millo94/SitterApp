@@ -94,6 +94,8 @@
     <string name="deletefail">Impossibile eliminare l\' annuncio.</string>
     <string name="candidateSucces">Candidatura effettuata correttamente</string>
     <string name="candidatefail">Errore nella candidatura.</string>
+    <string name="visualizzaProfiloSitter">Visualizza il suo profilo</string>
+    <string name="assegnaIncarico">Assegna incarico</string>
 
 
 
