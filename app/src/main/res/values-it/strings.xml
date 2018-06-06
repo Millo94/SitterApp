@@ -92,6 +92,8 @@
     <string name="profilo">Profilo</string>
     <string name="deleteSuccess">Eliminazione effettuata correttamente.</string>
     <string name="deletefail">Impossibile eliminare l\' annuncio.</string>
+    <string name="candidateSucces">Candidatura effettuata correttamente</string>
+    <string name="candidatefail">Errore nella candidatura.</string>
 
 
 

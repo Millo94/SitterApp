@@ -147,7 +147,7 @@ public class HomeActivity extends DrawerActivity
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Php.ANNUNCI,
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET, Php.ANNUNCI,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -159,12 +159,13 @@ public class HomeActivity extends DrawerActivity
                             for (int i = 0; i < notice.length(); i++) {
 
                                 JSONObject noticeObject = notice.getJSONObject(i);
+                                String idAnnuncio = noticeObject.getString("idAnnuncio");
                                 String famiglia = noticeObject.getString("usernameFamiglia");
                                 String data = noticeObject.getString("data");
                                 String oraInizio = noticeObject.getString("oraInizio");
                                 String oraFine = noticeObject.getString("oraFine");
                                 String descrizione = noticeObject.getString("descrizione");
-                                Notice n = new Notice(famiglia, data, oraInizio, oraFine, descrizione);
+                                Notice n = new Notice(idAnnuncio,famiglia, data, oraInizio, oraFine, descrizione);
 
                                 if (i < LOAD_LIMIT) {
                                     noticeList.add(n);
