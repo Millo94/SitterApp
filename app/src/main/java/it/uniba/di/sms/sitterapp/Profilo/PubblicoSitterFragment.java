@@ -40,7 +40,7 @@ import it.uniba.di.sms.sitterapp.Recensioni.RecensioniPubblicoActivity;
 
 /**
  * FRAGMENT PROFILO PUBBLICO SITTER
- *
+ * <p>
  * TODO -> COLLEGARE I BOTTONI
  */
 public class PubblicoSitterFragment extends Fragment {
@@ -63,7 +63,8 @@ public class PubblicoSitterFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public PubblicoSitterFragment() {}
+    public PubblicoSitterFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,7 @@ public class PubblicoSitterFragment extends Fragment {
         return view;
     }
 
-    private void showProfile(final String username){
+    private void showProfile(final String username) {
 
         StringRequest request = new StringRequest(Request.Method.POST, Php.PROFILO, new Response.Listener<String>() {
             @Override
@@ -91,7 +92,7 @@ public class PubblicoSitterFragment extends Fragment {
                     JSONObject json = new JSONObject(response);
                     String result = json.optString("show");
 
-                    if(result.equals("true")){
+                    if (result.equals("true")) {
                         Glide.with(getContext()).load(json.getString("pathFoto")).into(profilePic);
                         usernamePuSit.setText(username);
                         emailPuSit2.setText(json.getString("email"));
@@ -103,37 +104,37 @@ public class PubblicoSitterFragment extends Fragment {
                         nazionePuSit2.setText(json.getString("nazione"));
                         capPuSit2.setText(json.getString("cap"));
                         // Rating bar
-                        if(!json.getString("rating").equals("null")) {
+                        if (!json.getString("rating").equals("null")) {
                             ratingPuSitter.setRating((float) json.getDouble("rating"));
                         }
                         // Setta numero ingaggi
-                        if(!json.getString("ingaggi").equals("null"))
+                        if (!json.getString("ingaggi").equals("null"))
                             ingaggiPuSit2.setText(json.getString("ingaggi"));
                         else
                             ingaggiPuSit2.setText("0");
                         // Setta il genere
-                        if(json.getString("genere").equals(("M")))
+                        if (json.getString("genere").equals(("M")))
                             sessoPuSit2.setText("Uomo");
                         else
                             sessoPuSit2.setText("Donna");
                         // Setta l'auto
-                        if(json.getString("auto").equals("0"))
+                        if (json.getString("auto").equals("0"))
                             carPuSit2.setText("Si");
                         else
                             //carPuSit2.setChecked(false);
                             carPuSit2.setText("No");
                         dataPuSit2.setText(Constants.SQLtoDate(json.getString("dataNascita")));
                         // Check tariffa
-                        if(!json.getString("tariffaOraria").equals("null"))
+                        if (!json.getString("tariffaOraria").equals("null"))
                             tariffaPuSit2.setText(json.getString("tariffaOraria"));
                         else
                             tariffaPuSit2.setText(R.string.tariffaAssente);
                         // Check descrizione
-                        if(!json.getString("descrizione").equals("null"))
+                        if (!json.getString("descrizione").equals("null"))
                             descrPuSit.setText(json.getString("descrizione"));
                         else
                             descrPuSit.setText(R.string.descrizioneAssente);
-                    } else if (result.equals("false")){
+                    } else if (result.equals("false")) {
                         Toast.makeText(getActivity().getApplicationContext(), R.string.profileError, Toast.LENGTH_SHORT).show();
                     }
 
@@ -161,7 +162,7 @@ public class PubblicoSitterFragment extends Fragment {
         requestQueue.add(request);
     }
 
-    public void inizializzazione(){
+    public void inizializzazione() {
 
         usernamePuSit = (TextView) view.findViewById(R.id.usernamePuSitter);
 
@@ -193,7 +194,7 @@ public class PubblicoSitterFragment extends Fragment {
         sessoPuSit = (TextView) view.findViewById(R.id.sessoPuSitter);
         sessoPuSit2 = (TextView) view.findViewById(R.id.sessoPuSitter2);
 
-        dataPuSit= (TextView) view.findViewById(R.id.nascitaPuSitter);
+        dataPuSit = (TextView) view.findViewById(R.id.nascitaPuSitter);
         dataPuSit2 = (TextView) view.findViewById(R.id.nascitaPuSitter2);
 
         tariffaPuSit = (TextView) view.findViewById(R.id.tariffaPuSitter);
@@ -213,12 +214,12 @@ public class PubblicoSitterFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                CharSequence servizi[] = new CharSequence[] {getString(R.string.chiamata),getString(R.string.email),getString(R.string.sms)};
+                CharSequence servizi[] = new CharSequence[]{getString(R.string.chiamata), getString(R.string.email), getString(R.string.sms)};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                 builder.setTitle(R.string.sceltaAzione);
-                builder.setItems(servizi, new DialogInterface.OnClickListener(){
+                builder.setItems(servizi, new DialogInterface.OnClickListener() {
                     /**
                      * Questo metodo serve per eseguire un azione tra chiamata sms e e-mail
                      * per contattare la famiglia dell'annuncio
@@ -227,17 +228,17 @@ public class PubblicoSitterFragment extends Fragment {
                      */
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
+                        switch (which) {
 
                             //chiamata
                             case 0:
-                                Intent chiamaIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+telefono));
+                                Intent chiamaIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + telefono));
                                 startActivity(chiamaIntent);
                                 break;
                             //invio e-mail
                             case 1:
                                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                                emailIntent.putExtra(Intent.EXTRA_EMAIL,email );
+                                emailIntent.putExtra(Intent.EXTRA_EMAIL, email);
                                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Oggetto Email");
                                 emailIntent.putExtra(Intent.EXTRA_TEXT, "testo da mostrare");
                                 emailIntent.setType("text/plain");
@@ -245,7 +246,7 @@ public class PubblicoSitterFragment extends Fragment {
                                 break;
                             //invio sms
                             case 2:
-                                Intent smsIntent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms",telefono,null));
+                                Intent smsIntent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", telefono, null));
                                 startActivity(smsIntent);
                                 break;
                             default:
@@ -254,7 +255,12 @@ public class PubblicoSitterFragment extends Fragment {
 
                     }
                 });
-                builder.show();
+
+                AlertDialog alert = builder.create();
+                alert.show();
+                Button btn = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+                btn.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
 
             }
         });
@@ -263,7 +269,7 @@ public class PubblicoSitterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent showfeedIntent = new Intent(getContext(), RecensioniPubblicoActivity.class);
-                showfeedIntent.putExtra("username",getActivity().getIntent().getStringExtra("username"));
+                showfeedIntent.putExtra("username", getActivity().getIntent().getStringExtra("username"));
                 startActivity(showfeedIntent);
             }
         });
