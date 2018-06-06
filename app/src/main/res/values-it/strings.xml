@@ -99,10 +99,11 @@
 
 
 
-    <string name="login">Accedi</string>
+    <string name="login">Accesso</string>
     <string name="nuovoUtente">Nuovo Utente</string>
     <string name="nuovaFamiglia">Nuova Famiglia</string>
     <string name="newSitter">Nuova Baby Sitter</string>
     <string name="recensioneEffettuata">Recensione inviata correttamente!</string>
+    <string name="registrazioneStringa">Clicca qui per creare un nuovo account</string>
 
 </resources>

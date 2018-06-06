@@ -1,5 +1,6 @@
 package it.uniba.di.sms.sitterapp.Appuntamenti;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,7 +40,7 @@ import it.uniba.di.sms.sitterapp.Principale.DrawerActivity;
 import it.uniba.di.sms.sitterapp.Principale.NewNoticeActivity;
 import it.uniba.di.sms.sitterapp.R;
 
-public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.NoticeAdapterListener{
+public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.NoticeAdapterListener {
 
     // Vista
     private RecyclerView recyclerView;
@@ -65,9 +66,11 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
-        if(sessionManager.getSessionType() == Constants.TYPE_FAMILY){
-            addNotice = (FloatingActionButton) findViewById(R.id.addNotice);
-            addNotice.setVisibility(View.VISIBLE);
+
+        //FAB
+        addNotice = (FloatingActionButton) findViewById(R.id.addNotice);
+        if (sessionManager.getSessionType() == Constants.TYPE_FAMILY && addNotice.getVisibility() == View.GONE) {
+            addNotice.show();
             addNotice.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -75,8 +78,9 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                     startActivity(intent);
                 }
             });
+        } else if (sessionManager.getSessionType() == Constants.TYPE_SITTER && addNotice.getVisibility() == View.VISIBLE) {
+            addNotice.hide();
         }
-
 
 
         noticeList = new ArrayList<>();
@@ -156,7 +160,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                                 String oraInizio = noticeObject.getString("oraInizio");
                                 String oraFine = noticeObject.getString("oraFine");
                                 String descrizione = noticeObject.getString("descrizione");
-                                Notice n = new Notice(idAnnuncio,famiglia, data, oraInizio, oraFine, descrizione);
+                                Notice n = new Notice(idAnnuncio, famiglia, data, oraInizio, oraFine, descrizione);
 
                                 if (i < LOAD_LIMIT) {
                                     noticeList.add(n);
@@ -222,8 +226,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
 
         DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice);
         dialogs.show(getSupportFragmentManager(), "dialog");
-
-
 
 
     }

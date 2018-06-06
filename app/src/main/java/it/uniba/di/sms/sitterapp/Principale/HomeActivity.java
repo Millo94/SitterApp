@@ -57,7 +57,7 @@ public class HomeActivity extends DrawerActivity
     // you can change this to fit your specifications.
     // When you change this, there will be no need to update your php page,
     // as php will be ordered what to load and limit by android java
-    public static final int LOAD_LIMIT = 5;
+    public static final int LOAD_LIMIT = 9;
 
 
     // we need this variable to lock and unlock loading more
@@ -165,7 +165,7 @@ public class HomeActivity extends DrawerActivity
                                 String oraInizio = noticeObject.getString("oraInizio");
                                 String oraFine = noticeObject.getString("oraFine");
                                 String descrizione = noticeObject.getString("descrizione");
-                                Notice n = new Notice(idAnnuncio,famiglia, data, oraInizio, oraFine, descrizione);
+                                Notice n = new Notice(idAnnuncio, famiglia, data, oraInizio, oraFine, descrizione);
 
                                 if (i < LOAD_LIMIT) {
                                     noticeList.add(n);
@@ -214,13 +214,13 @@ public class HomeActivity extends DrawerActivity
 
                         try {
                             JSONArray sitter = new JSONArray(response);
-                            for(int i=0;i<sitter.length();i++){
+                            for (int i = 0; i < sitter.length(); i++) {
                                 JSONObject sitterObject = sitter.getJSONObject(i);
                                 String username = sitterObject.getString("username");
                                 String foto = sitterObject.getString("pathfoto");
                                 UtenteSitter s = new UtenteSitter(username, foto);
 
-                                if(i < LOAD_LIMIT) {
+                                if (i < LOAD_LIMIT) {
                                     sitterList.add(s);
                                 } else {
                                     remainingSitterList.add(s);
@@ -236,7 +236,7 @@ public class HomeActivity extends DrawerActivity
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(HomeActivity.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         Volley.newRequestQueue(this).add(stringRequest);
@@ -273,6 +273,7 @@ public class HomeActivity extends DrawerActivity
             }
 
         } else if (sessionManager.getSessionType() == Constants.TYPE_FAMILY) {
+
             if (!remainingSitterList.isEmpty()) {
 
                 final int remainingSitterListSize = remainingSitterList.size();
@@ -296,7 +297,6 @@ public class HomeActivity extends DrawerActivity
         DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice);
         dialogs.show(getSupportFragmentManager(), "dialog");
     }
-
 
 
     @Override

@@ -23,27 +23,25 @@
 
             <Button
                 android:id="@+id/contattaFamiglia"
-                android:layout_width="130dp"
-                android:layout_height="70dp"
-                android:layout_marginBottom="40dp"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:text="@string/contattaFamiglia"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/FeedbackFamiglia"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/capPuFamily2" />
 
             <Button
                 android:id="@+id/FeedbackFamiglia"
-                android:layout_width="130dp"
-                android:layout_height="70dp"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="8dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:text="@string/feedback"
                 android:textAlignment="center"
@@ -52,8 +50,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/contattaFamiglia"
-                app:layout_constraintTop_toBottomOf="@+id/capPuFamily2" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contattaFamiglia" />
 
             <TextView
                 android:id="@+id/usernamePuFamiglia"

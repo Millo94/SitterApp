@@ -23,8 +23,9 @@
         android:id="@+id/lblUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textAccount"
-        android:layout_marginTop="64dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textAccount"
+        android:layout_marginTop="30dp"
         android:hint="Username"
         android:inputType="textPersonName"
         android:text="Eladi96" />
@@ -62,29 +63,17 @@
         android:textSize="18sp"
         android:textStyle="italic" />
 
-    <Button
-        android:id="@+id/btnNewAccountSitter"
+    <TextView
+        android:id="@+id/creaAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/nuovoUtente"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_shape"
-        android:elevation="8dp"
-        android:onClick="createAccountSitter"
-        android:text="@string/createAccountSitter" />
-
-    <Button
-        android:id="@+id/btnNewAccountFamily"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/btnNewAccountSitter"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/button_shape"
-        android:elevation="8dp"
-        android:onClick="createAccountFamily"
-        android:text="@string/createAccountFamily" />
+        android:text="@string/registrazioneStringa"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/colorScritte"
+        android:textSize="18sp"
+        android:textStyle="bold|italic" />
 
 </RelativeLayout>
