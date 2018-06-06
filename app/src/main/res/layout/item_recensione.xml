@@ -33,10 +33,10 @@
             style="@style/Base.Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:isIndicator="true"
-            android:numStars="5"
             android:layout_below="@+id/usernameRecensione"
-            android:padding="8dp"/>
+            android:layout_margin="8dp"
+            android:isIndicator="true"
+            android:numStars="5" />
 
         <TextView
             android:id="@+id/descrizioneRecensione"
