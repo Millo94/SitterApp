@@ -218,8 +218,12 @@ public class HomeActivity extends DrawerActivity
                                 JSONObject sitterObject = sitter.getJSONObject(i);
                                 String username = sitterObject.getString("username");
                                 String foto = sitterObject.getString("pathfoto");
-                                UtenteSitter s = new UtenteSitter(username, foto);
-
+                                float rating;
+                                if(sitterObject.getString("rating").equals("null")){
+                                     rating = 0;
+                                }
+                                else{rating =(float) sitterObject.getDouble("rating");}
+                                UtenteSitter s = new UtenteSitter(username, foto,rating);
                                 if (i < LOAD_LIMIT) {
                                     sitterList.add(s);
                                 } else {
