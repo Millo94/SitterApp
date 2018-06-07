@@ -18,6 +18,7 @@ public class UtenteSitter {
     private String nazione;
     private String cap;
     private String auto;
+    private float rating;
 
     public UtenteSitter(String username,
                         String password,
@@ -43,10 +44,41 @@ public class UtenteSitter {
         this.cap = cap;
         this.auto = auto;
     }
-
-    public UtenteSitter(String username, String foto){
+    public UtenteSitter(String username,
+                        String password,
+                        String nome,
+                        String cognome,
+                        String dataNascita,
+                        String email,
+                        String numero,
+                        String genere,
+                        String nazione,
+                        String cap,
+                        String auto,
+                        float rating)
+    {
+        this.username = username;
+        this.password = password;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.dataNascita = dataNascita;
+        this.email = email;
+        this.numero = numero;
+        this.genere = genere;
+        this.nazione = nazione;
+        this.cap = cap;
+        this.auto = auto;
+        this.rating=rating;
+    }
+    public UtenteSitter(String username, String foto ){
         this.username = username;
         this.foto = foto;
+    }
+
+    public UtenteSitter(String username, String foto,float rating){
+        this.username = username;
+        this.foto = foto;
+        this.rating=rating;
     }
 
     public String getUsername() {
@@ -91,4 +123,5 @@ public class UtenteSitter {
 
     public String getCap() { return cap; }
 
+    public float getRating() {return rating;}
 }
