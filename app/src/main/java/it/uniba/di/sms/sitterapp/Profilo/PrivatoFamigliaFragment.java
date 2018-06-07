@@ -149,7 +149,6 @@ public class PrivatoFamigliaFragment extends Fragment {
                 emailPrFam2.setEnabled(true);
                 numeroPrFam2.setEnabled(true);
                 animaliPrFam2.setEnabled(true);
-                nazionePrFam2.setEnabled(true);
                 capPrFam2.setEnabled(true);
                 numFigliPrFam2.setEnabled(true);
 
@@ -163,7 +162,6 @@ public class PrivatoFamigliaFragment extends Fragment {
                 emailPrFam2.setEnabled(false);
                 numeroPrFam2.setEnabled(false);
                 animaliPrFam2.setEnabled(false);
-                nazionePrFam2.setEnabled(false);
                 capPrFam2.setEnabled(false);
                 numFigliPrFam2.setEnabled(false);
                 modifyProfile();

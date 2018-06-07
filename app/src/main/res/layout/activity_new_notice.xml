@@ -20,117 +20,116 @@
             android:orientation="vertical">
 
 
+            <TableLayout
+                android:id="@+id/tableNewNotice"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <TableLayout
-            android:id="@+id/tableNewNotice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/nav_header_vertical_spacing">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/nav_header_vertical_spacing">
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="8dp"
+                        app:srcCompat="@drawable/ic_descrizione" />
 
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    <EditText
+                        android:id="@+id/descrizioneNewNotice"
+                        android:layout_width="235dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:hint="@string/descrizione"
+                        android:textSize="14sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/nav_header_vertical_spacing">
+
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="8dp"
+                        app:srcCompat="@drawable/ic_data" />
+
+                    <EditText
+                        android:id="@+id/dataNewNotice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:focusableInTouchMode="false"
+                        android:gravity="center_vertical"
+                        android:hint="@string/data"
+                        android:inputType="date"
+                        android:textColorLink="@color/colorPrimary"
+                        android:textSize="14sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_margin="8dp"
+                    android:layout_marginLeft="8dp">
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="8dp"
+                        app:srcCompat="@drawable/ic_time" />
+
+                    <EditText
+                        android:id="@+id/oraInizioNewNotice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:focusableInTouchMode="false"
+                        android:gravity="center_vertical"
+                        android:hint="@string/orainizio"
+                        android:inputType="date"
+                        android:textColorLink="@color/colorPrimary"
+                        android:textSize="14sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginRight="8dp"
-                    app:srcCompat="@drawable/ic_descrizione" />
+                    android:padding="@dimen/nav_header_vertical_spacing">
 
-                <EditText
-                    android:id="@+id/descrizioneNewNotice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:hint="@string/descrizione"
-                    android:textSize="14sp" />
-            </TableRow>
+                    <ImageView
+                        android:id="@+id/imageView10"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="8dp"
+                        app:srcCompat="@drawable/ic_time" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/nav_header_vertical_spacing">
+                    <EditText
+                        android:id="@+id/oraFineNewNotice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:focusableInTouchMode="false"
+                        android:gravity="center_vertical"
+                        android:hint="@string/orafine"
+                        android:inputType="date"
+                        android:textColorLink="@color/colorPrimary"
+                        android:textSize="14sp" />
 
-                <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="8dp"
-                    app:srcCompat="@drawable/ic_data" />
+                </TableRow>
 
-                <EditText
-                    android:id="@+id/dataNewNotice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:focusableInTouchMode="false"
-                    android:gravity="center_vertical"
-                    android:hint="@string/data"
-                    android:inputType="date"
-                    android:textColorLink="@color/colorPrimary"
-                    android:textSize="14sp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_margin="8dp"
-                android:layout_marginLeft="8dp">
-
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="8dp"
-                    app:srcCompat="@drawable/ic_time" />
-
-                <EditText
-                    android:id="@+id/oraInizioNewNotice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:focusableInTouchMode="false"
-                    android:gravity="center_vertical"
-                    android:hint="@string/orainizio"
-                    android:inputType="date"
-                    android:textColorLink="@color/colorPrimary"
-                    android:textSize="14sp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:padding="@dimen/nav_header_vertical_spacing">
-
-                <ImageView
-                    android:id="@+id/imageView10"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="8dp"
-                    app:srcCompat="@drawable/ic_time" />
-
-                <EditText
-                    android:id="@+id/oraFineNewNotice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:focusableInTouchMode="false"
-                    android:gravity="center_vertical"
-                    android:hint="@string/orafine"
-                    android:inputType="date"
-                    android:textColorLink="@color/colorPrimary"
-                    android:textSize="14sp" />
-
-            </TableRow>
-
-        </TableLayout>
+            </TableLayout>
 
         </android.support.constraint.ConstraintLayout>
 
@@ -138,10 +137,10 @@
 
     <Button
         android:id="@+id/confermaNewNotice"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/scrollView3"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/colorPrimary"
         android:elevation="2dp"

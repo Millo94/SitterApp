@@ -229,6 +229,7 @@ public class PubblicoFamigliaFragment extends Fragment {
                             case 2:
                                 Intent smsIntent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", telefono, null));
                                 startActivity(smsIntent);
+
                                 break;
                             default:
                                 break;
