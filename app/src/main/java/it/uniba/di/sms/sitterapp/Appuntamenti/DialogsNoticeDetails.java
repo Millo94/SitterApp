@@ -45,6 +45,14 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     private String idAnnuncio;
 
     @Override
+    public void onStart() {
+        super.onStart();
+        Button negative = ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_NEGATIVE);
+        negative.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
+    }
+
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         sessionManager = new SessionManager(getActivity().getApplicationContext());
