@@ -87,7 +87,6 @@
     <string name="recensioniScritte">Recensioni Scritte</string>
     <string name="recensioniRicevute">Recensioni Ricevute</string>
     <string name="sceltaAzione">Scegli come eseguire l\' azione:</string>
-    <string name="sms">Manda un messaggio</string>
     <string name="chiamata">chiama</string>
     <string name="profilo">Profilo</string>
     <string name="deleteSuccess">Eliminazione effettuata correttamente.</string>
@@ -104,6 +103,26 @@
     <string name="nuovaFamiglia">Nuova Famiglia</string>
     <string name="newSitter">Nuova Baby Sitter</string>
     <string name="recensioneEffettuata">Recensione inviata correttamente!</string>
+    <string name="Monday">Lun</string>
+    <string name="Tuesday">Mar</string>
+    <string name="Wednesday">Mer</string>
+    <string name="Thursday">Gio</string>
+    <string name="Friday">Ven</string>
+    <string name="Saturday">Sab</string>
+    <string name="Morning">Mattina</string>
+    <string name="Afternoon">Pomeriggio</string>
+    <string name="Evening">Sera</string>
+    <string name="Sunday">Dom</string>
+    <string name="DisponibilitaSitter">Disponibilità sitter</string>
+    <string name="sms">Scrivi un messaggio</string>
+    <string name="Cancel">Cancella</string>
+    <string name="SaveChanges">Salva Modifica</string>
     <string name="registrazioneStringa">Clicca qui per creare un nuovo account</string>
+    <string name="esperienza">Esperienza (n° di ingaggi)</string>
+    <string name="disponibilita">Disponibilità</string>
+    <string name="editDisp">Modifica disponibilità</string>
+    <string name="minore5">Da 0 a 5</string>
+    <string name="maggiore5">Da 5 a 10</string>
+    <string name="maggiore10">Più di 10</string>
 
 </resources>

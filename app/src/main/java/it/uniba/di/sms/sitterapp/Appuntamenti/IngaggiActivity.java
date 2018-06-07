@@ -83,6 +83,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         }
 
 
+
         noticeList = new ArrayList<>();
         noticeAdapter = new NoticeAdapter(IngaggiActivity.this, noticeList, IngaggiActivity.this);
         remainingNoticeList = new LinkedList<>();
@@ -225,7 +226,9 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
     public void onNoticeSelected(Notice notice) {
 
         DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice);
+        dialogs.hideButton();
         dialogs.show(getSupportFragmentManager(), "dialog");
+
 
 
     }

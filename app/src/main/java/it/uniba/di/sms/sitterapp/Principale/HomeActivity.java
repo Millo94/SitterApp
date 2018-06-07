@@ -3,6 +3,7 @@ package it.uniba.di.sms.sitterapp.Principale;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -65,9 +66,29 @@ public class HomeActivity extends DrawerActivity
     // loading will be activated when volley completes loading
     private boolean itShouldLoadMore = true;
 
+    FloatingActionButton cercaSitter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        //FAB per la ricerca delle baby sitter
+        cercaSitter = (FloatingActionButton) findViewById(R.id.cercaSitter);
+        if (sessionManager.getSessionType() == Constants.TYPE_FAMILY && cercaSitter.getVisibility() == View.GONE) {
+            cercaSitter.show();
+            cercaSitter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //da collegare al Dialogs della ricerca
+                }
+            });
+        } else if (sessionManager.getSessionType() == Constants.TYPE_SITTER && cercaSitter.getVisibility() == View.VISIBLE) {
+            cercaSitter.hide();
+        }
+
+
+
 
         /*
         DA QUI INIZIA LA PARTE DEL CARICAMENTO DEGLI ANNUNCI
