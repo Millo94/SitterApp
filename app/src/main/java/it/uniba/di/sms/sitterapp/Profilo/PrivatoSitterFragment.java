@@ -2,11 +2,12 @@ package it.uniba.di.sms.sitterapp.Profilo;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.os.Bundle;
+import android.os.Bundle;;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,7 +25,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.annotation.GlideModule;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,6 +55,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     Switch carPrSit2;
     ImageView profilePic;
     ToggleButton modificaProfilo;
+    Button editDisp;
     boolean edit = false;
 
     private OnFragmentInteractionListener mListener;
@@ -73,14 +74,14 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profilo_privato_sitter, container, false);
 
-        requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue = Volley.newRequestQueue(getActivity());
 
         // Valorizzo il session manager
         sessionManager = new SessionManager(getActivity().getApplicationContext());
 
         //Creazione dell'istanza calendario per l'utilizzo del datePiker
         Calendar c = Calendar.getInstance();
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), this, c.get(Calendar.YEAR),
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), this, c.get(Calendar.YEAR),
                 c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 
         inizializzazione(datePickerDialog);
@@ -91,6 +92,13 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
             @Override
             public void onClick(View v) {
                 goEditable();
+            }
+        });
+        editDisp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DisponibilitaDialog dialog = DisponibilitaDialog.newInstance(sessionManager.getSessionUsername());
+                dialog.show(getChildFragmentManager(), "dialog");
             }
         });
 
@@ -274,6 +282,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         profilePic = (ImageView) view.findViewById(R.id.imgPrSitter);
 
         modificaProfilo = (ToggleButton) view.findViewById(R.id.modificaProfilo);
+        editDisp = (Button) view.findViewById(R.id.editDisp);
     }
 
     private void goEditable() {

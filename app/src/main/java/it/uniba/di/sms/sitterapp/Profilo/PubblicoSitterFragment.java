@@ -53,7 +53,7 @@ public class PubblicoSitterFragment extends Fragment {
     //QUESTE STRINGHE SONO DA COLLEGARE AL DATABASE
     TextView nomePuSit2, cognomePuSit2, emailPuSit2, numeroPuSit2, carPuSit2, sessoPuSit2, dataPuSit2, tariffaPuSit2, ingaggiPuSit2, nazionePuSit2, capPuSit2;
     //DA COLLEGARE QUANDO AVREMO AL CHAT
-    Button contattaSitter, feedbackSit;
+    Button contattaSitter, feedbackSit, disponibilitaSitter;
 
     //
     private String telefono;
@@ -208,6 +208,15 @@ public class PubblicoSitterFragment extends Fragment {
 
         capPuSit = (TextView) view.findViewById(R.id.capPuSitter);
         capPuSit2 = (TextView) view.findViewById(R.id.capPuSitter2);
+
+        disponibilitaSitter = (Button) view.findViewById(R.id.vediDispSitter);
+        disponibilitaSitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DisponibilitaDialog dialog = DisponibilitaDialog.newInstance(usernamePuSit.getText().toString());
+                dialog.show(getChildFragmentManager(), "dialog");
+            }
+        });
 
         contattaSitter = (Button) view.findViewById(R.id.contattaSitter);
         contattaSitter.setOnClickListener(new View.OnClickListener() {

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/tableDisp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="16dp">
+
+        <TableRow
+            android:id="@+id/HEAD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/CROSS"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/MON"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:padding="4dp"
+                android:text="@string/Monday"
+                android:textColor="@color/colorScritte"
+                tools:text="@string/Monday" />
+
+            <TextView
+                android:id="@+id/TUE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:padding="4dp"
+                android:text="@string/Tuesday"
+                android:textColor="@color/colorScritte" />
+
+            <TextView
+                android:id="@+id/WED"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:padding="4dp"
+                android:text="@string/Wednesday"
+                android:textColor="@color/colorScritte" />
+
+            <TextView
+                android:id="@+id/THU"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:padding="4dp"
+                android:text="@string/Thursday"
+                android:textColor="@color/colorScritte" />
+
+            <TextView
+                android:id="@+id/FRI"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:padding="4dp"
+                android:text="@string/Friday"
+                android:textColor="@color/colorScritte" />
+
+            <TextView
+                android:id="@+id/SAT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:padding="4dp"
+                android:text="@string/Saturday"
+                android:textColor="@color/colorScritte" />
+
+            <TextView
+                android:id="@+id/SUN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:padding="4dp"
+                android:text="@string/Sunday"
+                android:textColor="@color/colorScritte" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/MORNINGrow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/MORNING"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/Morning"
+                android:textAlignment="center"
+                android:textColor="@color/colorScritte" />
+
+            <CheckBox
+                android:id="@+id/MON1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/TUE1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/WED1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/THU1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/FRI1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/SAT1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/SUN1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/AFTERNOONrow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/AFTERNOON"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/Afternoon"
+                android:textAlignment="center"
+                android:textColor="@color/colorScritte" />
+
+            <CheckBox
+                android:id="@+id/MON2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/TUE2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/WED2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/THU2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/FRI2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/SAT2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/SUN2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/EVENINGrow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/EVENING"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/Evening"
+                android:textAlignment="center"
+                android:textColor="@color/colorScritte" />
+
+            <CheckBox
+                android:id="@+id/MON3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/TUE3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/WED3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/THU3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/FRI3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/SAT3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <CheckBox
+                android:id="@+id/SUN3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/saveDispBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/SaveChanges"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>
