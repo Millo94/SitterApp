@@ -62,7 +62,8 @@
         <activity
             android:name=".Principale.NewNoticeActivity"
             android:windowSoftInputMode="stateHidden"
-            android:label="@string/nuovoAnnuncio"/>
+            android:label="@string/nuovoAnnuncio"
+            android:parentActivityName=".Principale.HomeActivity"/>
         <activity android:name=".Recensioni.RecensioniPubblicoActivity"
             />
         <activity android:name=".Appuntamenti.candidati"
