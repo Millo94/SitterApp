@@ -275,7 +275,6 @@
                 android:id="@+id/modificaProfilo"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
                 android:layout_marginTop="40dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:textAlignment="center"
@@ -301,6 +300,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nascitaPrSitter2" />
+
+            <Button
+                android:id="@+id/editDisp"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="@string/editDisp"
+                android:textSize="18sp"
+                android:textColor="@android:color/background_light"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/modificaProfilo" />
 
 
         </android.support.constraint.ConstraintLayout>

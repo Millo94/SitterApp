@@ -22,10 +22,25 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/contattaSitter"
+                android:id="@+id/vediDispSitter"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="@string/DisponibilitaSitter"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/contattaSitter"
+                app:layout_constraintTop_toBottomOf="@+id/capPuSitter2"/>
+
+            <Button
+                android:id="@+id/contattaSitter"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:text="@string/contattaSitter"
                 android:textAlignment="center"
@@ -33,7 +48,7 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/capPuSitter2" />
+                app:layout_constraintTop_toBottomOf="@+id/vediDispSitter" />
 
             <Button
                 android:id="@+id/feedbackSitter"

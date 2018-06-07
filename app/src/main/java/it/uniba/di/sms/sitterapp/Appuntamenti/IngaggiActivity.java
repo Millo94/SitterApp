@@ -231,6 +231,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
 
 
 
+
     }
 
 }

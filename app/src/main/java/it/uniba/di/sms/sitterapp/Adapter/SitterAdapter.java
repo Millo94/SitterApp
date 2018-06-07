@@ -1,6 +1,7 @@
 package it.uniba.di.sms.sitterapp.Adapter;
 
 import android.content.Context;
+import android.media.Rating;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -42,11 +44,13 @@ public class SitterAdapter extends RecyclerView.Adapter<SitterAdapter.MyViewHold
     class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
         public ImageView photo;
+        public RatingBar ratingBar;
 
         public MyViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.name);
             photo = (ImageView) view.findViewById(R.id.thumbnail);
+            ratingBar = (RatingBar) view.findViewById(R.id.ratingSitterItem);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -73,6 +77,8 @@ public class SitterAdapter extends RecyclerView.Adapter<SitterAdapter.MyViewHold
         final UtenteSitter contact = sitterListFilter.get(position);
 
         holder.name.setText(contact.getUsername());
+        holder.ratingBar.setRating(contact.getRating());
+
         Glide.with(context).load(contact.getFoto()).apply(RequestOptions.centerCropTransform()).into(holder.photo);
     }
 
