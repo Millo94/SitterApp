@@ -110,6 +110,23 @@
     <string name="assegnaIncarico">assigns an assignment</string>
 
 
+    <!-- Stringh per il dialog disponibilità -->
+
+    <string name="DisponibilitaSitter">Sitter availabiity</string>
+    <string name="Monday">Mon</string>
+    <string name="Tuesday">Tue</string>
+    <string name="Wednesday">Wed</string>
+    <string name="Thursday">Thu</string>
+    <string name="Friday">Fri</string>
+    <string name="Saturday">Sat</string>
+    <string name="Sunday">Sun</string>
+    <string name="Morning">Morning</string>
+    <string name="Afternoon">Afternoon</string>
+    <string name="Evening">Evening</string>
+    <string name="Cancel">Cancel</string>
+    <string name="SaveChanges">Save Changes</string>
+    <string name="editDisp">Edit availability</string>
+
 
 
 
