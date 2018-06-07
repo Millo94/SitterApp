@@ -109,15 +109,20 @@
     <string name="Thursday">Gio</string>
     <string name="Friday">Ven</string>
     <string name="Saturday">Sab</string>
-    <string name="Morning">Mat</string>
+    <string name="Morning">Mattina</string>
     <string name="Afternoon">Pomeriggio</string>
     <string name="Evening">Sera</string>
-    <string name="Sunday">Domenica</string>
+    <string name="Sunday">Dom</string>
     <string name="DisponibilitaSitter">Disponibilità sitter</string>
     <string name="sms">Scrivi un messaggio</string>
     <string name="Cancel">Cancella</string>
     <string name="SaveChanges">Salva Modifica</string>
     <string name="registrazioneStringa">Clicca qui per creare un nuovo account</string>
+    <string name="esperienza">Esperienza (n° di ingaggi)</string>
+    <string name="disponibilita">Disponibilità</string>
     <string name="editDisp">Modifica disponibilità</string>
+    <string name="minore5">Da 0 a 5</string>
+    <string name="maggiore5">Da 5 a 10</string>
+    <string name="maggiore10">Più di 10</string>
 
 </resources>
