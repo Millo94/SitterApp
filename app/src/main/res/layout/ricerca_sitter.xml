@@ -58,7 +58,6 @@
 
     <RatingBar
         android:id="@+id/cerca_stars"
-        style="@style/Base.Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/cerca_rating"
@@ -171,37 +170,37 @@
                 android:textSize="12sp" />
 
             <CheckBox
-                android:id="@+id/checkBox"
+                android:id="@+id/MON11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox2"
+                android:id="@+id/TUE11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox3"
+                android:id="@+id/WED11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox4"
+                android:id="@+id/THU11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox5"
+                android:id="@+id/FRI11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox6"
+                android:id="@+id/SAT11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox7"
+                android:id="@+id/SUN11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -219,37 +218,37 @@
                 android:textSize="12sp" />
 
             <CheckBox
-                android:id="@+id/checkBox8"
+                android:id="@+id/MON22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox9"
+                android:id="@+id/TUE22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox10"
+                android:id="@+id/WED22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox11"
+                android:id="@+id/THU22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox12"
+                android:id="@+id/FRI22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox13"
+                android:id="@+id/SAT22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox14"
+                android:id="@+id/SUN22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -267,37 +266,37 @@
                 android:textSize="12sp" />
 
             <CheckBox
-                android:id="@+id/checkBox15"
+                android:id="@+id/MON33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox16"
+                android:id="@+id/TUE33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox17"
+                android:id="@+id/WED33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox18"
+                android:id="@+id/THU33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox19"
+                android:id="@+id/FRI33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox20"
+                android:id="@+id/SAT33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <CheckBox
-                android:id="@+id/checkBox21"
+                android:id="@+id/SUN33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

@@ -124,5 +124,8 @@
     <string name="minore5">Da 0 a 5</string>
     <string name="maggiore5">Da 5 a 10</string>
     <string name="maggiore10">Più di 10</string>
+    <string name="filtro">Filtri di ricerca</string>
+    <string name="applicFiltro">Applica Filtri</string>
+
 
 </resources>
