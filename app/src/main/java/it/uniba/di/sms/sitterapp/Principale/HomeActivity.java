@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import com.android.volley.Request;
@@ -23,8 +24,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 import it.uniba.di.sms.sitterapp.Adapter.NoticeAdapter;
@@ -38,7 +41,7 @@ import it.uniba.di.sms.sitterapp.Profilo.ProfiloPubblicoActivity;
 import it.uniba.di.sms.sitterapp.R;
 
 public class HomeActivity extends DrawerActivity
-        implements NoticeAdapter.NoticeAdapterListener, SitterAdapter.ContactsSitterAdapterListener {
+        implements NoticeAdapter.NoticeAdapterListener, SitterAdapter.ContactsSitterAdapterListener{
 
     // Vista
     private RecyclerView recyclerView;
@@ -72,7 +75,6 @@ public class HomeActivity extends DrawerActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         //FAB per la ricerca delle baby sitter
         cercaSitter = (FloatingActionButton) findViewById(R.id.cercaSitter);
         if (sessionManager.getSessionType() == Constants.TYPE_FAMILY && cercaSitter.getVisibility() == View.GONE) {
@@ -80,7 +82,9 @@ public class HomeActivity extends DrawerActivity
             cercaSitter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //da collegare al Dialogs della ricerca
+                    //ricerca
+                    DialogFiltro dialogFiltro = DialogFiltro.newInstance();
+                    dialogFiltro.show(getSupportFragmentManager(),"dialog");
                 }
             });
         } else if (sessionManager.getSessionType() == Constants.TYPE_SITTER && cercaSitter.getVisibility() == View.VISIBLE) {
@@ -125,6 +129,8 @@ public class HomeActivity extends DrawerActivity
             //prova caricamento di annunci
             loadSitter();
         }
+
+
 
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -206,10 +212,19 @@ public class HomeActivity extends DrawerActivity
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(HomeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("username", "Eladi96");
+                return super.getParams();
+            }
+        };
         Volley.newRequestQueue(this).add(stringRequest);
         progressDialog.hide();
     }
+
+
 
     /**
      * Caricamento dell'elenco babysitter (per la home della famiglia)
@@ -332,4 +347,5 @@ public class HomeActivity extends DrawerActivity
         detailIntent.putExtra("username", sitter.getUsername());
         startActivity(detailIntent);
     }
+
 }
