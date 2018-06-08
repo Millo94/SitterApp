@@ -18,6 +18,20 @@
         android:layout_height="wrap_content"
         android:padding="8dp">
 
+        <TextView
+            android:id="@+id/scadutoCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="8dp"
+            android:text="@string/scaduto"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
         <ImageView
             android:id="@+id/imageViewData"
             android:layout_width="wrap_content"

@@ -126,6 +126,7 @@
     <string name="maggiore10">Più di 10</string>
     <string name="filtro">Filtri di ricerca</string>
     <string name="applicFiltro">Applica Filtri</string>
+    <string name="scaduto">Scaduto</string>
 
 
 </resources>

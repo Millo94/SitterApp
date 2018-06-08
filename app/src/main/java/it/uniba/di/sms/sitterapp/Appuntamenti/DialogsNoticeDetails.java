@@ -35,7 +35,7 @@ import it.uniba.di.sms.sitterapp.SessionManager;
 import com.android.volley.RequestQueue;
 
 /**
- * Created by Francesca on 05/06/18.
+ * Dialog Notice Details
  */
 
 public class DialogsNoticeDetails extends AppCompatDialogFragment {
@@ -49,13 +49,6 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     RequestQueue requestQueue;
 
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Button negative = ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_NEGATIVE);
-        negative.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-
-    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

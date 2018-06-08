@@ -60,7 +60,6 @@ public class LoginActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
 
 
-
                 builder.setTitle(R.string.registrazione);
                 builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
                     @Override
@@ -88,11 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
-
-                AlertDialog alert = builder.create();
-                alert.show();
-                Button btn = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
-                btn.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                builder.show();
 
 
             }

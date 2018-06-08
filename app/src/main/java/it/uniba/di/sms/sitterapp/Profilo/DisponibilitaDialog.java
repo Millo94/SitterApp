@@ -36,7 +36,7 @@ import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 
 /**
- * Created by Enrico on 06/06/2018.
+ * Dialog per la disponibilità della baby sitter
  */
 
 public class DisponibilitaDialog extends AppCompatDialogFragment {
@@ -56,13 +56,7 @@ public class DisponibilitaDialog extends AppCompatDialogFragment {
     SessionManager sessionManager;
     RequestQueue requestQueue;
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Button negative = ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_NEGATIVE);
-        negative.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
-    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

@@ -265,10 +265,7 @@ public class PubblicoSitterFragment extends Fragment {
                     }
                 });
 
-                AlertDialog alert = builder.create();
-                alert.show();
-                Button btn = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
-                btn.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                builder.show();
 
 
             }

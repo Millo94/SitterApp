@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
+
 import com.android.volley.RequestQueue;
 
 import com.android.volley.toolbox.Volley;
@@ -21,10 +22,10 @@ import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 
 /**
- * Created by Feder on 07/06/2018.
+ * Dialog per i filtri di ricerca della baby sitter
  */
 
-public class DialogFiltro  extends AppCompatDialogFragment {
+public class DialogFiltro extends AppCompatDialogFragment {
     private DialogListener listener;
     RadioGroup numerolavori;
     RatingBar ratingBar;
@@ -82,7 +83,7 @@ public class DialogFiltro  extends AppCompatDialogFragment {
                             minLavori = 10;
                     }
                 });
-                listener.settaFiltro(checkedBox,rating, minLavori);
+                listener.settaFiltro(checkedBox, rating, minLavori);
             }
         });
 
@@ -93,8 +94,8 @@ public class DialogFiltro  extends AppCompatDialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            listener= (DialogListener) context;
-        }catch (ClassCastException e){
+            listener = (DialogListener) context;
+        } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + "must implement DialogFiltro");
         }
     }
@@ -154,8 +155,8 @@ public class DialogFiltro  extends AppCompatDialogFragment {
         checkBoxArrayList.add(SUN33);
     }
 
-    public interface DialogListener{
-        void settaFiltro(ArrayList<Integer> checkedBox , float rating , int minLavori);
+    public interface DialogListener {
+        void settaFiltro(ArrayList<Integer> checkedBox, float rating, int minLavori);
     }
 
 }

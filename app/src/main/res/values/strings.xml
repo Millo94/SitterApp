@@ -146,6 +146,7 @@
     <!-- Servono per il TextInputLayout -->
     <item name="visible" type="id" />
     <item name="masked" type="id" />
+    <string name="scaduto">Expired</string>
 
 
 </resources>

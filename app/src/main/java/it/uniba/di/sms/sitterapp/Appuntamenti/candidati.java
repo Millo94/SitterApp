@@ -37,7 +37,7 @@ import it.uniba.di.sms.sitterapp.Profilo.ProfiloPubblicoActivity;
 import it.uniba.di.sms.sitterapp.R;
 
 /**
- * Created by Feder on 06/06/2018.
+ * Sezione per le candidature
  */
 public class candidati extends DrawerActivity
         implements SitterAdapter.ContactsSitterAdapterListener {
