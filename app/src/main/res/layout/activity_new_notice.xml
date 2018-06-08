@@ -7,11 +7,10 @@
     android:orientation="vertical">
 
 
-
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/scrollView3">
+        android:layout_height="wrap_content">
 
 
         <android.support.constraint.ConstraintLayout
@@ -42,13 +41,17 @@
                         android:layout_marginRight="8dp"
                         app:srcCompat="@drawable/ic_descrizione" />
 
-                    <EditText
-                        android:id="@+id/descrizioneNewNotice"
-                        android:layout_width="235dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:hint="@string/descrizione"
-                        android:textSize="14sp" />
+                    <android.support.design.widget.TextInputLayout>
+
+                        <EditText
+                            android:id="@+id/descrizioneNewNotice"
+                            android:layout_width="235dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:hint="@string/descrizione"
+                            android:textSize="14sp" />
+                    </android.support.design.widget.TextInputLayout>
+
                 </TableRow>
 
                 <TableRow
@@ -64,16 +67,22 @@
                         android:layout_marginRight="8dp"
                         app:srcCompat="@drawable/ic_data" />
 
-                    <EditText
-                        android:id="@+id/dataNewNotice"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:focusableInTouchMode="false"
-                        android:gravity="center_vertical"
-                        android:hint="@string/data"
-                        android:inputType="date"
-                        android:textColorLink="@color/colorPrimary"
-                        android:textSize="14sp" />
+                        android:gravity="center_vertical">
+
+                        <EditText
+                            android:id="@+id/dataNewNotice"
+                            android:layout_width="230dp"
+                            android:layout_height="wrap_content"
+                            android:focusableInTouchMode="false"
+                            android:hint="@string/data"
+                            android:inputType="date"
+                            android:textColorLink="@color/colorPrimary"
+                            android:textSize="14sp" />
+                    </android.support.design.widget.TextInputLayout>
+
                 </TableRow>
 
                 <TableRow
@@ -90,16 +99,22 @@
                         android:layout_marginRight="8dp"
                         app:srcCompat="@drawable/ic_time" />
 
-                    <EditText
-                        android:id="@+id/oraInizioNewNotice"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:focusableInTouchMode="false"
-                        android:gravity="center_vertical"
-                        android:hint="@string/orainizio"
-                        android:inputType="date"
-                        android:textColorLink="@color/colorPrimary"
-                        android:textSize="14sp" />
+                        android:gravity="center_vertical">
+
+                        <EditText
+                            android:id="@+id/oraInizioNewNotice"
+                            android:layout_width="235dp"
+                            android:layout_height="wrap_content"
+                            android:focusableInTouchMode="false"
+                            android:hint="@string/orainizio"
+                            android:inputType="date"
+                            android:textColorLink="@color/colorPrimary"
+                            android:textSize="14sp" />
+                    </android.support.design.widget.TextInputLayout>
+
                 </TableRow>
 
                 <TableRow
@@ -116,16 +131,22 @@
                         android:layout_marginRight="8dp"
                         app:srcCompat="@drawable/ic_time" />
 
-                    <EditText
-                        android:id="@+id/oraFineNewNotice"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:focusableInTouchMode="false"
-                        android:gravity="center_vertical"
-                        android:hint="@string/orafine"
-                        android:inputType="date"
-                        android:textColorLink="@color/colorPrimary"
-                        android:textSize="14sp" />
+                        android:gravity="center_vertical">
+
+                        <EditText
+                            android:id="@+id/oraFineNewNotice"
+                            android:layout_width="235dp"
+                            android:layout_height="wrap_content"
+                            android:focusableInTouchMode="false"
+                            android:hint="@string/orafine"
+                            android:inputType="date"
+                            android:textColorLink="@color/colorPrimary"
+                            android:textSize="14sp" />
+                    </android.support.design.widget.TextInputLayout>
+
 
                 </TableRow>
 

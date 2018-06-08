@@ -37,108 +37,137 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/usernameFamiglia"
-                android:layout_width="300dp"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TI1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:ems="10"
-                android:hint="@string/username"
-                android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/registrazioneTitle" />
+                app:layout_constraintTop_toBottomOf="@id/registrazioneTitle">
 
-            <EditText
-                android:id="@+id/passwordFamiglia"
-                android:layout_width="300dp"
+                <EditText
+                    android:id="@+id/usernameFamiglia"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/username"
+                    android:inputType="textPersonName" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TI2"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/password"
-                android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/usernameFamiglia" />
+                app:layout_constraintTop_toBottomOf="@+id/TI1">
 
-            <EditText
-                android:id="@+id/confPasswordFamiglia"
-                android:layout_width="300dp"
+                <EditText
+                    android:id="@+id/passwordFamiglia"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/password"
+                    android:inputType="textPassword" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TI3"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/confermapassword"
-                android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/passwordFamiglia" />
+                app:layout_constraintTop_toBottomOf="@+id/TI2">
 
-            <EditText
-                android:id="@+id/nomeFamiglia"
-                android:layout_width="300dp"
+                <EditText
+                    android:id="@+id/confPasswordFamiglia"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/confermapassword"
+                    android:inputType="textPassword" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TI4"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/nome"
-                android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/confPasswordFamiglia" />
+                app:layout_constraintTop_toBottomOf="@+id/TI3">
 
-            <EditText
-                android:id="@+id/cognomeFamiglia"
-                android:layout_width="300dp"
+                <EditText
+                    android:id="@+id/nomeFamiglia"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/nome"
+                    android:inputType="textPersonName" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TI5"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/cognome"
-                android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nomeFamiglia" />
+                app:layout_constraintTop_toBottomOf="@+id/TI4">
 
-            <EditText
-                android:id="@+id/telefonoFamiglia"
-                android:layout_width="300dp"
+                <EditText
+                    android:id="@+id/cognomeFamiglia"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/cognome"
+                    android:inputType="textPersonName" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TI6"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/telefono"
-                android:inputType="phone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cognomeFamiglia" />
+                app:layout_constraintTop_toBottomOf="@+id/TI5">
 
-            <EditText
-                android:id="@+id/emailFamiglia"
-                android:layout_width="300dp"
+                <EditText
+                    android:id="@+id/telefonoFamiglia"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/telefono"
+                    android:inputType="phone" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TI7"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/telefonoFamiglia" />
+                app:layout_constraintTop_toBottomOf="@+id/TI6">
 
-            <EditText
-                android:id="@+id/numeroFigliFamiglia"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/figlinum"
-                android:inputType="number"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/CAPFamiglia" />
+                <EditText
+                    android:id="@+id/emailFamiglia"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress" />
+            </android.support.design.widget.TextInputLayout>
+
 
             <TextView
                 android:id="@+id/nazioneFamiglia"
@@ -150,20 +179,25 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailFamiglia" />
+                app:layout_constraintTop_toBottomOf="@+id/TI7" />
 
-            <EditText
-                android:id="@+id/CAPFamiglia"
-                android:layout_width="300dp"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TI8"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/cap"
-                android:inputType="number"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerNationFamiglia" />
+                app:layout_constraintTop_toBottomOf="@+id/TI9">
+
+                <EditText
+                    android:id="@+id/numeroFigliFamiglia"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/figlinum"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+
 
             <Spinner
                 android:id="@+id/spinnerNationFamiglia"
@@ -172,6 +206,26 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nazioneFamiglia" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TI9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerNationFamiglia">
+
+                <EditText
+                    android:id="@+id/CAPFamiglia"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/cap"
+                    android:inputType="number" />
+
+            </android.support.design.widget.TextInputLayout>
+
 
             <Button
                 android:id="@+id/confermaButton"
@@ -198,7 +252,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/numeroFigliFamiglia" />
+                app:layout_constraintTop_toBottomOf="@+id/TI8" />
 
 
         </android.support.constraint.ConstraintLayout>
