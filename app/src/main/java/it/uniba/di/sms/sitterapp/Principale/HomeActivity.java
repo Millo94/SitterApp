@@ -195,7 +195,7 @@ public class HomeActivity extends DrawerActivity
                                 }
                                 else{rating =(float) sitterObject.getDouble("rating");}
                                 UtenteSitter s = new UtenteSitter(username, foto,rating);
-                                filteredSitterList.add(s);
+                                sitterList.add(s);
                             }
 
                             sitterAdapter.notifyDataSetChanged();
