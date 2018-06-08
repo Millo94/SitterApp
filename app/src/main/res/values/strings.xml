@@ -128,11 +128,6 @@
     <string name="editDisp">Edit availability</string>
 
 
-
-
-
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="profilo">Profile</string>
     <string name="nuovoUtente">New User</string>
     <string name="nuovaFamiglia">New Family</string>
@@ -146,6 +141,11 @@
     <string name="maggiore10">More than 10</string>
     <string name="filtro">Search Filters</string>
     <string name="applicFiltro">Apply Filters</string>
+
+
+    <!-- Servono per il TextInputLayout -->
+    <item name="visible" type="id" />
+    <item name="masked" type="id" />
 
 
 </resources>

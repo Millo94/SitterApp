@@ -27,137 +27,176 @@
                 android:id="@+id/registrazioneSitterReg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="sans-serif-smallcaps"
                 android:text="@string/newSitter"
                 android:textColor="@color/colorScritte"
                 android:textSize="40sp"
-                app:layout_constraintBottom_toTopOf="@+id/usernameSitterReg"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/phoneSitterReg"
-                android:layout_width="300dp"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TEI1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/telefono"
-                android:inputType="phone"
-                android:textColorLink="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailSitterReg" />
-
-            <EditText
-                android:id="@+id/emailSitterReg"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                android:textColorLink="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nascitaSitterReg" />
-
-            <EditText
-                android:id="@+id/usernameSitterReg"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="30dp"
-                android:hint="@string/username"
-                android:inputType="textPersonName"
-                android:textColorLink="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/registrazioneSitterReg" />
+                app:layout_constraintTop_toBottomOf="@id/registrazioneSitterReg">
 
-            <EditText
-                android:id="@+id/passwordSitterReg"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:textColorLink="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/usernameSitterReg" />
+                <EditText
+                    android:id="@+id/usernameSitterReg"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/username"
+                    android:inputType="textPersonName"
+                    android:textColorLink="@color/colorPrimary" />
 
-            <EditText
-                android:id="@+id/confPasswordSitterReg"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/confermapassword"
-                android:inputType="textPassword"
-                android:textColorLink="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/passwordSitterReg" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/nomeSitterReg"
-                android:layout_width="300dp"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TEI2"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/nome"
-                android:inputType="textPersonName"
-                android:textColorLink="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/confPasswordSitterReg" />
+                app:layout_constraintTop_toBottomOf="@+id/TEI1">
 
-            <EditText
-                android:id="@+id/cognomeSitterReg"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/cognome"
-                android:inputType="textPersonName"
-                android:textColorLink="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nomeSitterReg" />
+                <EditText
+                    android:id="@+id/passwordSitterReg"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:textColorLink="@color/colorPrimary" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/nascitaSitterReg"
-                android:layout_width="300dp"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TEI3"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:ems="10"
-                android:focusableInTouchMode="false"
-                android:hint="@string/datanascita"
-                android:inputType="date"
-                android:textColorLink="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cognomeSitterReg" />
+                app:layout_constraintTop_toBottomOf="@+id/TEI2">
+
+                <EditText
+                    android:id="@+id/confPasswordSitterReg"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/confermapassword"
+                    android:inputType="textPassword"
+                    android:textColorLink="@color/colorPrimary" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TEI4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TEI3">
+
+                <EditText
+                    android:id="@+id/nomeSitterReg"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/nome"
+                    android:inputType="textPersonName"
+                    android:textColorLink="@color/colorPrimary" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TEI5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TEI4">
+
+                <EditText
+                    android:id="@+id/cognomeSitterReg"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/cognome"
+                    android:inputType="textPersonName"
+                    android:textColorLink="@color/colorPrimary" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TEI6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TEI5">
+
+                <EditText
+                    android:id="@+id/nascitaSitterReg"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/datanascita"
+                    android:inputType="date"
+                    android:textColorLink="@color/colorPrimary" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TEI7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TEI6">
+
+                <EditText
+                    android:id="@+id/emailSitterReg"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    android:textColorLink="@color/colorPrimary" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TEI8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TEI7">
+
+                <EditText
+                    android:id="@+id/phoneSitterReg"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/telefono"
+                    android:inputType="phone"
+                    android:textColorLink="@color/colorPrimary" />
+            </android.support.design.widget.TextInputLayout>
+
 
             <TextView
                 android:id="@+id/genderSitterReg"
@@ -173,21 +212,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phoneSitterReg" />
-
-            <Switch
-                android:id="@+id/switch1"
-                android:layout_width="290dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="16dp"
-                android:layout_weight="1"
-                android:backgroundTint="@android:color/darker_gray"
-                android:text="@string/automunito"
-                android:textColorLink="@color/colorPrimary"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/CAPSitterReg" />
+                app:layout_constraintTop_toBottomOf="@+id/TEI8" />
 
             <RadioGroup
                 android:id="@+id/groupGenderSitterReg"
@@ -198,7 +223,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.922"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phoneSitterReg">
+                app:layout_constraintTop_toBottomOf="@+id/TEI8">
 
                 <RadioButton
                     android:id="@+id/maleSitterReg"
@@ -216,6 +241,20 @@
 
             </RadioGroup>
 
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="290dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/darker_gray"
+                android:text="@string/automunito"
+                android:textColorLink="@color/colorPrimary"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TEI9" />
+
             <Button
                 android:id="@+id/buttonReg"
                 android:layout_width="300dp"
@@ -232,17 +271,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/switch1" />
 
-            <EditText
-                android:id="@+id/CAPSitterReg"
-                android:layout_width="300dp"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TEI9"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="@string/cap"
-                android:inputType="number"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerSitterReg" />
+                app:layout_constraintTop_toBottomOf="@+id/spinnerSitterReg">
+
+                <EditText
+                    android:id="@+id/CAPSitterReg"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:ems="10"
+                    android:hint="@string/cap"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+
 
             <Spinner
                 android:id="@+id/spinnerSitterReg"
