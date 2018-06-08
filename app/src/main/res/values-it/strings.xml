@@ -121,8 +121,11 @@
     <string name="esperienza">Esperienza (n° di ingaggi)</string>
     <string name="disponibilita">Disponibilità</string>
     <string name="editDisp">Modifica disponibilità</string>
-    <string name="minore5">Da 0 a 5</string>
-    <string name="maggiore5">Da 5 a 10</string>
+    <string name="maggiore0">Più di 0</string>
+    <string name="maggiore5">Più di 5</string>
     <string name="maggiore10">Più di 10</string>
+    <string name="filtro">Filtri di ricerca</string>
+    <string name="applicFiltro">Applica Filtri</string>
+
 
 </resources>

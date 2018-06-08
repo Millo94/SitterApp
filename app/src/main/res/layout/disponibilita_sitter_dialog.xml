@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:padding="16dp">
+        android:layout_margin="8dp">
 
         <TableRow
             android:id="@+id/HEAD"
@@ -21,7 +21,7 @@
 
             <TextView
                 android:id="@+id/CROSS"
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
@@ -32,6 +32,7 @@
                 android:padding="4dp"
                 android:text="@string/Monday"
                 android:textColor="@color/colorScritte"
+                android:textSize="12sp"
                 tools:text="@string/Monday" />
 
             <TextView
@@ -41,7 +42,8 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:padding="4dp"
                 android:text="@string/Tuesday"
-                android:textColor="@color/colorScritte" />
+                android:textColor="@color/colorScritte"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/WED"
@@ -50,7 +52,8 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:padding="4dp"
                 android:text="@string/Wednesday"
-                android:textColor="@color/colorScritte" />
+                android:textColor="@color/colorScritte"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/THU"
@@ -59,7 +62,8 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:padding="4dp"
                 android:text="@string/Thursday"
-                android:textColor="@color/colorScritte" />
+                android:textColor="@color/colorScritte"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/FRI"
@@ -68,7 +72,8 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:padding="4dp"
                 android:text="@string/Friday"
-                android:textColor="@color/colorScritte" />
+                android:textColor="@color/colorScritte"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/SAT"
@@ -77,7 +82,8 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:padding="4dp"
                 android:text="@string/Saturday"
-                android:textColor="@color/colorScritte" />
+                android:textColor="@color/colorScritte"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/SUN"
@@ -86,7 +92,8 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:padding="4dp"
                 android:text="@string/Sunday"
-                android:textColor="@color/colorScritte" />
+                android:textColor="@color/colorScritte"
+                android:textSize="12sp" />
 
         </TableRow>
 
@@ -98,12 +105,13 @@
 
             <TextView
                 android:id="@+id/MORNING"
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/Morning"
                 android:textAlignment="center"
-                android:textColor="@color/colorScritte" />
+                android:textColor="@color/colorScritte"
+                android:textSize="12sp" />
 
             <CheckBox
                 android:id="@+id/MON1"
@@ -157,12 +165,13 @@
 
             <TextView
                 android:id="@+id/AFTERNOON"
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/Afternoon"
                 android:textAlignment="center"
-                android:textColor="@color/colorScritte" />
+                android:textColor="@color/colorScritte"
+                android:textSize="12sp" />
 
             <CheckBox
                 android:id="@+id/MON2"
@@ -216,12 +225,13 @@
 
             <TextView
                 android:id="@+id/EVENING"
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/Evening"
                 android:textAlignment="center"
-                android:textColor="@color/colorScritte" />
+                android:textColor="@color/colorScritte"
+                android:textSize="12sp" />
 
             <CheckBox
                 android:id="@+id/MON3"
@@ -271,10 +281,11 @@
     <Button
         android:id="@+id/saveDispBtn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_margin="8dp"
         android:background="@color/colorPrimary"
         android:text="@string/SaveChanges"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 
 </LinearLayout>
