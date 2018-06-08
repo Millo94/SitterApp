@@ -28,9 +28,11 @@ import java.util.Map;
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Oggetti.Notice;
 import it.uniba.di.sms.sitterapp.Php;
+import it.uniba.di.sms.sitterapp.Principale.HomeActivity;
 import it.uniba.di.sms.sitterapp.Profilo.ProfiloPubblicoActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
+import com.android.volley.RequestQueue;
 
 /**
  * Created by Francesca on 05/06/18.
@@ -38,11 +40,14 @@ import it.uniba.di.sms.sitterapp.SessionManager;
 
 public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
+
     TextView user,dataDet,start,end,desc;
-    Button candidate;
+    int visibility = View.VISIBLE;
     SessionManager sessionManager;
     private static final String elimina = "delete";
     private String idAnnuncio;
+    RequestQueue requestQueue;
+
 
     @Override
     public void onStart() {
@@ -56,9 +61,11 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         sessionManager = new SessionManager(getActivity().getApplicationContext());
+        requestQueue = Volley.newRequestQueue(getContext());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
+        requestQueue = Volley.newRequestQueue(getContext());
 
 
         if (sessionManager.getSessionType() == Constants.TYPE_SITTER){
@@ -81,7 +88,8 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
             Button openProfile = (Button) view.findViewById(R.id.openFamilyProfile);
             openProfile.setOnClickListener(openProfileListener);
-            candidate = (Button) view.findViewById(R.id.candidamiSit);
+            Button candidate = (Button) view.findViewById(R.id.candidamiSit);
+            candidate.setVisibility(visibility);
             candidate.setOnClickListener(candidateListener);
 
             user.setText(getArguments().getString("username"));
@@ -106,8 +114,8 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
             Button delete_notice = (Button) view.findViewById(R.id.eliminaAnnuncio);
             delete_notice.setOnClickListener(deleteNoticeListener);
-            Button view_candidate = (Button) view.findViewById(R.id.visualCandidate);
-            view_candidate.setOnClickListener(viewCandidateListener);
+            Button candidate = (Button) view.findViewById(R.id.visualCandidate);
+            candidate.setOnClickListener(viewCandidateListener);
         }
 
 
@@ -155,7 +163,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     View.OnClickListener candidateListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            candidami();
         }
     };
 
@@ -217,7 +225,48 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
      * Nascondere il pulsante "candidami" quando si apre il dialog da "i miei annunci"
      */
     public void hideButton(){
-        candidate.setVisibility(View.GONE);
+        visibility = View.GONE;
+    }
+
+    public void candidami(){
+        StringRequest request = new StringRequest(Request.Method.POST, Php.CANDIDAMI, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject json = new JSONObject(response);
+                    String result = json.optString("response");
+
+                    if (result.equals("true")) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.candidateSucces, Toast.LENGTH_SHORT).show();
+                        Intent intentback = new Intent(getContext(),HomeActivity.class);
+                        startActivity(intentback);
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.candidatefail, Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity().getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("richiesta","CANDIDAMI");
+                params.put("username", sessionManager.getSessionUsername());
+                params.put("idAnnuncio", idAnnuncio);
+                return params;
+            }
+        };
+
+        requestQueue.add(request);
     }
 
 }

@@ -54,6 +54,10 @@ public class HomeActivity extends DrawerActivity
 
     FloatingActionButton cercaSitter;
 
+    //richieste
+    private static final String annunci = "ANNUNCI";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,7 +121,7 @@ public class HomeActivity extends DrawerActivity
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        final StringRequest stringRequest = new StringRequest(Request.Method.GET, Php.ANNUNCI,
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, Php.ANNUNCI,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -153,8 +157,9 @@ public class HomeActivity extends DrawerActivity
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username", "Eladi96");
-                return super.getParams();
+                params.put("richiesta",annunci);
+                params.put("username", sessionManager.getSessionUsername());
+                return params;
             }
         };
         Volley.newRequestQueue(this).add(stringRequest);

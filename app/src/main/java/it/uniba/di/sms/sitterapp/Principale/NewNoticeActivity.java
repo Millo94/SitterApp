@@ -38,6 +38,7 @@ public class NewNoticeActivity extends AppCompatActivity implements DatePickerDi
     Button post;
     RequestQueue requestQueue;
     SessionManager sessionManager;
+    private static final String posta = "POST";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,6 +158,7 @@ public class NewNoticeActivity extends AppCompatActivity implements DatePickerDi
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
+                params.put("richiesta",posta);
                 params.put("username", sessionManager.getSessionUsername());
                 params.put("descrizione", descrizione.getText().toString().trim());
                 params.put("data", Constants.dateToSQL(data.getText().toString()));
