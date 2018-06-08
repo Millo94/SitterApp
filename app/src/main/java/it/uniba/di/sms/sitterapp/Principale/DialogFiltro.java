@@ -17,7 +17,6 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
 
-import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 
@@ -37,7 +36,7 @@ public class DialogFiltro  extends AppCompatDialogFragment {
             SAT11, SAT22, SAT33,
             SUN11, SUN22, SUN33;
     float rating = 0;
-    int lavori = 0;
+    int minLavori = 0;
 
     ArrayList<CheckBox> checkBoxArrayList;
     ArrayList<Integer> checkedBox;
@@ -76,17 +75,16 @@ public class DialogFiltro  extends AppCompatDialogFragment {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
                         if (checkedId == R.id.radioButton)
-                            lavori = 1;
+                            minLavori = 0;
                         else if (checkedId == R.id.radioButton2)
-                            lavori = 2;
+                            minLavori = 5;
                         else if (checkedId == R.id.radioButton3)
-                            lavori = 3;
+                            minLavori = 10;
                     }
                 });
-                        listener.passaggioParamentr(checkedBox,rating,lavori);
+                listener.settaFiltro(checkedBox,rating, minLavori);
             }
         });
-
 
         return builder.create();
     }
@@ -157,9 +155,7 @@ public class DialogFiltro  extends AppCompatDialogFragment {
     }
 
     public interface DialogListener{
-        void passaggioParamentr(ArrayList<Integer> listacheck , float rating , int lavori);
+        void settaFiltro(ArrayList<Integer> checkedBox , float rating , int minLavori);
     }
-
-
 
 }
