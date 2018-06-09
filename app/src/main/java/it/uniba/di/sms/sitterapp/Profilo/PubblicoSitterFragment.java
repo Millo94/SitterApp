@@ -246,17 +246,19 @@ public class PubblicoSitterFragment extends Fragment {
                                 break;
                             //invio e-mail
                             case 1:
-                                Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                                emailIntent.putExtra(Intent.EXTRA_EMAIL, email);
-                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Oggetto Email");
-                                emailIntent.putExtra(Intent.EXTRA_TEXT, "testo da mostrare");
-                                emailIntent.setType("text/plain");
+                                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                                emailIntent.setData(Uri.parse("mailto:"));
+                                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
+                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mail_oggetto));
+                                emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.mail_testo));
                                 startActivity(emailIntent);
                                 break;
                             //invio sms
                             case 2:
-                                Intent smsIntent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", telefono, null));
-                                startActivity(smsIntent);
+                                Intent intent = new Intent(Intent.ACTION_SEND);
+                                intent.setData(Uri.parse("smsto:" + telefono));
+                                intent.putExtra("sms_body", getString(R.string.sms_testo));
+                                startActivity(intent);
                                 break;
                             default:
                                 break;

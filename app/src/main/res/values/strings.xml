@@ -6,7 +6,7 @@
     <string name="username" translatable="false">Username</string>
     <string name="password" translatable="false">Password</string>
     <string name="confermapassword">Confirm Password</string>
-    <string name="email" translatable="false">e-mail</string>
+    <string name="email" translatable="false">E-mail</string>
     <string name="cognome">Surname</string>
     <string name="telefono">"Phone "</string>
     <string name="descrizione">Description</string>
@@ -100,8 +100,8 @@
     <string name="selezionaOra">Select Time</string>
     <string name="annuncioPubblicato">Notice published.</string>
     <string name="sceltaAzione">Choose how to perform the action:</string>
-    <string name="sms">Write a messagge</string>
-    <string name="chiamata">Call the contact</string>
+    <string name="sms" translatable="false">SMS</string>
+    <string name="chiamata">Call</string>
     <string name="deleteSuccess">Elimination was successfull.</string>
     <string name="deletefail"> can not delete the ad.</string>
     <string name="candidateSucces">Application completed correctly</string>
@@ -146,7 +146,12 @@
     <!-- Servono per il TextInputLayout -->
     <item name="visible" type="id" />
     <item name="masked" type="id" />
+
+
     <string name="scaduto">Expired</string>
+    <string name="mail_oggetto">SitterApp: engagments</string>
+    <string name="mail_testo">Email sent by SitterApp</string>
+    <string name="sms_testo">SMS from SitterApp:</string>
 
 
 </resources>

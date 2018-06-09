@@ -35,7 +35,7 @@ import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 
 /**
- * Created by Feder on 05/06/2018.
+ * Recensioni Pubblico Activity: un utente vede le recensioni di un altro utente
  */
 
 public class RecensioniPubblicoActivity extends AppCompatActivity{
@@ -45,7 +45,7 @@ public class RecensioniPubblicoActivity extends AppCompatActivity{
     private RecyclerView recycler;
     private RecensioniAdapter adapter;
     private List<Recensione> recensioneList;
-    boolean itShouldLoadMore;
+    boolean itShouldLoadMore = false;
     String user ;
 
 
