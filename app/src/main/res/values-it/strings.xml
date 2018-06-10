@@ -129,6 +129,13 @@
     <string name="mail_oggetto">SitterApp: ingaggio</string>
     <string name="mail_testo">Inserire il testo della richiesta...</string>
     <string name="sms_testo">"SMS da SitterApp: "</string>
+    <string name="niente_recensioni">L\'utente non ha recensioni</string>
+    <string name="lista_vuota">Lista vuota</string>
+    <string name="niente_annunci">Nessun annuncio da mostrare</string>
+    <string name="niente_sitter">Nessun baby sitter da mostrare</string>
+    <string name="niente_scrivi_recensioni">Nessuna Recensione</string>
+    <string name="niente_recensioni_ricevute">Nessuna recensione ricevuta</string>
+    <string name="niente_recensioni_scritte">Nessuna recensione scritta</string>
 
 
 </resources>

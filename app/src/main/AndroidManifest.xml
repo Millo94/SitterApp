@@ -26,47 +26,51 @@
         <activity
             android:name=".Principale.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Registrazione.RegistrationActivity"
+        <activity
+            android:name=".Registrazione.RegistrationActivity"
             android:label="@string/registrazione"
-            android:parentActivityName=".Principale.LoginActivity"/>
+            android:parentActivityName=".Principale.LoginActivity" />
         <activity
             android:name=".Profilo.ProfiloPrivatoActivity"
+            android:label="@string/profilo"
             android:parentActivityName=".Principale.HomeActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/profilo"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Principale.DrawerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Appuntamenti.IngaggiActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/engagements"/>
+            android:label="@string/engagements"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Profilo.ProfiloPubblicoActivity"
-            android:label="@string/profilo"/>
+            android:label="@string/profilo" />
         <activity
             android:name=".Recensioni.RecensioniActivity"
-            android:parentActivityName=".Principale.HomeActivity"
-            android:label="@string/feedback"/>
-
-        <activity android:name=".Feedback.IngaggiSvoltiActivity"
-            android:parentActivityName=".Principale.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/scrivi_recensione"/>
-
-        <activity android:name=".Feedback.ScriviRecensioneActivity"
-            android:parentActivityName=".Principale.HomeActivity"
             android:label="@string/feedback"
-            />
+            android:parentActivityName=".Principale.HomeActivity" />
+
+        <activity
+            android:name=".Feedback.IngaggiSvoltiActivity"
+            android:label="@string/scrivi_recensione"
+            android:parentActivityName=".Principale.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".Feedback.ScriviRecensioneActivity"
+            android:label="@string/feedback"
+            android:parentActivityName=".Principale.HomeActivity" />
 
         <activity
             android:name=".Principale.NewNoticeActivity"
-            android:windowSoftInputMode="stateHidden"
             android:label="@string/nuovoAnnuncio"
-            android:parentActivityName=".Appuntamenti.IngaggiActivity"/>
-        <activity android:name=".Recensioni.RecensioniPubblicoActivity"
-            />
-        <activity android:name=".Appuntamenti.candidati"
+            android:parentActivityName=".Appuntamenti.IngaggiActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Recensioni.RecensioniPubblicoActivity"
+            android:label="@string/feedback" />
+        <activity
+            android:name=".Appuntamenti.candidati"
             android:theme="@style/AppTheme.NoActionBar" />
 
     </application>

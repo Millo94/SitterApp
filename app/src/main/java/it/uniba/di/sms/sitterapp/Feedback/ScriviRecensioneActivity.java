@@ -29,6 +29,7 @@ import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
+import tr.xip.errorview.ErrorView;
 
 /**
  * Created by Feder on 31/05/2018.
@@ -41,7 +42,7 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
     EditText desc;
     double rate = (double) 0.00;
     RatingBar rating;
-    String commento ="null";
+    String commento = "null";
     Button scriviRec;
     SessionManager sessionManager;
     String famiglia;
@@ -54,21 +55,21 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         sessionManager = new SessionManager(getApplicationContext());
-         famiglia = getIntent().getStringExtra("famiglia");
-         id =getIntent().getStringExtra("idAnnuncio");
-         sitter=getIntent().getStringExtra("sitter");
-         setContentView(R.layout.scrivi_recensione);
-         user = (TextView) findViewById(R.id.usernameRecensione);
-         desc = (EditText) findViewById(R.id.editRecensione);
-         rating = (RatingBar) findViewById(R.id.ratingBarRecensione);
-         rating.setEnabled(true);
-         scriviRec = (Button) findViewById(R.id.inviaRecensione);
-         scriviRec.setOnClickListener(inviarecListener);
+        famiglia = getIntent().getStringExtra("famiglia");
+        id = getIntent().getStringExtra("idAnnuncio");
+        sitter = getIntent().getStringExtra("sitter");
+        setContentView(R.layout.scrivi_recensione);
+        user = (TextView) findViewById(R.id.usernameRecensione);
+        desc = (EditText) findViewById(R.id.editRecensione);
+        rating = (RatingBar) findViewById(R.id.ratingBarRecensione);
+        rating.setEnabled(true);
+        scriviRec = (Button) findViewById(R.id.inviaRecensione);
+        scriviRec.setOnClickListener(inviarecListener);
 
-         if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
+        if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
             user.setText(famiglia);
         } else if (sessionManager.getSessionType() == Constants.TYPE_FAMILY) {
-             user.setText(sitter);
+            user.setText(sitter);
         }
 
     }
@@ -77,17 +78,16 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             commento = desc.getText().toString();
-            rate = (double ) Float.valueOf(rating.getRating());
+            rate = (double) Float.valueOf(rating.getRating());
 
-            if(rate == 0.0 || commento.isEmpty()){
+            if (rate == 0.0 || commento.isEmpty()) {
                 Toast.makeText(ScriviRecensioneActivity.this, R.string.missingFields, Toast.LENGTH_SHORT).show();
-            }
-            else
-                inviadati(commento,rate,famiglia);
+            } else
+                inviadati(commento, rate, famiglia);
         }
     };
 
-    public void inviadati(final String commento , final double rating, final String user){
+    public void inviadati(final String commento, final double rating, final String user) {
 
         StringRequest commentoRequest = new StringRequest(Request.Method.POST, Php.RECENSIONI, new Response.Listener<String>() {
             @Override
@@ -97,13 +97,19 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
                     JSONObject json = new JSONObject(response);
                     String result = json.getString("write");
 
+                    if (result.length() == 0){
+                        ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+                        errorView.setSubtitle(R.string.niente_scrivi_recensioni);
+                        errorView.setVisibility(View.VISIBLE);
+                    } else{
+
                     if (result.equals("true")) {
                         Toast.makeText(getApplicationContext(), R.string.recensioneEffettuata, Toast.LENGTH_LONG).show();
                         Intent backIntent = new Intent(ScriviRecensioneActivity.this, IngaggiSvoltiActivity.class);
                         startActivity(backIntent);
                     } else {
-                        Toast.makeText(getApplicationContext(), R.string.genericError ,Toast.LENGTH_SHORT).show();
-                    }
+                        Toast.makeText(getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
+                    }}
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -118,14 +124,14 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("operation", "write");
-                if(sessionManager.getSessionType()== Constants.TYPE_SITTER) {
+                if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
                     params.put("idAnnuncio", id);
                     params.put("usernameFamiglia", user);
                     params.put("usernameSitter", sessionManager.getSessionUsername());
                     params.put("commento", commento);
                     params.put("rating", Double.valueOf(rating).toString());
                     params.put("tipoUtente", String.valueOf(sessionManager.getSessionType()));
-                }else if(sessionManager.getSessionType()== Constants.TYPE_FAMILY){
+                } else if (sessionManager.getSessionType() == Constants.TYPE_FAMILY) {
                     params.put("idAnnuncio", id);
                     params.put("usernameFamiglia", sessionManager.getSessionUsername());
                     params.put("usernameSitter", sitter);

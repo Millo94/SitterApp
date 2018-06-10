@@ -52,4 +52,18 @@
         app:fabSize="normal"
         wheel:srcCompat="@drawable/ic_search" />
 
+    <tr.xip.errorview.ErrorView
+        android:id="@+id/errorView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:ev_errorImage="@drawable/ic_action_name"
+        app:ev_showRetryButton="false"
+        app:ev_showSubtitle="true"
+        app:ev_showTitle="true"
+        app:ev_subtitle="@string/lista_vuota"
+        app:ev_title="@string/error_view_oops">
+
+    </tr.xip.errorview.ErrorView>
+
 </RelativeLayout>

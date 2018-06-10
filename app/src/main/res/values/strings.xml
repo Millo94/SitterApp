@@ -152,6 +152,13 @@
     <string name="mail_oggetto">SitterApp: engagments</string>
     <string name="mail_testo">Email sent by SitterApp</string>
     <string name="sms_testo">SMS from SitterApp:</string>
+    <string name="lista_vuota">Empty List</string>
+    <string name="niente_recensioni">User has no reviews</string>
+    <string name="niente_annunci">No notice to show</string>
+    <string name="niente_sitter">No baby sitter to show</string>
+    <string name="niente_scrivi_recensioni">Nothing to review</string>
+    <string name="niente_recensioni_ricevute">No review received</string>
+    <string name="niente_recensioni_scritte">No review written</string>
 
 
 </resources>

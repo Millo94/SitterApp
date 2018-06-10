@@ -39,6 +39,7 @@ import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.Principale.DrawerActivity;
 import it.uniba.di.sms.sitterapp.Principale.NewNoticeActivity;
 import it.uniba.di.sms.sitterapp.R;
+import tr.xip.errorview.ErrorView;
 
 public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.NoticeAdapterListener {
 
@@ -81,7 +82,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         } else if (sessionManager.getSessionType() == Constants.TYPE_SITTER && addNotice.getVisibility() == View.VISIBLE) {
             addNotice.hide();
         }
-
 
 
         noticeList = new ArrayList<>();
@@ -152,21 +152,28 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                         itShouldLoadMore = true;
                         try {
                             JSONArray notice = new JSONArray(response);
-                            for (int i = 0; i < notice.length(); i++) {
 
-                                JSONObject noticeObject = notice.getJSONObject(i);
-                                String idAnnuncio = noticeObject.getString("idAnnuncio");
-                                String famiglia = noticeObject.getString("usernameFamiglia");
-                                String data = noticeObject.getString("data");
-                                String oraInizio = noticeObject.getString("oraInizio");
-                                String oraFine = noticeObject.getString("oraFine");
-                                String descrizione = noticeObject.getString("descrizione");
-                                Notice n = new Notice(idAnnuncio, famiglia, data, oraInizio, oraFine, descrizione);
+                            if (notice.length() == 0) {
+                                ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+                                errorView.setSubtitle(R.string.niente_annunci);
+                                errorView.setVisibility(View.VISIBLE);
+                            } else {
+                                for (int i = 0; i < notice.length(); i++) {
 
-                                if (i < LOAD_LIMIT) {
-                                    noticeList.add(n);
-                                } else {
-                                    remainingNoticeList.add(n);
+                                    JSONObject noticeObject = notice.getJSONObject(i);
+                                    String idAnnuncio = noticeObject.getString("idAnnuncio");
+                                    String famiglia = noticeObject.getString("usernameFamiglia");
+                                    String data = noticeObject.getString("data");
+                                    String oraInizio = noticeObject.getString("oraInizio");
+                                    String oraFine = noticeObject.getString("oraFine");
+                                    String descrizione = noticeObject.getString("descrizione");
+                                    Notice n = new Notice(idAnnuncio, famiglia, data, oraInizio, oraFine, descrizione);
+
+                                    if (i < LOAD_LIMIT) {
+                                        noticeList.add(n);
+                                    } else {
+                                        remainingNoticeList.add(n);
+                                    }
                                 }
                             }
                             noticeAdapter.notifyDataSetChanged();
@@ -228,8 +235,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice);
         dialogs.hideButton();
         dialogs.show(getSupportFragmentManager(), "dialog");
-
-
 
 
     }
