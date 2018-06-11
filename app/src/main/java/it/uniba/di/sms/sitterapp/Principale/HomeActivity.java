@@ -148,7 +148,7 @@ public class HomeActivity extends DrawerActivity
                                     JSONObject noticeObject = notice.getJSONObject(i);
                                     String idAnnuncio = noticeObject.getString("idAnnuncio");
                                     String famiglia = noticeObject.getString("usernameFamiglia");
-                                    String data = noticeObject.getString("data");
+                                    String data = Constants.SQLtoDate(noticeObject.getString("data"));
                                     String oraInizio = noticeObject.getString("oraInizio");
                                     String oraFine = noticeObject.getString("oraFine");
                                     String descrizione = noticeObject.getString("descrizione");
