@@ -226,9 +226,10 @@ public class HomeActivity extends DrawerActivity
                                         numLavori = sitterObject.getInt("numLavori");
                                     }
 
-                                UtenteSitter s = new UtenteSitter(username, foto, rating, numLavori);
-                                sitterList.add(s);
-                                dispTotali.put(username, new ArrayList<Integer>());
+                                    UtenteSitter s = new UtenteSitter(username, foto, rating, numLavori);
+                                    sitterList.add(s);
+                                    dispTotali.put(username, new ArrayList<Integer>());
+                                }
                             }
 
                             sitterAdapter.notifyDataSetChanged();
@@ -300,6 +301,14 @@ public class HomeActivity extends DrawerActivity
         filteredSitterList.removeAll(removeList);
         sitterAdapter.updateSitterList(filteredSitterList);
         sitterAdapter.notifyDataSetChanged();
+
+        ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+        if (filteredSitterList.size() == 0) {
+            errorView.setVisibility(View.VISIBLE);
+            errorView.setTitle(R.string.niente_sitter);
+        } else {
+            errorView.setVisibility(View.GONE);
+        }
     }
 
     private void getDisponibilità(final String username) {
