@@ -8,19 +8,23 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="113dp"
+        tools:layout_editor_absoluteY="34dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgPrSitter"
-                android:layout_width="125dp"
-                android:layout_height="125dp"
+                android:layout_width="115dp"
+                android:layout_height="115dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="28dp"
+                android:padding="15dp"
                 android:src="@drawable/ic_action_profilo"
                 app:layout_constraintEnd_toStartOf="@+id/usernamePrSitter"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -43,9 +47,10 @@
             <TextView
                 android:id="@+id/usernamePrSitter"
                 android:layout_width="240dp"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="28dp"
+                android:paddingStart="5dp"
                 android:text="@string/username"
                 android:textColor="@color/colorScritte"
                 android:textSize="40sp"
@@ -275,7 +280,6 @@
                 android:id="@+id/modificaProfilo"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
@@ -286,7 +290,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingaggiPrSitter2" />
+                app:layout_constraintTop_toBottomOf="@+id/ingaggiPrSitter2"
+                app:layout_constraintVertical_bias="0.3" />
 
             <Switch
                 android:id="@+id/carPrSit"
@@ -308,8 +313,8 @@
                 android:layout_marginBottom="40dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:text="@string/editDisp"
-                android:textSize="18sp"
                 android:textColor="@android:color/background_light"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -37,6 +38,7 @@ import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
 import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.Profilo.ProfiloPubblicoActivity;
 import it.uniba.di.sms.sitterapp.R;
+import tr.xip.errorview.ErrorView;
 
 public class HomeActivity extends DrawerActivity
         implements NoticeAdapter.NoticeAdapterListener, SitterAdapter.ContactsSitterAdapterListener, DialogFiltro.DialogListener {
@@ -52,6 +54,8 @@ public class HomeActivity extends DrawerActivity
     private List<UtenteSitter> sitterList;
     private List<UtenteSitter> filteredSitterList;
     private SitterAdapter sitterAdapter;
+
+    //da calncellare questo commento
 
 
     FloatingActionButton cercaSitter;
@@ -138,17 +142,25 @@ public class HomeActivity extends DrawerActivity
                         progressDialog.dismiss();
                         try {
                             JSONArray notice = new JSONArray(response);
-                            for (int i = 0; i < notice.length(); i++) {
 
-                                JSONObject noticeObject = notice.getJSONObject(i);
-                                String idAnnuncio = noticeObject.getString("idAnnuncio");
-                                String famiglia = noticeObject.getString("usernameFamiglia");
-                                String data = noticeObject.getString("data");
-                                String oraInizio = noticeObject.getString("oraInizio");
-                                String oraFine = noticeObject.getString("oraFine");
-                                String descrizione = noticeObject.getString("descrizione");
-                                Notice n = new Notice(idAnnuncio, famiglia, data, oraInizio, oraFine, descrizione);
-                                noticeList.add(n);
+                            if (notice.length() == 0) {
+                                ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+                                errorView.setVisibility(View.VISIBLE);
+                                errorView.setSubtitle(R.string.niente_annunci);
+                            } else {
+
+                                for (int i = 0; i < notice.length(); i++) {
+
+                                    JSONObject noticeObject = notice.getJSONObject(i);
+                                    String idAnnuncio = noticeObject.getString("idAnnuncio");
+                                    String famiglia = noticeObject.getString("usernameFamiglia");
+                                    String data = noticeObject.getString("data");
+                                    String oraInizio = noticeObject.getString("oraInizio");
+                                    String oraFine = noticeObject.getString("oraFine");
+                                    String descrizione = noticeObject.getString("descrizione");
+                                    Notice n = new Notice(idAnnuncio, famiglia, data, oraInizio, oraFine, descrizione);
+                                    noticeList.add(n);
+                                }
                             }
 
                             noticeAdapter.notifyDataSetChanged();
@@ -194,28 +206,34 @@ public class HomeActivity extends DrawerActivity
 
                         try {
                             JSONArray sitter = new JSONArray(response);
-                            for (int i = 0; i < sitter.length(); i++) {
-                                JSONObject sitterObject = sitter.getJSONObject(i);
-                                String username = sitterObject.getString("username");
-                                String foto = sitterObject.getString("pathfoto");
+                            if (sitter.length() == 0) {
+                                ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+                                errorView.setVisibility(View.VISIBLE);
+                                errorView.setTitle(R.string.niente_sitter);
+                            } else {
+                                for (int i = 0; i < sitter.length(); i++) {
+                                    JSONObject sitterObject = sitter.getJSONObject(i);
+                                    String username = sitterObject.getString("username");
+                                    String foto = sitterObject.getString("pathfoto");
 
-                                float rating;
-                                if (sitterObject.getString("rating").equals("null")) {
-                                    rating = 0;
-                                } else {
-                                    rating = (float) sitterObject.getDouble("rating");
+                                    float rating;
+                                    if (sitterObject.getString("rating").equals("null")) {
+                                        rating = 0;
+                                    } else {
+                                        rating = (float) sitterObject.getDouble("rating");
+                                    }
+
+                                    int numLavori;
+                                    if (sitterObject.getString("numLavori").equals("null")) {
+                                        numLavori = 0;
+                                    } else {
+                                        numLavori = sitterObject.getInt("numLavori");
+                                    }
+
+                                    UtenteSitter s = new UtenteSitter(username, foto, rating, numLavori);
+                                    sitterList.add(s);
+                                    disponibilitaTotali.put(username, getDisponibilità(username));
                                 }
-
-                                int numLavori;
-                                if (sitterObject.getString("numLavori").equals("null")) {
-                                    numLavori = 0;
-                                } else {
-                                    numLavori = sitterObject.getInt("numLavori");
-                                }
-
-                                UtenteSitter s = new UtenteSitter(username, foto, rating, numLavori);
-                                sitterList.add(s);
-                                disponibilitaTotali.put(username, getDisponibilità(username));
                             }
 
                             sitterAdapter.notifyDataSetChanged();
@@ -277,8 +295,8 @@ public class HomeActivity extends DrawerActivity
             // CHECK SULLA DISPONIBILITA
             for (Integer fascia : checkedBox) {
                 if (!disponibilitaTotali.get(sitter.getUsername()).contains(fascia)) {
-                    Log.d("singolo",sitter.getUsername());
-                    Log.d("singolo",disponibilitaTotali.get(sitter.getUsername()).toString());
+                    Log.d("singolo", sitter.getUsername());
+                    Log.d("singolo", disponibilitaTotali.get(sitter.getUsername()).toString());
                     removeList.add(sitter);
                     break;
                 }
