@@ -46,5 +46,34 @@
             android:layout_toRightOf="@+id/thumbnail"
             android:numStars="5" />
 
+        <TextView
+            android:id="@+id/labelIngaggi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ratingSitterItem"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:text="@string/numlavori" />
+
+        <TextView
+            android:id="@+id/duePunti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ratingSitterItem"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@+id/labelIngaggi"
+            android:text=":" />
+
+        <TextView
+            android:id="@+id/ingaggiSitterItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ratingSitterItem"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@+id/duePunti"
+            android:text="n" />
+
     </RelativeLayout>
 </android.support.v7.widget.CardView>

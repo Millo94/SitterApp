@@ -19,6 +19,7 @@ public class UtenteSitter {
     private String cap;
     private String auto;
     private float rating;
+    private int numLavori;
 
     public UtenteSitter(String username,
                         String password,
@@ -75,10 +76,11 @@ public class UtenteSitter {
         this.foto = foto;
     }
 
-    public UtenteSitter(String username, String foto,float rating){
+    public UtenteSitter(String username, String foto,float rating, int numLavori){
         this.username = username;
         this.foto = foto;
         this.rating=rating;
+        this.numLavori = numLavori;
     }
 
     public String getUsername() {
@@ -124,4 +126,8 @@ public class UtenteSitter {
     public String getCap() { return cap; }
 
     public float getRating() {return rating;}
+
+    public int getNumLavori() {
+        return numLavori;
+    }
 }

@@ -2,11 +2,13 @@ package it.uniba.di.sms.sitterapp.Principale;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -57,10 +59,17 @@ public class HomeActivity extends DrawerActivity
     //richieste
     private static final String annunci = "ANNUNCI";
 
+    // Variabili filtro
+    int numLavori;
+    ArrayList<Integer> disponibilitaSingola;
+    HashMap<String, ArrayList<Integer>> disponibilitaTotali;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        disponibilitaTotali = new HashMap<>();
 
         //FAB per la ricerca delle baby sitter
         cercaSitter = (FloatingActionButton) findViewById(R.id.cercaSitter);
@@ -71,7 +80,7 @@ public class HomeActivity extends DrawerActivity
                 public void onClick(View v) {
                     //ricerca
                     DialogFiltro dialogFiltro = DialogFiltro.newInstance();
-                    dialogFiltro.show(getSupportFragmentManager(),"dialog");
+                    dialogFiltro.show(getSupportFragmentManager(), "dialog");
                 }
             });
         } else if (sessionManager.getSessionType() == Constants.TYPE_SITTER && cercaSitter.getVisibility() == View.VISIBLE) {
@@ -108,6 +117,12 @@ public class HomeActivity extends DrawerActivity
             recyclerView.setItemAnimator(new DefaultItemAnimator());
 
             loadSitter();
+            for(String sa : disponibilitaTotali.keySet()){
+                for(Integer ii : getDisponibilità(sa)){
+                    disponibilitaTotali.get(sa).add(ii);
+                }
+            }
+
         }
     }
 
@@ -153,11 +168,11 @@ public class HomeActivity extends DrawerActivity
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(HomeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("richiesta",annunci);
+                params.put("richiesta", annunci);
                 params.put("username", sessionManager.getSessionUsername());
                 return params;
             }
@@ -189,13 +204,25 @@ public class HomeActivity extends DrawerActivity
                                 JSONObject sitterObject = sitter.getJSONObject(i);
                                 String username = sitterObject.getString("username");
                                 String foto = sitterObject.getString("pathfoto");
+
                                 float rating;
-                                if(sitterObject.getString("rating").equals("null")){
-                                     rating = 0;
+                                if (sitterObject.getString("rating").equals("null")) {
+                                    rating = 0;
+                                } else {
+                                    rating = (float) sitterObject.getDouble("rating");
                                 }
-                                else{rating =(float) sitterObject.getDouble("rating");}
-                                UtenteSitter s = new UtenteSitter(username, foto,rating);
+
+                                int numLavori;
+                                if (sitterObject.getString("numLavori").equals("null")) {
+                                    numLavori = 0;
+                                } else {
+                                    numLavori = sitterObject.getInt("numLavori");
+                                }
+
+                                UtenteSitter s = new UtenteSitter(username, foto, rating, numLavori);
                                 sitterList.add(s);
+                                    disponibilitaTotali.put(username,new ArrayList<Integer>());
+
                             }
 
                             sitterAdapter.notifyDataSetChanged();
@@ -233,34 +260,60 @@ public class HomeActivity extends DrawerActivity
     }
 
     @Override
-    public void settaFiltro(final ArrayList<Integer> checkedBox, final float rating, final int minLavori) {
+    public void settaFiltro(ArrayList<Integer> checkedBox, float rating, int minLavori) {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        filteredSitterList = new ArrayList<>();
+        filteredSitterList.addAll(sitterList);
+        ArrayList<UtenteSitter> removeList = new ArrayList<>();
 
-        StringRequest filtro = new StringRequest(Request.Method.POST, Php.FILTRO, new Response.Listener<String>() {
+
+        for (UtenteSitter sitter : filteredSitterList) {
+
+            // CHECK SUL MINLAVORI
+            if (sitter.getNumLavori() <= minLavori) {
+                removeList.add(sitter);
+                continue;
+            }
+
+            // CHECK SUL RATING
+            if (sitter.getRating() < rating) {
+                removeList.add(sitter);
+                continue;
+            }
+
+
+            // CHECK SULLA DISPONIBILITA
+            for (Integer fascia : checkedBox) {
+                if (!disponibilitaTotali.get(sitter.getUsername()).contains(fascia)) {
+                    Log.d("singolo",sitter.getUsername());
+                    Log.d("singolo",disponibilitaTotali.get(sitter.getUsername()).toString());
+                    removeList.add(sitter);
+                    break;
+                }
+            }
+        }
+
+        filteredSitterList.removeAll(removeList);
+        sitterAdapter.updateSitterList(filteredSitterList);
+        sitterAdapter.notifyDataSetChanged();
+    }
+
+    private ArrayList<Integer> getDisponibilità(final String username) {
+
+        disponibilitaSingola = new ArrayList<>();
+
+        StringRequest load = new StringRequest(Request.Method.POST, Php.DISPONIBILITA, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
-                progressDialog.dismiss();
                 try {
-                    JSONArray sitter = new JSONArray(response);
-                    for (int i = 0; i < sitter.length(); i++) {
-                        JSONObject sitterObject = sitter.getJSONObject(i);
-                        String username = sitterObject.getString("username");
-                        String foto = sitterObject.getString("pathfoto");
-                        float rating;
-                        if(sitterObject.getString("rating").equals("null")){
-                            rating = 0;
-                        }
-                        else{rating =(float) sitterObject.getDouble("rating");}
-                        UtenteSitter s = new UtenteSitter(username, foto,rating);
-                        filteredSitterList.add(s);
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        int fascia = jsonObject.getInt("fascia");
+                        Log.d("singolo",Integer.toString(fascia));
+                        disponibilitaSingola.add(fascia);
                     }
-
-                    sitterAdapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -276,12 +329,13 @@ public class HomeActivity extends DrawerActivity
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                JSONArray JSONChecked = new JSONArray(checkedBox);
-                params.put("disponibilita", JSONChecked.toString());
-                params.put("rating", Float.toString(rating));
-                params.put("minLavori", Integer.toString(minLavori));
+                params.put("operation", "load");
+                params.put("username", username);
                 return params;
             }
         };
+
+        Volley.newRequestQueue(this).add(load);
+        return disponibilitaSingola;
     }
 }

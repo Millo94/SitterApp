@@ -25,24 +25,21 @@ import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
  * Classe Adapter per gestire la lista delle babySitter nel menù della famiglia
  */
 
-public class SitterAdapter extends RecyclerView.Adapter<SitterAdapter.MyViewHolder>
-        implements Filterable {
+public class SitterAdapter extends RecyclerView.Adapter<SitterAdapter.MyViewHolder> {
 
     private Context context;
     private List<UtenteSitter> sitterList;
-    private List<UtenteSitter> sitterListFilter;
     private ContactsSitterAdapterListener listener;
 
     public SitterAdapter(Context context, List<UtenteSitter> sitterList, ContactsSitterAdapterListener listener) {
         this.context = context;
         this.sitterList = sitterList;
-        this.sitterListFilter = sitterList;
         this.listener = listener;
 
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name;
+        public TextView name, engages;
         public ImageView photo;
         public RatingBar ratingBar;
 
@@ -51,16 +48,21 @@ public class SitterAdapter extends RecyclerView.Adapter<SitterAdapter.MyViewHold
             name = (TextView) view.findViewById(R.id.name);
             photo = (ImageView) view.findViewById(R.id.thumbnail);
             ratingBar = (RatingBar) view.findViewById(R.id.ratingSitterItem);
+            engages = (TextView) view.findViewById(R.id.ingaggiSitterItem);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // send selected contact in callback
-                    listener.onSitterSelected(sitterListFilter.get(getAdapterPosition()));
+                    listener.onSitterSelected(sitterList.get(getAdapterPosition()));
                 }
             });
         }
 
+    }
+
+    public void updateSitterList(List<UtenteSitter> sitterList){
+        this.sitterList = sitterList;
     }
 
 
@@ -74,53 +76,18 @@ public class SitterAdapter extends RecyclerView.Adapter<SitterAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        final UtenteSitter contact = sitterListFilter.get(position);
+        final UtenteSitter contact = sitterList.get(position);
 
         holder.name.setText(contact.getUsername());
         holder.ratingBar.setRating(contact.getRating());
+        holder.engages.setText(String.valueOf(contact.getNumLavori()));
 
         Glide.with(context).load(contact.getFoto()).apply(RequestOptions.centerCropTransform()).into(holder.photo);
     }
 
     @Override
     public int getItemCount() {
-        return sitterListFilter.size();
-    }
-
-
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
-                if (charString.isEmpty()) {
-                    sitterListFilter = sitterList;
-                } else {
-                    List<UtenteSitter> filteredList = new ArrayList<>();
-                    for (UtenteSitter row : sitterList) {
-
-                        // name match condition. this might differ depending on your requirement
-                        // here we are looking for name or phone number match
-                        if (row.getUsername().toLowerCase().contains(charString.toLowerCase())) {
-                            filteredList.add(row);
-                        }
-                    }
-
-                    sitterListFilter = filteredList;
-                }
-
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = sitterListFilter;
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                sitterListFilter = (ArrayList<UtenteSitter>) filterResults.values;
-                notifyDataSetChanged();
-            }
-        };
+        return sitterList.size();
     }
 
     public interface ContactsSitterAdapterListener {

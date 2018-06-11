@@ -2,24 +2,24 @@ package it.uniba.di.sms.sitterapp.Principale;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
-
-import com.android.volley.RequestQueue;
-
-import com.android.volley.toolbox.Volley;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import it.uniba.di.sms.sitterapp.R;
-import it.uniba.di.sms.sitterapp.SessionManager;
 
 /**
  * Dialog per i filtri di ricerca della baby sitter
@@ -36,26 +36,39 @@ public class DialogFiltro extends AppCompatDialogFragment {
             FRI11, FRI22, FRI33,
             SAT11, SAT22, SAT33,
             SUN11, SUN22, SUN33;
-    float rating = 0;
-    int minLavori = 0;
+    float rating = -1;
+    int minLavori = -1;
 
     ArrayList<CheckBox> checkBoxArrayList;
     ArrayList<Integer> checkedBox;
 
-    SessionManager sessionManager;
-    RequestQueue requestQueue;
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        sessionManager = new SessionManager(getActivity().getApplicationContext());
-        requestQueue = Volley.newRequestQueue(getActivity());
+
         checkBoxArrayList = new ArrayList<>();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.ricerca_sitter, null);
         inizializzaCheckbox(view);
+
         numerolavori = (RadioGroup) view.findViewById(R.id.radioGroup);
         ratingBar = (RatingBar) view.findViewById(R.id.cerca_stars);
+
+        // FILTRO NUMERO LAVORI
+        numerolavori.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.radioButton)
+                    minLavori = 0;
+                else if (checkedId == R.id.radioButton2)
+                    minLavori = 5;
+                else if (checkedId == R.id.radioButton3)
+                    minLavori = 10;
+                else
+                    minLavori = -1;
+            }
+        });
 
         builder.setView(view)
                 .setTitle(R.string.filtro)
@@ -67,22 +80,18 @@ public class DialogFiltro extends AppCompatDialogFragment {
                 }).setPositiveButton(R.string.applicFiltro, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+                // FILTRO DISPONIBILITA
                 checkedBox = new ArrayList<>();
                 for (int checked = 0; checked < checkBoxArrayList.size(); checked++) {
                     if (checkBoxArrayList.get(checked).isChecked())
                         checkedBox.add(checked + 1);
                 }
-                numerolavori.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        if (checkedId == R.id.radioButton)
-                            minLavori = 0;
-                        else if (checkedId == R.id.radioButton2)
-                            minLavori = 5;
-                        else if (checkedId == R.id.radioButton3)
-                            minLavori = 10;
-                    }
-                });
+
+                // FILTRO RATING
+                rating = ratingBar.getRating();
+
+                Log.d("disponibilità", checkedBox.toString());
                 listener.settaFiltro(checkedBox, rating, minLavori);
             }
         });
