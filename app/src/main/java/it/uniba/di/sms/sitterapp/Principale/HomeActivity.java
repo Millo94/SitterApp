@@ -68,7 +68,7 @@ public class HomeActivity extends DrawerActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        dispTotali = new HashMap<>();
         //FAB per la ricerca delle baby sitter
         cercaSitter = (FloatingActionButton) findViewById(R.id.cercaSitter);
         if (sessionManager.getSessionType() == Constants.TYPE_FAMILY && cercaSitter.getVisibility() == View.GONE) {
@@ -191,7 +191,7 @@ public class HomeActivity extends DrawerActivity
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        dispTotali = new HashMap<>();
+
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Php.ELENCO_SITTER,
                 new Response.Listener<String>() {
@@ -229,6 +229,7 @@ public class HomeActivity extends DrawerActivity
                                     UtenteSitter s = new UtenteSitter(username, foto, rating, numLavori);
                                     sitterList.add(s);
                                     dispTotali.put(username, new ArrayList<Integer>());
+                                    getDisponibilità(username);
                                 }
                             }
 
@@ -289,7 +290,7 @@ public class HomeActivity extends DrawerActivity
 
 
             // CHECK SULLA DISPONIBILITA
-            getDisponibilità(sitter.getUsername());
+
             for(Integer checked : checkedBox){
                 if(!dispTotali.get(sitter.getUsername()).contains(checked)){
                     removeList.add(sitter);
