@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -38,7 +37,6 @@ import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
 import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.Profilo.ProfiloPubblicoActivity;
 import it.uniba.di.sms.sitterapp.R;
-import tr.xip.errorview.ErrorView;
 
 public class HomeActivity extends DrawerActivity
         implements NoticeAdapter.NoticeAdapterListener, SitterAdapter.ContactsSitterAdapterListener, DialogFiltro.DialogListener {
@@ -119,13 +117,6 @@ public class HomeActivity extends DrawerActivity
             recyclerView.setItemAnimator(new DefaultItemAnimator());
 
             loadSitter();
-            for(String sa : disponibilitaTotali.keySet()){
-                for(Integer ii : getDisponibilità(sa)){
-                    disponibilitaTotali.get(sa).add(ii);
-                }
-            }
-
-
         }
     }
 
@@ -147,25 +138,17 @@ public class HomeActivity extends DrawerActivity
                         progressDialog.dismiss();
                         try {
                             JSONArray notice = new JSONArray(response);
+                            for (int i = 0; i < notice.length(); i++) {
 
-                            if (notice.length() == 0 ) {
-                                ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
-                                errorView.setVisibility(View.VISIBLE);
-                                errorView.setSubtitle(R.string.niente_annunci);
-                            } else {
-
-                                for (int i = 0; i < notice.length(); i++) {
-
-                                    JSONObject noticeObject = notice.getJSONObject(i);
-                                    String idAnnuncio = noticeObject.getString("idAnnuncio");
-                                    String famiglia = noticeObject.getString("usernameFamiglia");
-                                    String data = noticeObject.getString("data");
-                                    String oraInizio = noticeObject.getString("oraInizio");
-                                    String oraFine = noticeObject.getString("oraFine");
-                                    String descrizione = noticeObject.getString("descrizione");
-                                    Notice n = new Notice(idAnnuncio, famiglia, data, oraInizio, oraFine, descrizione);
-                                    noticeList.add(n);
-                                }
+                                JSONObject noticeObject = notice.getJSONObject(i);
+                                String idAnnuncio = noticeObject.getString("idAnnuncio");
+                                String famiglia = noticeObject.getString("usernameFamiglia");
+                                String data = noticeObject.getString("data");
+                                String oraInizio = noticeObject.getString("oraInizio");
+                                String oraFine = noticeObject.getString("oraFine");
+                                String descrizione = noticeObject.getString("descrizione");
+                                Notice n = new Notice(idAnnuncio, famiglia, data, oraInizio, oraFine, descrizione);
+                                noticeList.add(n);
                             }
 
                             noticeAdapter.notifyDataSetChanged();
@@ -179,7 +162,7 @@ public class HomeActivity extends DrawerActivity
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(HomeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -211,26 +194,6 @@ public class HomeActivity extends DrawerActivity
 
                         try {
                             JSONArray sitter = new JSONArray(response);
-
-                            if (sitter.length() ==0){
-                                ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
-                                errorView.setVisibility(View.VISIBLE);
-                                errorView.setSubtitle(R.string.niente_sitter);
-                            } else {
-
-                                for (int i = 0; i < sitter.length(); i++) {
-                                    JSONObject sitterObject = sitter.getJSONObject(i);
-                                    String username = sitterObject.getString("username");
-                                    String foto = sitterObject.getString("pathfoto");
-                                    float rating;
-                                    if (sitterObject.getString("rating").equals("null")) {
-                                        rating = 0;
-                                    } else {
-                                        rating = (float) sitterObject.getDouble("rating");
-                                    }
-                                    UtenteSitter s = new UtenteSitter(username, foto, rating);
-                                    sitterList.add(s);
-                                }
                             for (int i = 0; i < sitter.length(); i++) {
                                 JSONObject sitterObject = sitter.getJSONObject(i);
                                 String username = sitterObject.getString("username");
@@ -252,9 +215,9 @@ public class HomeActivity extends DrawerActivity
 
                                 UtenteSitter s = new UtenteSitter(username, foto, rating, numLavori);
                                 sitterList.add(s);
-                                    disponibilitaTotali.put(username,new ArrayList<Integer>());
-
+                                disponibilitaTotali.put(username, getDisponibilità(username));
                             }
+
                             sitterAdapter.notifyDataSetChanged();
 
                         } catch (JSONException e) {
@@ -296,7 +259,6 @@ public class HomeActivity extends DrawerActivity
         filteredSitterList.addAll(sitterList);
         ArrayList<UtenteSitter> removeList = new ArrayList<>();
 
-
         for (UtenteSitter sitter : filteredSitterList) {
 
             // CHECK SUL MINLAVORI
@@ -337,28 +299,12 @@ public class HomeActivity extends DrawerActivity
             public void onResponse(String response) {
 
                 try {
-                    JSONArray sitter = new JSONArray(response);
-                    for (int i = 0; i < sitter.length(); i++) {
-                        JSONObject sitterObject = sitter.getJSONObject(i);
-                        String username = sitterObject.getString("username");
-                        String foto = sitterObject.getString("pathfoto");
-                        float rating;
-                        if (sitterObject.getString("rating").equals("null")) {
-                            rating = 0;
-                        } else {
-                            rating = (float) sitterObject.getDouble("rating");
-                        }
-                        UtenteSitter s = new UtenteSitter(username, foto, rating);
-                        filteredSitterList.add(s);
                     JSONArray jsonArray = new JSONArray(response);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         int fascia = jsonObject.getInt("fascia");
-                        Log.d("singolo",Integer.toString(fascia));
                         disponibilitaSingola.add(fascia);
                     }
-
-                    sitterAdapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -374,10 +320,8 @@ public class HomeActivity extends DrawerActivity
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                JSONArray JSONChecked = new JSONArray(checkedBox);
-                params.put("disponibilita", JSONChecked.toString());
-                params.put("rating", Float.toString(rating));
-                params.put("minLavori", Integer.toString(minLavori));
+                params.put("operation", "load");
+                params.put("username", username);
                 return params;
             }
         };
