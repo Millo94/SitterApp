@@ -59,17 +59,13 @@ public class HomeActivity extends DrawerActivity
     //richieste
     private static final String annunci = "ANNUNCI";
 
-    // Variabili filtro
-    int numLavori;
-    ArrayList<Integer> disponibilitaSingola;
-    HashMap<String, ArrayList<Integer>> disponibilitaTotali;
+    // Filtro disponibilità
+    Map<String, ArrayList<Integer>> dispTotali;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        disponibilitaTotali = new HashMap<>();
 
         //FAB per la ricerca delle baby sitter
         cercaSitter = (FloatingActionButton) findViewById(R.id.cercaSitter);
@@ -185,6 +181,8 @@ public class HomeActivity extends DrawerActivity
         progressDialog.setCancelable(false);
         progressDialog.show();
 
+        dispTotali = new HashMap<>();
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Php.ELENCO_SITTER,
                 new Response.Listener<String>() {
                     @Override
@@ -215,7 +213,7 @@ public class HomeActivity extends DrawerActivity
 
                                 UtenteSitter s = new UtenteSitter(username, foto, rating, numLavori);
                                 sitterList.add(s);
-                                disponibilitaTotali.put(username, getDisponibilità(username));
+                                dispTotali.put(username, new ArrayList<Integer>());
                             }
 
                             sitterAdapter.notifyDataSetChanged();
@@ -275,14 +273,13 @@ public class HomeActivity extends DrawerActivity
 
 
             // CHECK SULLA DISPONIBILITA
-            for (Integer fascia : checkedBox) {
-                if (!disponibilitaTotali.get(sitter.getUsername()).contains(fascia)) {
-                    Log.d("singolo",sitter.getUsername());
-                    Log.d("singolo",disponibilitaTotali.get(sitter.getUsername()).toString());
+            getDisponibilità(sitter.getUsername());
+            for(Integer checked : checkedBox){
+                if(!dispTotali.get(sitter.getUsername()).contains(checked)){
                     removeList.add(sitter);
-                    break;
                 }
             }
+
         }
 
         filteredSitterList.removeAll(removeList);
@@ -290,9 +287,7 @@ public class HomeActivity extends DrawerActivity
         sitterAdapter.notifyDataSetChanged();
     }
 
-    private ArrayList<Integer> getDisponibilità(final String username) {
-
-        disponibilitaSingola = new ArrayList<>();
+    private void getDisponibilità(final String username) {
 
         StringRequest load = new StringRequest(Request.Method.POST, Php.DISPONIBILITA, new Response.Listener<String>() {
             @Override
@@ -303,9 +298,8 @@ public class HomeActivity extends DrawerActivity
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         int fascia = jsonObject.getInt("fascia");
-                        disponibilitaSingola.add(fascia);
+                        dispTotali.get(username).add(fascia);
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -327,6 +321,5 @@ public class HomeActivity extends DrawerActivity
         };
 
         Volley.newRequestQueue(this).add(load);
-        return disponibilitaSingola;
     }
 }
