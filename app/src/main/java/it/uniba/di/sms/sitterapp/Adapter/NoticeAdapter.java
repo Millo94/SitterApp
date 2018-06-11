@@ -82,9 +82,9 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
 
         String data = notice.getDate();
         Integer annoNotice, meseNotice, giornoNotice;
-        annoNotice = Integer.valueOf(data.substring(0, 4));
-        meseNotice = Integer.valueOf(data.substring(5, 7));
-        giornoNotice = Integer.valueOf(data.substring(8, 10));
+        annoNotice = Integer.valueOf(data.substring(6, 10));
+        meseNotice = Integer.valueOf(data.substring(3, 5));
+        giornoNotice = Integer.valueOf(data.substring(0, 2));
 
         boolean scaduto;
 

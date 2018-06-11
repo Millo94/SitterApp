@@ -127,7 +127,7 @@
     <string name="applicFiltro">Applica Filtri</string>
     <string name="scaduto">Scaduto</string>
     <string name="mail_oggetto">SitterApp: ingaggio</string>
-    <string name="mail_testo">Inserire il testo della richiesta...</string>
+    <string name="mail_testo">Email da SitterApp: </string>
     <string name="sms_testo">"SMS da SitterApp: "</string>
     <string name="niente_recensioni">L\'utente non ha recensioni</string>
     <string name="lista_vuota">Lista vuota</string>

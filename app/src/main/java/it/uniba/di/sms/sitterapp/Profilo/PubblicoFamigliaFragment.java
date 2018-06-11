@@ -59,7 +59,7 @@ public class PubblicoFamigliaFragment extends Fragment {
     //numero di telefono di sanzone
     String telefono;
     //EMAIL ANNUNCIO
-    String email = "ciaociao";
+    String email;
 
     private OnFragmentInteractionListener mListener;
 
