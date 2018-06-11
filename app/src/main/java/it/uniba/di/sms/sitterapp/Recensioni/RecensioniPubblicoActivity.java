@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.DefaultItemAnimator;
 
@@ -20,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,20 +36,22 @@ import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.Principale.DrawerActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
+import tr.xip.errorview.ErrorView;
 
 /**
- * Created by Feder on 05/06/2018.
+ * Recensioni Pubblico Activity: un utente vede le recensioni di un altro utente
  */
 
-public class RecensioniPubblicoActivity extends AppCompatActivity{
+public class RecensioniPubblicoActivity extends AppCompatActivity {
 
 
     SessionManager sessionManager;
     private RecyclerView recycler;
     private RecensioniAdapter adapter;
     private List<Recensione> recensioneList;
-    boolean itShouldLoadMore;
-    String user ;
+    boolean itShouldLoadMore = false;
+    String user;
+
 
 
     @Override
@@ -54,16 +59,20 @@ public class RecensioniPubblicoActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_home);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        user =  getIntent().getStringExtra("username");
+        user = getIntent().getStringExtra("username");
         recycler = (RecyclerView) findViewById(R.id.recyclerHome);
+
         recensioneList = new ArrayList<>();
         adapter = new RecensioniAdapter(recensioneList);
         recycler.setAdapter(adapter);
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recycler.setLayoutManager(mLayoutManager);
         recycler.setItemAnimator(new DefaultItemAnimator());
         sessionManager = new SessionManager(getApplicationContext());
         loadNotices();
+
+
     }
 
     @Override
@@ -99,25 +108,31 @@ public class RecensioniPubblicoActivity extends AppCompatActivity{
                         try {
                             JSONArray recensione = new JSONArray(response);
 
-                            for (int i = 0; i < recensione.length(); i++) {
+                            if (recensione.length() == 0) {
+                                ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+                                errorView.setSubtitle(R.string.niente_recensioni);
+                                errorView.setVisibility(View.VISIBLE);
+                            } else {
 
-                                JSONObject recensioneObject = recensione.getJSONObject(i);
-                                String username;
+                                for (int i = 0; i < recensione.length(); i++) {
 
-                                if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
-                                    username = recensioneObject.getString("babysitter");
-                                } else {
-                                    username = recensioneObject.getString("famiglia");
+                                    JSONObject recensioneObject = recensione.getJSONObject(i);
+                                    String username;
+
+                                    if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
+                                        username = recensioneObject.getString("babysitter");
+                                    } else {
+                                        username = recensioneObject.getString("famiglia");
+                                    }
+
+
+                                    String descrizione = recensioneObject.getString("commento");
+                                    Float rating = (float) recensioneObject.getDouble("rating");
+
+                                    Recensione r = new Recensione(username, descrizione, rating);
+
+                                    recensioneList.add(r);
                                 }
-
-
-                                String descrizione = recensioneObject.getString("commento");
-                                Float rating = (float) recensioneObject.getDouble("rating");
-
-                                Recensione r = new Recensione(username, descrizione, rating);
-
-                                recensioneList.add(r);
-
                             }
 
 
@@ -138,7 +153,7 @@ public class RecensioniPubblicoActivity extends AppCompatActivity{
                 Map<String, String> params = new HashMap<>();
                 params.put("username", user);
 
-                if (sessionManager.getSessionType() == Constants.TYPE_SITTER){
+                if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
                     params.put("tipoUtente", String.valueOf(Constants.TYPE_FAMILY));
                 } else {
                     params.put("tipoUtente", String.valueOf(Constants.TYPE_SITTER));

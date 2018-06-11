@@ -87,7 +87,7 @@
     <string name="recensioniScritte">Recensioni Scritte</string>
     <string name="recensioniRicevute">Recensioni Ricevute</string>
     <string name="sceltaAzione">Scegli come eseguire l\' azione:</string>
-    <string name="chiamata">chiama</string>
+    <string name="chiamata">Chiamata</string>
     <string name="profilo">Profilo</string>
     <string name="deleteSuccess">Eliminazione effettuata correttamente.</string>
     <string name="deletefail">Impossibile eliminare l\' annuncio.</string>
@@ -114,7 +114,6 @@
     <string name="Evening">Sera</string>
     <string name="Sunday">Dom</string>
     <string name="DisponibilitaSitter">Disponibilità sitter</string>
-    <string name="sms">Scrivi un messaggio</string>
     <string name="Cancel">Cancella</string>
     <string name="SaveChanges">Salva Modifica</string>
     <string name="registrazioneStringa">Clicca qui per creare un nuovo account</string>
@@ -127,6 +126,16 @@
     <string name="filtro">Filtri di ricerca</string>
     <string name="applicFiltro">Applica Filtri</string>
     <string name="scaduto">Scaduto</string>
+    <string name="mail_oggetto">SitterApp: ingaggio</string>
+    <string name="mail_testo">Inserire il testo della richiesta...</string>
+    <string name="sms_testo">"SMS da SitterApp: "</string>
+    <string name="niente_recensioni">L\'utente non ha recensioni</string>
+    <string name="lista_vuota">Lista vuota</string>
+    <string name="niente_annunci">Nessun annuncio da mostrare</string>
+    <string name="niente_sitter">Nessun baby sitter da mostrare</string>
+    <string name="niente_scrivi_recensioni">Nessuna Recensione</string>
+    <string name="niente_recensioni_ricevute">Nessuna recensione ricevuta</string>
+    <string name="niente_recensioni_scritte">Nessuna recensione scritta</string>
 
 
 </resources>

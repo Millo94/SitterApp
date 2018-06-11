@@ -151,4 +151,6 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
     public interface NoticeAdapterListener {
         void onNoticeSelected(Notice notice);
     }
+
+
 }

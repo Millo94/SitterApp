@@ -32,6 +32,7 @@ import it.uniba.di.sms.sitterapp.Oggetti.Recensione;
 import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
+import tr.xip.errorview.ErrorView;
 
 
 public class RecensioniRicevuteFragment extends Fragment {
@@ -44,6 +45,7 @@ public class RecensioniRicevuteFragment extends Fragment {
 
     boolean itShouldLoadMore;
     private SessionManager sessionManager;
+    ErrorView errorView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,8 @@ public class RecensioniRicevuteFragment extends Fragment {
         recensioneList = new ArrayList<>();
         adapter = new RecensioniAdapter(recensioneList);
         recycler.setAdapter(adapter);
+
+        errorView = (ErrorView) view.findViewById(R.id.errorView);
 
         loadNotices();
 
@@ -99,27 +103,32 @@ public class RecensioniRicevuteFragment extends Fragment {
                         try {
                             JSONArray recensione = new JSONArray(response);
 
-                            for (int i = 0; i < recensione.length(); i++) {
+                            if (recensione.length() == 0) {
 
-                                JSONObject recensioneObject = recensione.getJSONObject(i);
-                                String username;
+                                errorView.setSubtitle(R.string.niente_recensioni_ricevute);
+                                errorView.setVisibility(View.VISIBLE);
+                            } else {
+                                for (int i = 0; i < recensione.length(); i++) {
 
-                                if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
-                                    username = recensioneObject.getString("famiglia");
-                                } else {
-                                    username = recensioneObject.getString("babysitter");
+                                    JSONObject recensioneObject = recensione.getJSONObject(i);
+                                    String username;
+
+                                    if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
+                                        username = recensioneObject.getString("famiglia");
+                                    } else {
+                                        username = recensioneObject.getString("babysitter");
+                                    }
+
+
+                                    String descrizione = recensioneObject.getString("commento");
+                                    Float rating = (float) recensioneObject.getDouble("rating");
+
+                                    Recensione r = new Recensione(username, descrizione, rating);
+
+                                    recensioneList.add(r);
+
                                 }
-
-
-                                String descrizione = recensioneObject.getString("commento");
-                                Float rating = (float) recensioneObject.getDouble("rating");
-
-                                Recensione r = new Recensione(username, descrizione, rating);
-
-                                recensioneList.add(r);
-
                             }
-
 
                             adapter.notifyDataSetChanged();
 
@@ -144,13 +153,6 @@ public class RecensioniRicevuteFragment extends Fragment {
         };
         Volley.newRequestQueue(getContext()).add(stringRequest);
     }
-
-
-
-    /*@Override
-    public void onRecensioniSelected(Recensione recensione) {
-        Toast.makeText(getContext(), "da implementare", Toast.LENGTH_SHORT).show();
-    }*/
 
 
 }

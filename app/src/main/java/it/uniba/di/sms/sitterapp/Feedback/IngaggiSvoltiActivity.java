@@ -34,8 +34,9 @@ import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.Principale.DrawerActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
+import tr.xip.errorview.ErrorView;
 
-public class IngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapter.NoticeAdapterListener{
+public class IngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapter.NoticeAdapterListener {
 
     protected SessionManager sessionManager;
 
@@ -127,22 +128,29 @@ public class IngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapt
                         itShouldLoadMore = true;
                         try {
                             JSONArray notice = new JSONArray(response);
-                            for (int i = 0; i < notice.length(); i++) {
 
-                                JSONObject noticeObject = notice.getJSONObject(i);
-                                String idAnnuncio = noticeObject.getString("idAnnuncio");
-                                String famiglia = noticeObject.getString("usernameFamiglia");
-                                String data = noticeObject.getString("data");
-                                String oraInizio = noticeObject.getString("oraInizio");
-                                String oraFine = noticeObject.getString("oraFine");
-                                String descrizione = noticeObject.getString("descrizione");
-                                String sitter = noticeObject.getString("babysitter");
-                                Notice n = new Notice(idAnnuncio,famiglia, data, oraInizio, oraFine, descrizione,sitter);
+                            if (notice.length() == 0) {
+                                ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+                                errorView.setSubtitle(R.string.niente_annunci);
+                                errorView.setVisibility(View.VISIBLE);
+                            } else {
+                                for (int i = 0; i < notice.length(); i++) {
 
-                                if (i < LOAD_LIMIT) {
-                                    noticeList.add(n);
-                                } else {
-                                    remainingNoticeList.add(n);
+                                    JSONObject noticeObject = notice.getJSONObject(i);
+                                    String idAnnuncio = noticeObject.getString("idAnnuncio");
+                                    String famiglia = noticeObject.getString("usernameFamiglia");
+                                    String data = noticeObject.getString("data");
+                                    String oraInizio = noticeObject.getString("oraInizio");
+                                    String oraFine = noticeObject.getString("oraFine");
+                                    String descrizione = noticeObject.getString("descrizione");
+                                    String sitter = noticeObject.getString("babysitter");
+                                    Notice n = new Notice(idAnnuncio, famiglia, data, oraInizio, oraFine, descrizione, sitter);
+
+                                    if (i < LOAD_LIMIT) {
+                                        noticeList.add(n);
+                                    } else {
+                                        remainingNoticeList.add(n);
+                                    }
                                 }
                             }
 
@@ -201,10 +209,10 @@ public class IngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapt
     @Override
     public void onNoticeSelected(Notice notice) {
 
-            Intent familyRev = new Intent(IngaggiSvoltiActivity.this, ScriviRecensioneActivity.class);
-            familyRev.putExtra("famiglia", notice.getFamily());
-            familyRev.putExtra("idAnnuncio",notice.getIdAnnuncio());
-            familyRev.putExtra("sitter",notice.getSitter());
-            startActivity(familyRev);
+        Intent familyRev = new Intent(IngaggiSvoltiActivity.this, ScriviRecensioneActivity.class);
+        familyRev.putExtra("famiglia", notice.getFamily());
+        familyRev.putExtra("idAnnuncio", notice.getIdAnnuncio());
+        familyRev.putExtra("sitter", notice.getSitter());
+        startActivity(familyRev);
     }
 }
