@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SitterApp</string>
+    <string name="app_name">SitterAPP</string>
     <string name="babySitter" translatable="false">Baby Sitter</string>
 
     <!-- Stringhe form registrazione -->
@@ -159,6 +159,7 @@
     <string name="niente_scrivi_recensioni">Nothing to review</string>
     <string name="niente_recensioni_ricevute">No review received</string>
     <string name="niente_recensioni_scritte">No review written</string>
+    <string name="lavoroAssegnato">Engagment Assigned</string>
 
 
 </resources>
