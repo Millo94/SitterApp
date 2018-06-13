@@ -280,13 +280,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/spinnerSitterReg">
 
                 <EditText
-                    android:id="@+id/CAPSitterReg"
+                    android:id="@+id/CittaSitterReg"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:ems="10"
-                    android:hint="@string/cap"
-                    android:inputType="number" />
+                    android:hint="@string/citta" />
             </android.support.design.widget.TextInputLayout>
 
 

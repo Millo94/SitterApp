@@ -31,7 +31,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
 
     ArrayList<EditText> listaET = new ArrayList<>();
     View view;
-    EditText usernameET, passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, dataNascitaET, capET;
+    EditText usernameET, passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, dataNascitaET, cittaET;
     RadioGroup genereRG;
     Switch autoSW;
     Button confRegistration;
@@ -133,7 +133,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                             numeroET.getText().toString(),
                             genere,
                             nazioni.getSelectedItem().toString(),
-                            capET.getText().toString(),
+                            cittaET.getText().toString(),
                             auto);
                     mListener.onFragmentInteraction(sitter);
                 }
@@ -198,8 +198,8 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
         dataNascitaET = (EditText) view.findViewById(R.id.nascitaSitterReg);
         listaET.add(dataNascitaET);
         genereRG = (RadioGroup) view.findViewById(R.id.groupGenderSitterReg);
-        capET = (EditText) view.findViewById(R.id.CAPSitterReg);
-        listaET.add(capET);
+        cittaET = (EditText) view.findViewById(R.id.CittaSitterReg);
+        listaET.add(cittaET);
         autoSW = (Switch) view.findViewById(R.id.switch1);
         confRegistration = (Button) view.findViewById(R.id.buttonReg);
     }

@@ -29,7 +29,7 @@ public class FamilyRegistrationFragment extends Fragment {
     View view;
     Spinner nazioni;
     String arraypaesi[];
-    EditText usernameET, passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, capET, numFigliET;
+    EditText usernameET, passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, cittaET, numFigliET;
     TextView nazioneET;
     Switch animaliSW;
     String animali = "1";
@@ -89,7 +89,7 @@ public class FamilyRegistrationFragment extends Fragment {
                             emailET.getText().toString(),
                             numeroET.getText().toString(),
                             nazioni.getSelectedItem().toString(),
-                            capET.getText().toString(),
+                            cittaET.getText().toString(),
                             numFigliET.getText().toString(),
                             animali);
                     mListener.onFragmentInteraction(famiglia);
@@ -149,8 +149,8 @@ public class FamilyRegistrationFragment extends Fragment {
         listaET.add(emailET);
         numeroET = (EditText) view.findViewById(R.id.telefonoFamiglia);
         listaET.add(numeroET);
-        capET = (EditText) view.findViewById(R.id.CAPFamiglia);
-        listaET.add(capET);
+        cittaET = (EditText) view.findViewById(R.id.CittaFamiglia);
+        listaET.add(cittaET);
         numFigliET = (EditText) view.findViewById(R.id.numeroFigliFamiglia);
         listaET.add(numFigliET);
         nazioneET = (TextView) view.findViewById(R.id.nazioneFamiglia);

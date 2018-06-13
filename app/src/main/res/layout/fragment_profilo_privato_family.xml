@@ -212,11 +212,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/nazionePrFamiglia" />
 
             <TextView
-                android:id="@+id/capPrFamiglia"
+                android:id="@+id/cittaPrFamiglia"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="@string/cap"
+                android:text="@string/citta"
                 android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -226,17 +226,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/nazionePrFamiglia2" />
 
             <EditText
-                android:id="@+id/capPrFamiglia2"
+                android:id="@+id/cittaPrFamiglia2"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="@string/cap"
+                android:text="@string/citta"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/capPrFamiglia" />
+                app:layout_constraintTop_toBottomOf="@+id/cittaPrFamiglia" />
 
             <ToggleButton
                 android:id="@+id/togglePrFamiglia"
@@ -252,7 +252,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/capPrFamiglia2" />
+                app:layout_constraintTop_toBottomOf="@+id/cittaPrFamiglia2" />
 
             <Switch
                 android:id="@+id/animaliPrFamiglia"

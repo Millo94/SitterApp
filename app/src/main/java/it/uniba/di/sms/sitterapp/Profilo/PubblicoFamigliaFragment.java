@@ -33,7 +33,6 @@ import android.content.Intent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,9 +49,9 @@ public class PubblicoFamigliaFragment extends Fragment {
 
     View view;
     //STRINGHE STATICHE DA NON TOCCARE
-    TextView usernamePuFam, descrPuFam, nomePuFam, cognomePuFam, emailPuFam, numeroPuFam, nazionePuFam, capPuFam, numFigliPuFam, animaliPuFam;
+    TextView usernamePuFam, descrPuFam, nomePuFam, cognomePuFam, emailPuFam, numeroPuFam, nazionePuFam, cittaPuFam, numFigliPuFam, animaliPuFam;
     //STRINGHE DA COLLEGARE AL DATABASE
-    TextView nomePuFam2, cognomePuFam2, emailPuFam2, numeroPuFam2, nazionePuFam2, capPuFam2, numFigliPuFam2, animaliPuFam2;
+    TextView nomePuFam2, cognomePuFam2, emailPuFam2, numeroPuFam2, nazionePuFam2, cittaPuFam2, numFigliPuFam2, animaliPuFam2;
     //DA COLLEGARE ALLA CHAT
     Button contattaFamiglia;
     Button feedbackFam;
@@ -110,7 +109,7 @@ public class PubblicoFamigliaFragment extends Fragment {
                         numeroPuFam2.setText(json.getString("telefono"));
                         telefono = json.getString("telefono");
                         nazionePuFam2.setText(json.getString("nazione"));
-                        capPuFam2.setText(json.getString("cap"));
+                        cittaPuFam2.setText(json.getString("citta"));
                         // Rating bar
                         if (!json.getString("rating").equals("null")) {
                             ratingPuFam.setRating((float) json.getDouble("rating"));
@@ -183,8 +182,8 @@ public class PubblicoFamigliaFragment extends Fragment {
         nazionePuFam = (TextView) view.findViewById(R.id.nazionePuFamiglia);
         nazionePuFam2 = (TextView) view.findViewById(R.id.nazionePuFamiglia2);
 
-        capPuFam = (TextView) view.findViewById(R.id.capPuFamily);
-        capPuFam2 = (TextView) view.findViewById(R.id.capPuFamily2);
+        cittaPuFam = (TextView) view.findViewById(R.id.cittaPuFamily);
+        cittaPuFam2 = (TextView) view.findViewById(R.id.cittaPuFamily2);
 
 
         numFigliPuFam = (TextView) view.findViewById(R.id.figliPuFamiglia);

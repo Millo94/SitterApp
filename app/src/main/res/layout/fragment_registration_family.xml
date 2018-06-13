@@ -218,11 +218,10 @@
                 app:layout_constraintTop_toBottomOf="@+id/spinnerNationFamiglia">
 
                 <EditText
-                    android:id="@+id/CAPFamiglia"
+                    android:id="@+id/CittaFamiglia"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:hint="@string/cap"
-                    android:inputType="number" />
+                    android:hint="@string/citta" />
 
             </android.support.design.widget.TextInputLayout>
 

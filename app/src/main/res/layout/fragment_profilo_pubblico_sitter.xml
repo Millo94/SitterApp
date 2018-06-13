@@ -34,7 +34,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/contattaSitter"
-                app:layout_constraintTop_toBottomOf="@+id/capPuSitter2"/>
+                app:layout_constraintTop_toBottomOf="@+id/cittaPuSitter2"/>
 
             <Button
                 android:id="@+id/contattaSitter"
@@ -91,11 +91,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/nazionePuSitter" />
 
             <TextView
-                android:id="@+id/capPuSitter"
+                android:id="@+id/cittaPuSitter"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="@string/cap"
+                android:text="@string/citta"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -103,15 +103,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/nazionePuSitter2" />
 
             <TextView
-                android:id="@+id/capPuSitter2"
+                android:id="@+id/cittaPuSitter2"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/cap"
+                android:text="@string/citta"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/capPuSitter" />
+                app:layout_constraintTop_toBottomOf="@+id/cittaPuSitter" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imagePuSitter"

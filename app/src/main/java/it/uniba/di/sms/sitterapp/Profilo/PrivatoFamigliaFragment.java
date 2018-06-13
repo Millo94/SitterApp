@@ -20,7 +20,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,8 +40,8 @@ public class PrivatoFamigliaFragment extends Fragment {
 
 
     View view;
-    TextView usernamePrFam, nomePrFam, cognomePrFam, emailPrFam, numeroPrFam, nazionePrFam, capPrFam, numFigliPrFam, animaliPrFam;
-    EditText descrPrFam, nomePrFam2, cognomePrFam2, emailPrFam2, numeroPrFam2, nazionePrFam2, capPrFam2,  numFigliPrFam2;
+    TextView usernamePrFam, nomePrFam, cognomePrFam, emailPrFam, numeroPrFam, nazionePrFam, cittaPrFam, numFigliPrFam;
+    EditText descrPrFam, nomePrFam2, cognomePrFam2, emailPrFam2, numeroPrFam2, nazionePrFam2, cittaPrFam2,  numFigliPrFam2;
     Switch animaliPrFam2;
     RatingBar ratingPrFam;
     Button modificaProfilo;
@@ -99,7 +98,7 @@ public class PrivatoFamigliaFragment extends Fragment {
                         emailPrFam2.setText(json.getString("email"));
                         numeroPrFam2.setText(json.getString("telefono"));
                         nazionePrFam2.setText(json.getString("nazione"));
-                        capPrFam2.setText(json.getString("cap"));
+                        cittaPrFam2.setText(json.getString("citta"));
                         // Conversione del flag animali
                         if(json.getString("animali").equals("0"))
                             animaliPrFam2.setChecked(true);
@@ -149,7 +148,7 @@ public class PrivatoFamigliaFragment extends Fragment {
                 emailPrFam2.setEnabled(true);
                 numeroPrFam2.setEnabled(true);
                 animaliPrFam2.setEnabled(true);
-                capPrFam2.setEnabled(true);
+                cittaPrFam2.setEnabled(true);
                 numFigliPrFam2.setEnabled(true);
 
                 edit = true;
@@ -162,7 +161,7 @@ public class PrivatoFamigliaFragment extends Fragment {
                 emailPrFam2.setEnabled(false);
                 numeroPrFam2.setEnabled(false);
                 animaliPrFam2.setEnabled(false);
-                capPrFam2.setEnabled(false);
+                cittaPrFam2.setEnabled(false);
                 numFigliPrFam2.setEnabled(false);
                 modifyProfile();
                 edit = false;
@@ -207,7 +206,7 @@ public class PrivatoFamigliaFragment extends Fragment {
                 params.put("email", emailPrFam2.getText().toString());
                 params.put("telefono", numeroPrFam2.getText().toString());
                 params.put("nazione", nazionePrFam2.getText().toString());
-                params.put("cap", capPrFam2.getText().toString());
+                params.put("citta", cittaPrFam2.getText().toString());
                 params.put("numFigli", numFigliPrFam2.getText().toString());
                 // Conversione del flag animali
                 if(animaliPrFam2.isChecked())
@@ -250,9 +249,9 @@ public class PrivatoFamigliaFragment extends Fragment {
         nazionePrFam2 = (EditText) view.findViewById(R.id.nazionePrFamiglia2);
         nazionePrFam2.setEnabled(false);
 
-        capPrFam = (TextView) view.findViewById(R.id.capPrFamiglia);
-        capPrFam2 = (EditText) view.findViewById(R.id.capPrFamiglia2);
-        capPrFam2.setEnabled(false);
+        cittaPrFam = (TextView) view.findViewById(R.id.cittaPrFamiglia);
+        cittaPrFam2 = (EditText) view.findViewById(R.id.cittaPrFamiglia2);
+        cittaPrFam2.setEnabled(false);
 
         numFigliPrFam = (TextView) view.findViewById(R.id.figliPrFamiglia);
         numFigliPrFam2 = (EditText) view.findViewById(R.id.figliPrFamiglia2);

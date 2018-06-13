@@ -33,7 +33,6 @@ import com.bumptech.glide.Glide;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,9 +53,9 @@ public class PubblicoSitterFragment extends Fragment {
     RatingBar ratingPuSitter;
     ImageView profilePic;
     //QUESTE STRINGHE SONO STATICHE
-    TextView usernamePuSit, descrPuSit, nomePuSit, cognomePuSit, emailPuSit, numeroPuSit, carPuSit, sessoPuSit, dataPuSit, tariffaPuSit, ingaggiPuSit, nazionePuSit, capPuSit;
+    TextView usernamePuSit, descrPuSit, nomePuSit, cognomePuSit, emailPuSit, numeroPuSit, carPuSit, sessoPuSit, dataPuSit, tariffaPuSit, ingaggiPuSit, nazionePuSit, cittaPuSit;
     //QUESTE STRINGHE SONO DA COLLEGARE AL DATABASE
-    TextView nomePuSit2, cognomePuSit2, emailPuSit2, numeroPuSit2, carPuSit2, sessoPuSit2, dataPuSit2, tariffaPuSit2, ingaggiPuSit2, nazionePuSit2, capPuSit2;
+    TextView nomePuSit2, cognomePuSit2, emailPuSit2, numeroPuSit2, carPuSit2, sessoPuSit2, dataPuSit2, tariffaPuSit2, ingaggiPuSit2, nazionePuSit2, cittaPuSit2;
     //DA COLLEGARE QUANDO AVREMO AL CHAT
     Button contattaSitter, feedbackSit, disponibilitaSitter;
 
@@ -111,7 +110,7 @@ public class PubblicoSitterFragment extends Fragment {
                         numeroPuSit2.setText(json.getString("telefono"));
                         telefono = json.getString("telefono");
                         nazionePuSit2.setText(json.getString("nazione"));
-                        capPuSit2.setText(json.getString("cap"));
+                        cittaPuSit2.setText(json.getString("citta"));
                         // Rating bar
                         if (!json.getString("rating").equals("null")) {
                             ratingPuSitter.setRating((float) json.getDouble("rating"));
@@ -215,8 +214,8 @@ public class PubblicoSitterFragment extends Fragment {
         nazionePuSit = (TextView) view.findViewById(R.id.nazionePuSitter);
         nazionePuSit2 = (TextView) view.findViewById(R.id.nazionePuSitter2);
 
-        capPuSit = (TextView) view.findViewById(R.id.capPuSitter);
-        capPuSit2 = (TextView) view.findViewById(R.id.capPuSitter2);
+        cittaPuSit = (TextView) view.findViewById(R.id.cittaPuSitter);
+        cittaPuSit2 = (TextView) view.findViewById(R.id.cittaPuSitter2);
 
         disponibilitaSitter = (Button) view.findViewById(R.id.vediDispSitter);
         disponibilitaSitter.setOnClickListener(new View.OnClickListener() {
