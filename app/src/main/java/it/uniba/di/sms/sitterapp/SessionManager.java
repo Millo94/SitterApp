@@ -1,6 +1,8 @@
 package it.uniba.di.sms.sitterapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
@@ -95,19 +97,33 @@ public class SessionManager {
     }
 
     /**
-     * Controlla se l'utente è loggato o no. Se non lo è, riporta l'utente alla schermata di Login.
-     * Altrimenti non fa niente.
+     * Controlla se l'utente è loggato o no.
      */
     public boolean checkLogin(){
 
-        if(!preferences.getBoolean(IS_LOGGED, false)){
-            Intent login = new Intent(myContext, LoginActivity.class);
-            login.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);// Inizio di una nuova "storia" d'uso
-            myContext.startActivity(login);
-            return true;
-        }
+        return preferences.getBoolean(IS_LOGGED, false);
+    }
 
-        return false;
+    public void forceLogin(Context context){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(R.string.attention);
+        builder.setMessage(R.string.loginMessage);
+        builder.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setPositiveButton(R.string.signIn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent login = new Intent(myContext, LoginActivity.class);
+                login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);// Inizio di una nuova "storia" d'uso
+                myContext.startActivity(login);
+            }
+        });
+        builder.show();
     }
 
     /**

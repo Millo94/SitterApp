@@ -50,7 +50,4 @@ dependencies {
     implementation 'com.github.xiprox.errorview:library:2.+'
 
 
-
-
-
 }

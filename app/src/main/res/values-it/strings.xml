@@ -100,8 +100,8 @@
 
     <string name="login">Accesso</string>
     <string name="nuovoUtente">Nuovo Utente</string>
-    <string name="nuovaFamiglia">Nuova Famiglia</string>
-    <string name="newSitter">Nuova Baby Sitter</string>
+    <string name="nuovaFamiglia">Cerco una babysitter</string>
+    <string name="newSitter">Sono una babysitter</string>
     <string name="recensioneEffettuata">Recensione inviata correttamente!</string>
     <string name="Monday">Lun</string>
     <string name="Tuesday">Mar</string>
@@ -140,7 +140,9 @@
     <string name="usaCamera">Scatta una foto</string>
     <string name="risutltatoCaricamento">Foto modificata correttamente</string>
     <string name="lavoroAssegnato">Lavoro assegnato</string>
-
+    <string name="attention">Attenzione</string>
+    <string name="loginMessage">Per usare questa funzionalità, devi effettuare l\'accesso.</string>
+    <string name="signIn">Accedi</string>
 
 
 </resources>

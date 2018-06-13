@@ -13,18 +13,23 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".Principale.LoginActivity"
-            android:clearTaskOnLaunch="true"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".DemoActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
+            android:name=".Principale.LoginActivity"
+            android:screenOrientation="portrait"
+            android:clearTaskOnLaunch="true"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
             android:name=".Principale.HomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Registrazione.RegistrationActivity"
@@ -32,47 +37,53 @@
             android:parentActivityName=".Principale.LoginActivity" />
         <activity
             android:name=".Profilo.ProfiloPrivatoActivity"
+            android:screenOrientation="portrait"
             android:label="@string/profilo"
             android:parentActivityName=".Principale.HomeActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Principale.DrawerActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Appuntamenti.IngaggiActivity"
+            android:screenOrientation="portrait"
             android:label="@string/engagements"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Profilo.ProfiloPubblicoActivity"
+            android:screenOrientation="portrait"
             android:label="@string/profilo" />
         <activity
             android:name=".Recensioni.RecensioniActivity"
+            android:screenOrientation="portrait"
             android:label="@string/feedback"
             android:parentActivityName=".Principale.HomeActivity" />
-
         <activity
             android:name=".Feedback.IngaggiSvoltiActivity"
+            android:screenOrientation="portrait"
             android:label="@string/scrivi_recensione"
             android:parentActivityName=".Principale.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Feedback.ScriviRecensioneActivity"
+            android:screenOrientation="portrait"
             android:label="@string/feedback"
             android:parentActivityName=".Principale.HomeActivity" />
-
         <activity
             android:name=".Principale.NewNoticeActivity"
+            android:screenOrientation="portrait"
             android:label="@string/nuovoAnnuncio"
             android:parentActivityName=".Appuntamenti.IngaggiActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Recensioni.RecensioniPubblicoActivity"
+            android:screenOrientation="portrait"
             android:label="@string/feedback" />
         <activity
             android:name=".Appuntamenti.candidati"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
     </application>
 
 </manifest>

@@ -130,8 +130,8 @@
 
     <string name="profilo">Profile</string>
     <string name="nuovoUtente">New User</string>
-    <string name="nuovaFamiglia">New Family</string>
-    <string name="newSitter">New Baby Sitter</string>
+    <string name="nuovaFamiglia">I\'m looking for a babysitter</string>
+    <string name="newSitter">I am a babysitter</string>
     <string name="recensioneEffettuata">Review sent correctly!</string>
     <string name="registrazioneStringa">Sign up now</string>
     <string name="esperienza">Experience (n° of engangments)</string>
@@ -164,6 +164,10 @@
     <string name="usaGalleria">Choose image from Gallery</string>
     <string name="usaCamera">Take a photo with your camera</string>
     <string name="risutltatoCaricamento">Photo changed correctly</string>
+
+    <string name="attention">Attention</string>
+    <string name="loginMessage">To use this functionality, you must sign in.</string>
+    <string name="signIn">Sign In</string>
 
 
 </resources>

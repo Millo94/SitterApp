@@ -90,6 +90,61 @@ public class HomeActivity extends DrawerActivity
          */
         recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
 
+        if(sessionManager.checkLogin()){
+            loadHome();
+        } else {
+            loadDemo();
+        }
+
+    }
+
+    /**
+     * Carica la home in fase di Demo
+     */
+    private void loadDemo(){
+        int type = getIntent().getIntExtra(Constants.TYPE, -1);
+
+        if(type == Constants.TYPE_SITTER){
+
+            noticeList = new ArrayList<>();
+            noticeList.add(new Notice("1", "Ladisa", "23-06-2018", "17.00", "20.00", "Ho bisogno di qualcuno che badi ai miei figli mentre faccio la spesa."));
+            noticeList.add(new Notice("2", "Luprano", "24-06-2018", "07.30", "12.30", "Cerco babysitter che badi a mio figlio durante il mio turno di lavoro."));
+            noticeList.add(new Notice("3", "Deperte", "25-06-2018", "13.00", "16.00", "Cercasi babysitter per i miei due figli."));
+            noticeList.add(new Notice("4", "Angarano", "25-06-2018", "19.00", "22.00", "Ho bisogno di una babysitter che prepari la cena per mia figlia"));
+            noticeList.add(new Notice("5", "Cuccovillo", "26-06-2018", "18.00", "21.00", "Cercasi tata per i miei tre figli."));
+            noticeList.add(new Notice("6", "Loiacono", "27-06-2018", "09.00", "13.00", "La mia tata è impegnata, e ho bisogno di una sostituta per un giorno."));
+            noticeAdapter = new NoticeAdapter(HomeActivity.this, noticeList, HomeActivity.this);
+
+            recyclerView.setAdapter(noticeAdapter);
+
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        } else if(type == Constants.TYPE_FAMILY){
+
+            sitterList = new ArrayList<>();
+            sitterList.add(new UtenteSitter("Francesca", "http://sitterapp.altervista.org/profilePicture/demoSitter/francesca.jpg", new Float(2.5), 4));
+            sitterList.add(new UtenteSitter("Gabriella", "http://sitterapp.altervista.org/profilePicture/demoSitter/gabriella.jpg", 4, 3));
+            sitterList.add(new UtenteSitter("Gianluca", "http://sitterapp.altervista.org/profilePicture/demoSitter/gianluca.jpg", new Float(3.5), 7));
+            sitterList.add(new UtenteSitter("Davide", "http://sitterapp.altervista.org/profilePicture/demoSitter/davide.jpg", 3, 5));
+            sitterList.add(new UtenteSitter("Monica", "http://sitterapp.altervista.org/profilePicture/demoSitter/monica.jpg", 2, 4));
+            sitterList.add(new UtenteSitter("Giorgia", "http://sitterapp.altervista.org/profilePicture/demoSitter/giorgia.jpg", 5, 7));
+            sitterAdapter = new SitterAdapter(HomeActivity.this, sitterList, HomeActivity.this);
+
+            recyclerView.setAdapter(sitterAdapter);
+
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        }
+    }
+
+    /**
+     * Carica la home se è stato effettuato l'accesso
+     */
+    private void loadHome(){
         if ((sessionManager.getSessionType() == Constants.TYPE_SITTER)) {
 
             noticeList = new ArrayList<>();
@@ -254,17 +309,28 @@ public class HomeActivity extends DrawerActivity
      */
     @Override
     public void onNoticeSelected(Notice notice) {
-        DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice);
-        dialogs.show(getSupportFragmentManager(), "dialog");
+
+        if(sessionManager.checkLogin()){
+            DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice);
+            dialogs.show(getSupportFragmentManager(), "dialog");
+        } else {
+            sessionManager.forceLogin(this);
+        }
+
     }
 
     @Override
     public void onSitterSelected(UtenteSitter sitter) {
 
-        Intent detailIntent = new Intent(HomeActivity.this, ProfiloPubblicoActivity.class);
-        detailIntent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
-        detailIntent.putExtra("username", sitter.getUsername());
-        startActivity(detailIntent);
+        if(sessionManager.checkLogin()){
+            Intent detailIntent = new Intent(HomeActivity.this, ProfiloPubblicoActivity.class);
+            detailIntent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
+            detailIntent.putExtra("username", sitter.getUsername());
+            startActivity(detailIntent);
+        } else {
+            sessionManager.forceLogin(this);
+        }
+
     }
 
     @Override

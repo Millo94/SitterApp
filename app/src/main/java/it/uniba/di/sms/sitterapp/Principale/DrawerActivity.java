@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -80,51 +81,52 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if(!item.isChecked()){
 
-            // Gestisce la navigazione al click del menu
-            int id = item.getItemId();
-            if (id == R.id.nav_recensioni_mie) {
+        if(!sessionManager.checkLogin()){
+            sessionManager.forceLogin(this);
+        } else {
+            if(!item.isChecked()){
 
-                //collegamento alla sezione recensioni
-                Intent recensioni = new Intent(DrawerActivity.this, RecensioniActivity.class);
-                startActivity(recensioni);
+                // Gestisce la navigazione al click del menu
+                int id = item.getItemId();
+                if (id == R.id.nav_recensioni_mie) {
 
-            } else if (id == R.id.nav_home) {
+                    //collegamento alla sezione recensioni
+                    Intent recensioni = new Intent(DrawerActivity.this, RecensioniActivity.class);
+                    startActivity(recensioni);
+
+                } else if (id == R.id.nav_home) {
 
                 /*//collegamento alla Home
                 Intent home = new Intent(DrawerActivity.this, HomeActivity.class);
                 home.putExtra(SELECTED, id);
                 startActivity(home);*/
-                finish();
+                    finish();
 
-            } else if (id == R.id.nav_engagements) {
+                } else if (id == R.id.nav_engagements) {
 
-                //collegamento alla sezione degli appuntamenti
-                Intent menuIngaggi = new Intent(DrawerActivity.this, IngaggiActivity.class);
-                menuIngaggi.putExtra(SELECTED, id);
-                startActivity(menuIngaggi);
+                    //collegamento alla sezione degli appuntamenti
+                    Intent menuIngaggi = new Intent(DrawerActivity.this, IngaggiActivity.class);
+                    menuIngaggi.putExtra(SELECTED, id);
+                    startActivity(menuIngaggi);
 
-            } else if (id == R.id.nav_scrivi_feedback) {
+                } else if (id == R.id.nav_scrivi_feedback) {
 
-                Intent scrivirecIntent = new Intent(DrawerActivity.this, IngaggiSvoltiActivity.class);
-                scrivirecIntent.putExtra(SELECTED, id);
-                startActivity(scrivirecIntent);
+                    Intent scrivirecIntent = new Intent(DrawerActivity.this, IngaggiSvoltiActivity.class);
+                    scrivirecIntent.putExtra(SELECTED, id);
+                    startActivity(scrivirecIntent);
 
-            } else if (id == R.id.nav_exit) {
+                } else if (id == R.id.nav_exit) {
 
-                // Chiama la funzione di logout
-                sessionManager.logout();
+                    // Chiama la funzione di logout
+                    sessionManager.logout();
+                }
+                drawer.closeDrawer(GravityCompat.START);
+
+            } else {
+                drawer.closeDrawer(GravityCompat.START);
             }
-            drawer.closeDrawer(GravityCompat.START);
-
-        } else {
-            drawer.closeDrawer(GravityCompat.START);
         }
-
-
-
-
 
         return false;
     }
