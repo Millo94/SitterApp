@@ -161,5 +161,9 @@
     <string name="niente_recensioni_scritte">No review written</string>
     <string name="lavoroAssegnato">Engagment Assigned</string>
 
+    <string name="usaGalleria">Choose image from Gallery</string>
+    <string name="usaCamera">Take a photo with your camera</string>
+    <string name="risutltatoCaricamento">Photo changed correctly</string>
+
 
 </resources>

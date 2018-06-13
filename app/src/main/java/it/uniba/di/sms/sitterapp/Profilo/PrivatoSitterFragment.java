@@ -1,9 +1,16 @@
 package it.uniba.di.sms.sitterapp.Profilo;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +36,8 @@ import com.bumptech.glide.Glide;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,12 +48,15 @@ import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.Oggetti.UtenteSitter;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * FRAGMENT PROFILO PRIVATO SITTER
  */
 
 public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
+    private static final int GALLERY_REQUEST = 1;
     private RequestQueue requestQueue;
     private SessionManager sessionManager;
 
@@ -59,8 +71,10 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     boolean edit = false;
 
     private OnFragmentInteractionListener mListener;
+    private Bitmap bitmap;
 
-    public PrivatoSitterFragment() {}
+    public PrivatoSitterFragment() {
+    }
 
 
     @Override
@@ -108,9 +122,9 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     /**
      * Funzione che inizializza i dati del profilo all'apertura.
      */
-    private void openProfile(){
+    private void openProfile() {
 
-        StringRequest profileRequest = new StringRequest(Request.Method.POST, Php.PROFILO , new Response.Listener<String>() {
+        StringRequest profileRequest = new StringRequest(Request.Method.POST, Php.PROFILO, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -118,12 +132,12 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                     JSONObject json = new JSONObject(response);
                     String result = json.getString("open");
 
-                    if (result.equals("true")){
+                    if (result.equals("true")) {
                         usernamePrSit.setText(sessionManager.getSessionUsername());
-                        if(!json.getString("rating").equals("null")) {
+                        if (!json.getString("rating").equals("null")) {
                             ratingPrSitter.setRating((float) json.getDouble("rating"));
                         }
-                        if(json.getString("descrizione").equals("null")){
+                        if (json.getString("descrizione").equals("null")) {
                             descrPrSit.setHint(R.string.missingdescription);
                         } else {
                             descrPrSit.setText(json.getString("descrizione"));
@@ -134,13 +148,13 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                         numeroPrSit2.setText(json.getString("telefono"));
 
                         // Conversione del flag auto
-                        if(json.getString("auto").equals("0"))
+                        if (json.getString("auto").equals("0"))
                             carPrSit2.setChecked(true);
                         else
                             carPrSit2.setChecked(false);
 
                         // Conversione del flag genere
-                        if(json.getString("genere").equals(("M")))
+                        if (json.getString("genere").equals(("M")))
                             sessoPrSit2.setText("Uomo");
                         else
                             sessoPrSit2.setText("Donna");
@@ -150,8 +164,8 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
                         Glide.with(PrivatoSitterFragment.this).load(sessionManager.getProfilePic()).into(profilePic);
 
-                    } else if(result.equals("false")) {
-                        Toast.makeText(getContext(), R.string.profileError ,Toast.LENGTH_SHORT).show();
+                    } else if (result.equals("false")) {
+                        Toast.makeText(getContext(), R.string.profileError, Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
@@ -161,7 +175,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), R.string.profileError ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.profileError, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -177,7 +191,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         requestQueue.add(profileRequest);
     }
 
-    private void modifyProfile(){
+    private void modifyProfile() {
 
         StringRequest modify = new StringRequest(Request.Method.POST, Php.PROFILO, new Response.Listener<String>() {
             @Override
@@ -186,10 +200,10 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                 try {
                     JSONObject json = new JSONObject(response);
                     String result = json.optString("modify");
-                    if(json.getString("modify").equals("true")){
-                        Toast.makeText(getActivity().getApplicationContext(), R.string.modifySuccess,Toast.LENGTH_SHORT).show();
+                    if (json.getString("modify").equals("true")) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.modifySuccess, Toast.LENGTH_SHORT).show();
                     } else if (result.equals("false")) {
-                        Toast.makeText(getActivity().getApplicationContext(), R.string.genericError,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -199,7 +213,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), R.string.genericError,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -215,7 +229,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                 params.put("telefono", numeroPrSit2.getText().toString());
                 params.put("dataNascita", Constants.dateToSQL(dataPrSit2.getText().toString()));
                 // Conversione del flag auto
-                if(carPrSit2.isChecked())
+                if (carPrSit2.isChecked())
                     params.put("auto", "0");
                 else
                     params.put("auto", "1");
@@ -279,14 +293,107 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         ingaggiPrSit2 = (EditText) view.findViewById(R.id.ingaggiPrSitter2);
         ingaggiPrSit2.setEnabled(false);
 
-        profilePic = (ImageView) view.findViewById(R.id.imgPrSitter);
-
         modificaProfilo = (ToggleButton) view.findViewById(R.id.modificaProfilo);
         editDisp = (Button) view.findViewById(R.id.editDisp);
+
+        // SCELTA DELLA FOTO
+        profilePic = (ImageView) view.findViewById(R.id.imgPrSitter);
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                CharSequence options[] = new CharSequence[]{getString(R.string.usaGalleria), getString(R.string.usaCamera)};
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        switch (which) {
+
+                            case 0:
+                                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                startActivityForResult(i, GALLERY_REQUEST);
+                                break;
+
+                            case 1:
+                                break;
+                        }
+                    }
+                }).show();
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK && data != null) {
+            Uri pickedImage = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), pickedImage);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            modificaFoto();
+        }
+    }
+
+    public void modificaFoto() {
+
+        StringRequest request = new StringRequest(Request.Method.POST, Php.MODIFICA_FOTO, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    if (jsonObject.getString("response").equals("true")) {
+                        sessionManager.setProfilePic(Constants.BASE_URL + "profilePicture/" + sessionManager.getSessionUsername() + "Pic.png");
+                        Glide.with(PrivatoSitterFragment.this).load(sessionManager.getProfilePic()).into(profilePic);
+                        Toast.makeText(getContext(), R.string.risutltatoCaricamento, Toast.LENGTH_SHORT).show();
+                    } else if (jsonObject.getString("response").equals("false")) {
+                        Toast.makeText(getContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("username", sessionManager.getSessionUsername());
+                params.put("nomeFile", sessionManager.getSessionUsername() + "Pic");
+                params.put("immagine", imageToString(bitmap));
+                return params;
+            }
+        };
+
+        Volley.newRequestQueue(getActivity()).add(request);
+    }
+
+    private String imageToString(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
 
     private void goEditable() {
-        if(!edit){
+        if (!edit) {
             descrPrSit.setEnabled(true);
             nomePrSit2.setEnabled(true);
             cognomePrSit2.setEnabled(true);
