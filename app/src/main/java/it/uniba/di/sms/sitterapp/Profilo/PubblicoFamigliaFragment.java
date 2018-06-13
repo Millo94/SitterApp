@@ -1,10 +1,15 @@
 package it.uniba.di.sms.sitterapp.Profilo;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +67,10 @@ public class PubblicoFamigliaFragment extends Fragment {
     String email;
 
     private OnFragmentInteractionListener mListener;
+
+    //PERMESSI
+    private int CALL_PERMISSION = 1;
+    private int SEND_SMS_PEMISSION = 2;
 
     public PubblicoFamigliaFragment() {
     }
@@ -213,9 +222,9 @@ public class PubblicoFamigliaFragment extends Fragment {
 
                             //chiamata
                             case 0:
-                                Intent chiamaIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + telefono));
-                                startActivity(chiamaIntent);
+                                requestPhonePermission();
                                 break;
+
                             //invio e-mail
                             case 1:
                                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
@@ -227,10 +236,7 @@ public class PubblicoFamigliaFragment extends Fragment {
                                 break;
                             //invio sms
                             case 2:
-                                Intent intent = new Intent(Intent.ACTION_SEND);
-                                intent.setData(Uri.parse("smsto:" + telefono));
-                                intent.putExtra("sms_body", getString(R.string.sms_testo));
-                                startActivity(intent);
+                                requestSMSPermission();
                                 break;
                             default:
                                 break;
@@ -244,6 +250,8 @@ public class PubblicoFamigliaFragment extends Fragment {
 
             }
         });
+
+
         feedbackFam = (Button) view.findViewById(R.id.FeedbackFamiglia);
         feedbackFam.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,6 +261,101 @@ public class PubblicoFamigliaFragment extends Fragment {
                 startActivity(showfeedIntent);
             }
         });
+
+    }
+
+    //richiesta del permesso per la chiamata
+    public void requestPhonePermission() {
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+            Intent chiamaIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + telefono));
+            startActivity(chiamaIntent);
+
+        } else {
+
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CALL_PHONE)) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.permessoRichiesto)
+                        .setMessage(R.string.stringPermissionRequest)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, CALL_PERMISSION);
+                            }
+                        })
+                        .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create()
+                        .show();
+
+            } else {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, CALL_PERMISSION);
+            }
+        }
+    }
+
+    //richiesta del permesso per la chiamata
+    public void requestSMSPermission() {
+
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setData(Uri.parse("smsto:" + telefono));
+            intent.putExtra("sms_body", getString(R.string.sms_testo));
+            startActivity(intent);
+
+        } else {
+
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.SEND_SMS)) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.permessoRichiesto)
+                        .setMessage(R.string.stringPermissionRequest)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.SEND_SMS}, SEND_SMS_PEMISSION);
+                            }
+                        })
+                        .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create()
+                        .show();
+
+            } else {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.SEND_SMS}, SEND_SMS_PEMISSION);
+            }
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CALL_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                requestPhonePermission();
+            } else {
+                Toast.makeText(getContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+
+        } else if (requestCode == SEND_SMS_PEMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
+
+            } else {
+                Toast.makeText(getContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+
 
     }
 

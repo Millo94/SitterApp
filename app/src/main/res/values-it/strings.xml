@@ -140,7 +140,8 @@
     <string name="usaCamera">Scatta una foto</string>
     <string name="risutltatoCaricamento">Foto modificata correttamente</string>
     <string name="lavoroAssegnato">Lavoro assegnato</string>
-
+    <string name="stringPermissionRequest">Il permesso è necessario per completare l\'operazione. Vuoi autorizzare?</string>
+    <string name="permessoRichiesto">Permesso Necessario</string>
 
 
 </resources>
