@@ -1,16 +1,12 @@
 package it.uniba.di.sms.sitterapp.Adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import it.uniba.di.sms.sitterapp.Oggetti.Recensione;
@@ -22,16 +18,15 @@ import it.uniba.di.sms.sitterapp.R;
 
 public class RecensioniAdapter extends RecyclerView.Adapter<RecensioniAdapter.MyViewHolder> {
 
-
-
+    //Lista per le recensioni
     private List<Recensione> recensioneList;
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView username, description;
-        public RatingBar ratingBar;
+    class MyViewHolder extends RecyclerView.ViewHolder {
+        private TextView username, description;
+        private RatingBar ratingBar;
 
-        public MyViewHolder(View view) {
+        private MyViewHolder(View view) {
             super(view);
             username = (TextView) view.findViewById(R.id.usernameRecensione);
             description = (TextView) view.findViewById(R.id.descrizioneRecensione);
@@ -41,6 +36,7 @@ public class RecensioniAdapter extends RecyclerView.Adapter<RecensioniAdapter.My
 
     }
 
+    //costruttore
     public RecensioniAdapter(List<Recensione> recensioneList) {
         this.recensioneList = recensioneList;
     }
@@ -57,17 +53,17 @@ public class RecensioniAdapter extends RecyclerView.Adapter<RecensioniAdapter.My
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final Recensione recensione = recensioneList.get(position);
+        //attribuzione dei dettagli dell'annuncio alle varie View
         holder.username.setText(recensione.getUsername());
         holder.description.setText(recensione.getDescrizione());
         holder.ratingBar.setRating(recensione.getRating());
     }
 
+    //restituisce il numero degli elementi presenti in recensioneList
     @Override
     public int getItemCount() {
         return recensioneList.size();
     }
-
-
 
 
 }

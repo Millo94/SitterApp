@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Queue;
 
 import it.uniba.di.sms.sitterapp.Adapter.NoticeAdapter;
+import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Oggetti.Notice;
 import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.Principale.DrawerActivity;
@@ -40,31 +41,25 @@ public class IngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapt
 
     protected SessionManager sessionManager;
 
-    // Vista
-    private RecyclerView recyclerView;
-
     //Items ingaggi
     private List<Notice> noticeList;
     private Queue<Notice> remainingNoticeList;
     private NoticeAdapter noticeAdapter;
 
-    // we will be loading 15 items per page or per load
-    // you can change this to fit your specifications.
-    // When you change this, there will be no need to update your php page,
-    // as php will be ordered what to load and limit by android java
+    //variabile per caricare 5 annunci alla volta
     public static final int LOAD_LIMIT = 5;
 
-    // we need this variable to lock and unlock loading more
-    // e.g we should not load more when volley is already loading,
-    // loading will be activated when volley completes loading
+
     private boolean itShouldLoadMore = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sessionManager = new SessionManager(getApplicationContext());
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
 
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
+
+        //recyclerView e adapter
         noticeList = new ArrayList<>();
         noticeAdapter = new NoticeAdapter(IngaggiSvoltiActivity.this, noticeList, IngaggiSvoltiActivity.this);
         remainingNoticeList = new LinkedList<>();
@@ -105,14 +100,13 @@ public class IngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapt
 
     }
 
-    /**
-     * Caricamento degli annunci (per la home delle babysitter)
-     */
+    // Caricamento degli ingaggi assegnati ad una baby sitter o
+    // degli ingaggi che una famiglia ha pubblicato e assegnato a una babysitter.
+    // se nella lista non è presenta alcun ingaggio, comparirà un messaggio di errore (ErrorView)
+
     private void loadNotices() {
 
-        itShouldLoadMore = false; // lock this guy,(itShouldLoadMore) to make sure,
-        // user will not load more when volley is processing another request
-        // only load more when  volley is free
+        itShouldLoadMore = false;
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
@@ -139,7 +133,7 @@ public class IngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapt
                                     JSONObject noticeObject = notice.getJSONObject(i);
                                     String idAnnuncio = noticeObject.getString("idAnnuncio");
                                     String famiglia = noticeObject.getString("usernameFamiglia");
-                                    String data = noticeObject.getString("data");
+                                    String data = Constants.SQLtoDate(noticeObject.getString("data"));
                                     String oraInizio = noticeObject.getString("oraInizio");
                                     String oraFine = noticeObject.getString("oraFine");
                                     String descrizione = noticeObject.getString("descrizione");
@@ -177,9 +171,7 @@ public class IngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapt
         Volley.newRequestQueue(this).add(stringRequest);
     }
 
-    /**
-     * Caricamento incrementale degli annunci
-     */
+    // Caricamento incrementale degli annunci
     private void loadMore() {
 
         itShouldLoadMore = false; // lock this until volley completes processing
@@ -203,9 +195,7 @@ public class IngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapt
         progressWheel.setVisibility(View.GONE);
     }
 
-    /**
-     * @param notice al click su un annuncio visualizza i dettagli
-     */
+    // al click su un annuncio si visualizza i dettagli
     @Override
     public void onNoticeSelected(Notice notice) {
 

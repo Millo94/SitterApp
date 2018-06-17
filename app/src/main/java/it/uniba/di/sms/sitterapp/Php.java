@@ -27,6 +27,4 @@ public class Php {
     public static final String DISPONIBILITA = BASE_URL + "disponibilita.php";
 
     public static final String CANDIDAMI = BASE_URL + "candidami.php";
-
-    public static final String MODIFICA_FOTO = BASE_URL + "caricaFoto.php";
 }

@@ -104,7 +104,7 @@ public class SessionManager {
         return preferences.getBoolean(IS_LOGGED, false);
     }
 
-    public void forceLogin(Context context){
+    public void forceLogin(final Context context){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.attention);
@@ -118,9 +118,9 @@ public class SessionManager {
         builder.setPositiveButton(R.string.signIn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent login = new Intent(myContext, LoginActivity.class);
+                Intent login = new Intent(context, LoginActivity.class);
                 login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);// Inizio di una nuova "storia" d'uso
-                myContext.startActivity(login);
+                context.startActivity(login);
             }
         });
         builder.show();

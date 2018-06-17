@@ -1,8 +1,8 @@
 package it.uniba.di.sms.sitterapp.Oggetti;
 
-import java.sql.Date;
-import java.sql.Time;
-
+/**
+ * Classe che contiene l'oggetto "Annuncio"
+ */
 public class Notice {
     private String family;
     private String date;
@@ -11,17 +11,16 @@ public class Notice {
     private String description;
     private String idAnnuncio;
     private String sitter;
-    private int assegnato;
 
 
-    public Notice(String id , String family,String date,String start_time, String end_time, String description,String sitter){
+    public Notice(String id, String family, String date, String start_time, String end_time, String description, String sitter) {
         this.idAnnuncio = id;
         this.family = family;
         this.date = date;
         this.start_time = start_time;
         this.end_time = end_time;
         this.description = description;
-        this.sitter=sitter;
+        this.sitter = sitter;
     }
 
     public Notice(String idAnnuncio, String famiglia, String data, String oraInizio, String oraFine, String descrizione) {
@@ -32,7 +31,7 @@ public class Notice {
         this.end_time = oraFine;
         this.description = descrizione;
     }
-    
+
     public void setDate(String date) {
         this.date = date;
     }
@@ -57,9 +56,13 @@ public class Notice {
         return start_time;
     }
 
-    public String getIdAnnuncio(){return this.idAnnuncio;}
+    public String getIdAnnuncio() {
+        return this.idAnnuncio;
+    }
 
-    public String getSitter() {return sitter;}
+    public String getSitter() {
+        return sitter;
+    }
 
-    public int getAssegnato(){ return assegnato;}
+
 }

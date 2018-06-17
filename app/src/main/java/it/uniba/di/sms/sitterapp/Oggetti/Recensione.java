@@ -1,7 +1,7 @@
 package it.uniba.di.sms.sitterapp.Oggetti;
 
 /**
- * Recensione
+ * Classe che contiene l'oggetto "Recensione"
  */
 
 public class Recensione {

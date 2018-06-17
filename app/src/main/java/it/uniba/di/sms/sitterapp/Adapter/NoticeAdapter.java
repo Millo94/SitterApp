@@ -11,25 +11,22 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Oggetti.Notice;
 import it.uniba.di.sms.sitterapp.R;
 
-public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHolder>
-        implements Filterable {
+public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHolder> {
     private Context context;
     private List<Notice> noticeList;
     private List<Notice> noticeListFiltered;
     private NoticeAdapterListener listener;
     private final static int TEXT_TO_SHOW = 100;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView family_name, date, start_time, end_time, description, scad;
+    class MyViewHolder extends RecyclerView.ViewHolder {
+        private TextView family_name, date, start_time, end_time, description, scad;
 
-        public MyViewHolder(View view) {
+        MyViewHolder(View view) {
             super(view);
             family_name = (TextView) view.findViewById(R.id.appuntamento_item_username);
             description = (TextView) view.findViewById(R.id.appuntamento_item_detail);
@@ -48,6 +45,8 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
         }
     }
 
+
+    //castruttore
     public NoticeAdapter(Context context, List<Notice> noticeList, NoticeAdapterListener listener) {
         this.context = context;
         this.listener = listener;
@@ -66,6 +65,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
+        //attribuzione dei dettagli dell'annuncio alle varie View
         final Notice notice = noticeListFiltered.get(position);
         holder.family_name.setText(notice.getFamily());
         holder.date.setText(notice.getDate());
@@ -77,7 +77,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
         //Controllo se l'annuncio è scaduto
         Calendar c = Calendar.getInstance();
         int anno = c.get(Calendar.YEAR);
-        int mese = c.get(Calendar.MONTH) + 1; //+1 perchè Calendar fa schifo!!! legge i mesi da 0 a 11...
+        int mese = c.get(Calendar.MONTH) + 1; //+1 perchè Calendar legge i mesi da 0 a 11
         int giorno = c.get(Calendar.DATE);
 
         String data = notice.getDate();
@@ -100,6 +100,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
         }
 
         if (scaduto) {
+            //se l'annuncio è scaduto setto la visibilità a VISIBLE della textView
             if (holder.scad.getVisibility() == View.GONE) {
                 holder.scad.setVisibility(View.VISIBLE);
             }
@@ -108,46 +109,13 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
 
     }
 
+    //restutuisce il numero degli elementi della lista
     @Override
     public int getItemCount() {
         return noticeListFiltered.size();
     }
 
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
-                if (charString.isEmpty()) {
-                    noticeListFiltered = noticeList;
-                } else {
-                    List<Notice> filteredList = new ArrayList<>();
-                    for (Notice row : noticeList) {
-
-                        // name match condition. this might differ depending on your requirement
-                        // here we are looking for name or phone number match
-                        if (row.getDate().contains(charSequence)) {
-                            filteredList.add(row);
-                        }
-                    }
-
-                    noticeListFiltered = filteredList;
-                }
-
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = noticeListFiltered;
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                noticeListFiltered = (ArrayList<Notice>) filterResults.values;
-                notifyDataSetChanged();
-            }
-        };
-    }
-
+    //interfaccia di comunicazione tra adapter e listView
     public interface NoticeAdapterListener {
         void onNoticeSelected(Notice notice);
     }

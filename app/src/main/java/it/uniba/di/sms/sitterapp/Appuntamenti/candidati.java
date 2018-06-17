@@ -37,44 +37,32 @@ import it.uniba.di.sms.sitterapp.Profilo.ProfiloPubblicoActivity;
 import it.uniba.di.sms.sitterapp.R;
 
 /**
- * Sezione per le candidature
+ * Sezione per le candidature: assegnare un lavoro a una baby sitter
  */
 public class candidati extends DrawerActivity
         implements SitterAdapter.ContactsSitterAdapterListener {
 
 
-    private RecyclerView recyclerView;
-
     private List<UtenteSitter> sitterList;
-    private Queue<UtenteSitter> remainingSitterList;
     private SitterAdapter sitterAdapter;
     private final static String assegna = "ASSEGNA";
     private final static String visualizza = "VISUALIZZA";
-    // we will be loading 15 items per page or per load
-    // you can change this to fit your specifications.
-    // When you change this, there will be no need to update your php page,
-    // as php will be ordered what to load and limit by android java
-    public static final int LOAD_LIMIT = 5;
 
 
-    // we need this variable to lock and unlock loading more
-    // e.g we should not load more when volley is already loading,
-    // loading will be activated when volley completes loading
-    private boolean itShouldLoadMore = true;
+    protected boolean itShouldLoadMore = true;
+
     private String idAnnuncio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*
-        DA QUI INIZIA LA PARTE DEL CARICAMENTO DEGLI ANNUNCI
-         */
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
+        // caricamento degli annunci nella recyclerView
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
 
         sitterList = new ArrayList<>();
         sitterAdapter = new SitterAdapter(candidati.this, sitterList, candidati.this);
-        remainingSitterList = new LinkedList<>();
+
 
         recyclerView.setAdapter(sitterAdapter);
 
@@ -82,20 +70,17 @@ public class candidati extends DrawerActivity
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         idAnnuncio = getIntent().getStringExtra("idAnnuncio");
-        //prova caricamento di annunci
+
+
         loadSitter();
 
     }
 
 
-    /**
-     * Caricamento dell'elenco babysitter (per la home della famiglia)
-     */
+    //Volley per recuperare i dati dal database
     private void loadSitter() {
 
-        itShouldLoadMore = false; // lock this guy,(itShouldLoadMore) to make sure,
-        // user will not load more when volley is processing another request
-        // only load more when  volley is free
+        itShouldLoadMore = false;
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
@@ -112,7 +97,7 @@ public class candidati extends DrawerActivity
 
                         try {
                             JSONArray sitter = new JSONArray(response);
-                            for(int i=0;i<sitter.length();i++){
+                            for (int i = 0; i < sitter.length(); i++) {
                                 JSONObject sitterObject = sitter.getJSONObject(i);
                                 String username = sitterObject.getString("username");
                                 String foto = sitterObject.getString("pathfoto");
@@ -127,14 +112,14 @@ public class candidati extends DrawerActivity
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(candidati.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(candidati.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("richiesta", visualizza);
-                params.put("idAnnuncio",idAnnuncio);
+                params.put("idAnnuncio", idAnnuncio);
                 return params;
             }
         };
@@ -142,16 +127,17 @@ public class candidati extends DrawerActivity
         progressDialog.hide();
     }
 
-
+    //quando si clicca su una baby sitter si apre un Dialog che consente alla famiglia
+    //di visualizzare il profilo della sitter o assegnarle un incarico
     @Override
     public void onSitterSelected(final UtenteSitter sitter) {
 
-        final CharSequence servizi[] = new CharSequence[] {getString(R.string.visualizzaProfiloSitter),getString(R.string.assegnaIncarico)};
+        final CharSequence servizi[] = new CharSequence[]{getString(R.string.visualizzaProfiloSitter), getString(R.string.assegnaIncarico)};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle(R.string.sceltaAzione);
-        builder.setItems(servizi, new DialogInterface.OnClickListener(){
+        builder.setItems(servizi, new DialogInterface.OnClickListener() {
             /**
              * Questo metodo serve per eseguire un azione tra viasualizza il profilo e assegna incarico
              * @param dialog
@@ -159,7 +145,7 @@ public class candidati extends DrawerActivity
              */
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which){
+                switch (which) {
 
                     //visualizza profilo
                     case 0:
@@ -170,7 +156,7 @@ public class candidati extends DrawerActivity
                         break;
                     //assegna incarico
                     case 1:
-                        assegnaIncarico(sitter.getUsername(),idAnnuncio);
+                        assegnaIncarico(sitter.getUsername(), idAnnuncio);
                         break;
 
                     default:
@@ -182,7 +168,8 @@ public class candidati extends DrawerActivity
         builder.show();
     }
 
-    public void assegnaIncarico(final String username, final String idAnnuncio){
+    //Volley per assegnare un incarico alla sitter
+    public void assegnaIncarico(final String username, final String idAnnuncio) {
         StringRequest assegnaRequest = new StringRequest(Request.Method.POST, Php.CANDIDAMI, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -191,11 +178,11 @@ public class candidati extends DrawerActivity
                     String result = json.optString("response");
 
                     if (result.equals("true")) {
-                        Toast.makeText(candidati.this,"lavoro assegnato",Toast.LENGTH_SHORT).show();
-                        Intent intentback = new Intent(candidati.this,IngaggiActivity.class);
+                        Toast.makeText(candidati.this, "lavoro assegnato", Toast.LENGTH_SHORT).show();
+                        Intent intentback = new Intent(candidati.this, IngaggiActivity.class);
                         startActivity(intentback);
-                    } else if(result.equals("false")){
-                        Toast.makeText(candidati.this,"errore",Toast.LENGTH_SHORT).show();
+                    } else if (result.equals("false")) {
+                        Toast.makeText(candidati.this, "errore", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -204,15 +191,15 @@ public class candidati extends DrawerActivity
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(candidati.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(candidati.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("richiesta", assegna);
-                params.put("username",username);
-                params.put("idAnnuncio",idAnnuncio);
+                params.put("username", username);
+                params.put("idAnnuncio", idAnnuncio);
                 return params;
             }
         };

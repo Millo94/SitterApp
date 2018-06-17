@@ -1,6 +1,6 @@
 package it.uniba.di.sms.sitterapp.Appuntamenti;
 
-import android.app.AlertDialog;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -43,33 +41,24 @@ import tr.xip.errorview.ErrorView;
 
 public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.NoticeAdapterListener {
 
-    // Vista
-    private RecyclerView recyclerView;
-    private FloatingActionButton addNotice;
-
     //Items ingaggi
     private List<Notice> noticeList;
     private Queue<Notice> remainingNoticeList;
     private NoticeAdapter noticeAdapter;
 
-    // we will be loading 15 items per page or per load
-    // you can change this to fit your specifications.
-    // When you change this, there will be no need to update your php page,
-    // as php will be ordered what to load and limit by android java
+    // per il caricamento incrementale degli annunci
     public static final int LOAD_LIMIT = 5;
 
-    // we need this variable to lock and unlock loading more
-    // e.g we should not load more when volley is already loading,
-    // loading will be activated when volley completes loading
     private boolean itShouldLoadMore = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
 
         //FAB
-        addNotice = (FloatingActionButton) findViewById(R.id.addNotice);
+        FloatingActionButton addNotice = (FloatingActionButton) findViewById(R.id.addNotice);
         if (sessionManager.getSessionType() == Constants.TYPE_FAMILY && addNotice.getVisibility() == View.GONE) {
             addNotice.show();
             addNotice.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +72,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
             addNotice.hide();
         }
 
-
+        //caricamento degli annunci
         noticeList = new ArrayList<>();
         noticeAdapter = new NoticeAdapter(IngaggiActivity.this, noticeList, IngaggiActivity.this);
         remainingNoticeList = new LinkedList<>();
@@ -94,6 +83,8 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        //caricamento incrementale degli annunci...
+        //TODO -> togliamo?
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -129,14 +120,10 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         loadNotices();
     }
 
-    /**
-     * Caricamento degli annunci
-     */
+    //Caricamento degli annunci dal database
     private void loadNotices() {
 
-        itShouldLoadMore = false; // lock this guy,(itShouldLoadMore) to make sure,
-        // user will not load more when volley is processing another request
-        // only load more when  volley is free
+        itShouldLoadMore = false;
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
@@ -202,6 +189,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
 
     /**
      * Caricamento incrementale degli annunci
+     * TODO-> si può togliere?
      */
     private void loadMore() {
 

@@ -101,7 +101,7 @@
     <string name="login">Accesso</string>
     <string name="nuovoUtente">Nuovo Utente</string>
     <string name="nuovaFamiglia">Cerco una babysitter</string>
-    <string name="newSitter">Sono una babysitter</string>
+    <string name="nuovaSitter">Sono una babysitter</string>
     <string name="recensioneEffettuata">Recensione inviata correttamente!</string>
     <string name="Monday">Lun</string>
     <string name="Tuesday">Mar</string>
@@ -145,6 +145,9 @@
     <string name="signIn">Accedi</string>
     <string name="permessoRichiesto">Permesso richiesto</string>
     <string name="stringPermissionRequest">Il permesso è richiesto per completare l\'operazione. Vuoi autorizzare?</string>
+    <string name="registrazioneFamily">Nuova Famiglia</string>
+    <string name="registrazioneSitter">Nuova BabySitter</string>
+    <string name="confermaCandidatura">Confermi la tua candidatura?</string>
 
 
 </resources>

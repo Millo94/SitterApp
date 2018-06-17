@@ -1,7 +1,7 @@
 package it.uniba.di.sms.sitterapp.Oggetti;
 
 /**
- * Classe che contiene i dati di una famiglia
+ * Classe che contiene l'oggetto "famiglia"
  */
 
 public class UtenteFamiglia {

@@ -32,7 +32,7 @@ import it.uniba.di.sms.sitterapp.SessionManager;
 import tr.xip.errorview.ErrorView;
 
 /**
- * Created by Feder on 31/05/2018.
+ * Classe che gestisce la parte della scrittura delle recensioni
  */
 
 public class ScriviRecensioneActivity extends AppCompatActivity {
@@ -52,13 +52,17 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.scrivi_recensione);
+
         requestQueue = Volley.newRequestQueue(this);
 
         sessionManager = new SessionManager(getApplicationContext());
+
         famiglia = getIntent().getStringExtra("famiglia");
         id = getIntent().getStringExtra("idAnnuncio");
         sitter = getIntent().getStringExtra("sitter");
-        setContentView(R.layout.scrivi_recensione);
+
+
         user = (TextView) findViewById(R.id.usernameRecensione);
         desc = (EditText) findViewById(R.id.editRecensione);
         rating = (RatingBar) findViewById(R.id.ratingBarRecensione);
@@ -78,7 +82,7 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             commento = desc.getText().toString();
-            rate = (double) Float.valueOf(rating.getRating());
+            rate = (double) rating.getRating();
 
             if (rate == 0.0 || commento.isEmpty()) {
                 Toast.makeText(ScriviRecensioneActivity.this, R.string.missingFields, Toast.LENGTH_SHORT).show();
@@ -87,6 +91,7 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
         }
     };
 
+    //volley per inviare i dati della recensione appena scritta
     public void inviadati(final String commento, final double rating, final String user) {
 
         StringRequest commentoRequest = new StringRequest(Request.Method.POST, Php.RECENSIONI, new Response.Listener<String>() {
@@ -97,19 +102,20 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
                     JSONObject json = new JSONObject(response);
                     String result = json.getString("write");
 
-                    if (result.length() == 0){
+                    if (result.length() == 0) {
                         ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
                         errorView.setSubtitle(R.string.niente_scrivi_recensioni);
                         errorView.setVisibility(View.VISIBLE);
-                    } else{
-
-                    if (result.equals("true")) {
-                        Toast.makeText(getApplicationContext(), R.string.recensioneEffettuata, Toast.LENGTH_LONG).show();
-                        Intent backIntent = new Intent(ScriviRecensioneActivity.this, IngaggiSvoltiActivity.class);
-                        startActivity(backIntent);
                     } else {
-                        Toast.makeText(getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
-                    }}
+
+                        if (result.equals("true")) {
+                            Toast.makeText(getApplicationContext(), R.string.recensioneEffettuata, Toast.LENGTH_LONG).show();
+                            Intent backIntent = new Intent(ScriviRecensioneActivity.this, IngaggiSvoltiActivity.class);
+                            startActivity(backIntent);
+                        } else {
+                            Toast.makeText(getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -84,9 +84,7 @@ public class RecensioniRicevuteFragment extends Fragment {
      */
     private void loadNotices() {
 
-        itShouldLoadMore = false; // lock this guy,(itShouldLoadMore) to make sure,
-        // user will not load more when volley is processing another request
-        // only load more when  volley is free
+        itShouldLoadMore = false;
 
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");

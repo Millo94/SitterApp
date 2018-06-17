@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
@@ -35,7 +36,7 @@ import it.uniba.di.sms.sitterapp.SessionManager;
 import com.android.volley.RequestQueue;
 
 /**
- * Dialog Notice Details
+ * Dialogs per i dettagli di un annuncio
  */
 
 public class DialogsNoticeDetails extends AppCompatDialogFragment {
@@ -125,7 +126,6 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
         return builder.create();
     }
 
-
     public static DialogsNoticeDetails newInstance(Notice notice) {
 
         Bundle args = new Bundle();
@@ -156,7 +156,29 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     View.OnClickListener candidateListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            candidami();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+
+            builder.setTitle(R.string.candidami)
+                    .setMessage(R.string.confermaCandidatura)
+                    .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            candidami();
+                        }
+                    })
+                    .create()
+                    .show();
+
+
+
         }
     };
 
@@ -214,9 +236,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
         Volley.newRequestQueue(getContext()).add(deleteRequest);
     }
 
-    /**
-     * Nascondere il pulsante "candidami" quando si apre il dialog da "i miei annunci"
-     */
+    //Nascondere il pulsante "candidami" quando si apre il dialog da "i miei annunci"
     public void hideButton(){
         visibility = View.GONE;
     }

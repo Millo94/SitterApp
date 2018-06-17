@@ -56,7 +56,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
-    private static final int GALLERY_REQUEST = 1;
     private RequestQueue requestQueue;
     private SessionManager sessionManager;
 
@@ -298,98 +297,6 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
         // SCELTA DELLA FOTO
         profilePic = (ImageView) view.findViewById(R.id.imgPrSitter);
-        profilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                CharSequence options[] = new CharSequence[]{getString(R.string.usaGalleria), getString(R.string.usaCamera)};
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-                builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                }).setItems(options, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        switch (which) {
-
-                            case 0:
-                                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                startActivityForResult(i, GALLERY_REQUEST);
-                                break;
-
-                            case 1:
-                                break;
-                        }
-                    }
-                }).show();
-            }
-        });
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK && data != null) {
-            Uri pickedImage = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), pickedImage);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            modificaFoto();
-        }
-    }
-
-    public void modificaFoto() {
-
-        StringRequest request = new StringRequest(Request.Method.POST, Php.MODIFICA_FOTO, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-
-                    if (jsonObject.getString("response").equals("true")) {
-                        sessionManager.setProfilePic(Constants.BASE_URL + "profilePicture/" + sessionManager.getSessionUsername() + "Pic.png");
-                        Glide.with(PrivatoSitterFragment.this).load(sessionManager.getProfilePic()).into(profilePic);
-                        Toast.makeText(getContext(), R.string.risutltatoCaricamento, Toast.LENGTH_SHORT).show();
-                    } else if (jsonObject.getString("response").equals("false")) {
-                        Toast.makeText(getContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", sessionManager.getSessionUsername());
-                params.put("nomeFile", sessionManager.getSessionUsername() + "Pic");
-                params.put("immagine", imageToString(bitmap));
-                return params;
-            }
-        };
-
-        Volley.newRequestQueue(getActivity()).add(request);
-    }
-
-    private String imageToString(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] imageBytes = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
 
     private void goEditable() {

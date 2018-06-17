@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="@color/colorPrimary"
-            android:text="@string/newSitter"
+            android:text="@string/nuovaSitter"
             android:textColor="@color/cardview_light_background"
             android:textSize="18dp"/>
 
