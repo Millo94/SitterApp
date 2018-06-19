@@ -100,7 +100,6 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                         }
                     });
 
-
             dataDet= (TextView) view.findViewById(R.id.dataDettagliFamiglia2);
             start =(TextView)view.findViewById(R.id.oraInizioDettagliFamiglia2);
             end = (TextView) view.findViewById(R.id.oraFineDettagliFamiglia2);
@@ -112,16 +111,11 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
             candidate.setOnClickListener(viewCandidateListener);
         }
 
-
         dataDet.setText(getArguments().getString("data"));
         start.setText(getArguments().getString("oraInizio"));
         end.setText(getArguments().getString("oraFine"));
         desc.setText(getArguments().getString("descrizione"));
         idAnnuncio = getArguments().getString("idAnnuncio");
-
-
-
-
 
         return builder.create();
     }
@@ -159,7 +153,6 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-
             builder.setTitle(R.string.candidami)
                     .setMessage(R.string.confermaCandidatura)
                     .setNegativeButton("Back", new DialogInterface.OnClickListener() {
@@ -176,9 +169,6 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                     })
                     .create()
                     .show();
-
-
-
         }
     };
 

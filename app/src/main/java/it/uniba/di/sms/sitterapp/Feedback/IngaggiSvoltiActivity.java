@@ -46,12 +46,6 @@ public class IngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapt
     private Queue<Notice> remainingNoticeList;
     private NoticeAdapter noticeAdapter;
 
-    //variabile per caricare 5 annunci alla volta
-    public static final int LOAD_LIMIT = 5;
-
-
-    private boolean itShouldLoadMore = true;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,24 +72,6 @@ public class IngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapt
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
             }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
-                if (dy > 0) {
-                    // Recycle view scrolling downwards...
-                    // this if statement detects when user reaches the end of recyclerView, this is only time we should load more
-                    if (!recyclerView.canScrollVertically(RecyclerView.FOCUS_DOWN)) {
-                        // remember "!" is the same as "== false"
-                        // here we are now allowed to load more, but we need to be careful
-                        // we must check if itShouldLoadMore variable is true [unlocked]
-                        if (itShouldLoadMore) {
-
-                            loadMore();
-                        }
-                    }
-                }
-            }
         });
 
     }
@@ -105,8 +81,6 @@ public class IngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapt
     // se nella lista non è presenta alcun ingaggio, comparirà un messaggio di errore (ErrorView)
 
     private void loadNotices() {
-
-        itShouldLoadMore = false;
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
@@ -119,7 +93,6 @@ public class IngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapt
                     public void onResponse(String response) {
 
                         progressDialog.dismiss();
-                        itShouldLoadMore = true;
                         try {
                             JSONArray notice = new JSONArray(response);
 
@@ -140,14 +113,9 @@ public class IngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapt
                                     String sitter = noticeObject.getString("babysitter");
                                     Notice n = new Notice(idAnnuncio, famiglia, data, oraInizio, oraFine, descrizione, sitter);
 
-                                    if (i < LOAD_LIMIT) {
-                                        noticeList.add(n);
-                                    } else {
-                                        remainingNoticeList.add(n);
-                                    }
+                                    noticeList.add(n);
                                 }
                             }
-
                             noticeAdapter.notifyDataSetChanged();
 
                         } catch (JSONException e) {
@@ -169,30 +137,6 @@ public class IngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapt
             }
         };
         Volley.newRequestQueue(this).add(stringRequest);
-    }
-
-    // Caricamento incrementale degli annunci
-    private void loadMore() {
-
-        itShouldLoadMore = false; // lock this until volley completes processing
-
-        // progressWheel is just a loading spinner, please see the content_main.xml
-        final ProgressWheel progressWheel = (ProgressWheel) this.findViewById(R.id.progress_wheel_home);
-        progressWheel.setVisibility(View.VISIBLE);
-
-        itShouldLoadMore = true;
-
-        if (!remainingNoticeList.isEmpty()) {
-            //todo aggiungere un ritardo (asynctask) per visualizzare la ruota figa di caricamento
-            final int remainingNoticeListSize = remainingNoticeList.size();
-            for (int i = 0; i < remainingNoticeListSize; ++i) {
-                if (i < LOAD_LIMIT) {
-                    noticeList.add(remainingNoticeList.remove());
-                }
-            }
-            noticeAdapter.notifyDataSetChanged();
-        }
-        progressWheel.setVisibility(View.GONE);
     }
 
     // al click su un annuncio si visualizza i dettagli

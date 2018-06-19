@@ -42,14 +42,10 @@ import it.uniba.di.sms.sitterapp.R;
 public class candidati extends DrawerActivity
         implements SitterAdapter.ContactsSitterAdapterListener {
 
-
     private List<UtenteSitter> sitterList;
     private SitterAdapter sitterAdapter;
     private final static String assegna = "ASSEGNA";
     private final static String visualizza = "VISUALIZZA";
-
-
-    protected boolean itShouldLoadMore = true;
 
     private String idAnnuncio;
 
@@ -76,11 +72,8 @@ public class candidati extends DrawerActivity
 
     }
 
-
     //Volley per recuperare i dati dal database
     private void loadSitter() {
-
-        itShouldLoadMore = false;
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
@@ -93,7 +86,6 @@ public class candidati extends DrawerActivity
                     public void onResponse(String response) {
 
                         progressDialog.dismiss();
-                        itShouldLoadMore = true;
 
                         try {
                             JSONArray sitter = new JSONArray(response);
