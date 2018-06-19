@@ -119,7 +119,7 @@ public class SessionManager {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent login = new Intent(context, LoginActivity.class);
-                login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);// Inizio di una nuova "storia" d'uso
+                login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// Inizio di una nuova "storia" d'uso
                 context.startActivity(login);
             }
         });
