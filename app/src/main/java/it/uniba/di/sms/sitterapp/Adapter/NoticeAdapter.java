@@ -75,29 +75,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
 
 
         //Controllo se l'annuncio è scaduto
-        Calendar c = Calendar.getInstance();
-        int anno = c.get(Calendar.YEAR);
-        int mese = c.get(Calendar.MONTH) + 1; //+1 perchè Calendar legge i mesi da 0 a 11
-        int giorno = c.get(Calendar.DATE);
-
-        String data = notice.getDate();
-        Integer annoNotice, meseNotice, giornoNotice;
-        annoNotice = Integer.valueOf(data.substring(6, 10));
-        meseNotice = Integer.valueOf(data.substring(3, 5));
-        giornoNotice = Integer.valueOf(data.substring(0, 2));
-
-        boolean scaduto;
-
-
-        if (annoNotice < anno) {
-            scaduto = true;
-        } else if (annoNotice == anno && meseNotice < mese) {
-            scaduto = true;
-        } else if (annoNotice == anno && meseNotice == mese && giornoNotice < giorno) {
-            scaduto = true;
-        } else {
-            scaduto = false;
-        }
+        boolean scaduto= annuncioScaduto(noticeListFiltered.get(position));
 
         if (scaduto) {
             //se l'annuncio è scaduto setto la visibilità a VISIBLE della textView
@@ -107,6 +85,54 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
         }
 
 
+
+    }
+
+    public boolean annuncioScaduto(Notice notice){
+        //trasformo la data di oggi in una stringa in forma AAAA-MM-GG
+        Calendar c = Calendar.getInstance();
+        int anno = c.get(Calendar.YEAR);
+        int mese = c.get(Calendar.MONTH) + 1; //+1 perchè Calendar legge i mesi da 0 a 11
+        int giorno = c.get(Calendar.DATE);
+        String annoS = String.valueOf(anno);
+        String meseS = String.valueOf(mese);
+        String giornoS = String.valueOf(giorno);
+
+        //controllo se la data di oggi ha bisogno di uno 0 quando il giorno o il numero è di una sola cifra
+        String numero0 = "0";
+
+        String dataOggi = annoS.concat(meseS).concat(giornoS);
+        if (meseS.length() == 1) {
+            dataOggi = annoS.concat(numero0).concat(meseS).concat(giornoS);
+        }
+        if (giornoS.length() == 1) {
+            dataOggi = annoS.concat(meseS).concat(numero0).concat(giornoS);
+        }
+
+        if (meseS.length() == 1 && giornoS.length() == 1) {
+            dataOggi = annoS.concat(numero0).concat(meseS).concat(numero0).concat(giornoS);
+        }
+
+        //trasformo la data dell'annuncio in una stringa in forma AAAA-MM-GG
+        String data = notice.getDate();
+        String annoNotice, meseNotice, giornoNotice;
+        annoNotice = String.valueOf(data.substring(6, 10));
+        meseNotice = String.valueOf(data.substring(3, 5));
+        giornoNotice = String.valueOf(data.substring(0, 2));
+        String dataNoTrattini = annoNotice.concat(meseNotice).concat(giornoNotice);
+
+        //trasformo le date in formato stringa in un intero
+        Integer dataNoticeInt = Integer.valueOf(dataNoTrattini);
+        Integer dataOggiInt = Integer.valueOf(dataOggi);
+
+        boolean scaduto = false;
+
+        //confronto le date per sapere se un annuncio è scaduto
+        if (dataNoticeInt < dataOggiInt){
+            scaduto = true;
+        }
+
+        return scaduto;
     }
 
     //restutuisce il numero degli elementi della lista
