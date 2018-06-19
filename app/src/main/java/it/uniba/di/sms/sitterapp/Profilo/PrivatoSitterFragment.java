@@ -62,7 +62,7 @@ import static android.app.Activity.RESULT_OK;
 public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int REQUEST_IMAGE_CAPTURE = 2;
     private static final int GALLERY_REQUEST = 1;
     private RequestQueue requestQueue;
     private SessionManager sessionManager;
@@ -330,14 +330,10 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                                 break;
 
                             case 1:
-
-                                //QUESTO è QUELLO DELLO SCATTO DELLA FOTO, VEDI COME RISOLEVERE LA QUESTIONE DELL'if. CIA
                                 Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            //    if (takePicture.resolveActivity(getPackageManager()) != null) {
+                                if (takePicture.resolveActivity(getContext().getPackageManager()) != null) {
                                     startActivityForResult(takePicture, REQUEST_IMAGE_CAPTURE);
-
-                            //    }
-
+                                }
                                 break;
                         }
                     }
@@ -354,12 +350,14 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
             Uri pickedImage = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), pickedImage);
+                new AsyncCaller().execute();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            new AsyncCaller().execute();
-
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null){
+            bitmap = (Bitmap) data.getExtras().get("data");
+            modificaFoto();
         }
     }
 
