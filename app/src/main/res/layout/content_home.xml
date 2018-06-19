@@ -26,32 +26,6 @@
         wheel:matProg_barColor="@color/colorPrimary"
         wheel:matProg_progressIndeterminate="true" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addNotice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:visibility="gone"
-        app:backgroundTint="@color/colorPrimary"
-        app:fabSize="normal"
-        wheel:srcCompat="@drawable/ic_action_add" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/cercaSitter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:visibility="gone"
-        app:backgroundTint="@color/colorPrimary"
-        app:fabSize="normal"
-        wheel:srcCompat="@drawable/ic_search" />
-
     <tr.xip.errorview.ErrorView
         android:id="@+id/errorView"
         android:layout_width="match_parent"
