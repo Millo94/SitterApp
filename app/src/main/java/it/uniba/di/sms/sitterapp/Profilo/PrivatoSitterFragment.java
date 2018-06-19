@@ -2,11 +2,14 @@ package it.uniba.di.sms.sitterapp.Profilo;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -19,6 +22,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RemoteViews;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +45,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Php;
@@ -56,6 +61,9 @@ import static android.app.Activity.RESULT_OK;
 
 public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int GALLERY_REQUEST = 1;
     private RequestQueue requestQueue;
     private SessionManager sessionManager;
 
@@ -297,6 +305,108 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
         // SCELTA DELLA FOTO
         profilePic = (ImageView) view.findViewById(R.id.imgPrSitter);
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                CharSequence options[] = new CharSequence[]{getString(R.string.usaGalleria), getString(R.string.usaCamera)};
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                        switch (which) {
+
+                            case 0:
+                                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                startActivityForResult(i, GALLERY_REQUEST);
+                                break;
+
+                            case 1:
+
+                                //QUESTO è QUELLO DELLO SCATTO DELLA FOTO, VEDI COME RISOLEVERE LA QUESTIONE DELL'if. CIA
+                                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            //    if (takePicture.resolveActivity(getPackageManager()) != null) {
+                                    startActivityForResult(takePicture, REQUEST_IMAGE_CAPTURE);
+
+                            //    }
+
+                                break;
+                        }
+                    }
+                }).show();
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK && data != null) {
+            Uri pickedImage = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), pickedImage);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            new AsyncCaller().execute();
+
+        }
+    }
+
+    public void modificaFoto() {
+
+        StringRequest request = new StringRequest(Request.Method.POST, Php.MODIFICA_FOTO, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    if (jsonObject.getString("response").equals("true")) {
+                        sessionManager.setProfilePic(jsonObject.optString("nomeFile"));
+                        Glide.with(PrivatoSitterFragment.this).load(sessionManager.getProfilePic()).into(profilePic);
+                        Toast.makeText(getContext(), R.string.risutltatoCaricamento, Toast.LENGTH_SHORT).show();
+                    } else if (jsonObject.getString("response").equals("false")) {
+                        Toast.makeText(getContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("username", sessionManager.getSessionUsername());
+                params.put("nomeFile", sessionManager.getSessionUsername() + "Pic" + String.valueOf(new Random().nextInt(100)));
+                params.put("immagine", imageToString(bitmap));
+                return params;
+            }
+        };
+
+        Volley.newRequestQueue(getActivity()).add(request);
+    }
+
+    private String imageToString(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
 
     private void goEditable() {
@@ -359,16 +469,37 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * Interfaccia di comunicazione tra fragment e activity
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(UtenteSitter sitter);
+    }
+
+
+    /**
+     * Task asincrono per il caricamento della foto
+     */
+    private class AsyncCaller extends AsyncTask<Void, Void, Void> {
+        ProgressDialog pdLoading = new ProgressDialog(getContext());
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //this method will be running on UI thread
+            pdLoading.setMessage(getResources().getString(R.string.caricamentoFoto));
+            pdLoading.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            modificaFoto();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            pdLoading.dismiss();
+        }
     }
 }
