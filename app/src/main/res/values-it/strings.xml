@@ -149,7 +149,7 @@
     <string name="registrazioneSitter">Nuova BabySitter</string>
     <string name="confermaCandidatura">Confermi la tua candidatura?</string>
     <string name="confermaIncarico">Vuoi assegnare questo incarico a questa Babysitter?</string>
-
+    <string name="caricamentoFoto">Caricamento...</string>
 
 
 </resources>
