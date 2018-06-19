@@ -43,13 +43,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
 
     //Items ingaggi
     private List<Notice> noticeList;
-    private Queue<Notice> remainingNoticeList;
     private NoticeAdapter noticeAdapter;
-
-    // per il caricamento incrementale degli annunci
-    public static final int LOAD_LIMIT = 5;
-
-    private boolean itShouldLoadMore = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,55 +69,23 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         //caricamento degli annunci
         noticeList = new ArrayList<>();
         noticeAdapter = new NoticeAdapter(IngaggiActivity.this, noticeList, IngaggiActivity.this);
-        remainingNoticeList = new LinkedList<>();
 
         recyclerView.setAdapter(noticeAdapter);
-
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        //caricamento incrementale degli annunci...
-        //TODO -> togliamo?
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
-                if (dy > 0) {
-                    // Recycle view scrolling downwards...
-                    // this if statement detects when user reaches the end of recyclerView, this is only time we should load more
-                    if (!recyclerView.canScrollVertically(RecyclerView.FOCUS_DOWN)) {
-                        // remember "!" is the same as "== false"
-                        // here we are now allowed to load more, but we need to be careful
-                        // we must check if itShouldLoadMore variable is true [unlocked]
-                        if (itShouldLoadMore) {
-
-                            loadMore();
-                        }
-                    }
-                }
-            }
-        });
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        remainingNoticeList.clear();
         noticeList.clear();
         loadNotices();
     }
 
     //Caricamento degli annunci dal database
     private void loadNotices() {
-
-        itShouldLoadMore = false;
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
@@ -136,7 +98,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                     public void onResponse(String response) {
 
                         progressDialog.dismiss();
-                        itShouldLoadMore = true;
                         try {
                             JSONArray notice = new JSONArray(response);
 
@@ -156,11 +117,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                                     String descrizione = noticeObject.getString("descrizione");
                                     Notice n = new Notice(idAnnuncio, famiglia, data, oraInizio, oraFine, descrizione);
 
-                                    if (i < LOAD_LIMIT) {
-                                        noticeList.add(n);
-                                    } else {
-                                        remainingNoticeList.add(n);
-                                    }
+                                    noticeList.add(n);
                                 }
                             }
                             noticeAdapter.notifyDataSetChanged();
@@ -188,33 +145,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
     }
 
     /**
-     * Caricamento incrementale degli annunci
-     * TODO-> si può togliere?
-     */
-    private void loadMore() {
-
-        itShouldLoadMore = false; // lock this until volley completes processing
-
-        // progressWheel is just a loading spinner, please see the content_main.xml
-        final ProgressWheel progressWheel = (ProgressWheel) this.findViewById(R.id.progress_wheel_home);
-        progressWheel.setVisibility(View.VISIBLE);
-
-        itShouldLoadMore = true;
-
-        if (!remainingNoticeList.isEmpty()) {
-            //todo aggiungere un ritardo (asynctask) per visualizzare la ruota figa di caricamento
-            final int remainingNoticeListSize = remainingNoticeList.size();
-            for (int i = 0; i < remainingNoticeListSize; ++i) {
-                if (i < LOAD_LIMIT) {
-                    noticeList.add(remainingNoticeList.remove());
-                }
-            }
-            noticeAdapter.notifyDataSetChanged();
-        }
-        progressWheel.setVisibility(View.GONE);
-    }
-
-    /**
      * @param notice al click su un annuncio visualizza i dettagli
      */
     @Override
@@ -223,7 +153,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice);
         dialogs.hideButton();
         dialogs.show(getSupportFragmentManager(), "dialog");
-
 
     }
 

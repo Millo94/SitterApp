@@ -56,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
 
-
                 builder.setTitle(R.string.registrazione);
                 builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
                     @Override
