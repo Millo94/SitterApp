@@ -148,6 +148,8 @@
     <string name="registrazioneFamily">Nuova Famiglia</string>
     <string name="registrazioneSitter">Nuova BabySitter</string>
     <string name="confermaCandidatura">Confermi la tua candidatura?</string>
+    <string name="confermaIncarico">Vuoi assegnare questo incarico a questa Babysitter?</string>
+
 
 
 </resources>

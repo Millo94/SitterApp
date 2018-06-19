@@ -156,7 +156,24 @@ public class candidati extends DrawerActivity
                         break;
                     //assegna incarico
                     case 1:
-                        assegnaIncarico(sitter.getUsername(), idAnnuncio);
+                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(candidati.this);
+
+
+                        builder.setTitle(R.string.assegnaIncarico)
+                                .setMessage(R.string.confermaIncarico)
+                                .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                })
+                                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        assegnaIncarico(sitter.getUsername(), idAnnuncio);                                    }
+                                })
+                                .create()
+                                .show();
                         break;
 
                     default:

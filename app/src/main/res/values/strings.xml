@@ -173,6 +173,7 @@
     <string name="registrazioneFamily">New Family</string>
     <string name="registrazioneSitter">New Sitter</string>
     <string name="confermaCandidatura">Confirm your candidature?</string>
+    <string name="confermaIncarico">Do you want to assign this engage to this Babysitter?</string>
 
 
 </resources>
