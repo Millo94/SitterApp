@@ -24,65 +24,65 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Principale.LoginActivity"
+            android:name=".principale.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".Principale.HomeActivity"
+            android:name=".principale.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Registrazione.RegistrationActivity"
+            android:name=".registrazione.RegistrationActivity"
             android:label="@string/registrazione"
-            android:parentActivityName=".Principale.LoginActivity" />
+            android:parentActivityName=".principale.LoginActivity" />
         <activity
-            android:name=".Profilo.ProfiloPrivatoActivity"
+            android:name=".profilo.ProfiloPrivatoActivity"
             android:screenOrientation="portrait"
             android:label="@string/profilo"
-            android:parentActivityName=".Principale.HomeActivity"
+            android:parentActivityName=".principale.HomeActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Principale.DrawerActivity"
+            android:name=".principale.DrawerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Appuntamenti.IngaggiActivity"
+            android:name=".appuntamenti.IngaggiActivity"
             android:screenOrientation="portrait"
             android:label="@string/engagements"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Profilo.ProfiloPubblicoActivity"
+            android:name=".profilo.ProfiloPubblicoActivity"
             android:screenOrientation="portrait"
             android:label="@string/profilo" />
         <activity
-            android:name=".Recensioni.RecensioniActivity"
+            android:name=".recensioni.RecensioniActivity"
             android:screenOrientation="portrait"
             android:label="@string/feedback"
-            android:parentActivityName=".Principale.HomeActivity" />
+            android:parentActivityName=".principale.HomeActivity" />
         <activity
-            android:name=".Feedback.IngaggiSvoltiActivity"
+            android:name=".scriviRecensione.ListaIngaggiSvoltiActivity"
             android:screenOrientation="portrait"
             android:label="@string/scrivi_recensione"
-            android:parentActivityName=".Principale.HomeActivity"
+            android:parentActivityName=".principale.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Feedback.ScriviRecensioneActivity"
+            android:name=".scriviRecensione.ScriviRecensioneActivity"
             android:screenOrientation="portrait"
             android:label="@string/feedback"
-            android:parentActivityName=".Principale.HomeActivity" />
+            android:parentActivityName=".scriviRecensione.ListaIngaggiSvoltiActivity" />
         <activity
-            android:name=".Principale.NewNoticeActivity"
+            android:name=".principale.NewNoticeActivity"
             android:screenOrientation="portrait"
             android:label="@string/nuovoAnnuncio"
-            android:parentActivityName=".Appuntamenti.IngaggiActivity"
+            android:parentActivityName=".appuntamenti.IngaggiActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Recensioni.RecensioniPubblicoActivity"
+            android:name=".recensioni.RecensioniPubblicoActivity"
             android:screenOrientation="portrait"
             android:label="@string/feedback" />
         <activity
-            android:name=".Appuntamenti.candidati"
+            android:name=".appuntamenti.candidati"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

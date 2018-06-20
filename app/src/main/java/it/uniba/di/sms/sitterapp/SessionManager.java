@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import it.uniba.di.sms.sitterapp.Principale.LoginActivity;
+import it.uniba.di.sms.sitterapp.principale.LoginActivity;
 
 /**
  * Created by Enrico on 20/05/2018.
@@ -50,7 +50,7 @@ public class SessionManager {
     /**
      * Costruttore
      */
-    public SessionManager(Context context){
+    public SessionManager(Context context) {
         this.myContext = context;
 
         // Associo alle preferenze legate al contesto corrente
@@ -62,7 +62,7 @@ public class SessionManager {
     /**
      * Funzione che salva i dati nel file di sessione
      */
-    public void createLoginSession(String username, int type){
+    public void createLoginSession(String username, int type) {
         editor.putBoolean(IS_LOGGED, true);
         editor.putString(USERNAME, username);
         editor.putInt(TYPE, type);
@@ -76,35 +76,40 @@ public class SessionManager {
 
     /**
      * Funzione che restituisce l'username di sessione
+     *
      * @return username
      */
-    public String getSessionUsername(){
+    public String getSessionUsername() {
         return preferences.getString(USERNAME, null);
     }
 
     /**
      * Funzione che resituisce il tipo di sessione
+     *
      * @return tipo utente
      */
-    public int getSessionType() { return preferences.getInt(TYPE, -1);}
+    public int getSessionType() {
+        return preferences.getInt(TYPE, -1);
+    }
 
     /**
      * Funzione che restituisce l'url della foto profilo
+     *
      * @return url foto profilo
      */
-    public String getProfilePic(){
+    public String getProfilePic() {
         return preferences.getString(PATHFOTO, null);
     }
 
     /**
      * Controlla se l'utente è loggato o no.
      */
-    public boolean checkLogin(){
+    public boolean checkLogin() {
 
         return preferences.getBoolean(IS_LOGGED, false);
     }
 
-    public void forceLogin(final Context context){
+    public void forceLogin(final Context context) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.attention);
@@ -129,7 +134,7 @@ public class SessionManager {
     /**
      * Funzione di logout. Pulisce tutti i dati di sessione e reindirizza l'utente al login.
      */
-    public void logout(){
+    public void logout() {
 
         editor.clear();
         editor.commit();

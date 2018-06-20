@@ -107,7 +107,7 @@
     <string name="candidateSucces">Application completed correctly</string>
     <string name="candidatefail"> Application error.</string>
     <string name="visualizzaProfiloSitter">Show sitter profile</string>
-    <string name="assegnaIncarico">assigns an assignment</string>
+    <string name="assegnaIncarico">Assigns an assignment</string>
 
 
     <!-- Stringh per il dialog disponibilità -->

@@ -4,7 +4,7 @@
     android:id="@+id/sitter_reg_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="it.uniba.di.sms.sitterapp.Registrazione.SitterRegistrationFragment">
+    tools:context="it.uniba.di.sms.sitterapp.registrazione.SitterRegistrationFragment">
 
 
     <ScrollView
