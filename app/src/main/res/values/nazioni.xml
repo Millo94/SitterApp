@@ -52,7 +52,7 @@
         <item code='cg' handle='congo' continent='africa' iso='178'>Congo</item>
         <item code='ck' handle='cook-islands' continent='polynesia' iso='184'>Cook Islands</item>
         <item code='cr' handle='costa-rica' continent='central america' iso='188'>Costa Rica</item>
-        <item code='ci' handle='cote-divoire' continent='africa' iso='384'>Cote D'Ivoire</item>
+        <item code='ci' handle='cote-divoire' continent='africa' iso='384'>Cote D\'Ivoire</item>
         <item code='hr' handle='croatia' continent='europe' iso='191'>Croatia</item>
         <item code='cu' handle='cuba' continent='central america' iso='192'>Cuba</item>
         <item code='cy' handle='cyprus' continent='europe' iso='196'>Cyprus</item>
@@ -111,11 +111,11 @@
         <item code='kz' handle='kazakhstan' continent='asia' iso='398'>Kazakhstan</item>
         <item code='ke' handle='kenya' continent='africa' iso='404'>Kenya</item>
         <item code='ki' handle='kiribati' continent='australasia' iso='296'>Kiribati</item>
-        <item code='kp' handle='korea-democratic-peoples-republic-of' continent='asia' alt='dprk' iso='408'>Korea, Democratic People'S Republic Of</item>
+        <item code='kp' handle='korea-democratic-peoples-republic-of' continent='asia' alt='dprk' iso='408'>Korea, Democratic People\'S Republic Of</item>
         <item code='kr' handle='korea-republic-of' continent='asia' iso='410'>Korea, Republic Of</item>
         <item code='kw' handle='kuwait' continent='asia' iso='414'>Kuwait</item>
         <item code='kg' handle='kyrgyzstan' continent='asia' iso='417'>Kyrgyzstan</item>
-        <item code='la' handle='lao-peoples-democratic-republic' continent='asia' iso='418'>Lao People's Democratic Republic</item>
+        <item code='la' handle='lao-peoples-democratic-republic' continent='asia' iso='418'>Lao People\'s Democratic Republic</item>
         <item code='lv' handle='latvia' continent='europe' iso='428'>Latvia</item>
         <item code='lb' handle='lebanon' continent='asia' iso='422'>Lebanon</item>
         <item code='ls' handle='lesotho' continent='africa' iso='426'>Lesotho</item>
