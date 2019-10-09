@@ -1,7 +1,7 @@
 package it.uniba.di.sms.sitterapp.profilo;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteFamiglia;

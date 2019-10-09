@@ -13,7 +13,7 @@
         android:layout_height="160dp"
         app:srcCompat="@drawable/scritta_login" />
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TextInput1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -27,10 +27,10 @@
             android:layout_margin="16dp"
             android:hint="Username"
             android:inputType="textPersonName" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TextInput2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             android:hint="@string/password"
             android:inputType="textPassword" />
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <Button

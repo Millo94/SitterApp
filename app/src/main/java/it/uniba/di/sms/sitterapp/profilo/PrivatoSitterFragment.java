@@ -11,7 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -167,7 +167,10 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                         dataPrSit2.setText(Constants.SQLtoDate(json.getString("dataNascita")));
                         tariffaPrSit2.setText(json.getString("tariffaOraria"));
 
-                        Glide.with(PrivatoSitterFragment.this).load(sessionManager.getProfilePic()).into(profilePic);
+                        Glide
+                                .with(PrivatoSitterFragment.this.getContext())
+                                .load(sessionManager.getProfilePic())
+                                .into(profilePic);
 
                     } else if (result.equals("false")) {
                         Toast.makeText(getContext(), R.string.profileError, Toast.LENGTH_SHORT).show();
@@ -374,7 +377,10 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
                     if (jsonObject.getString("response").equals("true")) {
                         sessionManager.setProfilePic(jsonObject.optString("nomeFile"));
-                        Glide.with(PrivatoSitterFragment.this).load(sessionManager.getProfilePic()).into(profilePic);
+                        Glide
+                                .with(PrivatoSitterFragment.this.getContext())
+                                .load(sessionManager.getProfilePic())
+                                .into(profilePic);
                         Toast.makeText(getContext(), R.string.risutltatoCaricamento, Toast.LENGTH_SHORT).show();
                     } else if (jsonObject.getString("response").equals("false")) {
                         Toast.makeText(getContext(), R.string.genericError, Toast.LENGTH_SHORT).show();

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -41,7 +41,7 @@
                         android:layout_marginRight="8dp"
                         app:srcCompat="@drawable/ic_descrizione" />
 
-                    <android.support.design.widget.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout>
 
                         <EditText
                             android:id="@+id/descrizioneNewNotice"
@@ -50,7 +50,7 @@
                             android:gravity="center_vertical"
                             android:hint="@string/descrizione"
                             android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </TableRow>
 
@@ -67,7 +67,7 @@
                         android:layout_marginRight="8dp"
                         app:srcCompat="@drawable/ic_data" />
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
@@ -81,7 +81,7 @@
                             android:inputType="date"
                             android:textColorLink="@color/colorPrimary"
                             android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </TableRow>
 
@@ -99,7 +99,7 @@
                         android:layout_marginRight="8dp"
                         app:srcCompat="@drawable/ic_time" />
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
@@ -113,7 +113,7 @@
                             android:inputType="date"
                             android:textColorLink="@color/colorPrimary"
                             android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </TableRow>
 
@@ -131,7 +131,7 @@
                         android:layout_marginRight="8dp"
                         app:srcCompat="@drawable/ic_time" />
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
@@ -145,14 +145,14 @@
                             android:inputType="date"
                             android:textColorLink="@color/colorPrimary"
                             android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
                 </TableRow>
 
             </TableLayout>
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
