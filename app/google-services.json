@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "562752539843",
+    "firebase_url": "https://sitterapp-223aa.firebaseio.com",
+    "project_id": "sitterapp-223aa",
+    "storage_bucket": "sitterapp-223aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562752539843:android:11022f95b801f11e40a676",
+        "android_client_info": {
+          "package_name": "it.uniba.di.sms.sitterapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "562752539843-vg5pid42jfviiritbomo9rjgpel3odqg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "it.uniba.di.sms.sitterapp",
+            "certificate_hash": "ee8a9e2ee8df32fb3f3141b7391b814ba6cac977"
+          }
+        },
+        {
+          "client_id": "562752539843-vs82hrt11tfv9o4dc0fd4ub7mfs3908u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHgf6fpenAZeRmaua29mE7EgK7nt0zYPU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "562752539843-vs82hrt11tfv9o4dc0fd4ub7mfs3908u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
