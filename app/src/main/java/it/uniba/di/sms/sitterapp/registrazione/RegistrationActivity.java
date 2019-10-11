@@ -65,6 +65,7 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
         Map<String,Object> utente = new HashMap<>();
         utente.put("password",famiglia.getPassword());
         utente.put("tipoUtente", Constants.TYPE_FAMILY);
+
         Map<String,Object> famigliaExtra = new HashMap<>();
         famigliaExtra.put("nome",famiglia.getNome());
         famigliaExtra.put("cognome", famiglia.getCognome());
@@ -75,6 +76,9 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
         famigliaExtra.put("numFigli",famiglia.getNumFigli());
         famigliaExtra.put("animali", famiglia.getAnimali());
         utente.put("famiglia",famigliaExtra);
+
+        utente.put("famiglia", famiglia);
+
         db.collection("utente")
                 .document(famiglia.getUsername())
                 .set(utente)
@@ -103,7 +107,16 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
         Map<String,Object> utente = new HashMap<>();
         utente.put("password",sitter.getPassword());
         utente.put("tipoUtente",Constants.TYPE_SITTER);
-        utente.put("babysitter",sitter);
+        Map<String,Object> sitterExtra = new HashMap<>();
+        sitterExtra.put("nome", sitter.getNome());
+        sitterExtra.put("email", sitter.getEmail());
+        sitterExtra.put("numero", sitter.getNumero());
+        sitterExtra.put("foto", sitter.getFoto());
+        sitterExtra.put("auto", sitter.getAuto());
+        sitterExtra.put("nazione", sitter.getNazione());
+        sitterExtra.put("rating", sitter.getRating());
+        sitterExtra.put("numLavori", sitter.getNumLavori());
+        utente.put("babysitter",sitterExtra);
         db.collection("utente")
                 .document(sitter.getUsername())
                 .set(utente)
