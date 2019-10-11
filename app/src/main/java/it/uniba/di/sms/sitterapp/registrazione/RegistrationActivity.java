@@ -8,26 +8,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import it.uniba.di.sms.sitterapp.Constants;
-import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.principale.LoginActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteFamiglia;
@@ -76,7 +64,7 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
     private void register(final UtenteFamiglia famiglia) {
         Map<String,Object> utente = new HashMap<>();
         utente.put("password",famiglia.getPassword());
-        utente.put("tipo_utente",0);
+        utente.put("tipoUtente", Constants.TYPE_FAMILY);
         utente.put("famiglia",famiglia);
         db.collection("utente")
                 .document(famiglia.getUsername())
@@ -105,7 +93,7 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
     private void register(final UtenteSitter sitter) {
         Map<String,Object> utente = new HashMap<>();
         utente.put("password",sitter.getPassword());
-        utente.put("tipoUtente",1);
+        utente.put("tipoUtente",Constants.TYPE_SITTER);
         utente.put("babysitter",sitter);
         db.collection("utente")
                 .document(sitter.getUsername())
