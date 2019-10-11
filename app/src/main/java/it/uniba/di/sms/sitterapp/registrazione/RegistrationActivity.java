@@ -1,8 +1,11 @@
 package it.uniba.di.sms.sitterapp.registrazione;
 
 import android.content.Intent;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -12,6 +15,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,16 +35,13 @@ import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
 
 public class RegistrationActivity extends AppCompatActivity implements SitterRegistrationFragment.OnFragmentInteractionListener, FamilyRegistrationFragment.OnFragmentInteractionListener {
 
-    RequestQueue requestQueue;
+    private static final String TAG = "RegistrationActivity";
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frame_layout);
-
-        //inserimento della volley nella coda
-        requestQueue = Volley.newRequestQueue(this);
-
         /*
          * L'intent contiene un valore intero "type" che indica alla activity se il
          * fragment da visualizzare è quello della registrazione della famiglia, o quello della
@@ -70,110 +74,58 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
 
     //volley per la registrazione di un utente famiglia
     private void register(final UtenteFamiglia famiglia) {
-
-        StringRequest registrationRequest = new StringRequest(Request.Method.POST, Php.REGISTRAZIONE, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONObject json = new JSONObject(response);
-                    String result = json.getString("response");
-
-                    if (result.equals("true")) {
+        Map<String,Object> utente = new HashMap<>();
+        utente.put("password",famiglia.getPassword());
+        utente.put("tipo_utente",0);
+        utente.put("famiglia",famiglia);
+        db.collection("utente")
+                .document(famiglia.getUsername())
+                .set(utente)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
                         Toast.makeText(getApplicationContext(), R.string.registrationSuccess, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // termina tutte le activity sopra quella chiamata
                         startActivity(intent);
-                    } else if (result.equals("username")) {
-                        Toast.makeText(getApplicationContext(), R.string.usedUsername, Toast.LENGTH_SHORT).show();
-                    } else {
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
                         Toast.makeText(getApplicationContext(), R.string.registrationFail, Toast.LENGTH_SHORT).show();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), R.string.registrationFail, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("type", String.valueOf(Constants.TYPE_FAMILY));
-                params.put("username", famiglia.getUsername());
-                params.put("password", famiglia.getPassword());
-                params.put("email", famiglia.getEmail());
-                params.put("nome", famiglia.getNome());
-                params.put("cognome", famiglia.getCognome());
-                params.put("telefono", famiglia.getNumero());
-                params.put("nazione", famiglia.getNazione());
-                params.put("cap", famiglia.getCap());
-                params.put("numFigli", famiglia.getNumFigli());
-                params.put("animali", famiglia.getAnimali());
-                return params;
-            }
-        };
-
-        requestQueue.add(registrationRequest);
+                });
 
     }
 
     //volley per la registrazione di un utente sitter
     private void register(final UtenteSitter sitter) {
-
-        StringRequest registrationRequest = new StringRequest(Request.Method.POST, Php.REGISTRAZIONE, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONObject json = new JSONObject(response);
-                    String result = json.getString("response");
-
-                    if (result.equals("true")) {
+        Map<String,Object> utente = new HashMap<>();
+        utente.put("password",sitter.getPassword());
+        utente.put("tipoUtente",1);
+        utente.put("babysitter",sitter);
+        db.collection("utente")
+                .document(sitter.getUsername())
+                .set(utente)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
                         Toast.makeText(getApplicationContext(), R.string.registrationSuccess, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // termina tutte le activity sopra quella chiamata
                         startActivity(intent);
-                    } else if (result.equals("username")) {
-                        Toast.makeText(getApplicationContext(), R.string.usedUsername, Toast.LENGTH_SHORT).show();
-                    } else {
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
                         Toast.makeText(getApplicationContext(), R.string.registrationFail, Toast.LENGTH_SHORT).show();
                     }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), R.string.registrationFail, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("type", String.valueOf(Constants.TYPE_SITTER));
-                params.put("username", sitter.getUsername());
-                params.put("password", sitter.getPassword());
-                params.put("email", sitter.getEmail());
-                params.put("nome", sitter.getNome());
-                params.put("cognome", sitter.getCognome());
-                params.put("telefono", sitter.getNumero());
-                params.put("dataNascita", sitter.getDataNascita());
-                params.put("genere", sitter.getGenere());
-                params.put("nazione", sitter.getNazione());
-                params.put("cap", sitter.getCap());
-                params.put("auto", sitter.getAuto());
-                return params;
-            }
-        };
-
-        requestQueue.add(registrationRequest);
+                });
     }
 
 
