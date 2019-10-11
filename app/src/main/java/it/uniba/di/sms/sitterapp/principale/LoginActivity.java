@@ -127,13 +127,12 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
-                                if(passwordEt == document.get("password")){
-
+                                if(passwordEt.getText().toString().equals(document.getString("password"))){
+                                    final Integer tipoUtente = document.getLong("tipoUtente").intValue();
                                     Toast.makeText(getApplicationContext(), R.string.loginSuccess, Toast.LENGTH_LONG).show();
-                                    session.createLoginSession(usernameEt.getText().toString(), (Integer) document.get("tipoUtente"));
+                                    session.createLoginSession(usernameEt.getText().toString(),  tipoUtente);
 
-                                    if (document.get("tipoUtente").equals(String.valueOf(Constants.TYPE_SITTER))) {
-
+                                    if (tipoUtente.equals(Constants.TYPE_SITTER)) {
                                         session.setProfilePic(document.getString("pathFoto"));
                                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                         intent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
@@ -141,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
 
-                                    } else if (document.get("tipoUtente").equals(String.valueOf(Constants.TYPE_FAMILY))) {
+                                    } else if (tipoUtente.equals(Constants.TYPE_FAMILY)) {
 
                                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                         intent.putExtra(Constants.TYPE, Constants.TYPE_FAMILY);

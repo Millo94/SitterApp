@@ -65,7 +65,16 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
         Map<String,Object> utente = new HashMap<>();
         utente.put("password",famiglia.getPassword());
         utente.put("tipoUtente", Constants.TYPE_FAMILY);
-        utente.put("famiglia",famiglia);
+        Map<String,Object> famigliaExtra = new HashMap<>();
+        famigliaExtra.put("nome",famiglia.getNome());
+        famigliaExtra.put("cognome", famiglia.getCognome());
+        famigliaExtra.put("email",famiglia.getEmail());
+        famigliaExtra.put("numero", famiglia.getNumero());
+        famigliaExtra.put("nazione",famiglia.getNazione());
+        famigliaExtra.put("cap", famiglia.getCap());
+        famigliaExtra.put("numFigli",famiglia.getNumFigli());
+        famigliaExtra.put("animali", famiglia.getAnimali());
+        utente.put("famiglia",famigliaExtra);
         db.collection("utente")
                 .document(famiglia.getUsername())
                 .set(utente)
