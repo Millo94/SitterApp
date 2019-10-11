@@ -2,9 +2,12 @@ package it.uniba.di.sms.sitterapp.principale;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,6 +20,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +39,7 @@ import java.util.Map;
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
+import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
 import it.uniba.di.sms.sitterapp.registrazione.RegistrationActivity;
 import it.uniba.di.sms.sitterapp.SessionManager;
 
@@ -37,10 +50,12 @@ import it.uniba.di.sms.sitterapp.SessionManager;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText usernameEt, passwordEt;
-    private TextView nuovoAccount;
+    private TextView nuovoAccount,nuovoAccountFB;
     private StringRequest request;
     private RequestQueue RequestQueue;
     private SessionManager session;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    String TAG = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +68,13 @@ public class LoginActivity extends AppCompatActivity {
         usernameEt = (EditText) findViewById(R.id.lblUsername);
         passwordEt = (EditText) findViewById(R.id.lblPassword);
         nuovoAccount = (TextView) findViewById(R.id.creaAccount);
+
+
         //aller dialog per la scelta del tipo del nuovo utente
         nuovoAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 CharSequence registrazione[] = new CharSequence[]{getString(R.string.nuovaFamiglia), getString(R.string.nuovaSitter)};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
@@ -94,67 +112,58 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        RequestQueue = Volley.newRequestQueue(this);
+
+
     }
 
-    //vollley per il login
     public void onLogin(View view) {
-        request = new StringRequest(Request.Method.POST, Php.LOGIN,
-                new Response.Listener<String>() {
+
+        final DocumentReference docRef = db.collection("utente").document(usernameEt.getText().toString());
+
+        docRef.get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String result = jsonObject.getString("login");
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                if(passwordEt == document.get("password")){
 
-                            if (result.equals("true")) {
+                                    Toast.makeText(getApplicationContext(), R.string.loginSuccess, Toast.LENGTH_LONG).show();
+                                    session.createLoginSession(usernameEt.getText().toString(), (Integer) document.get("tipoUtente"));
 
-                                Toast.makeText(getApplicationContext(), R.string.loginSuccess, Toast.LENGTH_LONG).show();
-                                session.createLoginSession(usernameEt.getText().toString(), jsonObject.getInt("tipoUtente"));
+                                    if (document.get("tipoUtente").equals(String.valueOf(Constants.TYPE_SITTER))) {
 
-                                if (jsonObject.getString("tipoUtente").equals(String.valueOf(Constants.TYPE_SITTER))) {
+                                        session.setProfilePic(document.getString("pathFoto"));
+                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                        intent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                        finish();
 
-                                    session.setProfilePic(jsonObject.getString("pathFoto"));
-                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                    intent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(intent);
-                                    finish();
+                                    } else if (document.get("tipoUtente").equals(String.valueOf(Constants.TYPE_FAMILY))) {
 
-                                } else if (jsonObject.getString("tipoUtente").equals(String.valueOf(Constants.TYPE_FAMILY))) {
+                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                        intent.putExtra(Constants.TYPE, Constants.TYPE_FAMILY);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                        finish();
+                                    }
 
-                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                    intent.putExtra(Constants.TYPE, Constants.TYPE_FAMILY);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(intent);
-                                    finish();
+
                                 }
 
-                            } else if (result.equals("false")) {
-
+                            } else {
                                 Toast.makeText(getApplicationContext(), R.string.loginerror, Toast.LENGTH_SHORT).show();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        } else {
+                            //TODO cambiare messaggio di errore
+                            Toast.makeText(LoginActivity.this, R.string.loginerror, Toast.LENGTH_LONG).show();
                         }
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(LoginActivity.this, R.string.loginerror, Toast.LENGTH_LONG).show();
-                error.printStackTrace();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", usernameEt.getText().toString());
-                params.put("password", passwordEt.getText().toString());
-                return params;
-            }
-        };
-        RequestQueue.add(request);
+                });
     }
+
 
 
 }
