@@ -16,14 +16,15 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TextInput1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <EditText
             android:id="@+id/lblUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/textAccount"
+            android:layout_alignParentStart="true"
             android:layout_margin="16dp"
             android:hint="Username"
             android:inputType="textPersonName" />
@@ -38,11 +39,13 @@
 
         <EditText
             android:id="@+id/lblPassword"
+            style="@style/Widget.MaterialComponents.TextInputEditText.FilledBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:hint="@string/password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textSize="18sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -55,10 +58,12 @@
         android:layout_margin="16dp"
         android:background="@drawable/button_shape"
         android:backgroundTint="@color/colorPrimary"
-        android:elevation="8dp"
         android:onClick="onLogin"
         android:text="@string/login"
-        android:textColor="@android:color/background_light" />
+        android:textAllCaps="false"
+        android:textColor="@android:color/background_light"
+        android:textColorLink="#8BC34A"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/nuovoUtente"

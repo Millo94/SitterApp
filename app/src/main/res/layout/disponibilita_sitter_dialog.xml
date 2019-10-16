@@ -286,6 +286,7 @@
         android:background="@color/colorPrimary"
         android:text="@string/SaveChanges"
         android:textColor="@android:color/white"
+        android:textColorLink="#4CAF50"
         android:textSize="18sp" />
 
 </LinearLayout>

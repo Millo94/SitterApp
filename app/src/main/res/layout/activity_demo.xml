@@ -23,7 +23,7 @@
             android:background="@color/colorPrimary"
             android:text="@string/nuovaSitter"
             android:textColor="@color/cardview_light_background"
-            android:textSize="18dp"/>
+            android:textSize="18dp" />
 
         <Button
             android:id="@+id/demoFamiglia"
@@ -33,7 +33,8 @@
             android:background="@color/colorPrimaryDark"
             android:text="@string/nuovaFamiglia"
             android:textColor="@color/cardview_light_background"
-            android:textSize="18dp"/>
+            android:textColorLink="#4CAF50"
+            android:textSize="18dp" />
 
     </LinearLayout>
 

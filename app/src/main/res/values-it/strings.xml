@@ -150,6 +150,8 @@
     <string name="confermaCandidatura">Confermi la tua candidatura?</string>
     <string name="confermaIncarico">Vuoi assegnare questo incarico a questa Babysitter?</string>
     <string name="caricamentoFoto">Caricamento...</string>
+    <string name="ContentDescriptionClockImage">Clock image</string>
+    <string name="ContentDescriptionCalendarImage">Calendar image</string>
 
 
 </resources>

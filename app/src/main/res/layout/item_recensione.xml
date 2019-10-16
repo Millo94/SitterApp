@@ -24,9 +24,9 @@
             android:layout_height="wrap_content"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:textColor="#000"
             android:text="@string/username"
-            android:textSize="28dp" />
+            android:textColor="#000"
+            android:textSize="28sp" />
 
         <RatingBar
             android:id="@+id/ratingBarRecensione"

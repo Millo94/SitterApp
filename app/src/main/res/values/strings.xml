@@ -175,6 +175,8 @@
     <string name="confermaCandidatura">Confirm your candidature?</string>
     <string name="confermaIncarico">Do you want to assign this engage to this Babysitter?</string>
     <string name="caricamentoFoto">Loading...</string>
+    <string name="ContentDescriptionClockImage">Clock image</string>
+    <string name="ContentDescriptionCalendarImage">Calendar image</string>
 
 
 </resources>

@@ -19,10 +19,10 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/thumbnail"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:background="@drawable/ic_action_profilo"
-            android:contentDescription="@string/profilo"/>
+            android:contentDescription="@string/profilo" />
 
         <TextView
             android:id="@+id/name"
@@ -31,9 +31,9 @@
             android:layout_toRightOf="@+id/thumbnail"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:textColor="#000"
             android:text="@string/username"
-            android:textSize="28dp" />
+            android:textColor="#000"
+            android:textSize="28sp" />
 
         <RatingBar
             android:id="@+id/ratingSitterItem"

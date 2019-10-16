@@ -65,7 +65,6 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
         Map<String,Object> utente = new HashMap<>();
         utente.put("password",famiglia.getPassword());
         utente.put("tipoUtente", Constants.TYPE_FAMILY);
-
         Map<String,Object> famigliaExtra = new HashMap<>();
         famigliaExtra.put("nome",famiglia.getNome());
         famigliaExtra.put("cognome", famiglia.getCognome());
@@ -76,9 +75,6 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
         famigliaExtra.put("numFigli",famiglia.getNumFigli());
         famigliaExtra.put("animali", famiglia.getAnimali());
         utente.put("famiglia",famigliaExtra);
-
-        utente.put("famiglia", famiglia);
-
         db.collection("utente")
                 .document(famiglia.getUsername())
                 .set(utente)
@@ -107,16 +103,21 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
         Map<String,Object> utente = new HashMap<>();
         utente.put("password",sitter.getPassword());
         utente.put("tipoUtente",Constants.TYPE_SITTER);
-        Map<String,Object> sitterExtra = new HashMap<>();
-        sitterExtra.put("nome", sitter.getNome());
-        sitterExtra.put("email", sitter.getEmail());
-        sitterExtra.put("numero", sitter.getNumero());
-        sitterExtra.put("foto", sitter.getFoto());
-        sitterExtra.put("auto", sitter.getAuto());
-        sitterExtra.put("nazione", sitter.getNazione());
-        sitterExtra.put("rating", sitter.getRating());
-        sitterExtra.put("numLavori", sitter.getNumLavori());
-        utente.put("babysitter",sitterExtra);
+        utente.put("babysitter",sitter);
+        Map<String,Object> babysitterExtra = new HashMap<>();
+        babysitterExtra.put("nome",sitter.getNome());
+        babysitterExtra.put("cognome", sitter.getCognome());
+        babysitterExtra.put("email",sitter.getEmail());
+        babysitterExtra.put("numero", sitter.getNumero());
+        babysitterExtra.put("nazione",sitter.getNazione());
+        babysitterExtra.put("cap", sitter.getCap());
+        babysitterExtra.put("auto",sitter.getAuto());
+        babysitterExtra.put("foto", sitter.getFoto());
+        babysitterExtra.put("genere", sitter.getGenere());
+        babysitterExtra.put("numLavori", sitter.getNumLavori());
+        babysitterExtra.put("rating", sitter.getRating());
+        babysitterExtra.put("dataNascita", sitter.getDataNascita());
+        utente.put("babysitter",babysitterExtra);
         db.collection("utente")
                 .document(sitter.getUsername())
                 .set(utente)
