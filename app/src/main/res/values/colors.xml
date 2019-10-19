@@ -2,9 +2,10 @@
 <resources>
     <color name="colorPrimary">#4CAF50</color>
     <color name="colorPrimaryDark">#388E3C</color>
-    <color name="colorAccent">#ff5722</color>
-    <color name="colorScritte">#212121</color>
+    <color name="colorAccent">#4CAF50</color>
+    <color name="colorScritte">#4CAF50</color>
     <color name="colorBackgroundMenu">#a5e7e7e7</color>
+    <color name="white">#ffffff</color>
 </resources>
 
 

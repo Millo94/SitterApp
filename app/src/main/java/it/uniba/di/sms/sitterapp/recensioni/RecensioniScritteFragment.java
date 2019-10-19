@@ -84,6 +84,7 @@ public class RecensioniScritteFragment extends Fragment {
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
+        progressDialog.dismiss();
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Php.RECENSIONI,

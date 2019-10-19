@@ -8,13 +8,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:theme="@android:style/Theme.Material"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -48,7 +47,6 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +62,6 @@
                 android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:theme="@android:style/TextAppearance.Material.Widget.TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +90,6 @@
                 android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:theme="@android:style/TextAppearance.Material.Widget.TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -122,7 +118,6 @@
                 android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:theme="@android:style/TextAppearance.Material.Widget.TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cognomePrFamiglia2" />
@@ -150,7 +145,6 @@
                 android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:theme="@android:style/TextAppearance.Material.Widget.TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/emailPrFamiglia2" />
@@ -178,7 +172,6 @@
                 android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:theme="@android:style/TextAppearance.Material.Widget.TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/animaliPrFamiglia" />
@@ -206,7 +199,6 @@
                 android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:theme="@android:style/TextAppearance.Material.Widget.TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/figliPrFamiglia2" />
@@ -234,7 +226,6 @@
                 android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:theme="@android:style/TextAppearance.Material.Widget.TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -259,14 +250,11 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:layout_marginBottom="40dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:checked="true"
                 android:textColor="@android:color/background_light"
                 android:textOff="@string/modificaProfiloOff"
                 android:textOn="@string/modificaProfiloOn"
-                android:theme="@android:style/TextAppearance.Material.Widget.Button"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cittaPrFamiglia2" />
@@ -280,12 +268,26 @@
                 android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:theme="@android:style/Widget.Material.Light.CompoundButton.Switch"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/telefonoPrFamiglia2" />
 
+            <Button
+                android:id="@+id/exit_button"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="@string/exit"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/togglePrFamiglia" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

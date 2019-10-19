@@ -44,7 +44,7 @@ public class PrivatoFamigliaFragment extends Fragment {
     EditText descrPrFam, nomePrFam2, cognomePrFam2, emailPrFam2, numeroPrFam2, nazionePrFam2, cittaPrFam2,  numFigliPrFam2;
     Switch animaliPrFam2;
     RatingBar ratingPrFam;
-    Button modificaProfilo;
+    Button modificaProfilo,exit_button;
     boolean edit = false;
 
     RequestQueue requestQueue;
@@ -72,6 +72,12 @@ public class PrivatoFamigliaFragment extends Fragment {
         requestQueue = Volley.newRequestQueue(getContext());
         inizializzazione();
         openProfile();
+        exit_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                sessionManager.logout();
+
+            }
+        });
         return view;
     }
 
@@ -260,12 +266,14 @@ public class PrivatoFamigliaFragment extends Fragment {
         numFigliPrFam = (TextView) view.findViewById(R.id.figliPrFamiglia);
         numFigliPrFam2 = (EditText) view.findViewById(R.id.figliPrFamiglia2);
         numFigliPrFam2.setEnabled(false);
-
         animaliPrFam2 = (Switch) view.findViewById(R.id.animaliPrFamiglia);
         animaliPrFam2.setEnabled(false);
 
         modificaProfilo = (Button) view.findViewById(R.id.togglePrFamiglia);
         modificaProfilo.setOnClickListener(goEditable);
+
+        exit_button = view.findViewById(R.id.exit_button);
+
     }
 
     @Override

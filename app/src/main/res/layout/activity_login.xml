@@ -16,8 +16,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TextInput1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/lblUsername"
@@ -39,7 +38,6 @@
 
         <EditText
             android:id="@+id/lblPassword"
-            style="@style/Widget.MaterialComponents.TextInputEditText.FilledBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -56,13 +54,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/TextInput2"
         android:layout_margin="16dp"
-        android:background="@drawable/button_shape"
-        android:backgroundTint="@color/colorPrimary"
         android:onClick="onLogin"
         android:text="@string/login"
         android:textAllCaps="false"
         android:textColor="@android:color/background_light"
-        android:textColorLink="#8BC34A"
         android:textSize="24sp" />
 
     <TextView

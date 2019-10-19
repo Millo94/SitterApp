@@ -72,7 +72,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     Switch carPrSit2;
     ImageView profilePic;
     ToggleButton modificaProfilo;
-    Button editDisp;
+    Button editDisp,exit_button;
     boolean edit = false;
 
     private OnFragmentInteractionListener mListener;
@@ -120,6 +120,13 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
             public void onClick(View v) {
                 DisponibilitaDialog dialog = DisponibilitaDialog.newInstance(sessionManager.getSessionUsername());
                 dialog.show(getChildFragmentManager(), "dialog");
+            }
+        });
+
+        exit_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                sessionManager.logout();
+
             }
         });
 
@@ -305,6 +312,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
         modificaProfilo = (ToggleButton) view.findViewById(R.id.modificaProfilo);
         editDisp = (Button) view.findViewById(R.id.editDisp);
+        exit_button = view.findViewById(R.id.exit_button2);
 
         // SCELTA DELLA FOTO
         profilePic = (ImageView) view.findViewById(R.id.imgPrSitter);

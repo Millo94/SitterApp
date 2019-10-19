@@ -14,9 +14,9 @@
         android:process="it.uniba.di.sms.sitterapp"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.Light">
         <activity android:name=".DemoActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:theme="@style/AppTheme.Light.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,12 +26,12 @@
         <activity
             android:name=".principale.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.Light.NoActionBar">
         </activity>
         <activity
             android:name=".principale.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.Light.NoActionBar" />
         <activity
             android:name=".registrazione.RegistrationActivity"
             android:label="@string/registrazione"
@@ -41,16 +41,26 @@
             android:screenOrientation="portrait"
             android:label="@string/profilo"
             android:parentActivityName=".principale.HomeActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppTheme.Light.NoActionBar" />
+        <activity
+            android:name=".chat.ChatActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/chat"
+            android:parentActivityName=".principale.HomeActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppTheme.Light.NoActionBar" />
+
         <activity
             android:name=".principale.DrawerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.Light.NoActionBar" />
+
         <activity
             android:name=".appuntamenti.IngaggiActivity"
             android:screenOrientation="portrait"
             android:label="@string/engagements"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.Light.NoActionBar" />
         <activity
             android:name=".profilo.ProfiloPubblicoActivity"
             android:screenOrientation="portrait"
@@ -59,13 +69,14 @@
             android:name=".recensioni.RecensioniActivity"
             android:screenOrientation="portrait"
             android:label="@string/feedback"
-            android:parentActivityName=".principale.HomeActivity" />
+            android:parentActivityName=".principale.HomeActivity"
+            android:theme="@style/AppTheme.Light.NoActionBar" />
         <activity
             android:name=".scriviRecensione.ListaIngaggiSvoltiActivity"
             android:screenOrientation="portrait"
             android:label="@string/scrivi_recensione"
             android:parentActivityName=".principale.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.Light.NoActionBar" />
         <activity
             android:name=".scriviRecensione.ScriviRecensioneActivity"
             android:screenOrientation="portrait"
@@ -84,7 +95,7 @@
         <activity
             android:name=".appuntamenti.candidati"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.Light.NoActionBar" />
     </application>
 
 </manifest>

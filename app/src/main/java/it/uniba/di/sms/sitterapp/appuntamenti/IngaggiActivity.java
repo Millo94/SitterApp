@@ -90,6 +90,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
+        progressDialog.dismiss();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Php.INGAGGI,
                 new Response.Listener<String>() {

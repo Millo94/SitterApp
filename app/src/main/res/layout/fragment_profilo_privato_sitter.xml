@@ -21,10 +21,11 @@
                 android:id="@+id/imgPrSitter"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="28dp"
+                android:layout_marginEnd="5dp"
                 android:padding="15dp"
+                android:src="@drawable/ic_account_circle_black_24dp"
                 app:layout_constraintEnd_toStartOf="@+id/usernamePrSitter"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -224,6 +225,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nascitaPrSitter" />
 
+            <Switch
+                android:id="@+id/carPrSit"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/automunito"
+                android:textColor="@color/colorScritte"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nascitaPrSitter2" />
+
             <TextView
                 android:id="@+id/tariffaPrSitter"
                 android:layout_width="300dp"
@@ -281,43 +295,41 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
                 android:textAlignment="center"
+                android:layout_marginTop="40dp"
                 android:textColor="@android:color/background_light"
-                android:textColorLink="@color/colorScritte"
                 android:textOff="@string/modificaProfiloOn"
                 android:textOn="@string/modificaProfiloOff"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingaggiPrSitter2"
-                app:layout_constraintVertical_bias="0.3" />
-
-            <Switch
-                android:id="@+id/carPrSit"
-                android:layout_width="300dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/automunito"
-                android:textColor="@color/colorScritte"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nascitaPrSitter2" />
+                app:layout_constraintTop_toBottomOf="@+id/ingaggiPrSitter2" />
 
             <Button
                 android:id="@+id/editDisp"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:text="@string/editDisp"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/modificaProfilo" />
+
+            <Button
+                android:id="@+id/exit_button2"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:text="@string/exit"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/modificaProfilo" />
+                app:layout_constraintTop_toBottomOf="@id/editDisp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

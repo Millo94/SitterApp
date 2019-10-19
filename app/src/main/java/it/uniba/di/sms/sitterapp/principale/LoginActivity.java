@@ -91,17 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
-                        switch (which) {
-                            case 0:
-                                intent.putExtra("type", Constants.TYPE_FAMILY);
-                                break;
-                            case 1:
-                                intent.putExtra("type", Constants.TYPE_SITTER);
-                                break;
-                            default:
-                                break;
-                        }
-
+                        intent.putExtra("type", which);
                         startActivity(intent);
                     }
                 });
@@ -131,25 +121,11 @@ public class LoginActivity extends AppCompatActivity {
                                     final Integer tipoUtente = document.getLong("tipoUtente").intValue();
                                     Toast.makeText(getApplicationContext(), R.string.loginSuccess, Toast.LENGTH_LONG).show();
                                     session.createLoginSession(usernameEt.getText().toString(),  tipoUtente);
-
-                                    if (tipoUtente.equals(Constants.TYPE_SITTER)) {
-                                        session.setProfilePic(document.getString("pathFoto"));
-                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                        intent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
-                                        finish();
-
-                                    } else if (tipoUtente.equals(Constants.TYPE_FAMILY)) {
-
-                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                        intent.putExtra(Constants.TYPE, Constants.TYPE_FAMILY);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-
-
+                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                    intent.putExtra(Constants.TYPE, tipoUtente);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                    finish();
                                 }
 
                             } else {

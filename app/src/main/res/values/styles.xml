@@ -19,21 +19,27 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-    <style name="AppTheme.Light">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
+
+
+    <style name="AppTheme.Light" parent="Platform.MaterialComponents.Light">
+        <item name="android:windowAnimationStyle">@android:anim/fade_in</item>
+        <item name="android:windowFullscreen">false</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@android:color/black</item>
         <item name="buttonStyle">@style/Widget.MaterialComponents.Button</item>
         <item name="android:theme">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
         <item name="spinnerStyle">@style/Widget.AppCompat.Spinner.Underlined</item>
         <item name="android:datePickerStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
-        <item name="android:editTextColor">@color/colorPrimary</item>
+        <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
 
     </style>
+    <style name="AppTheme.Light.NoActionBar" parent="AppTheme.Light">
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+
+
+</style>
 
 </resources>

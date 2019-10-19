@@ -87,7 +87,7 @@ public class RecensioniRicevuteFragment extends Fragment {
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
-
+        progressDialog.dismiss();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Php.RECENSIONI,
                 new Response.Listener<String>() {
                     @Override

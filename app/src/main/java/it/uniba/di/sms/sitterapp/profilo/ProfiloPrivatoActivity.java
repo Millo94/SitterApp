@@ -1,19 +1,35 @@
 package it.uniba.di.sms.sitterapp.profilo;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import javax.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteFamiglia;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
 import it.uniba.di.sms.sitterapp.R;
+import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
 
-public class ProfiloPrivatoActivity extends AppCompatActivity implements PrivatoFamigliaFragment.OnFragmentInteractionListener, PrivatoSitterFragment.OnFragmentInteractionListener{
+public class ProfiloPrivatoActivity extends DrawerActivity implements PrivatoFamigliaFragment.OnFragmentInteractionListener, PrivatoSitterFragment.OnFragmentInteractionListener{
+
+    private static final String SELECTED = "selected";
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.frame_layout);
+
+
+        //BottomNavigationView
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigationView.getMenu().findItem(getIntent().getIntExtra(SELECTED,R.id.nav_account)).setChecked(true);
 
         // Selezione del fragment in base al tipo dell'intent
         int type = getIntent().getIntExtra(Constants.TYPE, -1);
@@ -25,6 +41,11 @@ public class ProfiloPrivatoActivity extends AppCompatActivity implements Privato
                     .add(R.id.viewPager, new PrivatoFamigliaFragment()).commit();
 
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override
