@@ -105,34 +105,39 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
                 // Gestisce la navigazione al click del menu
                 int id = item.getItemId();
-                if (id == R.id.nav_recensioni_mie) {
-
+                //TODO RIMUOVERE CODICE COMMENTATO
+                /*if (id == R.id.nav_recensioni_mie) {
                     //collegamento alla sezione recensioni
                     Intent recensioni = new Intent(DrawerActivity.this, RecensioniActivity.class);
                     startActivity(recensioni);
 
-                } else if (id == R.id.nav_home) {
+                } else*/ if (id == R.id.nav_home) {
+                    //Activity principale
                     Intent home = new Intent(DrawerActivity.this, HomeActivity.class);
                     startActivity(home);
 
                 }else if (id == R.id.nav_recensioni) {
                     //collegamento alla sezione recensioni
+                    //Activity in cui si vedono le recensioni fatte/ricevute
                     Intent recensioni = new Intent(DrawerActivity.this, RecensioniActivity.class);
                     startActivity(recensioni);
 
                 }else if (id == R.id.nav_chat) {
                     //collegamento alla sezione recensioni
+                    //chat con babysitter/famiglia
                     Intent chat = new Intent(DrawerActivity.this, ChatActivity.class);
                     startActivity(chat);
 
                 } else if (id == R.id.nav_engagements) {
 
                     //collegamento alla sezione degli appuntamenti
+                    //lista degli annunci fatti (nel caso della famiglia) assegnati (nel caso della babysitter)
                     Intent menuIngaggi = new Intent(DrawerActivity.this, IngaggiActivity.class);
                     menuIngaggi.putExtra(SELECTED, id);
                     startActivity(menuIngaggi);
 
                 } else if (id == R.id.nav_scrivi_feedback) {
+                    //TODO da rimuovere, bisogna aggiungere un bottone nell'activity recensioni per crearne una nuova
                     //collegamento a scrivi recensione
                     Intent scrivirecIntent = new Intent(DrawerActivity.this, ListaIngaggiSvoltiActivity.class);
                     scrivirecIntent.putExtra(SELECTED, id);
@@ -140,19 +145,23 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
                 } else if (id == R.id.nav_account) {
                     //collegamento a profilo privato
+                    //porta alle informazioni sul proprio profilo
                     Intent intent = new Intent(DrawerActivity.this, ProfiloPrivatoActivity.class);
                     intent.putExtra(Constants.TYPE, sessionManager.getSessionType());
                     startActivity(intent);
 
-                } else if (id == R.id.nav_exit) {
+                }
+                //TODO RIMUOVI CODICE COMMENTATO
+
+                /* else if (id == R.id.nav_exit) {
                     // Chiama la funzione di logout
                     sessionManager.logout();
                 }
-                //TODO RIMUOVI CODICE COMMENTATO
                 //drawer.closeDrawer(GravityCompat.START);
 
             } else {
                 //drawer.closeDrawer(GravityCompat.START);
+            */
             }
         }
 
