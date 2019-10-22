@@ -2,6 +2,8 @@ package it.uniba.di.sms.sitterapp.principale;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,24 +13,16 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
-import it.uniba.di.sms.sitterapp.Constants;
-import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 
@@ -39,9 +33,9 @@ public class NewNoticeActivity extends AppCompatActivity implements DatePickerDi
 
     EditText descrizione, data, oraInizio, oraFine;
     Button post;
-    RequestQueue requestQueue;
     SessionManager sessionManager;
     private static final String posta = "POST";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +49,6 @@ public class NewNoticeActivity extends AppCompatActivity implements DatePickerDi
         oraFine = (EditText) findViewById(R.id.oraFineNewNotice);
         post = (Button) findViewById(R.id.confermaNewNotice);
         sessionManager = new SessionManager(getApplicationContext());
-        requestQueue = Volley.newRequestQueue(NewNoticeActivity.this);
 
         // DATE PICKER
         // Creazione del Date Picker
@@ -109,10 +102,12 @@ public class NewNoticeActivity extends AppCompatActivity implements DatePickerDi
 
         //controllo se l'utente ha compilato tutti i campi
         post.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
                 if(!isEmpty()) {
-                    post();
+                    sendNotice();
                     finish();
                 } else {
                     Toast.makeText(NewNoticeActivity.this, R.string.missingFields, Toast.LENGTH_SHORT).show();
@@ -134,47 +129,40 @@ public class NewNoticeActivity extends AppCompatActivity implements DatePickerDi
 
     }
 
-    //volley per caricare un nuovo annuncio
-    private void post(){
 
-        StringRequest request = new StringRequest(Request.Method.POST, Php.ANNUNCI, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
+    /**
+     * Metodo per l'inserimento di un ingaggio (Notice) da parte dell'utente Famiglia
+     */
+    private void sendNotice(){
 
-                try {
-                    JSONObject json = new JSONObject(response);
-                    String result = json.getString("post");
+        Map<String, Object> annuncio = new HashMap<>();
+        annuncio.put("idAnnuncio", UUID.randomUUID().toString());
+        annuncio.put("family", sessionManager.getSessionUsername());
+        annuncio.put("date", data.getText().toString().trim());
+        annuncio.put("start_time", oraInizio.getText().toString().trim());
+        annuncio.put("end_time", oraFine.getText().toString().trim());
+        annuncio.put("description", descrizione.getText().toString());
+        annuncio.put("sitter", "");
+        annuncio.put("candidatura", new HashMap<String,String>());
+        annuncio.put("conferma", false);
 
-                    if(result.equals("true")){
+        db.collection("annuncio")
+                .document(annuncio.get("idAnnuncio").toString())
+                .set(annuncio)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
                         Toast.makeText(NewNoticeActivity.this, R.string.annuncioPubblicato, Toast.LENGTH_SHORT).show();
-                    } else if(result.equals("false")){
-                        Toast.makeText(NewNoticeActivity.this, "falsoooo", Toast.LENGTH_SHORT).show();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(NewNoticeActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(NewNoticeActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("richiesta",posta);
-                params.put("username", sessionManager.getSessionUsername());
-                params.put("descrizione", descrizione.getText().toString().trim());
-                params.put("data", Constants.dateToSQL(data.getText().toString()));
-                params.put("oraInizio", oraInizio.getText().toString().trim());
-                params.put("oraFine", oraFine.getText().toString().trim());
-                return params;
-            }
-        };
 
-        requestQueue.add(request);
     }
 
     //Funzione di controllo sui campi vuoti

@@ -15,16 +15,6 @@
         />
 
     <!-- We need this loading wheel, only when loading more -->
-    <com.pnikosis.materialishprogress.ProgressWheel
-        android:id="@+id/progress_wheel_home"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:visibility="gone"
-        wheel:matProg_barColor="@color/colorPrimary"
-        wheel:matProg_progressIndeterminate="true" />
 
     <tr.xip.errorview.ErrorView
         android:id="@+id/errorView"

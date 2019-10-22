@@ -3,7 +3,12 @@ package it.uniba.di.sms.sitterapp.principale;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +21,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,6 +33,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +53,8 @@ import tr.xip.errorview.ErrorView;
  */
 public class HomeActivity extends DrawerActivity
         implements NoticeAdapter.NoticeAdapterListener, SitterAdapter.ContactsSitterAdapterListener, DialogFiltro.DialogListener {
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     // Vista
     private RecyclerView recyclerView;
@@ -150,7 +163,7 @@ public class HomeActivity extends DrawerActivity
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-            loadNotices();
+            caricaAnnunci();
 
         } else if (sessionManager.getSessionType() == Constants.TYPE_FAMILY) {
 
@@ -167,65 +180,40 @@ public class HomeActivity extends DrawerActivity
         }
     }
 
-    //Caricamento degli annunci (per la home delle babysitter)
-    private void loadNotices() {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+    /**
+     * Caricamento degli annunci sulla home per le babysitter
+     */
 
-        final StringRequest stringRequest = new StringRequest(Request.Method.POST, Php.ANNUNCI,
-                new Response.Listener<String>() {
+    private void caricaAnnunci(){
+
+        CollectionReference colRef = db.collection("annuncio");
+
+        colRef
+                .whereEqualTo("conferma", false)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                        progressDialog.dismiss();
-                        try {
-                            JSONArray notice = new JSONArray(response);
-
-                            if (notice.length() == 0) {
-                                ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
-                                errorView.setVisibility(View.VISIBLE);
-                                errorView.setSubtitle(R.string.niente_annunci);
-                            } else {
-
-                                for (int i = 0; i < notice.length(); i++) {
-
-                                    JSONObject noticeObject = notice.getJSONObject(i);
-                                    String idAnnuncio = noticeObject.getString("idAnnuncio");
-                                    String famiglia = noticeObject.getString("usernameFamiglia");
-                                    String data = Constants.SQLtoDate(noticeObject.getString("data"));
-                                    String oraInizio = noticeObject.getString("oraInizio");
-                                    String oraFine = noticeObject.getString("oraFine");
-                                    String descrizione = noticeObject.getString("descrizione");
-                                    Notice n = new Notice(idAnnuncio, famiglia, data, oraInizio, oraFine, descrizione);
-                                    noticeList.add(n);
-                                }
-                            }
-
-                            noticeAdapter.notifyDataSetChanged();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        Iterator<QueryDocumentSnapshot> iterableCandidature = queryDocumentSnapshots.iterator();
+                        while(iterableCandidature.hasNext()){
+                            DocumentSnapshot documentSnapshot = iterableCandidature.next();
+                            Notice notice = documentSnapshot.toObject(Notice.class);
+                            noticeList.add(notice);
                         }
+                        noticeAdapter.notifyDataSetChanged();
+
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(HomeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("richiesta", annunci);
-                params.put("username", sessionManager.getSessionUsername());
-                return params;
-            }
-        };
-        Volley.newRequestQueue(this).add(stringRequest);
-        progressDialog.hide();
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //TODO Sostituire "Errore" con la stringa di errore di riferimento.
+                        Toast.makeText(HomeActivity.this, "Errore", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
     }
 
     //Caricamento dell'elenco babysitter (per la home della famiglia)
