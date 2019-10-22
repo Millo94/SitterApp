@@ -3,34 +3,28 @@ package it.uniba.di.sms.sitterapp.scriviRecensione;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 
 import it.uniba.di.sms.sitterapp.adapter.NoticeAdapter;
-import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.oggetti.Notice;
-import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
@@ -39,6 +33,7 @@ import tr.xip.errorview.ErrorView;
 public class ListaIngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapter.NoticeAdapterListener {
 
     protected SessionManager sessionManager;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     //Items ingaggi
     private List<Notice> noticeList;
@@ -64,7 +59,7 @@ public class ListaIngaggiSvoltiActivity extends DrawerActivity implements Notice
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         //caricamento di annunci
-        loadNotices();
+        caricaNotices();
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -75,67 +70,75 @@ public class ListaIngaggiSvoltiActivity extends DrawerActivity implements Notice
 
     }
 
-    // Caricamento degli ingaggi assegnati ad una baby sitter o
-    // degli ingaggi che una famiglia ha pubblicato e assegnato a una babysitter.
-    // se nella lista non è presenta alcun ingaggio, comparirà un messaggio di errore (ErrorView)
+    /**
+     * Caricamento degli ingaggi assegnati ad una baby sitter o
+     * degli ingaggi che una famiglia ha pubblicato e assegnato a una babysitter.
+     * se nella lista non è presenta alcun ingaggio, comparirà un messaggio di errore (ErrorView)
+     */
 
-    private void loadNotices() {
+    private void caricaNotices(){
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Php.UTENZE,
-                new Response.Listener<String>() {
+
+        db.collection("candidatura")
+                .whereEqualTo("username", sessionManager.getSessionUsername())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onResponse(String response) {
-
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         progressDialog.dismiss();
-                        try {
-                            JSONArray notice = new JSONArray(response);
-
-                            if (notice.length() == 0) {
+                        if(task.isSuccessful()){
+                            if (task.getResult().isEmpty()) {
                                 ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
                                 errorView.setSubtitle(R.string.niente_annunci);
                                 errorView.setVisibility(View.VISIBLE);
-                            } else {
-                                for (int i = 0; i < notice.length(); i++) {
+                            }else{
 
-                                    JSONObject noticeObject = notice.getJSONObject(i);
-                                    String idAnnuncio = noticeObject.getString("idAnnuncio");
-                                    String famiglia = noticeObject.getString("usernameFamiglia");
-                                    String data = Constants.SQLtoDate(noticeObject.getString("data"));
-                                    String oraInizio = noticeObject.getString("oraInizio");
-                                    String oraFine = noticeObject.getString("oraFine");
-                                    String descrizione = noticeObject.getString("descrizione");
-                                    String sitter = noticeObject.getString("babysitter");
-                                    Notice n = new Notice(idAnnuncio, famiglia, data, oraInizio, oraFine, descrizione, sitter);
+                                String username;
 
-                                    noticeList.add(n);
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                    document.getData();
+
+                                    String id = document.getString("id");
+                                    String famiglia = document.getString("famiglia");
+                                    String date = document.getString("data");
+                                    String start = document.getString("start");
+                                    String end = document.getString("end");
+                                    String description = document.getString("descrizione");
+                                    String sitter = document.getString("String");
+
+                                    Notice candidatura = new Notice (id,famiglia,date,start,end,description,sitter);
+
+                                    noticeList.add(candidatura);
+
                                 }
                             }
+
                             noticeAdapter.notifyDataSetChanged();
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        }else{
+
+                            Toast.makeText(getApplicationContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
+
                         }
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ListaIngaggiSvoltiActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", sessionManager.getSessionUsername());
-                params.put("type", String.valueOf(sessionManager.getSessionType()));
-                return params;
-            }
-        };
-        Volley.newRequestQueue(this).add(stringRequest);
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //TODO sostiture "Errore" con la stringa di riferimento
+                        Toast.makeText(getApplicationContext(), "Errore", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+
+
     }
 
     // al click su un annuncio si visualizza i dettagli
