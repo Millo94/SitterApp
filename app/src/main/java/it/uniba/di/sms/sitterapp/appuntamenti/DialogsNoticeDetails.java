@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +35,12 @@ import it.uniba.di.sms.sitterapp.profilo.ProfiloPubblicoActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 import com.android.volley.RequestQueue;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * Dialogs per i dettagli di un annuncio
@@ -47,6 +55,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     private static final String elimina = "delete";
     private String idAnnuncio;
     RequestQueue requestQueue;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
 
@@ -166,7 +175,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                     .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            candidami();
+                            candidaSitter();
                         }
                     })
                     .create()
@@ -236,46 +245,36 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
         visibility = View.GONE;
     }
 
-    //per far candidare una babysitter
-    public void candidami(){
-        StringRequest request = new StringRequest(Request.Method.POST, Php.CANDIDAMI, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
 
-                try {
-                    JSONObject json = new JSONObject(response);
-                    String result = json.optString("response");
+    /**
+     * Metodo per far caricare la babysitter in candidatura
+     *
+     */
+    public void candidaSitter(){
 
-                    if (result.equals("true")) {
+
+        String username = sessionManager.getSessionUsername();
+
+        db.collection("annuncio")
+                .document(idAnnuncio)
+                .update("candidatura." + username , username)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
                         Toast.makeText(getActivity().getApplicationContext(), R.string.candidateSucces, Toast.LENGTH_SHORT).show();
                         Intent intentback = new Intent(getContext(),HomeActivity.class);
                         startActivity(intentback);
-                    } else {
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
                         Toast.makeText(getActivity().getApplicationContext(), R.string.candidatefail, Toast.LENGTH_SHORT).show();
                     }
+                });
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity().getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("richiesta","CANDIDAMI");
-                params.put("username", sessionManager.getSessionUsername());
-                params.put("idAnnuncio", idAnnuncio);
-                return params;
-            }
-        };
-
-        requestQueue.add(request);
     }
+
 
 }
