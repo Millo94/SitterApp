@@ -28,11 +28,13 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="buttonStyle">@style/Widget.MaterialComponents.Button</item>
+        <item name="textAppearanceSmallPopupMenu">@color/colorPrimary</item>
         <item name="android:theme">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
         <item name="spinnerStyle">@style/Widget.AppCompat.Spinner.Underlined</item>
         <item name="android:datePickerStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
         <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+
+
 
     </style>
     <style name="AppTheme.Light.NoActionBar" parent="AppTheme.Light">

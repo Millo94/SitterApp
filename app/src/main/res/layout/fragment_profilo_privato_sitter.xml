@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:focusableInTouchMode="false"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -310,6 +311,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
                 android:text="@string/editDisp"
+                android:textAllCaps="false"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -324,6 +326,7 @@
                 android:layout_marginBottom="40dp"
                 android:backgroundTint="@android:color/holo_red_dark"
                 android:text="@string/exit"
+                android:textAllCaps="false"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"

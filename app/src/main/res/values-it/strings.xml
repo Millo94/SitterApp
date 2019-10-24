@@ -152,6 +152,11 @@
     <string name="caricamentoFoto">Caricamento...</string>
     <string name="ContentDescriptionClockImage">Clock image</string>
     <string name="ContentDescriptionCalendarImage">Calendar image</string>
+    <string name="action_copy">Copia</string>
+    <string name="action_delete">Cancella</string>
+    <string name="copied_message">Messaggio copiato!</string>
+    <string name="hint_enter_a_message">Scrivi un messaggio...</string>
+    <string name="on_log_click_message">Il tuo Handler click personalizzato</string>
 
 
 </resources>

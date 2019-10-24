@@ -261,7 +261,7 @@ public class HomeActivity extends DrawerActivity
                                     UtenteSitter s = new UtenteSitter(username, foto, rating, numLavori);
                                     sitterList.add(s);
                                     dispTotali.put(username, new ArrayList<Integer>());
-                                    getDisponibilità(username);
+                                    getDisponibilita(username);
                                 }
                             }
 
@@ -356,7 +356,7 @@ public class HomeActivity extends DrawerActivity
     }
 
     //volley per la disponibilità delle sitter
-    private void getDisponibilità(final String username) {
+    private void getDisponibilita(final String username) {
 
         StringRequest load = new StringRequest(Request.Method.POST, Php.DISPONIBILITA, new Response.Listener<String>() {
             @Override
