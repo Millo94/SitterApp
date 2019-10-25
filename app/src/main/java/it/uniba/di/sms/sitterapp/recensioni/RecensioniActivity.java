@@ -3,7 +3,11 @@ package it.uniba.di.sms.sitterapp.recensioni;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import it.uniba.di.sms.sitterapp.adapter.PageViewAdapter;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
+import it.uniba.di.sms.sitterapp.scriviRecensione.ListaIngaggiSvoltiActivity;
 
 /**
  * Classe per le recensioni legate all'utente
@@ -28,7 +33,9 @@ public class RecensioniActivity extends DrawerActivity {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.getMenu().findItem(getIntent().getIntExtra(SELECTED,R.id.nav_recensioni)).setChecked(true);
-        float dimension = getResources().getDimensionPixelSize(R.dimen.dimen_56dp);
+        float dimension = getResources().getDimensionPixelSize(R.dimen.appbar_size);
+
+
         //Tabbed Layout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setTranslationY(56);
@@ -63,6 +70,30 @@ public class RecensioniActivity extends DrawerActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.recensioni_action_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // action with ID action_refresh was selected
+            case R.id.action_write_feedback:
+                //collegamento a scrivi recensione
+                Intent scrivirecIntent = new Intent(RecensioniActivity.this, ListaIngaggiSvoltiActivity.class);
+                startActivity(scrivirecIntent);
+                break;
+            default:
+                break;
+        }
+
+        return true;
     }
 
     @Override

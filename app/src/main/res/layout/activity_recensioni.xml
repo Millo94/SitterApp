@@ -10,6 +10,16 @@
     tools:context="it.uniba.di.sms.sitterapp.recensioni.RecensioniActivity">
 
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
@@ -31,8 +41,6 @@
         android:layout_height="fill_parent"
         android:layout_below="@id/tab_layout"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="0dp">
-
-    </androidx.viewpager.widget.ViewPager>
+        tools:layout_editor_absoluteX="0dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

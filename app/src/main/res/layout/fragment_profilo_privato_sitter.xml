@@ -294,15 +294,16 @@
                 android:id="@+id/modificaProfilo"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:textAlignment="center"
-                android:layout_marginTop="40dp"
+                android:textAllCaps="false"
                 android:textColor="@android:color/background_light"
                 android:textOff="@string/modificaProfiloOn"
                 android:textOn="@string/modificaProfiloOff"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingaggiPrSitter2" />
 
             <Button

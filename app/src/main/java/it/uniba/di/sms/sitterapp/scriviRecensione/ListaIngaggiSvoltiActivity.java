@@ -8,12 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -28,6 +30,7 @@ import it.uniba.di.sms.sitterapp.oggetti.Notice;
 import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
+import it.uniba.di.sms.sitterapp.recensioni.RecensioniActivity;
 import tr.xip.errorview.ErrorView;
 
 public class ListaIngaggiSvoltiActivity extends DrawerActivity implements NoticeAdapter.NoticeAdapterListener {
@@ -39,14 +42,20 @@ public class ListaIngaggiSvoltiActivity extends DrawerActivity implements Notice
     private List<Notice> noticeList;
     private Queue<Notice> remainingNoticeList;
     private NoticeAdapter noticeAdapter;
+    private static final String SELECTED = "selected";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sessionManager = new SessionManager(getApplicationContext());
-
+        BottomNavigationView bottomNavigationView= findViewById(R.id.bottom_navigation_view);
+        //BottomNavigationView
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigationView.getMenu().findItem(getIntent().getIntExtra(SELECTED,R.id.nav_recensioni)).setChecked(true);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //recyclerView e adapter
         noticeList = new ArrayList<>();
         noticeAdapter = new NoticeAdapter(ListaIngaggiSvoltiActivity.this, noticeList, ListaIngaggiSvoltiActivity.this);
@@ -84,7 +93,7 @@ public class ListaIngaggiSvoltiActivity extends DrawerActivity implements Notice
         progressDialog.show();
 
 
-        db.collection("candidatura")
+        db.collection("annuncio")
                 .whereEqualTo("username", sessionManager.getSessionUsername())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -150,5 +159,17 @@ public class ListaIngaggiSvoltiActivity extends DrawerActivity implements Notice
         familyRev.putExtra("idAnnuncio", notice.getIdAnnuncio());
         familyRev.putExtra("sitter", notice.getSitter());
         startActivity(familyRev);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                Intent intent = new Intent(ListaIngaggiSvoltiActivity.this, RecensioniActivity.class);
+                startActivity(intent);
+
+        }
+        return true;
     }
 }
