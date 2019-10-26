@@ -69,7 +69,7 @@
     <string name="checkPassword">Passwords don\'t match.</string>
     <string name="invalidEmail">Invalid email.</string>
     <string name="usedUsername">Username already used.</string>
-    <string name="feedback">Review</string>
+    <string name="review">Reviews</string>
     <string name="modificaProfiloOn">Edit Profile</string>
     <string name="contattaSitter">Contact Sitter</string>
     <string name="modificaProfiloOff">Confirm Edit</string>
@@ -108,7 +108,9 @@
     <string name="candidatefail"> Application error.</string>
     <string name="visualizzaProfiloSitter">Show sitter profile</string>
     <string name="assegnaIncarico">Assigns an assignment</string>
-
+    <string name="engagementToConfirm">To do</string>
+    <string name="engagementToDo">Done</string>
+    <string name="engagementDone">To confirm</string>
 
     <!-- Stringh per il dialog disponibilità -->
 

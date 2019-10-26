@@ -81,7 +81,7 @@ public class RecensioniActivity extends DrawerActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             // action with ID action_refresh was selected
-            case R.id.action_write_feedback:
+            case R.id.action_write_review:
                 //collegamento a scrivi recensione
                 Intent scrivirecIntent = new Intent(RecensioniActivity.this, IngaggiDaRecensireActivity.class);
                 startActivity(scrivirecIntent);

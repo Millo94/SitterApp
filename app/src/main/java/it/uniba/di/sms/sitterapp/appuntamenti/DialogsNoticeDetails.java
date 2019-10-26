@@ -35,11 +35,8 @@ import it.uniba.di.sms.sitterapp.profilo.ProfiloPubblicoActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 import com.android.volley.RequestQueue;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
@@ -197,7 +194,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     View.OnClickListener viewCandidateListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent visualizzaIntent = new Intent(getContext(),candidati.class);
+            Intent visualizzaIntent = new Intent(getContext(), Candidati.class);
             visualizzaIntent.putExtra("idAnnuncio",idAnnuncio);
             startActivity(visualizzaIntent);
         }

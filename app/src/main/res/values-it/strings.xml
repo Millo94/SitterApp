@@ -70,7 +70,7 @@
     <string name="genericError">C\'è stato un errore. Riprova.</string>
     <string name="modifySuccess">Modifiche effettuate</string>
     <string name="lasciaFeedback">Scrivi Recensione</string>
-    <string name="feedback" translatable="false">Recensioni</string>
+    <string name="review" translatable="false">Recensioni</string>
     <string name="eliminaAnnuncio">Elimina Annuncio</string>
     <string name="visualizzaCandidate">Visualizza Risposte</string>
     <string name="giudizio">Il tuo giudizio complessivo sull\'esperienza:</string>
@@ -157,6 +157,9 @@
     <string name="copied_message">Messaggio copiato!</string>
     <string name="hint_enter_a_message">Scrivi un messaggio...</string>
     <string name="on_log_click_message">Il tuo Handler click personalizzato</string>
+    <string name="engagementDone">Da confermare</string>
+    <string name="engagementToConfirm">Da fare</string>
+    <string name="engagementToDo">fatti</string>
 
 
 </resources>

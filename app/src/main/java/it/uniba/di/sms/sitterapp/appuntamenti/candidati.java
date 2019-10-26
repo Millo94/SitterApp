@@ -37,7 +37,7 @@ import it.uniba.di.sms.sitterapp.R;
 /**
  * Sezione per le candidature: assegnare un lavoro a una baby sitter
  */
-public class candidati extends DrawerActivity
+public class Candidati extends DrawerActivity
         implements SitterAdapter.ContactsSitterAdapterListener {
 
     private List<UtenteSitter> sitterList;
@@ -55,7 +55,7 @@ public class candidati extends DrawerActivity
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
 
         sitterList = new ArrayList<>();
-        sitterAdapter = new SitterAdapter(candidati.this, sitterList, candidati.this);
+        sitterAdapter = new SitterAdapter(Candidati.this, sitterList, Candidati.this);
 
 
         recyclerView.setAdapter(sitterAdapter);
@@ -102,7 +102,7 @@ public class candidati extends DrawerActivity
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(candidati.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Candidati.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -139,14 +139,14 @@ public class candidati extends DrawerActivity
 
                     //visualizza profilo
                     case 0:
-                        Intent detailIntent = new Intent(candidati.this, ProfiloPubblicoActivity.class);
+                        Intent detailIntent = new Intent(Candidati.this, ProfiloPubblicoActivity.class);
                         detailIntent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
                         detailIntent.putExtra("username", sitter.getUsername());
                         startActivity(detailIntent);
                         break;
                     //assegna incarico
                     case 1:
-                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(candidati.this);
+                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Candidati.this);
 
 
                         builder.setTitle(R.string.assegnaIncarico)
@@ -185,11 +185,11 @@ public class candidati extends DrawerActivity
                     String result = json.optString("response");
 
                     if (result.equals("true")) {
-                        Toast.makeText(candidati.this, "lavoro assegnato", Toast.LENGTH_SHORT).show();
-                        Intent intentback = new Intent(candidati.this, IngaggiActivity.class);
+                        Toast.makeText(Candidati.this, "lavoro assegnato", Toast.LENGTH_SHORT).show();
+                        Intent intentback = new Intent(Candidati.this, IngaggiActivity.class);
                         startActivity(intentback);
                     } else if (result.equals("false")) {
-                        Toast.makeText(candidati.this, "errore", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Candidati.this, "errore", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -198,7 +198,7 @@ public class candidati extends DrawerActivity
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(candidati.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Candidati.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

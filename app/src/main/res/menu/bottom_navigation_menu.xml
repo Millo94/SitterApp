@@ -14,7 +14,7 @@
     <item
         android:id="@+id/nav_recensioni"
         android:icon="@drawable/ic_action_feedback"
-        android:title="@string/feedback" />
+        android:title="@string/review" />
     <item
         android:id="@+id/nav_engagements"
         android:icon="@drawable/ic_work_black_24dp"
