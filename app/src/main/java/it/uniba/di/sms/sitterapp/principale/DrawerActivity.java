@@ -5,26 +5,20 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import com.bumptech.glide.Glide;
 
 import androidx.viewpager.widget.ViewPager;
 import it.uniba.di.sms.sitterapp.appuntamenti.IngaggiActivity;
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.chat.ChatActivity;
 import it.uniba.di.sms.sitterapp.profilo.ProfiloPrivatoActivity;
-import it.uniba.di.sms.sitterapp.scriviRecensione.ListaIngaggiSvoltiActivity;
+import it.uniba.di.sms.sitterapp.scriviRecensione.IngaggiDaRecensireActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.recensioni.RecensioniActivity;
 import it.uniba.di.sms.sitterapp.SessionManager;
@@ -139,7 +133,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 } else if (id == R.id.nav_scrivi_feedback) {
                     //TODO da rimuovere, bisogna aggiungere un bottone nell'activity recensioni per crearne una nuova
                     //collegamento a scrivi recensione
-                    Intent scrivirecIntent = new Intent(DrawerActivity.this, ListaIngaggiSvoltiActivity.class);
+                    Intent scrivirecIntent = new Intent(DrawerActivity.this, IngaggiDaRecensireActivity.class);
                     scrivirecIntent.putExtra(SELECTED, id);
                     startActivity(scrivirecIntent);
 

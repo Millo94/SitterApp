@@ -110,7 +110,7 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Toast.makeText(getApplicationContext(), R.string.recensioneEffettuata, Toast.LENGTH_LONG).show();
-                        Intent backIntent = new Intent(ScriviRecensioneActivity.this, ListaIngaggiSvoltiActivity.class);
+                        Intent backIntent = new Intent(ScriviRecensioneActivity.this, IngaggiDaRecensireActivity.class);
                         startActivity(backIntent);
                     }
                 })

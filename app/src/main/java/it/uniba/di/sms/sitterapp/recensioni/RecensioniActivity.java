@@ -8,14 +8,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import it.uniba.di.sms.sitterapp.adapter.PageViewAdapter;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
-import it.uniba.di.sms.sitterapp.scriviRecensione.ListaIngaggiSvoltiActivity;
+import it.uniba.di.sms.sitterapp.scriviRecensione.IngaggiDaRecensireActivity;
 
 /**
  * Classe per le recensioni legate all'utente
@@ -86,7 +83,7 @@ public class RecensioniActivity extends DrawerActivity {
             // action with ID action_refresh was selected
             case R.id.action_write_feedback:
                 //collegamento a scrivi recensione
-                Intent scrivirecIntent = new Intent(RecensioniActivity.this, ListaIngaggiSvoltiActivity.class);
+                Intent scrivirecIntent = new Intent(RecensioniActivity.this, IngaggiDaRecensireActivity.class);
                 startActivity(scrivirecIntent);
                 break;
             default:

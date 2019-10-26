@@ -200,7 +200,10 @@ public class HomeActivity extends DrawerActivity
                         while(iterableCandidature.hasNext()){
                             DocumentSnapshot documentSnapshot = iterableCandidature.next();
                             Notice notice = documentSnapshot.toObject(Notice.class);
-                            noticeList.add(notice);
+                            //mostra solo gli ingaggi non scaduti
+                            if (noticeAdapter.annuncioScaduto(notice) == false) {
+                                noticeList.add(notice);
+                            }
                         }
                         noticeAdapter.notifyDataSetChanged();
 
