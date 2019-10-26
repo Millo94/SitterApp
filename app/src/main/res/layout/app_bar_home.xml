@@ -63,13 +63,6 @@
         app:backgroundTint="@color/colorPrimary"
         app:fabSize="normal" />
 
-    <include
-        layout="@layout/activity_custom_holder_dialogs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="-56dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:visibility="visible" />
 
     <include layout="@layout/content_home"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
