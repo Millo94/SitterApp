@@ -54,7 +54,7 @@ public class IngaggiDaConfermareFragment extends Fragment {
         recycler.setAdapter(noticeAdapter);
 
         errorView = (ErrorView) view.findViewById(R.id.errorView);
-        loadNotice();
+       // loadNotice();
 
         return view;
     }
