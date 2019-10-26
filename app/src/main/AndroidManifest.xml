@@ -68,7 +68,7 @@
         <activity
             android:name=".recensioni.RecensioniActivity"
             android:screenOrientation="portrait"
-            android:label="@string/feedback"
+            android:label="@string/review"
             android:parentActivityName=".principale.HomeActivity"
             android:theme="@style/AppTheme.Light.NoActionBar" />
         <activity
@@ -80,7 +80,7 @@
         <activity
             android:name=".scriviRecensione.ScriviRecensioneActivity"
             android:screenOrientation="portrait"
-            android:label="@string/feedback"
+            android:label="@string/review"
             android:parentActivityName=".scriviRecensione.IngaggiDaRecensireActivity" />
         <activity
             android:name=".principale.NewNoticeActivity"
@@ -91,7 +91,7 @@
         <activity
             android:name=".recensioni.RecensioniPubblicoActivity"
             android:screenOrientation="portrait"
-            android:label="@string/feedback" />
+            android:label="@string/review" />
         <activity
             android:name=".appuntamenti.candidati"
             android:screenOrientation="portrait"
