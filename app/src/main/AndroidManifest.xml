@@ -50,6 +50,13 @@
             android:parentActivityName=".principale.HomeActivity"
             android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppTheme.Light.NoActionBar" />
+        <activity
+        android:name=".chat.ChatConversationActivity"
+        android:screenOrientation="portrait"
+        android:label="@string/chat"
+        android:parentActivityName=".chat.ChatActivity"
+        android:windowSoftInputMode="stateHidden"
+        android:theme="@style/AppTheme.Light.NoActionBar" />
 
         <activity
             android:name=".principale.DrawerActivity"
@@ -72,7 +79,7 @@
             android:parentActivityName=".principale.HomeActivity"
             android:theme="@style/AppTheme.Light.NoActionBar" />
         <activity
-            android:name=".scriviRecensione.IngaggiDaRecensireActivity"
+            android:name=".scriviRecensione.ListaIngaggiSvoltiActivity"
             android:screenOrientation="portrait"
             android:label="@string/scrivi_recensione"
             android:parentActivityName=".principale.HomeActivity"
@@ -81,7 +88,7 @@
             android:name=".scriviRecensione.ScriviRecensioneActivity"
             android:screenOrientation="portrait"
             android:label="@string/review"
-            android:parentActivityName=".scriviRecensione.IngaggiDaRecensireActivity" />
+            android:parentActivityName=".scriviRecensione.ListaIngaggiSvoltiActivity" />
         <activity
             android:name=".principale.NewNoticeActivity"
             android:screenOrientation="portrait"
