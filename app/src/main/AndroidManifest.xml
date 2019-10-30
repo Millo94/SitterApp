@@ -100,7 +100,7 @@
             android:screenOrientation="portrait"
             android:label="@string/review" />
         <activity
-            android:name=".appuntamenti.Candidati"
+            android:name=".appuntamenti.SceltaSitter"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Light.NoActionBar" />
     </application>
