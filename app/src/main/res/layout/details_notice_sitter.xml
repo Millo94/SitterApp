@@ -152,10 +152,37 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/openFamilyProfile"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="16dp"
-        android:textSize="@dimen/button_text_size"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/candidami"
-        android:textColor="@android:color/background_light" />
+        android:textColor="@android:color/background_light"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/confirmSit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/candidamiSit"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="16dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/confermaCandidatura"
+        android:textColor="@android:color/background_light"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/deleteApplication"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/confirmSit"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="16dp"
+        android:backgroundTint="@color/red"
+        android:text="@string/eliminaCandidatura"
+        android:textColor="@android:color/background_light"
+        android:textSize="@dimen/button_text_size" />
 
 </RelativeLayout>

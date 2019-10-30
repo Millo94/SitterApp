@@ -91,6 +91,14 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
             candidate.setVisibility(visibility);
             candidate.setOnClickListener(candidateListener);
 
+            Button confirm = (Button) view.findViewById(R.id.confirmSit);
+            confirm.setVisibility(visibility);
+            confirm.setOnClickListener(confirmEngageListener);
+
+            Button deleteCandidatura = (Button) view.findViewById(R.id.deleteApplication);
+            deleteCandidatura.setVisibility(visibility);
+            deleteCandidatura.setOnClickListener(deleteCandidaturaListener);
+
             user.setText(getArguments().getString("username"));
 
         } else if(sessionManager.getSessionType() == Constants.TYPE_FAMILY){            //dialog per la famiglia
@@ -172,6 +180,62 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                     .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            candidaSitter();
+                        }
+                    })
+                    .create()
+                    .show();
+        }
+    };
+
+    //per la conferma successiva alla scelta da parte della famiglia
+    View.OnClickListener confirmEngageListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+            builder.setTitle(R.string.candidami)
+                    .setMessage(R.string.confermaCandidatura)
+                    .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            //VA RIMOSSA LA Babysitter dal campo sitter nella collezione annunicio
+                        }
+                    })
+                    .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //va aggiunto TRUE al campo conferma nella collezione annuncio
+                            candidaSitter();
+                        }
+                    })
+                    .create()
+                    .show();
+        }
+    };
+
+
+    //TODO aggiungere controlli firebase per la conferma successiva alla scelta da parte della famiglia
+    View.OnClickListener deleteCandidaturaListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+            builder.setTitle(R.string.candidami)
+                    .setMessage(R.string.confermaCandidatura)
+                    .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //va aggiunto TRUE al campo conferma nella collezione annuncio
                             candidaSitter();
                         }
                     })

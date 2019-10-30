@@ -48,7 +48,7 @@
     <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
     <string name="nav_header_desc" translatable="false">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="edit_profile">Edit profile</string>
+    <string name="edit_profile">Edit Profile</string>
     <string name="other">Other</string>
     <string name="settings">Settings</string>
     <string name="exit">Exit</string>
@@ -86,6 +86,8 @@
     <string name="lasciaFeedback">Write Feedback</string>
     <string name="eliminaAnnuncio">Delete Notice</string>
     <string name="visualizzaCandidate">Show Responses</string>
+    <string name="eliminaCandidatura">Delete Application</string>
+    <string name="confermaCandidaturaSit">Confirm Application</string>
     <string name="giudizio">Your overall rating of this experience</string>
     <string name="yourReview">Your Review:</string>
     <string name="inviaRecensione">Submit your review</string>
@@ -127,7 +129,7 @@
     <string name="Evening">Evening</string>
     <string name="Cancel">Cancel</string>
     <string name="SaveChanges">Save Changes</string>
-    <string name="editDisp">Edit availability</string>
+    <string name="editDisp">Edit Availability</string>
 
 
     <string name="profilo">Profile</string>

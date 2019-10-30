@@ -79,7 +79,7 @@
             android:parentActivityName=".principale.HomeActivity"
             android:theme="@style/AppTheme.Light.NoActionBar" />
         <activity
-            android:name=".scriviRecensione.ListaIngaggiSvoltiActivity"
+            android:name=".scriviRecensione.IngaggiDaRecensireActivity"
             android:screenOrientation="portrait"
             android:label="@string/scrivi_recensione"
             android:parentActivityName=".principale.HomeActivity"
@@ -88,7 +88,7 @@
             android:name=".scriviRecensione.ScriviRecensioneActivity"
             android:screenOrientation="portrait"
             android:label="@string/review"
-            android:parentActivityName=".scriviRecensione.ListaIngaggiSvoltiActivity" />
+            android:parentActivityName=".scriviRecensione.IngaggiDaRecensireActivity" />
         <activity
             android:name=".principale.NewNoticeActivity"
             android:screenOrientation="portrait"
