@@ -194,7 +194,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     View.OnClickListener viewCandidateListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent visualizzaIntent = new Intent(getContext(), Candidati.class);
+            Intent visualizzaIntent = new Intent(getContext(), SceltaSitter.class);
             visualizzaIntent.putExtra("idAnnuncio",idAnnuncio);
             startActivity(visualizzaIntent);
         }
