@@ -85,18 +85,20 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
             end = (TextView) view.findViewById(R.id.oraFineDettagliSit2);
             desc = (TextView) view.findViewById(R.id.descrizioneDettagliSit2);
 
-            //TODO SISTEMA VISIBILITà BOTTONI PER CANDIDATURA BABYSITTER
             Button openProfile = (Button) view.findViewById(R.id.openFamilyProfile);
             openProfile.setOnClickListener(openProfileListener);
             Button candidate = (Button) view.findViewById(R.id.candidamiSit);
+            //viene visualizzato quando una babysitter si può candidare ad un annuncio
             candidate.setVisibility((getArguments().getBoolean("candidatura") || sessionManager.getSessionType() == Constants.TYPE_FAMILY)?View.GONE:View.VISIBLE);
             candidate.setOnClickListener(candidateListener);
 
             Button confirm = (Button) view.findViewById(R.id.confirmSit);
+            //viene visualizzato quando la babysitter, candidata, viene scelta dalla famiglia e deve confermare la scelta
             confirm.setVisibility(getArguments().getString("sitter").equals(sessionManager.getSessionUsername()) && !getArguments().getBoolean("conferma")?View.VISIBLE:View.GONE);
             confirm.setOnClickListener(confirmEngageListener);
 
             Button deleteCandidatura = (Button) view.findViewById(R.id.deleteApplication);
+            //viene visualizzato quando una babysitter, candidata, vpuò rimuovere la sua candidatura
             deleteCandidatura.setVisibility((getArguments().getBoolean("candidatura") && !getArguments().getBoolean("conferma"))?View.VISIBLE:View.GONE);
             deleteCandidatura.setOnClickListener(deleteCandidaturaListener);
 
@@ -205,7 +207,6 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
-                            //VA RIMOSSA LA Babysitter dal campo sitter nella collezione annunicio
                         }
                     })
                     .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
@@ -221,7 +222,6 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     };
 
 
-    //TODO aggiungere controlli firebase per la conferma successiva alla scelta da parte della famiglia
     View.OnClickListener deleteCandidaturaListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -239,6 +239,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                     .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+
                             //va aggiunto TRUE al campo conferma nella collezione annuncio
                             eliminaCandidatura();
                         }

@@ -132,8 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), R.string.loginerror, Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            //TODO cambiare messaggio di errore
-                            Toast.makeText(LoginActivity.this, R.string.loginerror, Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, R.string.genericError, Toast.LENGTH_LONG).show();
                         }
                     }
                 });
