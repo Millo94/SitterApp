@@ -97,6 +97,10 @@ public class Notice {
         return sitter;
     }
 
+    public Boolean getConferma() {
+        return conferma;
+    }
+
     public boolean addCandidatura(String username){
         return (candidatura.put(username,username) == null) ? true:false;
     }
@@ -112,7 +116,7 @@ public class Notice {
     }
 
     public boolean containsCandidatura(String username){
-        return candidatura.containsValue(username);
+        return candidatura.containsKey(username);
     }
 
 }

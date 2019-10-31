@@ -4,7 +4,7 @@ package it.uniba.di.sms.sitterapp.oggetti;
  * Classe che contiene l'oggetto "famiglia"
  */
 
-public class UtenteFamiglia {
+public class UtenteFamiglia extends User{
 
     private String username;
     private String password;
@@ -29,6 +29,7 @@ public class UtenteFamiglia {
                           String cap,
                           String numFigli,
                           String animali) {
+        super(username,nome+" "+cognome,null,true);
         this.username = username;
         this.password = password;
         this.nome = nome;

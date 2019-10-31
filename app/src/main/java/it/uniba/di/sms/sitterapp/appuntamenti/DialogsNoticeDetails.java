@@ -85,18 +85,19 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
             end = (TextView) view.findViewById(R.id.oraFineDettagliSit2);
             desc = (TextView) view.findViewById(R.id.descrizioneDettagliSit2);
 
+            //TODO SISTEMA VISIBILITà BOTTONI PER CANDIDATURA BABYSITTER
             Button openProfile = (Button) view.findViewById(R.id.openFamilyProfile);
             openProfile.setOnClickListener(openProfileListener);
             Button candidate = (Button) view.findViewById(R.id.candidamiSit);
-            candidate.setVisibility(visibility);
+            candidate.setVisibility((getArguments().getBoolean("candidatura") || sessionManager.getSessionType() == Constants.TYPE_FAMILY)?View.GONE:View.VISIBLE);
             candidate.setOnClickListener(candidateListener);
 
             Button confirm = (Button) view.findViewById(R.id.confirmSit);
-            confirm.setVisibility(visibility);
+            confirm.setVisibility(getArguments().getString("sitter").equals(sessionManager.getSessionUsername()) && !getArguments().getBoolean("conferma")?View.VISIBLE:View.GONE);
             confirm.setOnClickListener(confirmEngageListener);
 
             Button deleteCandidatura = (Button) view.findViewById(R.id.deleteApplication);
-            deleteCandidatura.setVisibility(visibility);
+            deleteCandidatura.setVisibility((getArguments().getBoolean("candidatura") && !getArguments().getBoolean("conferma"))?View.VISIBLE:View.GONE);
             deleteCandidatura.setOnClickListener(deleteCandidaturaListener);
 
             user.setText(getArguments().getString("username"));
@@ -134,7 +135,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     }
 
     //per recuperare le informazioni dalla pagina precedente
-    public static DialogsNoticeDetails newInstance(Notice notice) {
+    public static DialogsNoticeDetails newInstance(Notice notice, String username) {
 
         Bundle args = new Bundle();
         args.putString("username", notice.getFamily());
@@ -143,6 +144,9 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
         args.putString("oraFine", notice.getEnd_time());
         args.putString("descrizione", notice.getDescription());
         args.putString("idAnnuncio", notice.getIdAnnuncio());
+        args.putBoolean("candidatura", notice.containsCandidatura(username));
+        args.putString("sitter", notice.getSitter());
+        args.putBoolean("conferma", notice.getConferma());
 
         DialogsNoticeDetails fragment = new DialogsNoticeDetails();
         fragment.setArguments(args);
@@ -195,8 +199,8 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-            builder.setTitle(R.string.candidami)
-                    .setMessage(R.string.confermaCandidatura)
+            builder.setTitle(R.string.confermaCandidaturaSit)
+                    .setMessage(R.string.confermaConfermaCandidaturaSit)
                     .setNegativeButton("Back", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -208,7 +212,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //va aggiunto TRUE al campo conferma nella collezione annuncio
-                            candidaSitter();
+                            confermaCandidatura();
                         }
                     })
                     .create()
@@ -224,8 +228,8 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-            builder.setTitle(R.string.candidami)
-                    .setMessage(R.string.confermaCandidatura)
+            builder.setTitle(R.string.eliminaCandidatura)
+                    .setMessage(R.string.confermaEliminaCandidatura)
                     .setNegativeButton("Back", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -236,7 +240,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //va aggiunto TRUE al campo conferma nella collezione annuncio
-                            candidaSitter();
+                            eliminaCandidatura();
                         }
                     })
                     .create()
@@ -337,5 +341,40 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
     }
 
+    private void eliminaCandidatura(){
+        db.collection("annuncio")
+                .document(idAnnuncio)
+                .update("sitter","")
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.deleteSuccess, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void confermaCandidatura(){
+        db.collection("annuncio")
+                .document(idAnnuncio)
+                .update("conferma",true)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.candidateSucces, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 
 }

@@ -88,6 +88,8 @@
     <string name="visualizzaCandidate">Show Responses</string>
     <string name="eliminaCandidatura">Delete Application</string>
     <string name="confermaCandidaturaSit">Confirm Application</string>
+    <string name="confermaEliminaCandidatura">Are you sure to delete your application?</string>
+    <string name="confermaConfermaCandidaturaSit">Family chosen you for this notice. Do you wnat to confirm?</string>
     <string name="giudizio">Your overall rating of this experience</string>
     <string name="yourReview">Your Review:</string>
     <string name="inviaRecensione">Submit your review</string>
