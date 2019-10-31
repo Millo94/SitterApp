@@ -49,6 +49,8 @@ public class UtenteSitter extends User {
 
     public UtenteSitter(String username,String pathPhoto){
         super(username,"",pathPhoto,false);
+        this.username = username;
+        this.foto = pathPhoto;
     }
 
     //costruttore
