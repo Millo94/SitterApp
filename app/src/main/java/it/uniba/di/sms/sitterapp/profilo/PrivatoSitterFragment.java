@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;;
 import android.provider.MediaStore;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -34,6 +36,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,6 +70,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     static final int REQUEST_IMAGE_CAPTURE = 2;
     private static final int GALLERY_REQUEST = 1;
     private RequestQueue requestQueue;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private SessionManager sessionManager;
 
     View view;
@@ -106,7 +114,8 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         inizializzazione(datePickerDialog);
 
         //apertura del profilo
-        openProfile();
+        apriProfilo();
+        //openProfile();
 
         // Modifica
         modificaProfilo.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +140,35 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         });
 
         return view;
+    }
+
+    private void apriProfilo(){
+
+        db.collection("utente")
+                .document(sessionManager.getSessionUsername())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        descrPrSit.setText(documentSnapshot.getString("babysitter.descrizione"));
+                        nomePrSit2.setText(documentSnapshot.getString("babysitter.nome"));
+                        cognomePrSit2.setText(documentSnapshot.getString("babysitter.cognome"));
+                        emailPrSit2.setText(documentSnapshot.getString("babysitter.email"));
+                        numeroPrSit2.setText(documentSnapshot.getString("babyistter.numero"));
+                        carPrSit2.setChecked(documentSnapshot.getBoolean("babysitter.auto"));
+                        sessoPrSit2.setText(documentSnapshot.getString("babysitter.genere"));
+                        dataPrSit2.setText(documentSnapshot.getString("babysitter.dataNascita"));
+
+                        //TODO AGGIUNGI FOTO
+                        //TODO AGGIUNGI RATING
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), R.string.profileError ,Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     //metodo che inizializza i dati del profilo all'apertura.
@@ -206,6 +244,36 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         requestQueue.add(profileRequest);
     }
 
+    private void modifica(){
+
+        DocumentReference docRef = db.collection("utente")
+                .document(sessionManager.getSessionUsername());
+
+        docRef.update("babysitter.descrizione", descrPrSit.getText().toString(),
+                "babysitter.nome", nomePrSit2.getText().toString(),
+                "babysitter.cognome", cognomePrSit2.getText().toString(),
+                "babysitter.email", emailPrSit2.getText().toString(),
+                "babysitter.numero", numeroPrSit2.getText().toString(),
+                "babysitter.genere", sessoPrSit2.getText().toString(),
+                "babysitter.dataNascita", dataPrSit2.getText().toString(),
+                "babysitter.auto", carPrSit2.isChecked()
+                //TODO retribuzione oraria
+                //TODO ingaggi ??
+        )
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.modifySuccess, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.genericError,Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     //volley per la modifica del profilo
     private void modifyProfile() {
 
@@ -261,6 +329,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     public void inizializzazione(final DatePickerDialog datePickerDialog) {
 
         usernamePrSit = (TextView) view.findViewById(R.id.usernamePrSitter);
+        usernamePrSit.setText(sessionManager.getSessionUsername());
 
         descrPrSit = (EditText) view.findViewById(R.id.descrizionePrSitter);
         descrPrSit.setEnabled(false);
@@ -445,7 +514,8 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
             dataPrSit2.setEnabled(false);
             tariffaPrSit2.setEnabled(false);
             edit = false;
-            modifyProfile();
+            modifica();
+            //modifyProfile();
         }
     }
 

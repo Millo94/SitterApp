@@ -32,7 +32,7 @@ public class FamilyRegistrationFragment extends Fragment {
     EditText usernameET, passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, cittaET, numFigliET;
     TextView nazioneET;
     Switch animaliSW;
-    String animali = "1";
+    Boolean animali = true;
     Button confRegistration;
 
 
@@ -62,15 +62,8 @@ public class FamilyRegistrationFragment extends Fragment {
         nazioni.setAdapter(adapter);
 
         // Gestione del flag animali
-        animaliSW.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    animali = "0";
-                else
-                    animali = "1";
-            }
-        });
+
+        animali = animaliSW.isChecked();
 
         //controllo dei campi inseriti
         confRegistration.setOnClickListener(new View.OnClickListener() {

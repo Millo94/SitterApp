@@ -36,7 +36,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
     Switch autoSW;
     Button confRegistration;
     String genere = "";
-    String auto = "1";
+    Boolean auto = false;
     Spinner nazioni;
     String arraypaesi[];
 
@@ -106,9 +106,9 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked)
-                    auto = "0";
+                    auto = false;
                 else
-                    auto = "1";
+                    auto = true;
             }
         });
 

@@ -71,9 +71,10 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
         famigliaExtra.put("email",famiglia.getEmail());
         famigliaExtra.put("numero", famiglia.getNumero());
         famigliaExtra.put("nazione",famiglia.getNazione());
-        famigliaExtra.put("cap", famiglia.getCap());
+        famigliaExtra.put("citta", famiglia.getCitta());
         famigliaExtra.put("numFigli",famiglia.getNumFigli());
         famigliaExtra.put("animali", famiglia.getAnimali());
+        //famigliaExtra.put("rating", famiglia.getR);
         utente.put("famiglia",famigliaExtra);
         db.collection("utente")
                 .document(famiglia.getUsername())
@@ -110,13 +111,14 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
         babysitterExtra.put("email",sitter.getEmail());
         babysitterExtra.put("numero", sitter.getNumero());
         babysitterExtra.put("nazione",sitter.getNazione());
-        babysitterExtra.put("cap", sitter.getCap());
+        babysitterExtra.put("citta", sitter.getCitta());
         babysitterExtra.put("auto",sitter.getAuto());
         babysitterExtra.put("foto", sitter.getFoto());
         babysitterExtra.put("genere", sitter.getGenere());
         babysitterExtra.put("numLavori", sitter.getNumLavori());
         babysitterExtra.put("rating", sitter.getRating());
         babysitterExtra.put("dataNascita", sitter.getDataNascita());
+        babysitterExtra.put("retribuzione", "");
         utente.put("babysitter",babysitterExtra);
         db.collection("utente")
                 .document(sitter.getUsername())

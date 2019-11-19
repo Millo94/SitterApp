@@ -2,6 +2,8 @@ package it.uniba.di.sms.sitterapp.profilo;
 
 import android.content.Context;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,6 +55,8 @@ public class PrivatoFamigliaFragment extends Fragment {
     RatingBar ratingPrFam;
     Button modificaProfilo,exit_button;
     boolean edit = false;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     RequestQueue requestQueue;
     SessionManager sessionManager;
@@ -71,7 +82,8 @@ public class PrivatoFamigliaFragment extends Fragment {
         //coda per la richiesta della volley
         requestQueue = Volley.newRequestQueue(getContext());
         inizializzazione();
-        openProfile();
+        //openProfile();
+        apriProfilo();
         exit_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 sessionManager.logout();
@@ -81,8 +93,45 @@ public class PrivatoFamigliaFragment extends Fragment {
         return view;
     }
 
+    private void getRatingFamily(final String username){
+
+
+        db.collection("recensione");
+
+
+
+    }
+
+    private void apriProfilo(){
+
+        db.collection("utente")
+                .document(sessionManager.getSessionUsername())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        descrPrFam.setText(documentSnapshot.getString("famiglia.descrizione"));
+                        nomePrFam2.setText(documentSnapshot.getString("famiglia.nome"));
+                        cognomePrFam2.setText(documentSnapshot.getString("famiglia.cognome"));
+                        emailPrFam2.setText(documentSnapshot.getString("famiglia.email"));
+                        numeroPrFam2.setText(documentSnapshot.getString("famiglia.numero"));
+                        animaliPrFam2.setChecked(documentSnapshot.getBoolean("famiglia.animali"));
+                        numFigliPrFam2.setText(documentSnapshot.getString("famiglia.numFigli"));
+                        nazionePrFam2.setText(documentSnapshot.getString("famiglia.nazione"));
+                        cittaPrFam2.setText(documentSnapshot.getString("famiglia.citta"));
+                        //TODO AGGIUNGI RATING
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), R.string.profileError ,Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     //volley per aprire il profilo privato
-    private void openProfile(){
+    /*private void openProfile(){
 
         StringRequest profileRequest = new StringRequest(Request.Method.POST, Php.PROFILO , new Response.Listener<String>() {
             @Override
@@ -144,7 +193,7 @@ public class PrivatoFamigliaFragment extends Fragment {
         };
 
         requestQueue.add(profileRequest);
-    }
+    }*/
 
     //per modificare i dati
     public View.OnClickListener goEditable = new View.OnClickListener() {
@@ -173,13 +222,42 @@ public class PrivatoFamigliaFragment extends Fragment {
                 animaliPrFam2.setEnabled(false);
                 cittaPrFam2.setEnabled(false);
                 numFigliPrFam2.setEnabled(false);
-                modifyProfile();
+                modifica();
                 edit = false;
             }
         }
     };
 
-    private void modifyProfile(){
+    private void modifica(){
+
+        DocumentReference docRef = db.collection("utente")
+                .document(sessionManager.getSessionUsername());
+
+        docRef.update("famiglia.numFigli", numeroPrFam2.getText().toString(),
+                "famiglia.nazione", nazionePrFam2.getText().toString(),
+                "famiglia.descrizione", descrPrFam.getText().toString(),
+                "famiglia.citta", cittaPrFam2.getText().toString(),
+                "famiglia.email", emailPrFam2.getText().toString(),
+                "famiglia.nome", nomePrFam2.getText().toString(),
+                "famiglia.cognome", cognomePrFam2.getText().toString(),
+                "famiglia.numero", numeroPrFam2.getText().toString(),
+                "famiglia.animali", animaliPrFam2.isChecked()
+                )
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.modifySuccess,Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.genericError,Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    /*private void modifyProfile(){
 
         StringRequest modify = new StringRequest(Request.Method.POST, Php.PROFILO, new Response.Listener<String>() {
             @Override
@@ -228,10 +306,11 @@ public class PrivatoFamigliaFragment extends Fragment {
         };
 
         requestQueue.add(modify);
-    }
+    }*/
 
     private void inizializzazione() {
         usernamePrFam = (TextView) view.findViewById(R.id.usernamePrFamiglia);
+        usernamePrFam.setText(sessionManager.getSessionUsername());
 
         descrPrFam = (EditText) view.findViewById(R.id.descrizionePrFamiglia);
         descrPrFam.setEnabled(false);

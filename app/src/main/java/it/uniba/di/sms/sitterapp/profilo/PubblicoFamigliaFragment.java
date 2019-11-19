@@ -27,6 +27,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import android.content.Intent;
 
@@ -56,6 +60,7 @@ public class PubblicoFamigliaFragment extends Fragment {
     RatingBar ratingPuFam;
 
     RequestQueue requestQueue;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     //numero di telefono
     String telefono;
@@ -83,9 +88,45 @@ public class PubblicoFamigliaFragment extends Fragment {
 
         requestQueue = Volley.newRequestQueue(getContext());
         inizializzazione();
-        showProfile(getActivity().getIntent().getStringExtra("username"));
+        mostraProfilo(getActivity().getIntent().getStringExtra("username"));
+       // showProfile(getActivity().getIntent().getStringExtra("username"));
         return view;
     }
+
+
+    private void mostraProfilo(final String username){
+
+        db.collection("utente")
+                .document(username)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        usernamePuFam.setText(username);
+                        emailPuFam2.setText((documentSnapshot.getString("famiglia.email")));
+                        email = documentSnapshot.getString("famiglia.email");
+                        nomePuFam2.setText(documentSnapshot.getString("famiglia.nome"));
+                        cognomePuFam2.setText(documentSnapshot.getString("famiglia.cognome"));
+                        numeroPuFam2.setText(documentSnapshot.getString("famiglia.numero"));
+                        telefono = documentSnapshot.getString("famiglia.numero");
+                        nazionePuFam2.setText(documentSnapshot.getString("famiglia.nazione"));
+                        cittaPuFam2.setText(documentSnapshot.getString("famiglia.citta"));
+                        //TODO rating bar
+                        animaliPuFam2.setText(documentSnapshot.getBoolean("famiglia.animali").toString());
+                        numFigliPuFam2.setText(documentSnapshot.getString("famiglia.numFigli"));
+                        descrPuFam.setText(documentSnapshot.getString("famiglia.descrizione"));
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), R.string.profileError, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
 
     //volley per la visualizzazione dei campi del profilo
     private void showProfile(final String username) {

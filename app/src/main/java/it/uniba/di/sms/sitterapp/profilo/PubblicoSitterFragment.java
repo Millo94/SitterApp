@@ -29,6 +29,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,6 +63,7 @@ public class PubblicoSitterFragment extends Fragment {
     private String email;
 
     RequestQueue requestQueue;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private OnFragmentInteractionListener mListener;
 
@@ -81,10 +86,45 @@ public class PubblicoSitterFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_profilo_pubblico_sitter, container, false);
         requestQueue = Volley.newRequestQueue(getContext());
         inizializzazione();
-        showProfile(getActivity().getIntent().getStringExtra("username"));
+        mostraProfilo(getActivity().getIntent().getStringExtra("username"));
         return view;
     }
 
+
+    private void mostraProfilo(final String username){
+
+        db.collection("utente")
+                .document(username)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        usernamePuSit.setText(username);
+                        emailPuSit2.setText((documentSnapshot.getString("babysitter.email")));
+                        email = documentSnapshot.getString("babysitter.email");
+                        nomePuSit2.setText(documentSnapshot.getString("babysitter.nome"));
+                        cognomePuSit2.setText(documentSnapshot.getString("babysitter.cognome"));
+                        numeroPuSit2.setText(documentSnapshot.getString("babysitter.numero"));
+                        telefono = documentSnapshot.getString("babysitter.numero");
+                        nazionePuSit2.setText(documentSnapshot.getString("babysitter.nazione"));
+                        cittaPuSit2.setText(documentSnapshot.getString("babysitter.citta"));
+                        //TODO rating bar
+                        //TODO tariffaoraria
+                        sessoPuSit2.setText(documentSnapshot.getString("babysitter.genere"));
+                        carPuSit2.setText(documentSnapshot.getBoolean("babysitter.auto").toString());
+                        ingaggiPuSit2.setText(documentSnapshot.get("babysitter.numLavori").toString());
+                        descrPuSit.setText(documentSnapshot.getString("babysitter.descrizione"));
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), R.string.profileError, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
     //volley per mostrare il profilo
     private void showProfile(final String username) {
 

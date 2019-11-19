@@ -16,8 +16,8 @@ public class UtenteSitter extends User {
     private String foto;
     private String genere;
     private String nazione;
-    private String cap;
-    private String auto;
+    private String citta;
+    private Boolean auto;
     private float rating;
     private int numLavori;
 
@@ -31,8 +31,8 @@ public class UtenteSitter extends User {
                         String numero,
                         String genere,
                         String nazione,
-                        String cap,
-                        String auto) {
+                        String citta,
+                        Boolean auto) {
         super(username,nome+" "+cognome,null,true);
         this.username = username;
         this.password = password;
@@ -43,7 +43,7 @@ public class UtenteSitter extends User {
         this.numero = numero;
         this.genere = genere;
         this.nazione = nazione;
-        this.cap = cap;
+        this.citta = citta;
         this.auto = auto;
     }
 
@@ -99,7 +99,7 @@ public class UtenteSitter extends User {
         return genere;
     }
 
-    public String getAuto() {
+    public Boolean getAuto() {
         return auto;
     }
 
@@ -107,8 +107,8 @@ public class UtenteSitter extends User {
         return nazione;
     }
 
-    public String getCap() {
-        return cap;
+    public String getCitta() {
+        return citta;
     }
 
     public float getRating() {

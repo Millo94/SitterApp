@@ -13,10 +13,11 @@ public class UtenteFamiglia extends User{
     private String email;
     private String numero;
     private String nazione;
-    private String cap;
+    private String citta;
     private String civico;
     private String numFigli;
-    private String animali;
+    private Boolean animali;
+
 
     //costruttore
     public UtenteFamiglia(String username,
@@ -26,9 +27,9 @@ public class UtenteFamiglia extends User{
                           String email,
                           String numero,
                           String nazione,
-                          String cap,
+                          String citta,
                           String numFigli,
-                          String animali) {
+                          Boolean animali) {
         super(username,nome+" "+cognome,null,true);
         this.username = username;
         this.password = password;
@@ -37,7 +38,7 @@ public class UtenteFamiglia extends User{
         this.email = email;
         this.numero = numero;
         this.nazione = nazione;
-        this.cap = cap;
+        this.citta = citta;
         this.numFigli = numFigli;
         this.animali = animali;
     }
@@ -71,8 +72,8 @@ public class UtenteFamiglia extends User{
         return nazione;
     }
 
-    public String getCap() {
-        return cap;
+    public String getCitta() {
+        return citta;
     }
 
     public String getCivico() {
@@ -83,7 +84,7 @@ public class UtenteFamiglia extends User{
         return numFigli;
     }
 
-    public String getAnimali() {
+    public Boolean getAnimali() {
         return animali;
     }
 }
