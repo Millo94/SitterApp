@@ -97,9 +97,9 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
     }
 
 
+
     /**
-     * Mostra gli ingaggi creati da una famiglia
-     * //TODO aggiungere la possibilità per la babysitter.
+     * Mostra gli ingaggi creati
      */
     private void caricaIngaggi(){
 
@@ -111,30 +111,57 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
 
         CollectionReference colRef = db.collection("annuncio");
 
-        colRef
-                .whereEqualTo("family", sessionManager.getSessionUsername())
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+        if(sessionManager.getSessionType() == Constants.TYPE_FAMILY){
+            colRef
+                    .whereEqualTo("family", sessionManager.getSessionUsername())
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                        Iterator<QueryDocumentSnapshot> iterableCandidature = queryDocumentSnapshots.iterator();
-                        while(iterableCandidature.hasNext()){
-                            DocumentSnapshot documentSnapshot = iterableCandidature.next();
-                            Notice notice = documentSnapshot.toObject(Notice.class);
-                            noticeList.add(notice);
+                            Iterator<QueryDocumentSnapshot> listNotice = queryDocumentSnapshots.iterator();
+                            while(listNotice.hasNext()){
+                                DocumentSnapshot documentSnapshot = listNotice.next();
+                                Notice notice = documentSnapshot.toObject(Notice.class);
+                                noticeList.add(notice);
+                            }
+                            noticeAdapter.notifyDataSetChanged();
+
                         }
-                        noticeAdapter.notifyDataSetChanged();
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(IngaggiActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }else{
+            colRef
+                    .whereEqualTo("sitter", sessionManager.getSessionUsername())
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        //TODO Sostituire "Errore" con la stringa di errore di riferimento.
-                        //Toast.makeText(HomeActivity.this, "Errore", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                            Iterator<QueryDocumentSnapshot> listNotice = queryDocumentSnapshots.iterator();
+                            while(listNotice.hasNext()){
+                                DocumentSnapshot documentSnapshot = listNotice.next();
+                                Notice notice = documentSnapshot.toObject(Notice.class);
+                                noticeList.add(notice);
+                            }
+                            noticeAdapter.notifyDataSetChanged();
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(IngaggiActivity.this,R.string.genericError, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+
+
 
     }
 
@@ -142,7 +169,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
     @Override
     public void onNoticeSelected(Notice notice) {
 
-        DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice);
+        DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice, sessionManager.getSessionUsername());
         dialogs.hideButton();
         dialogs.show(getSupportFragmentManager(), "dialog");
 

@@ -50,6 +50,13 @@
             android:parentActivityName=".principale.HomeActivity"
             android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppTheme.Light.NoActionBar" />
+        <activity
+        android:name=".chat.ChatConversationActivity"
+        android:screenOrientation="portrait"
+        android:label="@string/chat"
+        android:parentActivityName=".chat.ChatActivity"
+        android:windowSoftInputMode="stateHidden"
+        android:theme="@style/AppTheme.Light.NoActionBar" />
 
         <activity
             android:name=".principale.DrawerActivity"
@@ -93,7 +100,7 @@
             android:screenOrientation="portrait"
             android:label="@string/review" />
         <activity
-            android:name=".appuntamenti.Candidati"
+            android:name=".appuntamenti.SceltaSitter"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Light.NoActionBar" />
     </application>

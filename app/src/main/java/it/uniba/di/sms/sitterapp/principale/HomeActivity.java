@@ -212,8 +212,7 @@ public class HomeActivity extends DrawerActivity
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        //TODO Sostituire "Errore" con la stringa di errore di riferimento.
-                        Toast.makeText(HomeActivity.this, "Errore", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -289,7 +288,7 @@ public class HomeActivity extends DrawerActivity
     public void onNoticeSelected(Notice notice) {
 
         if (sessionManager.checkLogin()) {
-            DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice);
+            DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice, sessionManager.getSessionUsername());
             dialogs.show(getSupportFragmentManager(), "dialog");
         } else {
             sessionManager.forceLogin(this);

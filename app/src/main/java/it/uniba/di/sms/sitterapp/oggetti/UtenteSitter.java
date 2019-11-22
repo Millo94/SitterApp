@@ -4,7 +4,7 @@ package it.uniba.di.sms.sitterapp.oggetti;
  * Classe che contiene l'oggetto "babysitter"
  */
 
-public class UtenteSitter {
+public class UtenteSitter extends User {
 
     private String username;
     private String password;
@@ -33,6 +33,7 @@ public class UtenteSitter {
                         String nazione,
                         String cap,
                         String auto) {
+        super(username,nome+" "+cognome,null,true);
         this.username = username;
         this.password = password;
         this.nome = nome;
@@ -46,14 +47,15 @@ public class UtenteSitter {
         this.auto = auto;
     }
 
-    //costruttore
-    public UtenteSitter(String username, String foto) {
+    public UtenteSitter(String username,String pathPhoto){
+        super(username,"",pathPhoto,false);
         this.username = username;
-        this.foto = foto;
+        this.foto = pathPhoto;
     }
 
     //costruttore
     public UtenteSitter(String username, String foto, float rating, int numLavori) {
+        super(username,"",foto,false);
         this.username = username;
         this.foto = foto;
         this.rating = rating;

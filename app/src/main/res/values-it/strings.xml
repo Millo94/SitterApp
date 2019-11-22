@@ -119,7 +119,7 @@
     <string name="registrazioneStringa">Clicca qui per creare un nuovo account</string>
     <string name="esperienza">Esperienza (n° di ingaggi)</string>
     <string name="disponibilita">Disponibilità</string>
-    <string name="editDisp">Modifica disponibilità</string>
+    <string name="editDisp">Modifica Disponibilità</string>
     <string name="maggiore0">Più di 0</string>
     <string name="maggiore5">Più di 5</string>
     <string name="maggiore10">Più di 10</string>
@@ -160,6 +160,10 @@
     <string name="engagementDone">Da confermare</string>
     <string name="engagementToConfirm">Da fare</string>
     <string name="engagementToDo">fatti</string>
+    <string name="eliminaCandidatura">Elimina Candidatura</string>
+    <string name="confermaCandidaturaSit">Conferma Candidatura</string>
+    <string name="confermaConfermaCandidaturaSit">La famiglia ti ha scelto per quest\'annuncio. Vuoi confermare?</string>
+    <string name="confermaEliminaCandidatura">Sei sicuro di voler eliminare la tua candidatura?</string>
 
 
 </resources>

@@ -88,8 +88,19 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
             Button openProfile = (Button) view.findViewById(R.id.openFamilyProfile);
             openProfile.setOnClickListener(openProfileListener);
             Button candidate = (Button) view.findViewById(R.id.candidamiSit);
-            candidate.setVisibility(visibility);
+            //viene visualizzato quando una babysitter si può candidare ad un annuncio
+            candidate.setVisibility((getArguments().getBoolean("candidatura") || sessionManager.getSessionType() == Constants.TYPE_FAMILY)?View.GONE:View.VISIBLE);
             candidate.setOnClickListener(candidateListener);
+
+            Button confirm = (Button) view.findViewById(R.id.confirmSit);
+            //viene visualizzato quando la babysitter, candidata, viene scelta dalla famiglia e deve confermare la scelta
+            confirm.setVisibility(getArguments().getString("sitter").equals(sessionManager.getSessionUsername()) && !getArguments().getBoolean("conferma")?View.VISIBLE:View.GONE);
+            confirm.setOnClickListener(confirmEngageListener);
+
+            Button deleteCandidatura = (Button) view.findViewById(R.id.deleteApplication);
+            //viene visualizzato quando una babysitter, candidata, vpuò rimuovere la sua candidatura
+            deleteCandidatura.setVisibility((getArguments().getBoolean("candidatura") && !getArguments().getBoolean("conferma"))?View.VISIBLE:View.GONE);
+            deleteCandidatura.setOnClickListener(deleteCandidaturaListener);
 
             user.setText(getArguments().getString("username"));
 
@@ -126,7 +137,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     }
 
     //per recuperare le informazioni dalla pagina precedente
-    public static DialogsNoticeDetails newInstance(Notice notice) {
+    public static DialogsNoticeDetails newInstance(Notice notice, String username) {
 
         Bundle args = new Bundle();
         args.putString("username", notice.getFamily());
@@ -135,6 +146,9 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
         args.putString("oraFine", notice.getEnd_time());
         args.putString("descrizione", notice.getDescription());
         args.putString("idAnnuncio", notice.getIdAnnuncio());
+        args.putBoolean("candidatura", notice.containsCandidatura(username));
+        args.putString("sitter", notice.getSitter());
+        args.putBoolean("conferma", notice.getConferma());
 
         DialogsNoticeDetails fragment = new DialogsNoticeDetails();
         fragment.setArguments(args);
@@ -180,6 +194,61 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
         }
     };
 
+    //per la conferma successiva alla scelta da parte della famiglia
+    View.OnClickListener confirmEngageListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+            builder.setTitle(R.string.confermaCandidaturaSit)
+                    .setMessage(R.string.confermaConfermaCandidaturaSit)
+                    .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //va aggiunto TRUE al campo conferma nella collezione annuncio
+                            confermaCandidatura();
+                        }
+                    })
+                    .create()
+                    .show();
+        }
+    };
+
+
+    View.OnClickListener deleteCandidaturaListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+            builder.setTitle(R.string.eliminaCandidatura)
+                    .setMessage(R.string.confermaEliminaCandidatura)
+                    .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            //va aggiunto TRUE al campo conferma nella collezione annuncio
+                            eliminaCandidatura();
+                        }
+                    })
+                    .create()
+                    .show();
+        }
+    };
+
     //per eliminare un annuncio
     View.OnClickListener deleteNoticeListener = new View.OnClickListener() {
         @Override
@@ -194,7 +263,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     View.OnClickListener viewCandidateListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent visualizzaIntent = new Intent(getContext(), Candidati.class);
+            Intent visualizzaIntent = new Intent(getContext(), SceltaSitter.class);
             visualizzaIntent.putExtra("idAnnuncio",idAnnuncio);
             startActivity(visualizzaIntent);
         }
@@ -273,5 +342,40 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
     }
 
+    private void eliminaCandidatura(){
+        db.collection("annuncio")
+                .document(idAnnuncio)
+                .update("sitter","")
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.deleteSuccess, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void confermaCandidatura(){
+        db.collection("annuncio")
+                .document(idAnnuncio)
+                .update("conferma",true)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.candidateSucces, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 
 }
