@@ -5,25 +5,29 @@ package it.uniba.di.sms.sitterapp.oggetti;
  */
 
 public class Recensione {
-    String username;
+
     String descrizione;
     Float rating;
+    String idAnnuncio;
+    String receiver;
+    String sender;
 
-    //castruttore
-    public Recensione(String username, String descrizione, Float rating) {
-        this.username = username;
+
+    //costruttore
+    public Recensione(String descrizione, Float rating, String idAnnuncio, String receiver, String sender) {
         this.descrizione = descrizione;
         this.rating = rating;
+        this.idAnnuncio = idAnnuncio;
+        this.receiver = receiver;
+        this.sender = sender;
+
     }
 
+
+    public Recensione(){
+
+    }
     //metodi get e set
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getDescrizione() {
         return descrizione;
@@ -40,4 +44,21 @@ public class Recensione {
     public void setRating(Float rating) {
         this.rating = rating;
     }
+
+    public String getIdAnnuncio() {
+        return idAnnuncio;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+
+
 }
+
+

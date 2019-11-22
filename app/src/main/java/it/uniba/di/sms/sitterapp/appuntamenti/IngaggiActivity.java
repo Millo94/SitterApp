@@ -103,6 +103,12 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
      */
     private void caricaIngaggi(){
 
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        progressDialog.dismiss();
+
         CollectionReference colRef = db.collection("annuncio");
 
         colRef
@@ -132,67 +138,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
 
     }
 
-   /* //Caricamento degli annunci dal database
-    private void loadNotices() {
-
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-        progressDialog.dismiss();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Php.INGAGGI,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        progressDialog.dismiss();
-                        try {
-                            JSONArray notice = new JSONArray(response);
-
-                            if (notice.length() == 0) {
-                                ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
-                                errorView.setSubtitle(R.string.niente_annunci);
-                                errorView.setVisibility(View.VISIBLE);
-                            } else {
-                                for (int i = 0; i < notice.length(); i++) {
-
-                                    JSONObject noticeObject = notice.getJSONObject(i);
-                                    String idAnnuncio = noticeObject.getString("idAnnuncio");
-                                    String famiglia = noticeObject.getString("usernameFamiglia");
-                                    String data = Constants.SQLtoDate(noticeObject.getString("data"));
-                                    String oraInizio = noticeObject.getString("oraInizio");
-                                    String oraFine = noticeObject.getString("oraFine");
-                                    String descrizione = noticeObject.getString("descrizione");
-                                    Notice n = new Notice(idAnnuncio, famiglia, data, oraInizio, oraFine, descrizione);
-
-                                    noticeList.add(n);
-                                }
-                            }
-                            noticeAdapter.notifyDataSetChanged();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(IngaggiActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("operation", "load");
-                params.put("username", sessionManager.getSessionUsername());
-                params.put("tipoutente", String.valueOf(sessionManager.getSessionType()));
-                return params;
-            }
-        };
-        Volley.newRequestQueue(this).add(stringRequest);
-    }
-*/
     // al click su un annuncio visualizza i dettagli
     @Override
     public void onNoticeSelected(Notice notice) {
