@@ -42,6 +42,9 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
     String famiglia;
     String id;
     String sitter;
+    public static Intent intentReview;
+
+
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -54,6 +57,7 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
         famiglia = getIntent().getStringExtra("famiglia");
         id = getIntent().getStringExtra("idAnnuncio");
         sitter = getIntent().getStringExtra("sitter");
+
 
 
         user = (TextView) findViewById(R.id.usernameRecensione);
@@ -77,8 +81,15 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
 
             commento = desc.getText().toString();
             rate = rating.getRating();
-
-            Recensione recensione = new Recensione(sessionManager.getSessionUsername(),commento, rate);
+            //cattura l'intent dell'ingaggio recensito e ne prende l'idAnnuncio da associare alla recensione
+            intentReview = getIntent();
+            String idAnnuncio = intentReview.getStringExtra("idAnnuncio");
+            String fam = intentReview.getStringExtra("famiglia");
+            String bs = intentReview.getStringExtra("babysitter");
+            //se manda la recensione (utente in sessione) utente tipo sitter allora recensisci famiglia, altrimenti recensisci babysitter
+            String receiver = sessionManager.getSessionType() == Constants.TYPE_SITTER ? fam : bs;
+            String sender = sessionManager.getSessionUsername();
+            Recensione recensione = new Recensione(commento, rate, idAnnuncio, receiver, sender);
 
             if (rate == 0.0 || commento.isEmpty()) {
                 Toast.makeText(ScriviRecensioneActivity.this, R.string.missingFields, Toast.LENGTH_SHORT).show();
@@ -99,10 +110,12 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
     public void inviaDati(final Recensione recensione) {
 
         Map<String, Object> comment = new HashMap<>();
-        comment.put("username", recensione.getUsername());
         comment.put("tipoUtente", sessionManager.getSessionType());
         comment.put("descrizione", recensione.getDescrizione());
         comment.put("rating", recensione.getRating());
+        comment.put("idAnnuncio", recensione.getIdAnnuncio());
+        comment.put("receiver", recensione.getReceiver());
+        comment.put("sender", recensione.getSender());
 
         db.collection("recensione")
                 .add(comment)

@@ -37,6 +37,7 @@ import it.uniba.di.sms.sitterapp.SessionManager;
 import com.android.volley.RequestQueue;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
@@ -343,9 +344,12 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     }
 
     private void eliminaCandidatura(){
+        Map<String, Object> deleteSitter = new HashMap<>();
+        deleteSitter.put("candidatura."+sessionManager.getSessionUsername(), FieldValue.delete());
+
         db.collection("annuncio")
                 .document(idAnnuncio)
-                .update("sitter","")
+                .update(deleteSitter)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

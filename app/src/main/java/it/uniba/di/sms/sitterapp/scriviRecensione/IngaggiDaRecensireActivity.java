@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.adapter.NoticeAdapter;
 import it.uniba.di.sms.sitterapp.oggetti.Notice;
 import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
@@ -77,24 +78,17 @@ public class IngaggiDaRecensireActivity extends DrawerActivity implements Notice
      */
 
 
-    private void caricaNotices(){
+    private void caricaNotices() {
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-
-       /* //utente loggato
-                String usr = db.collection("utente").getId();
-        db.collection("utente").whereEqualTo(usr, sessionManager.getSessionUsername());
-        */
-
-        /**recupera gli annunci eseguiti da una babysitter per farle effettuare una recensione*/
-        //TODO mostrare alla famiglia in sessione in quel momento i propri annunci svolti
+        /**recupera gli annunci eseguiti */
 
         db.collection("annuncio")
-                .whereEqualTo("sitter", sessionManager.getSessionUsername())
+                .whereEqualTo(sessionManager.getSessionType() == Constants.TYPE_SITTER ? "sitter" : "family", sessionManager.getSessionUsername())
                 //aggiunto controllo per recuperare solo annunci con conferma
                 .whereEqualTo("conferma", true)
                 .get()
@@ -102,30 +96,29 @@ public class IngaggiDaRecensireActivity extends DrawerActivity implements Notice
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         progressDialog.dismiss();
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             if (task.getResult().isEmpty()) {
                                 ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
                                 errorView.setSubtitle(R.string.niente_annunci);
                                 errorView.setVisibility(View.VISIBLE);
-                            }else{
+                            } else {
 
                                 String username;
-                            //visualizza gli ingaggi effettutati (lato babysitter)
+                                //visualizza gli ingaggi effettutati
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                        document.getData();
-                                        Notice notice = document.toObject(Notice.class);
-                                        //mostra solo gli ingaggi già completati (ovvero scaduti) per recensirli
+                                    document.getData();
+                                    Notice notice = document.toObject(Notice.class);
+                                    //mostra solo gli ingaggi già completati (ovvero scaduti) per recensirli
                                     if (noticeAdapter.annuncioScaduto(notice) == true) {
                                         noticeList.add(notice);
                                     }
-                                    }
-
                                 }
 
+                            }
 
                             noticeAdapter.notifyDataSetChanged();
 
-                        }else{
+                        } else {
 
                             Toast.makeText(getApplicationContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
 
@@ -139,8 +132,6 @@ public class IngaggiDaRecensireActivity extends DrawerActivity implements Notice
                         Toast.makeText(getApplicationContext(), "Errore", Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
 
 
     }
