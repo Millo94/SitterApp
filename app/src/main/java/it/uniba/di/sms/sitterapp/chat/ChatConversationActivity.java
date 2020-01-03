@@ -11,6 +11,13 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
 import com.stfalcon.chatkit.commons.ImageLoader;
 import com.stfalcon.chatkit.messages.MessageHolders;
@@ -21,9 +28,14 @@ import com.stfalcon.chatkit.messages.MessagesListAdapter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
-import androidx.core.app.ActivityCompat;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.chat.fixtures.MessagesFixtures;
 import it.uniba.di.sms.sitterapp.chat.messages.CustomIncomingImageMessageViewHolder;
@@ -31,7 +43,7 @@ import it.uniba.di.sms.sitterapp.chat.messages.CustomIncomingTextMessageViewHold
 import it.uniba.di.sms.sitterapp.chat.messages.CustomOutcomingImageMessageViewHolder;
 import it.uniba.di.sms.sitterapp.chat.messages.CustomOutcomingTextMessageViewHolder;
 import it.uniba.di.sms.sitterapp.oggetti.Message;
-import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
+import it.uniba.di.sms.sitterapp.oggetti.User;
 import it.uniba.di.sms.sitterapp.utils.AppUtils;
 
 public class ChatConversationActivity extends Activity
@@ -40,19 +52,20 @@ public class ChatConversationActivity extends Activity
         MessageInput.AttachmentsListener, MessagesListAdapter.SelectionListener,
         MessagesListAdapter.OnLoadMoreListener {
 
-    private static final int TOTAL_MESSAGES_COUNT = 100;
+    private int TOTAL_MESSAGES_COUNT = 0;
 
-    protected final String senderId = "0";
     protected ImageLoader imageLoader;
     protected MessagesListAdapter<Message> messagesAdapter;
 
     private Menu menu;
     private int selectionCount;
     private Date lastLoadedDate;
+    private Message lastMessage;
 
-    public static void open(Context context) {
-        context.startActivity(new Intent(context, ChatConversationActivity.class));
-    }
+    private Bundle BUNDLE;
+    private String CONVERSATION_UID;
+    private String CONVERSATION_NAME;
+    private String senderId;
 
     private MessagesList messagesList;
 
@@ -60,6 +73,11 @@ public class ChatConversationActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_holder_messages);
+
+        BUNDLE = getIntent().getExtras();
+        CONVERSATION_UID =BUNDLE.getString("conversationUID");
+        CONVERSATION_NAME = BUNDLE.getString("conversationName");
+        senderId = BUNDLE.getString("senderId");
 
         messagesList = (MessagesList) findViewById(R.id.messagesList);
         initAdapter();
@@ -69,15 +87,35 @@ public class ChatConversationActivity extends Activity
                 Picasso.with(ChatConversationActivity.this).load(url).into(imageView);
             }
         };
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(CONVERSATION_NAME);
         MessageInput input = (MessageInput) findViewById(R.id.input);
         input.setInputListener(this);
         input.setAttachmentsListener(this);
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        messagesAdapter.addToStart(MessagesFixtures.getTextMessage(), true);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("chat").document(CONVERSATION_UID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                TOTAL_MESSAGES_COUNT = ((ArrayList<Object>)documentSnapshot.get("Messages")).size();
+                Map<String,?> mapMessage = (HashMap<String,?>) documentSnapshot.get("lastMessage");
+                String textMessage = (String) mapMessage.get("text");
+                User userMessage = new User(documentSnapshot.getString("lastMessage.user.id"),
+                        documentSnapshot.getString("lastMessage.user.name"),
+                        documentSnapshot.getString("lastMessage.user.avatar"),
+                        documentSnapshot.getBoolean("lastMessage.user.online"));
+                String idMessage = (String) mapMessage.get("id");
+                Date dateMessage = ((Timestamp) mapMessage.get("timestamp")).toDate();
+                lastMessage = new Message(idMessage,userMessage,textMessage,dateMessage);
+                messagesAdapter.addToStart(lastMessage, true);
+            }
+        });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -112,10 +150,36 @@ public class ChatConversationActivity extends Activity
     }
 
     @Override
-    public void onLoadMore(int page, int totalItemsCount) {
+    public void onLoadMore(int page, final int totalItemsCount) {
         Log.i("TAG", "onLoadMore: " + page + " " + totalItemsCount);
         if (totalItemsCount < TOTAL_MESSAGES_COUNT) {
-            loadMessages();
+            //loadMessages();
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("chat").document(CONVERSATION_UID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if(documentSnapshot.exists() && totalItemsCount < ((ArrayList<Object>) documentSnapshot.get("Messages")).size()){
+
+                        List<Map<String,Object>> mapMessageList = (ArrayList<Map<String,Object>>)(documentSnapshot.get("Messages"));
+                        Integer i = 0;
+                        ArrayList<Message> messageList = new ArrayList<>();
+                        for(Map<String,Object> mapMessage : mapMessageList){
+                            String textMessage = (String) mapMessage.get("text");
+                            User userMessage = new User((String) mapMessage.get("user"),(String) mapMessage.get("user"),"",true);
+                            String idMessage = i.toString();
+                            i++;
+                            Date dateMessage = ((Timestamp) mapMessage.get("timestamp")).toDate();
+                            Message message = new Message(idMessage,userMessage,textMessage,dateMessage);
+                            //TODO DA RIVERE LA CONDIZIONE DI UGUAGLIANZA
+                            if(!(message.getText().equals(lastMessage.getText()) ||
+                                    message.getUser().equals(lastMessage.getUser()) ||
+                                    message.getCreatedAt().equals(lastMessage.getCreatedAt()))) messageList.add(message);
+                        }
+                        messagesAdapter.addToEnd(messageList,true);
+                    }
+                }
+            });
         }
     }
 
@@ -154,8 +218,13 @@ public class ChatConversationActivity extends Activity
     }
     @Override
     public boolean onSubmit(CharSequence input) {
-        messagesAdapter.addToStart(
-                MessagesFixtures.getTextMessage(input.toString()), true);
+        Map<String,Object> message = new HashMap<>();
+        message.put("text",input);
+        Timestamp timestamp = new Timestamp(new Date());
+        message.put("timestamp",timestamp);
+        message.put("user",senderId);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("chat").document(CONVERSATION_UID).collection("Messages").add(message);
         return true;
     }
 
