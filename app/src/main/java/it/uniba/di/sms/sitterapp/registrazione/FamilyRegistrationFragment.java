@@ -29,10 +29,11 @@ public class FamilyRegistrationFragment extends Fragment {
     View view;
     Spinner nazioni;
     String arraypaesi[];
-    EditText usernameET, passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, cittaET, numFigliET;
+    String pathFoto = "gs://sitterapp-223aa.appspot.com/img/stock_img/placeholder-profile-sq.jpg";
+    EditText fotoET, usernameET, passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, cittaET, numFigliET;
     TextView nazioneET;
     Switch animaliSW;
-    String animali = "1";
+    Boolean animali = true;
     Button confRegistration;
 
 
@@ -62,15 +63,8 @@ public class FamilyRegistrationFragment extends Fragment {
         nazioni.setAdapter(adapter);
 
         // Gestione del flag animali
-        animaliSW.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    animali = "0";
-                else
-                    animali = "1";
-            }
-        });
+
+        animali = animaliSW.isChecked();
 
         //controllo dei campi inseriti
         confRegistration.setOnClickListener(new View.OnClickListener() {
@@ -83,14 +77,15 @@ public class FamilyRegistrationFragment extends Fragment {
                 } else if (!checkEmail(emailET.getText().toString())) {
                     Toast.makeText(getContext(), R.string.invalidEmail, Toast.LENGTH_LONG).show();
                 } else {
-                    UtenteFamiglia famiglia = new UtenteFamiglia(usernameET.getText().toString(),
-                            passwordET.getText().toString(),
-                            nomeET.getText().toString(),
-                            cognomeET.getText().toString(),
+                    UtenteFamiglia famiglia = new UtenteFamiglia("",
+                            usernameET.getText().toString(),
+                            pathFoto,
                             emailET.getText().toString(),
-                            numeroET.getText().toString(),
+                            passwordET.getText().toString(),
                             nazioni.getSelectedItem().toString(),
                             cittaET.getText().toString(),
+                            numeroET.getText().toString(),
+                            true,
                             numFigliET.getText().toString(),
                             animali);
                     mListener.onFragmentInteraction(famiglia);

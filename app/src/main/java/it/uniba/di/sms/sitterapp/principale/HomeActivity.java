@@ -133,12 +133,12 @@ public class HomeActivity extends DrawerActivity
         } else if (type == Constants.TYPE_FAMILY) {
 
             sitterList = new ArrayList<>();
-            sitterList.add(new UtenteSitter("Francesca", "http://sitterapp.altervista.org/profilePicture/demoSitter/francesca.jpg", new Float(2.5), 4));
-            sitterList.add(new UtenteSitter("Gabriella", "http://sitterapp.altervista.org/profilePicture/demoSitter/gabriella.jpg", 4, 3));
-            sitterList.add(new UtenteSitter("Gianluca", "http://sitterapp.altervista.org/profilePicture/demoSitter/gianluca.jpg", new Float(3.5), 7));
-            sitterList.add(new UtenteSitter("Davide", "http://sitterapp.altervista.org/profilePicture/demoSitter/davide.jpg", 3, 5));
-            sitterList.add(new UtenteSitter("Monica", "http://sitterapp.altervista.org/profilePicture/demoSitter/monica.jpg", 2, 4));
-            sitterList.add(new UtenteSitter("Giorgia", "http://sitterapp.altervista.org/profilePicture/demoSitter/giorgia.jpg", 5, 7));
+            sitterList.add(new UtenteSitter("","Francesca", "http://sitterapp.altervista.org/profilePicture/demoSitter/francesca.jpg",true, new Float(2.5), 4));
+            sitterList.add(new UtenteSitter("","Gabriella", "http://sitterapp.altervista.org/profilePicture/demoSitter/gabriella.jpg", true,4, 3));
+            sitterList.add(new UtenteSitter("","Gianluca", "http://sitterapp.altervista.org/profilePicture/demoSitter/gianluca.jpg", true,new Float(3.5), 7));
+            sitterList.add(new UtenteSitter("","Davide", "http://sitterapp.altervista.org/profilePicture/demoSitter/davide.jpg", true,3, 5));
+            sitterList.add(new UtenteSitter("","Monica", "http://sitterapp.altervista.org/profilePicture/demoSitter/monica.jpg", true,2, 4));
+            sitterList.add(new UtenteSitter("","Giorgia", "http://sitterapp.altervista.org/profilePicture/demoSitter/giorgia.jpg", true,5, 7));
             sitterAdapter = new SitterAdapter(HomeActivity.this, sitterList, HomeActivity.this);
 
             recyclerView.setAdapter(sitterAdapter);
@@ -176,7 +176,7 @@ public class HomeActivity extends DrawerActivity
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-            loadSitter();
+            //loadSitter();
         }
     }
 
@@ -218,70 +218,9 @@ public class HomeActivity extends DrawerActivity
 
     }
 
-    //Caricamento dell'elenco babysitter (per la home della famiglia)
-    private void loadSitter() {
-
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Php.ELENCO_SITTER,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        progressDialog.dismiss();
-
-                        try {
-                            JSONArray sitter = new JSONArray(response);
-                            if (sitter.length() == 0) {
-                                ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
-                                errorView.setVisibility(View.VISIBLE);
-                                errorView.setTitle(R.string.niente_sitter);
-                            } else {
-                                for (int i = 0; i < sitter.length(); i++) {
-                                    JSONObject sitterObject = sitter.getJSONObject(i);
-                                    String username = sitterObject.getString("username");
-                                    String foto = sitterObject.getString("pathfoto");
-
-                                    float rating;
-                                    if (sitterObject.getString("rating").equals("null")) {
-                                        rating = 0;
-                                    } else {
-                                        rating = (float) sitterObject.getDouble("rating");
-                                    }
-
-                                    int numLavori;
-                                    if (sitterObject.getString("numLavori").equals("null")) {
-                                        numLavori = 0;
-                                    } else {
-                                        numLavori = sitterObject.getInt("numLavori");
-                                    }
-
-                                    UtenteSitter s = new UtenteSitter(username, foto, rating, numLavori);
-                                    sitterList.add(s);
-                                    dispTotali.put(username, new ArrayList<Integer>());
-                                    getDisponibilita(username);
-                                }
-                            }
-
-                            sitterAdapter.notifyDataSetChanged();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(HomeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        Volley.newRequestQueue(this).add(stringRequest);
-        progressDialog.hide();
-    }
+    /**
+     * TODO CREARE METODO DEL CARICAMENTO DELLE BABYSITTER PER LA HOME DELLA FAMIGLIA !!!
+     */
 
     //al click su un annuncio visualizza i dettagli
     @Override
@@ -303,7 +242,7 @@ public class HomeActivity extends DrawerActivity
         if (sessionManager.checkLogin()) {
             Intent detailIntent = new Intent(HomeActivity.this, ProfiloPubblicoActivity.class);
             detailIntent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
-            detailIntent.putExtra("username", sitter.getUsername());
+            detailIntent.putExtra("username", sitter.getName());
             startActivity(detailIntent);
         } else {
             sessionManager.forceLogin(this);
@@ -337,7 +276,7 @@ public class HomeActivity extends DrawerActivity
             // CHECK SULLA DISPONIBILITA
 
             for (Integer checked : checkedBox) {
-                if (!dispTotali.get(sitter.getUsername()).contains(checked)) {
+                if (!dispTotali.get(sitter.getName()).contains(checked)) {
                     removeList.add(sitter);
                     break;
                 }
