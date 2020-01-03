@@ -18,6 +18,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -53,6 +54,7 @@ public class ChatActivity extends DrawerActivity implements DialogsListAdapter.O
         DialogsListAdapter.OnDialogLongClickListener<Dialog>{
 
     private static final String SELECTED = "selected";
+    private static final String TAG = "ChatActivity";
     BottomNavigationView bottomNavigationView;
 
     private DialogsList dialogsList;
@@ -114,43 +116,47 @@ public class ChatActivity extends DrawerActivity implements DialogsListAdapter.O
     private void getDialogs(final String user) {
         db.collection("chat")
                 .whereArrayContains("UsersList",sessionManager.getSessionUsername())
+                .orderBy("lastMessage.timestamp", Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
-                        //ripulisco la lista dei dialogs
-                        dialogsAdapter.clear();
-                        List<Dialog> dialogList = new ArrayList<>();
-                        //aggiungo ogni conversazione alla lista
-                        for(DocumentSnapshot documentSnapshot:querySnapshot.getDocuments()){
-                            List<Map<String,Object>> mapUserList = (ArrayList<Map<String,Object>>) documentSnapshot.get("Users");
-                            //rimuovo dell'utente che non sono necessarie
-                            for(int i=0;i<mapUserList.size();++i){
-                                Map<String,Object> user = mapUserList.get(i);
-                                if(user.get("id").equals(sessionManager.getSessionUsername())){
-                                    mapUserList.remove(i);
+                        if(e!=null){
+                            Log.d(TAG,"Error:"+e.getMessage());
+                        }else{
+                            //ripulisco la lista dei dialogs
+                            dialogsAdapter.clear();
+                            List<Dialog> dialogList = new ArrayList<>();
+                            //aggiungo ogni conversazione alla lista
+                            for(DocumentSnapshot documentSnapshot:querySnapshot.getDocuments()){
+                                List<Map<String,Object>> mapUserList = (ArrayList<Map<String,Object>>) documentSnapshot.get("Users");
+                                //rimuovo dell'utente che non sono necessarie
+                                for(int i=0;i<mapUserList.size();++i){
+                                    Map<String,Object> user = mapUserList.get(i);
+                                    if(user.get("id").equals(sessionManager.getSessionUsername())){
+                                        mapUserList.remove(i);
+                                    }
                                 }
+
+                                //avvaloro la lista degli utenti (nel nostro caso c'è solo un utente
+                                ArrayList<User> userList = new ArrayList<>();
+                                userList.add(new User((String) mapUserList.get(0).get("id"),(String) mapUserList.get(0).get("name"),(String) mapUserList.get(0).get("avatar"),(Boolean) mapUserList.get(0).get("online")));
+
+                                //avvaloro il campo ultimo messaggio
+                                Map<String,Object> mapMessage = (HashMap<String,Object>) documentSnapshot.get("lastMessage");
+                                String textMessage = (String) mapMessage.get("text");
+                                User userMessage = new User(documentSnapshot.getString("lastMessage.user.id"),
+                                        documentSnapshot.getString("lastMessage.user.name"),
+                                        documentSnapshot.getString("lastMessage.user.avatar"),
+                                        documentSnapshot.getBoolean("lastMessage.user.online"));
+                                String idMessage = (String) mapMessage.get("id").toString();
+                                Date dateMessage = ((Timestamp) mapMessage.get("timestamp")).toDate();
+                                Message lastMessage = new Message(idMessage,userMessage,textMessage,dateMessage);
+
+                                //creo il dialog per la conversazione
+                                dialogList.add(new Dialog(documentSnapshot.getId(),userList.get(0).getName(),userList.get(0).getAvatar(),userList,lastMessage,0));
                             }
-
-                            //avvaloro la lista degli utenti (nel nostro caso c'è solo un utente
-                            ArrayList<User> userList = new ArrayList<>();
-                            userList.add(new User((String) mapUserList.get(0).get("id"),(String) mapUserList.get(0).get("name"),(String) mapUserList.get(0).get("avatar"),(Boolean) mapUserList.get(0).get("online")));
-
-                            //avvaloro il campo ultimo messaggio
-                            Map<String,?> mapMessage = (HashMap<String,?>) documentSnapshot.get("lastMessage");
-                            String textMessage = (String) mapMessage.get("text");
-                            User userMessage = new User(documentSnapshot.getString("lastMessage.user.id"),
-                                    documentSnapshot.getString("lastMessage.user.name"),
-                                    documentSnapshot.getString("lastMessage.user.avatar"),
-                                    documentSnapshot.getBoolean("lastMessage.user.online"));
-                            String idMessage = (String) mapMessage.get("id").toString();
-                            Date dateMessage = ((Timestamp) mapMessage.get("timestamp")).toDate();
-                            Message lastMessage = new Message(idMessage,userMessage,textMessage,dateMessage);
-
-                            //creo il dialog per la conversazione
-                            dialogList.add(new Dialog(documentSnapshot.getId(),userList.get(0).getName(),userList.get(0).getAvatar(),userList,lastMessage,0));
+                            dialogsAdapter.addItems(dialogList);
                         }
-                        dialogsAdapter.addItems(dialogList);
-
                     }
                 });
     }
