@@ -32,9 +32,11 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
     ArrayList<EditText> listaET = new ArrayList<>();
     View view;
     EditText usernameET, passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, dataNascitaET, cittaET;
+    String pathFoto = "";
     RadioGroup genereRG;
     Switch autoSW;
     Button confRegistration;
+    float rating ;
     String genere = "";
     Boolean auto = false;
     Spinner nazioni;
@@ -124,16 +126,19 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                 } else if (!checkEmail(emailET.getText().toString())) {
                     Toast.makeText(getContext(), R.string.invalidEmail, Toast.LENGTH_LONG).show();
                 } else {
-                    UtenteSitter sitter = new UtenteSitter(usernameET.getText().toString(),
-                            passwordET.getText().toString(),
-                            nomeET.getText().toString(),
-                            cognomeET.getText().toString(),
-                            Constants.dateToSQL(dataNascitaET.getText().toString()),
+                    UtenteSitter sitter = new UtenteSitter("",
+                            usernameET.getText().toString(),
+                            pathFoto,
                             emailET.getText().toString(),
-                            numeroET.getText().toString(),
-                            genere,
+                            passwordET.getText().toString(),
                             nazioni.getSelectedItem().toString(),
                             cittaET.getText().toString(),
+                            numeroET.getText().toString(),
+                            true,
+                            Constants.dateToSQL(dataNascitaET.getText().toString()),
+                            genere,
+                            0,
+                            0,
                             auto);
                     mListener.onFragmentInteraction(sitter);
                 }

@@ -75,11 +75,11 @@ public class SitterAdapter extends RecyclerView.Adapter<SitterAdapter.MyViewHold
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final UtenteSitter contact = sitterList.get(position);
         //attribuzione dei dettagli dell'annuncio alle varie View
-        holder.name.setText(contact.getUsername());
+        holder.name.setText(contact.getName());
         holder.ratingBar.setRating(contact.getRating());
         holder.engages.setText(String.valueOf(contact.getNumLavori()));
 
-        Glide.with(context).load(contact.getFoto()).apply(RequestOptions.centerCropTransform()).into(holder.photo);
+        Glide.with(context).load(contact.getAvatar()).apply(RequestOptions.centerCropTransform()).into(holder.photo);
     }
 
     //restituisce il numero degli elementi in sitter list

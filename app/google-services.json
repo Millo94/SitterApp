@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "562752539843-jioiajjtc23jj773h2qt9l4ph69sonbs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "it.uniba.di.sms.sitterapp",
+            "certificate_hash": "1289845e9e73af36a23f7e0d38117544970b6df0"
+          }
+        },
+        {
           "client_id": "562752539843-vg5pid42jfviiritbomo9rjgpel3odqg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

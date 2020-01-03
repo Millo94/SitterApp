@@ -29,7 +29,8 @@ public class FamilyRegistrationFragment extends Fragment {
     View view;
     Spinner nazioni;
     String arraypaesi[];
-    EditText usernameET, passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, cittaET, numFigliET;
+    String pathFoto = "gs://sitterapp-223aa.appspot.com/img/stock_img/placeholder-profile-sq.jpg";
+    EditText fotoET, usernameET, passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, cittaET, numFigliET;
     TextView nazioneET;
     Switch animaliSW;
     Boolean animali = true;
@@ -76,14 +77,15 @@ public class FamilyRegistrationFragment extends Fragment {
                 } else if (!checkEmail(emailET.getText().toString())) {
                     Toast.makeText(getContext(), R.string.invalidEmail, Toast.LENGTH_LONG).show();
                 } else {
-                    UtenteFamiglia famiglia = new UtenteFamiglia(usernameET.getText().toString(),
-                            passwordET.getText().toString(),
-                            nomeET.getText().toString(),
-                            cognomeET.getText().toString(),
+                    UtenteFamiglia famiglia = new UtenteFamiglia("",
+                            usernameET.getText().toString(),
+                            pathFoto,
                             emailET.getText().toString(),
-                            numeroET.getText().toString(),
+                            passwordET.getText().toString(),
                             nazioni.getSelectedItem().toString(),
                             cittaET.getText().toString(),
+                            numeroET.getText().toString(),
+                            true,
                             numFigliET.getText().toString(),
                             animali);
                     mListener.onFragmentInteraction(famiglia);

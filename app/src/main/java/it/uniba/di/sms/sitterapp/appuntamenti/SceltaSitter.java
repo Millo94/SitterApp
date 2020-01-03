@@ -78,7 +78,7 @@ public class SceltaSitter extends DrawerActivity
                         Notice notice =  docRef.toObject(Notice.class);
                         Map<String, Object> listSitter = notice.getCandidatura();
                         for(String u : listSitter.keySet()){
-                            UtenteSitter uS = new UtenteSitter(u,(String) listSitter.get(u));
+                            UtenteSitter uS = new UtenteSitter("",(String) listSitter.get(u),"",true);
                             sitterList.add(uS);
                         }
                         sitterAdapter.notifyDataSetChanged();
@@ -118,7 +118,7 @@ public class SceltaSitter extends DrawerActivity
                     case 0:
                         Intent detailIntent = new Intent(SceltaSitter.this, ProfiloPubblicoActivity.class);
                         detailIntent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
-                        detailIntent.putExtra("username", sitter.getUsername());
+                        detailIntent.putExtra("username", sitter.getName());
                         startActivity(detailIntent);
                         break;
                     //assegna incarico
@@ -137,7 +137,7 @@ public class SceltaSitter extends DrawerActivity
                                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        chooseSitter(sitter.getUsername());
+                                        chooseSitter(sitter.getName());
                                     }
                                 })
                                 .create()
