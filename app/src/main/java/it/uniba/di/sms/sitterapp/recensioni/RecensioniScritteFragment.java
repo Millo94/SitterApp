@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -25,7 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 
 
-import it.uniba.di.sms.sitterapp.adapter.RecensioniAdapter;
+import it.uniba.di.sms.sitterapp.adapter.RecensioniScritteAdapter;
 import it.uniba.di.sms.sitterapp.oggetti.Recensione;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
@@ -36,7 +35,7 @@ public class RecensioniScritteFragment extends Fragment {
 
 
     private RecyclerView recycler;
-    private RecensioniAdapter adapter;
+    private RecensioniScritteAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<Recensione> recensioneList;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -66,11 +65,11 @@ public class RecensioniScritteFragment extends Fragment {
         recycler.setLayoutManager(layoutManager);
 
         recensioneList = new ArrayList<>();
-        adapter = new RecensioniAdapter(recensioneList);
+        adapter = new RecensioniScritteAdapter(recensioneList);
         recycler.setAdapter(adapter);
 
         errorView = (ErrorView) view.findViewById(R.id.errorView);
-        //caricaReview();
+
         ReviewScritte();
 
         return view;

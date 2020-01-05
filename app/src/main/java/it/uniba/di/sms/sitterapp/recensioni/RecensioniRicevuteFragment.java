@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import it.uniba.di.sms.sitterapp.adapter.RecensioniAdapter;
+import it.uniba.di.sms.sitterapp.adapter.RecensioniRicevuteAdapter;
 
 
 import it.uniba.di.sms.sitterapp.oggetti.Recensione;
@@ -38,7 +37,7 @@ public class RecensioniRicevuteFragment extends Fragment {
 
 
     private RecyclerView recycler;
-    private RecensioniAdapter adapter;
+    private RecensioniRicevuteAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<Recensione> recensioneList;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -68,7 +67,7 @@ public class RecensioniRicevuteFragment extends Fragment {
         recycler.setLayoutManager(layoutManager);
 
         recensioneList = new ArrayList<>();
-        adapter = new RecensioniAdapter(recensioneList);
+        adapter = new RecensioniRicevuteAdapter(recensioneList);
         recycler.setAdapter(adapter);
 
         errorView = (ErrorView) view.findViewById(R.id.errorView);
@@ -77,7 +76,6 @@ public class RecensioniRicevuteFragment extends Fragment {
 
         return view;
     }
-
 
 
     private void ReviewRicevute() {

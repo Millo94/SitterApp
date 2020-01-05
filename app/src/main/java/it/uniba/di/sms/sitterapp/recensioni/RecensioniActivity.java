@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import it.uniba.di.sms.sitterapp.adapter.PageViewAdapter;
 import it.uniba.di.sms.sitterapp.R;
@@ -30,13 +31,12 @@ public class RecensioniActivity extends DrawerActivity {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.getMenu().findItem(getIntent().getIntExtra(SELECTED,R.id.nav_recensioni)).setChecked(true);
-        float dimension = getResources().getDimensionPixelSize(R.dimen.appbar_size);
+
 
 
         //Tabbed Layout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.setTranslationY(56);
-        tabLayout.animate().translationY(dimension).alpha(1).setDuration(10*100).start();
+        tabLayout.setVisibility(View.VISIBLE);
         tabLayout.addTab(tabLayout.newTab().setText("Recensioni Scritte"));
         tabLayout.addTab(tabLayout.newTab().setText("Recensioni Ricevute"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);

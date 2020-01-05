@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import it.uniba.di.sms.sitterapp.adapter.RecensioniAdapter;
+import it.uniba.di.sms.sitterapp.adapter.RecensioniRicevuteAdapter;
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.oggetti.Recensione;
 import it.uniba.di.sms.sitterapp.Php;
@@ -44,7 +44,7 @@ public class RecensioniPubblicoActivity extends AppCompatActivity {
 
     SessionManager sessionManager;
     private RecyclerView recycler;
-    private RecensioniAdapter adapter;
+    private RecensioniRicevuteAdapter adapter;
     private List<Recensione> recensioneList;
 
     String user;
@@ -59,7 +59,7 @@ public class RecensioniPubblicoActivity extends AppCompatActivity {
         recycler = (RecyclerView) findViewById(R.id.recyclerHome);
 
         recensioneList = new ArrayList<>();
-        adapter = new RecensioniAdapter(recensioneList);
+        adapter = new RecensioniRicevuteAdapter(recensioneList);
         recycler.setAdapter(adapter);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -113,16 +113,18 @@ public class RecensioniPubblicoActivity extends AppCompatActivity {
                                     String username;
 
                                     if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
-                                        username = recensioneObject.getString("babysitter");
+                                        username = recensioneObject.getString("sender");
                                     } else {
                                         username = recensioneObject.getString("famiglia");
                                     }
 
-
+                                    String sender = "";
+                                    String receiver = "";
+                                    String idAnnuncio = "";
                                     String descrizione = recensioneObject.getString("commento");
                                     Float rating = (float) recensioneObject.getDouble("rating");
 
-                                    Recensione r = new Recensione(username, descrizione, rating);
+                                    Recensione r = new Recensione(descrizione, rating, idAnnuncio, sender, receiver);
 
                                     recensioneList.add(r);
                                 }

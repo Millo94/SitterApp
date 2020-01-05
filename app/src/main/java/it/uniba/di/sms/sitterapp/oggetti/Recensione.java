@@ -11,6 +11,7 @@ public class Recensione {
     String idAnnuncio;
     String receiver;
     String sender;
+    String data;
 
 
     //costruttore
@@ -20,6 +21,7 @@ public class Recensione {
         this.idAnnuncio = idAnnuncio;
         this.receiver = receiver;
         this.sender = sender;
+        //this.data = dataRev;
 
     }
 

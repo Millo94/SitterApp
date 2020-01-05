@@ -99,6 +99,7 @@
     <string name="scrivi_recensione">Write Review</string>
     <string name="recensioniScritte">Reviews Written</string>
     <string name="recensioniRicevute">Reviews Received</string>
+    <string name="destinatario">To:</string>
     <string name="nuovoAnnuncio">New Notice</string>
     <string name="pubblicaAnnuncio">Post Notice</string>
     <string name="selezionaOra">Select Time</string>
@@ -189,5 +190,7 @@
     <string name="action_delete">Delete</string>
     <string name="action_copy">Copy</string>
     <string name="copied_message">Message copied!</string>
+    <string name="sender">sender</string>
+    <string name="receiver">receiver</string>
 
 </resources>

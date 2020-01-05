@@ -86,6 +86,7 @@
     <string name="annuncioPubblicato">Annuncio pubblicato.</string>
     <string name="recensioniScritte">Recensioni Scritte</string>
     <string name="recensioniRicevute">Recensioni Ricevute</string>
+    <string name="destinatario">A:</string>
     <string name="sceltaAzione">Scegli come eseguire l\' azione:</string>
     <string name="chiamata">Chiamata</string>
     <string name="profilo">Profilo</string>
