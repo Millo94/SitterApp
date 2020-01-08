@@ -183,16 +183,12 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
     //inizializzazione delle view
     public void initialization() {
         //TODO FOTO
-        nomeCompletoET = (EditText) view.findViewById(R.id.usernameSitterReg);
+        nomeCompletoET = (EditText) view.findViewById(R.id.nomeCompletoSitterReg);
         listaET.add(nomeCompletoET);
         passwordET = (EditText) view.findViewById(R.id.passwordSitterReg);
         listaET.add(passwordET);
         confermaPasswordET = (EditText) view.findViewById(R.id.confPasswordSitterReg);
         listaET.add(confermaPasswordET);
-        nomeET = (EditText) view.findViewById(R.id.nomeSitterReg);
-        listaET.add(nomeET);
-        cognomeET = (EditText) view.findViewById(R.id.cognomeSitterReg);
-        listaET.add(cognomeET);
         emailET = (EditText) view.findViewById(R.id.emailSitterReg);
         listaET.add(emailET);
         numeroET = (EditText) view.findViewById(R.id.phoneSitterReg);
@@ -204,7 +200,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
         listaET.add(cittaET);
         retribuzioneET = (EditText) view.findViewById(R.id.retribuzioneSitterReg);
         listaET.add(retribuzioneET);
-        autoSW = (Switch) view.findViewById(R.id.switch1);
+        autoSW = (Switch) view.findViewById(R.id.Auto);
         confRegistration = (Button) view.findViewById(R.id.buttonReg);
     }
 

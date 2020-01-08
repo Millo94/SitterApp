@@ -21,7 +21,7 @@
 
             <TableLayout
                 android:id="@+id/tableNewNotice"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -158,7 +158,7 @@
 
     <Button
         android:id="@+id/confermaNewNotice"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/scrollView3"
         android:layout_centerHorizontal="true"

@@ -7,39 +7,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import it.uniba.di.sms.sitterapp.Constants;
-import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
-import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
 import it.uniba.di.sms.sitterapp.registrazione.RegistrationActivity;
 import it.uniba.di.sms.sitterapp.SessionManager;
 
@@ -65,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         // Creazione del nuovo manager di sessione
         session = new SessionManager(getApplicationContext());
 
-        usernameEt = (EditText) findViewById(R.id.lblUsername);
+        usernameEt = (EditText) findViewById(R.id.lblEmail);
         passwordEt = (EditText) findViewById(R.id.lblPassword);
         nuovoAccount = (TextView) findViewById(R.id.creaAccount);
 

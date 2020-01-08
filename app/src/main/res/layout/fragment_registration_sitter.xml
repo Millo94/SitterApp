@@ -1,387 +1,247 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sitter_reg_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context="it.uniba.di.sms.sitterapp.registrazione.SitterRegistrationFragment">
 
 
-    <ScrollView
-        style="@android:style/Widget.Material.ScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="3dp"
-        android:paddingStart="3dp"
-        android:paddingLeft="3dp"
-        android:paddingTop="3dp"
-        android:paddingEnd="3dp"
-        android:paddingRight="3dp"
-        android:paddingBottom="3dp"
-        android:verticalScrollbarPosition="defaultPosition"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+    <TextView
+        android:id="@+id/registrazioneSitterReg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/registrazioneSitter"
+        android:textColor="@color/colorScritte"
+        android:textSize="40sp" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearLayout2"
+    <ImageView
+        android:id="@+id/profilePictureSitter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_account_circle_black_56dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nomeCompletoSitter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+        <EditText
+            android:id="@+id/nomeCompletoSitterReg"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="0dp"
-            android:orientation="vertical"
-            android:padding="3dp"
-            android:paddingStart="3dp"
-            android:paddingLeft="3dp"
-            android:paddingTop="3dp"
-            android:paddingEnd="3dp"
-            android:paddingRight="3dp"
-            android:paddingBottom="3dp">
+            android:autofillHints=""
+            android:hint="@string/nomeCompleto"
+            android:inputType="textPersonName"
+            android:textColorLink="@color/colorPrimary"
+            android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/registrazioneSitterReg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="sans-serif-smallcaps"
-                android:text="@string/registrazioneSitter"
-                android:textColor="@color/colorScritte"
-                android:textSize="40sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TEI1"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/registrazioneSitterReg">
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/Password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
-                <EditText
-                    android:id="@+id/usernameSitterReg"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autofillHints=""
-                    android:hint="@string/username"
-                    android:inputType="textPersonName"
-                    android:textColorLink="@color/colorPrimary"
-                    android:textSize="18sp" />
+        <EditText
+            android:id="@+id/passwordSitterReg"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textColorLink="@color/colorPrimary"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ConfermaPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TEI2"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TEI1">
+        <EditText
+            android:id="@+id/confPasswordSitterReg"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/confermapassword"
+            android:inputType="textPassword"
+            android:textColorLink="@color/colorPrimary"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/passwordSitterReg"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autofillHints=""
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:textColorLink="@color/colorPrimary"
-                    android:textSize="18sp" />
-            </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/Email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TEI3"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TEI2">
+        <EditText
+            android:id="@+id/emailSitterReg"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:textColorLink="@color/colorPrimary"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/confPasswordSitterReg"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autofillHints=""
-                    android:ems="10"
-                    android:hint="@string/confermapassword"
-                    android:inputType="textPassword"
-                    android:textColorLink="@color/colorPrimary"
-                    android:textSize="18sp" />
-            </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/DataNascita"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TEI4"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TEI3">
+        <EditText
+            android:id="@+id/nascitaSitterReg"
+            style="@android:style/Widget.Material.DatePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
+            android:focusableInTouchMode="false"
+            android:hint="@string/datanascita"
+            android:inputType="date"
+            android:textColorLink="@color/colorPrimary"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/nomeSitterReg"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autofillHints=""
-                    android:ems="10"
-                    android:hint="@string/nome"
-                    android:inputType="textPersonName"
-                    android:textColorLink="@color/colorPrimary"
-                    android:textSize="18sp" />
-            </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/Telefono"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TEI5"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TEI4">
+        <EditText
+            android:id="@+id/phoneSitterReg"
+            style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/telefono"
+            android:inputType="phone"
+            android:textColorLink="@color/colorPrimary"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/cognomeSitterReg"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autofillHints=""
-                    android:ems="10"
-                    android:hint="@string/cognome"
-                    android:inputType="textPersonName"
-                    android:textColorLink="@color/colorPrimary"
-                    android:textSize="18sp" />
-            </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/nazioneSitterReg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/nazione" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TEI6"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TEI5">
+    <Spinner
+        android:id="@+id/spinnerSitterReg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        tools:listitem="@android:layout/simple_list_item_1" />
 
-                <EditText
-                    android:id="@+id/nascitaSitterReg"
-                    style="@android:style/Widget.Material.DatePicker"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autofillHints=""
-                    android:ems="10"
-                    android:focusableInTouchMode="false"
-                    android:hint="@string/datanascita"
-                    android:inputType="date"
-                    android:textColorLink="@color/colorPrimary"
-                    android:textSize="18sp" />
-            </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/Citta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TEI7"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TEI6">
+        <EditText
+            android:id="@+id/CittaSitterReg"
+            style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/citta"
+            android:inputType="text"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/emailSitterReg"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autofillHints=""
-                    android:ems="10"
-                    android:hint="@string/email"
-                    android:inputType="textEmailAddress"
-                    android:textColorLink="@color/colorPrimary"
-                    android:textSize="18sp" />
-            </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/genderSitterReg"
+        android:layout_width="match_parent"
+        android:layout_height="31dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@android:color/darker_gray"
+        android:paddingTop="3dp"
+        android:text="@string/sesso"
+        android:textAlignment="textStart"
+        android:textColor="@android:color/background_dark"
+        android:textSize="18sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TEI8"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TEI7">
+    <RadioGroup
+        android:id="@+id/groupGenderSitterReg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/phoneSitterReg"
-                    style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autofillHints=""
-                    android:ems="10"
-                    android:hint="@string/telefono"
-                    android:inputType="phone"
-                    android:textColorLink="@color/colorPrimary"
-                    android:textSize="18sp" />
-            </com.google.android.material.textfield.TextInputLayout>
+        <RadioButton
+            android:id="@+id/maleSitterReg"
+            style="@android:style/Widget.Material.CompoundButton.RadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/uomo" />
+
+        <RadioButton
+            android:id="@+id/femaleSitterReg"
+            style="@android:style/Widget.Material.CompoundButton.RadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/donna" />
+
+    </RadioGroup>
+
+    <Switch
+        android:id="@+id/Auto"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:backgroundTint="@android:color/darker_gray"
+        android:text="@string/automunito"
+        android:textColorLink="@color/colorPrimary"
+        android:textSize="18sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/retribuzioneSitterReg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/tariffa" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/buttonReg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:elevation="2dp"
+        android:text="@string/confermaRegistrazione"
+        android:textColor="@android:color/background_light"
+        android:textCursorDrawable="@color/colorPrimary"
+        android:textSize="14sp" />
 
 
-            <TextView
-                android:id="@+id/genderSitterReg"
-                style="@android:style/Widget.Material.TextView"
-                android:layout_width="0dp"
-                android:layout_height="31dp"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@android:color/darker_gray"
-                android:paddingTop="3dp"
-                android:text="@string/sesso"
-                android:textAlignment="textStart"
-                android:textColor="@android:color/background_dark"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TEI8" />
-
-            <RadioGroup
-                android:id="@+id/groupGenderSitterReg"
-                android:layout_width="230dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="@+id/genderSitterReg"
-                app:layout_constraintHorizontal_bias="0.922"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TEI8">
-
-                <RadioButton
-                    android:id="@+id/maleSitterReg"
-                    style="@android:style/Widget.Material.CompoundButton.RadioButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="@string/uomo" />
-
-                <RadioButton
-                    android:id="@+id/femaleSitterReg"
-                    style="@android:style/Widget.Material.CompoundButton.RadioButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/donna" />
-
-            </RadioGroup>
-
-            <Switch
-                android:id="@+id/switch1"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="16dp"
-                android:layout_weight="1"
-                android:backgroundTint="@android:color/darker_gray"
-                android:text="@string/automunito"
-                android:textColorLink="@color/colorPrimary"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TEI9" />
-
-            <Button
-                android:id="@+id/buttonReg"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="40dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:elevation="2dp"
-                android:text="@string/confermaRegistrazione"
-                android:textColor="@android:color/background_light"
-                android:textCursorDrawable="@color/colorPrimary"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/switch1" />
-
-
-            <Spinner
-                android:id="@+id/spinnerSitterReg"
-                style="@android:style/Widget.Material.TextView.SpinnerItem"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nazioneSitterReg"
-                tools:listitem="@android:layout/simple_list_item_1" />
-
-            <TextView
-                android:id="@+id/nazioneSitterReg"
-                style="@android:style/TextAppearance.Material.Widget.TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/nazione"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/genderSitterReg" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TEI9"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerSitterReg">
-
-                <EditText
-                    android:id="@+id/CittaSitterReg"
-                    style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:autofillHints=""
-                    android:ems="10"
-                    android:hint="@string/citta"
-                    android:inputType="text"
-                    android:textSize="18sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

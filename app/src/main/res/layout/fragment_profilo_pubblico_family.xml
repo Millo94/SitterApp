@@ -23,7 +23,7 @@
 
             <Button
                 android:id="@+id/contattaFamiglia"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:backgroundTint="@color/colorPrimary"
@@ -38,7 +38,7 @@
 
             <Button
                 android:id="@+id/FeedbackFamiglia"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
                 android:layout_marginTop="8dp"
@@ -59,14 +59,14 @@
                 android:layout_height="58dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="40dp"
-                android:text="@string/username"
+                android:text="@string/nomeCompleto"
                 android:textSize="40sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/descrizionePuFamiglia"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:text="@string/descrizione"
@@ -87,7 +87,7 @@
 
             <TextView
                 android:id="@+id/nomePuFamiglia"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:text="@string/nome"
@@ -101,7 +101,7 @@
 
             <TextView
                 android:id="@+id/nomePuFamiglia2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/nome"
@@ -113,7 +113,7 @@
 
             <TextView
                 android:id="@+id/cognomePuFamiglia"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/cognome"
@@ -127,7 +127,7 @@
 
             <TextView
                 android:id="@+id/cognomePuFamiglia2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/cognome"
@@ -139,7 +139,7 @@
 
             <TextView
                 android:id="@+id/emailPuFamiglia"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/email"
@@ -152,7 +152,7 @@
 
             <TextView
                 android:id="@+id/emailPuFamiglia2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/email"
@@ -164,7 +164,7 @@
 
             <TextView
                 android:id="@+id/telefonoPuFamiglia"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/telefono"
@@ -178,7 +178,7 @@
 
             <TextView
                 android:id="@+id/telefonoPuFamiglia2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/telefono"
@@ -190,7 +190,7 @@
 
             <TextView
                 android:id="@+id/animaliPuFamiglia2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/animali"
@@ -202,7 +202,7 @@
 
             <TextView
                 android:id="@+id/animaliPuFamiglia"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/animali"
@@ -215,7 +215,7 @@
 
             <TextView
                 android:id="@+id/figliPuFamiglia"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/figlinum"
@@ -228,7 +228,7 @@
 
             <TextView
                 android:id="@+id/figliPuFamiglia2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/figlinum"
@@ -240,7 +240,7 @@
 
             <TextView
                 android:id="@+id/nazionePuFamiglia2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/nazione"
@@ -252,7 +252,7 @@
 
             <TextView
                 android:id="@+id/nazionePuFamiglia"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/nazione"
@@ -265,7 +265,7 @@
 
             <TextView
                 android:id="@+id/cittaPuFamily2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/citta"
@@ -277,7 +277,7 @@
 
             <TextView
                 android:id="@+id/cittaPuFamily"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/citta"

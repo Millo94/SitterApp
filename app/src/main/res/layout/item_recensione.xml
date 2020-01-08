@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:text="@string/username"
+            android:text="@string/nomeCompleto"
             android:textColor="#000"
             android:textSize="20sp"
             android:textStyle="bold"/>

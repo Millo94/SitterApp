@@ -3,7 +3,7 @@
     <string name="babySitter" translatable="false">Baby Sitter</string>
 
     <!-- Stringhe form registrazione -->
-    <string name="username" translatable="false">Username</string>
+    <string name="nomeCompleto">Full name</string>
     <string name="password" translatable="false">Password</string>
     <string name="confermapassword">Confirm Password</string>
     <string name="email" translatable="false">E-mail</string>

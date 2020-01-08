@@ -165,6 +165,9 @@
     <string name="confermaCandidaturaSit">Conferma Candidatura</string>
     <string name="confermaConfermaCandidaturaSit">La famiglia ti ha scelto per quest\'annuncio. Vuoi confermare?</string>
     <string name="confermaEliminaCandidatura">Sei sicuro di voler eliminare la tua candidatura?</string>
+    <string name="nomeCompleto" translatable="false">Nome completo</string>
+    <string name="sender">Mittente</string>
+    <string name="receiver">Destinatario</string>
 
 
 </resources>

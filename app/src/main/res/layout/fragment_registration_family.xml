@@ -1,262 +1,161 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fam_reg_layout"
+    android:id="@+id/fam_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
     tools:context="it.uniba.di.sms.sitterapp.registrazione.FamilyRegistrationFragment">
 
-    <ScrollView
+    <TextView
+        android:id="@+id/registrazioneTitle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/registrazioneFamily"
+        android:textAlignment="center"
+        android:textColor="@color/colorScritte"
+        android:textSize="40sp" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearLayout2"
+    <ImageView
+        android:id="@+id/profilePictureFamiglia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_account_circle_black_56dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nomeCompletoFamiglia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/nomeFamiglia"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:hint="@string/nomeCompleto"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/registrazioneTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="40dp"
-                android:fontFamily="sans-serif-smallcaps"
-                android:text="@string/registrazioneFamily"
-                android:textColor="@color/colorScritte"
-                android:textSize="40sp"
-                app:layout_constraintBottom_toTopOf="@+id/usernameSitterReg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/Password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TI1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/registrazioneTitle">
+        <EditText
+            android:id="@+id/passwordFamiglia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:inputType="textPassword" />
 
-                <EditText
-                    android:id="@+id/usernameFamiglia"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/username"
-                    android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ConfermaPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TI2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TI1">
+        <EditText
+            android:id="@+id/confPasswordFamiglia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/confermapassword"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/passwordFamiglia"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/password"
-                    android:inputType="textPassword" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/Email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
-            </com.google.android.material.textfield.TextInputLayout>
+        <EditText
+            android:id="@+id/emailFamiglia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TI3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TI2">
+    </com.google.android.material.textfield.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/confPasswordFamiglia"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/confermapassword"
-                    android:inputType="textPassword" />
-            </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/Telefono"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TI4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TI3">
+        <EditText
+            android:id="@+id/telefonoFamiglia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/telefono"
+            android:inputType="phone" />
 
-                <EditText
-                    android:id="@+id/nomeFamiglia"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/nome"
-                    android:inputType="textPersonName" />
-            </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TI5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TI4">
+    <TextView
+        android:id="@+id/nazioneFamiglia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/nazione"
+        android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/cognomeFamiglia"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/cognome"
-                    android:inputType="textPersonName" />
-            </com.google.android.material.textfield.TextInputLayout>
+    <Spinner
+        android:id="@+id/spinnerNationFamiglia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/Citta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TI6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TI5">
+        <EditText
+            android:id="@+id/CittaFamiglia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/citta" />
 
-                <EditText
-                    android:id="@+id/telefonoFamiglia"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/telefono"
-                    android:inputType="phone" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/NumFigli"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/numeroFigliFamiglia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/figlinum"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Switch
+        android:id="@+id/petSwitchFamiglia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/animali"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/confermaButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:elevation="2dp"
+        android:text="@string/confermaRegistrazione"
+        android:textColor="@android:color/background_light" />
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TI7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TI6">
-
-                <EditText
-                    android:id="@+id/emailFamiglia"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/email"
-                    android:inputType="textEmailAddress" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <TextView
-                android:id="@+id/nazioneFamiglia"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/nazione"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TI7" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TI8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TI9">
-
-                <EditText
-                    android:id="@+id/numeroFigliFamiglia"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/figlinum"
-                    android:inputType="number" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <Spinner
-                android:id="@+id/spinnerNationFamiglia"
-                android:layout_width="300dp"
-                android:layout_height="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nazioneFamiglia" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TI9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerNationFamiglia">
-
-                <EditText
-                    android:id="@+id/CittaFamiglia"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/citta" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <Button
-                android:id="@+id/confermaButton"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
-                android:layout_marginTop="40dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:elevation="2dp"
-                android:text="@string/confermaRegistrazione"
-                android:textColor="@android:color/background_light"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/petSwitchFamiglia" />
-
-            <Switch
-                android:id="@+id/petSwitchFamiglia"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/animali"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TI8" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
