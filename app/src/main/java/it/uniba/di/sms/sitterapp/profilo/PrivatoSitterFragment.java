@@ -74,9 +74,11 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     private SessionManager sessionManager;
 
     View view;
+    //NomeCompleto, E-mail, dataNascita, Avatar, Telefono, Rating, Retribuzione Oraria,
+    //Auto,
     RatingBar ratingPrSitter;
-    TextView usernamePrSit, nomePrSit, cognomePrSit, emailPrSit, numeroPrSit, sessoPrSit, dataPrSit, tariffaPrSit, ingaggiPrSit;
-    EditText descrPrSit, nomePrSit2, cognomePrSit2, emailPrSit2, numeroPrSit2, sessoPrSit2, dataPrSit2, tariffaPrSit2, ingaggiPrSit2;
+    TextView nomeCompletoPrSit, emailPrSit, numeroPrSit, sessoPrSit, dataPrSit, tariffaPrSit, ingaggiPrSit;
+    EditText descrPrSit, nomeCompletoPrSit2, cognomePrSit2, emailPrSit2, numeroPrSit2, sessoPrSit2, dataPrSit2, tariffaPrSit2, ingaggiPrSit2;
     Switch carPrSit2;
     ImageView profilePic;
     ToggleButton modificaProfilo;
@@ -150,17 +152,17 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        descrPrSit.setText(documentSnapshot.getString("babysitter.descrizione"));
-                        nomePrSit2.setText(documentSnapshot.getString("babysitter.nome"));
-                        cognomePrSit2.setText(documentSnapshot.getString("babysitter.cognome"));
-                        emailPrSit2.setText(documentSnapshot.getString("babysitter.email"));
-                        numeroPrSit2.setText(documentSnapshot.getString("babyistter.numero"));
-                        carPrSit2.setChecked(documentSnapshot.getBoolean("babysitter.auto"));
-                        sessoPrSit2.setText(documentSnapshot.getString("babysitter.genere"));
+                        descrPrSit.setText(documentSnapshot.getString("babysitter.Descrizione"));
+                        nomeCompletoPrSit2.setText(documentSnapshot.getString("babysitter.NomeCompleto"));
+                        emailPrSit2.setText(documentSnapshot.getString("babysitter.Email"));
+                        numeroPrSit2.setText(documentSnapshot.getString("babyistter.Telefono"));
+                        carPrSit2.setChecked(documentSnapshot.getBoolean("babysitter.Auto"));
+                        sessoPrSit2.setText(documentSnapshot.getString("babysitter.Genere"));
                         dataPrSit2.setText(documentSnapshot.getString("babysitter.dataNascita"));
-
+                        ingaggiPrSit.setText(Integer.valueOf(documentSnapshot.getString("babysitter.numLavori")));
+                        ratingPrSitter.setRating(Float.valueOf(documentSnapshot.getString("babysitter.Rating")));
+                        tariffaPrSit2.setText(documentSnapshot.getString("babysitter.Retribuzione"));
                         //TODO AGGIUNGI FOTO
-                        //TODO AGGIUNGI RATING
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -183,7 +185,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                     String result = json.getString("open");
 
                     if (result.equals("true")) {
-                        usernamePrSit.setText(sessionManager.getSessionUsername());
+                        nomeCompletoPrSit.setText(sessionManager.getSessionUsername());
                         if (!json.getString("rating").equals("null")) {
                             ratingPrSitter.setRating((float) json.getDouble("rating"));
                         }
@@ -192,7 +194,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                         } else {
                             descrPrSit.setText(json.getString("descrizione"));
                         }
-                        nomePrSit2.setText(json.getString("nome"));
+                        nomeCompletoPrSit2.setText(json.getString("nome"));
                         cognomePrSit2.setText(json.getString("cognome"));
                         emailPrSit2.setText(json.getString("email"));
                         numeroPrSit2.setText(json.getString("telefono"));
@@ -249,16 +251,14 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         DocumentReference docRef = db.collection("utente")
                 .document(sessionManager.getSessionUsername());
 
-        docRef.update("babysitter.descrizione", descrPrSit.getText().toString(),
-                "babysitter.nome", nomePrSit2.getText().toString(),
-                "babysitter.cognome", cognomePrSit2.getText().toString(),
-                "babysitter.email", emailPrSit2.getText().toString(),
-                "babysitter.numero", numeroPrSit2.getText().toString(),
-                "babysitter.genere", sessoPrSit2.getText().toString(),
+        docRef.update("babysitter.Descrizione", descrPrSit.getText().toString(),
+                "babysitter.NomeCompleto", nomeCompletoPrSit2.getText().toString(),
+                "babysitter.Email", emailPrSit2.getText().toString(),
+                "babysitter.Telefono", numeroPrSit2.getText().toString(),
+                "babysitter.Genere", sessoPrSit2.getText().toString(),
                 "babysitter.dataNascita", dataPrSit2.getText().toString(),
-                "babysitter.auto", carPrSit2.isChecked()
-                //TODO retribuzione oraria
-                //TODO ingaggi ??
+                "babysitter.Auto", carPrSit2.isChecked(),
+                "babysitter.Retribuzione", tariffaPrSit2.getText().toString()
         )
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -307,7 +307,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                 params.put("type", String.valueOf(Constants.TYPE_SITTER));
                 params.put("username", sessionManager.getSessionUsername());
                 params.put("descrizione", descrPrSit.getText().toString());
-                params.put("nome", nomePrSit2.getText().toString());
+                params.put("nome", nomeCompletoPrSit2.getText().toString());
                 params.put("cognome", cognomePrSit2.getText().toString());
                 params.put("email", emailPrSit2.getText().toString());
                 params.put("telefono", numeroPrSit2.getText().toString());
@@ -328,22 +328,14 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     //inizializzazione dei campi
     public void inizializzazione(final DatePickerDialog datePickerDialog) {
 
-        usernamePrSit = (TextView) view.findViewById(R.id.usernamePrSitter);
-        usernamePrSit.setText(sessionManager.getSessionUsername());
+        nomeCompletoPrSit = (TextView) view.findViewById(R.id.nomeCompletoPrSitter);
+        nomeCompletoPrSit.setText(sessionManager.getSessionUsername());
 
         descrPrSit = (EditText) view.findViewById(R.id.descrizionePrSitter);
         descrPrSit.setEnabled(false);
 
         ratingPrSitter = (RatingBar) view.findViewById(R.id.ratingPrSitter);
         ratingPrSitter.setEnabled(false);
-
-        nomePrSit = (TextView) view.findViewById(R.id.nomePrSitter);
-        nomePrSit2 = (EditText) view.findViewById(R.id.nomePrSitter2);
-        nomePrSit2.setEnabled(false);
-
-        cognomePrSit = (TextView) view.findViewById(R.id.cognomePrSitter);
-        cognomePrSit2 = (EditText) view.findViewById(R.id.cognomePrSitter2);
-        cognomePrSit2.setEnabled(false);
 
         emailPrSit = (TextView) view.findViewById(R.id.emailPrSitter);
         emailPrSit2 = (EditText) view.findViewById(R.id.emailPrSitter2);
@@ -496,8 +488,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     private void goEditable() {
         if (!edit) {
             descrPrSit.setEnabled(true);
-            nomePrSit2.setEnabled(true);
-            cognomePrSit2.setEnabled(true);
+            nomeCompletoPrSit2.setEnabled(true);
             emailPrSit2.setEnabled(true);
             numeroPrSit2.setEnabled(true);
             carPrSit2.setEnabled(true);
@@ -506,8 +497,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
             edit = true;
         } else {
             descrPrSit.setEnabled(false);
-            nomePrSit2.setEnabled(false);
-            cognomePrSit2.setEnabled(false);
+            nomeCompletoPrSit2.setEnabled(false);
             emailPrSit2.setEnabled(false);
             numeroPrSit2.setEnabled(false);
             carPrSit2.setEnabled(false);

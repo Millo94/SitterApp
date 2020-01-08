@@ -23,7 +23,7 @@
 
 
             <TextView
-                android:id="@+id/usernamePrFamiglia"
+                android:id="@+id/nomeCompletoPrFamiglia"
                 android:layout_width="wrap_content"
                 android:layout_height="58dp"
                 android:layout_marginStart="40dp"
@@ -41,7 +41,7 @@
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/colorPrimary"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/usernamePrFamiglia" />
+                app:layout_constraintTop_toBottomOf="@+id/nomeCompletoPrFamiglia" />
 
             <EditText
                 android:id="@+id/descrizionePrFamiglia"

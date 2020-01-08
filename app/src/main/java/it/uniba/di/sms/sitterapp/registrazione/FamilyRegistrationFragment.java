@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -30,7 +30,7 @@ public class FamilyRegistrationFragment extends Fragment {
     Spinner nazioni;
     String arraypaesi[];
     String pathFoto = "gs://sitterapp-223aa.appspot.com/img/stock_img/placeholder-profile-sq.jpg";
-    EditText fotoET, usernameET, passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, cittaET, numFigliET;
+    EditText nomeCompletoET, passwordET, confermaPasswordET, emailET, numeroET, cittaET, numFigliET;
     TextView nazioneET;
     Switch animaliSW;
     Boolean animali = true;
@@ -78,7 +78,7 @@ public class FamilyRegistrationFragment extends Fragment {
                     Toast.makeText(getContext(), R.string.invalidEmail, Toast.LENGTH_LONG).show();
                 } else {
                     UtenteFamiglia famiglia = new UtenteFamiglia("",
-                            usernameET.getText().toString(),
+                            nomeCompletoET.getText().toString(),
                             pathFoto,
                             emailET.getText().toString(),
                             passwordET.getText().toString(),
@@ -87,7 +87,8 @@ public class FamilyRegistrationFragment extends Fragment {
                             numeroET.getText().toString(),
                             true,
                             numFigliET.getText().toString(),
-                            animali);
+                            animali,
+                            0);
                     mListener.onFragmentInteraction(famiglia);
                 }
             }
@@ -122,16 +123,13 @@ public class FamilyRegistrationFragment extends Fragment {
     //inizializzazione dei campi
     public void initialization() {
 
-        usernameET = (EditText) view.findViewById(R.id.usernameFamiglia);
-        listaET.add(usernameET);
+        //TODO FOTO
+        nomeCompletoET = (EditText) view.findViewById(R.id.nomeCompletoFamiglia);
+        listaET.add(nomeCompletoET);
         passwordET = (EditText) view.findViewById(R.id.passwordFamiglia);
         listaET.add(passwordET);
         confermaPasswordET = (EditText) view.findViewById(R.id.confPasswordFamiglia);
         listaET.add(confermaPasswordET);
-        nomeET = (EditText) view.findViewById(R.id.nomeFamiglia);
-        listaET.add(nomeET);
-        cognomeET = (EditText) view.findViewById(R.id.cognomeFamiglia);
-        listaET.add(cognomeET);
         emailET = (EditText) view.findViewById(R.id.emailFamiglia);
         listaET.add(emailET);
         numeroET = (EditText) view.findViewById(R.id.telefonoFamiglia);

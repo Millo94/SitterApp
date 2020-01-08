@@ -11,6 +11,7 @@ public class UtenteSitter extends User {
     private Boolean auto;
     private float rating;
     private int numLavori;
+    private String retribuzioneOra;
 
     //costruttore
     public UtenteSitter(String id,
@@ -26,13 +27,15 @@ public class UtenteSitter extends User {
                           String genere,
                           float rating,
                           int numLavori,
-                          Boolean auto) {
+                          Boolean auto,
+                        String retribuzioneOra) {
         super(id,nameC,avatar,email,password,nazione,citta,telefono,online);
         this.dataNascita = dataNascita;
         this.genere = genere;
         this.rating = rating;
         this.numLavori = numLavori;
         this.auto = auto;
+        this.retribuzioneOra = retribuzioneOra;
     }
 
 
@@ -68,5 +71,9 @@ public class UtenteSitter extends User {
 
     public int getNumLavori() {
         return numLavori;
+    }
+
+    public String getRetribuzioneOra() {
+        return retribuzioneOra;
     }
 }

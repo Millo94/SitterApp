@@ -31,13 +31,17 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
 
     ArrayList<EditText> listaET = new ArrayList<>();
     View view;
-    EditText usernameET, passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, dataNascitaET, cittaET;
+    //NomeCompleto, Email, Telefono, Nazione, Citta, dataNascita,
+    EditText nomeCompletoET, passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, dataNascitaET, cittaET, retribuzioneET;
+    //Avatar
     String pathFoto = "";
     RadioGroup genereRG;
     Switch autoSW;
     Button confRegistration;
+    //Rating al momento della registrazione, valore null/vuoto
     float rating ;
     String genere = "";
+    //Automobile
     Boolean auto = false;
     Spinner nazioni;
     String arraypaesi[];
@@ -127,9 +131,9 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                     Toast.makeText(getContext(), R.string.invalidEmail, Toast.LENGTH_LONG).show();
                 } else {
                     UtenteSitter sitter = new UtenteSitter("",
-                            usernameET.getText().toString(),
-                            pathFoto,
+                            nomeCompletoET.getText().toString(),
                             emailET.getText().toString(),
+                            pathFoto,
                             passwordET.getText().toString(),
                             nazioni.getSelectedItem().toString(),
                             cittaET.getText().toString(),
@@ -139,7 +143,8 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                             genere,
                             0,
                             0,
-                            auto);
+                            auto,
+                            retribuzioneET.getText().toString());
                     mListener.onFragmentInteraction(sitter);
                 }
             }
@@ -177,8 +182,9 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
 
     //inizializzazione delle view
     public void initialization() {
-        usernameET = (EditText) view.findViewById(R.id.usernameSitterReg);
-        listaET.add(usernameET);
+        //TODO FOTO
+        nomeCompletoET = (EditText) view.findViewById(R.id.usernameSitterReg);
+        listaET.add(nomeCompletoET);
         passwordET = (EditText) view.findViewById(R.id.passwordSitterReg);
         listaET.add(passwordET);
         confermaPasswordET = (EditText) view.findViewById(R.id.confPasswordSitterReg);
@@ -196,6 +202,8 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
         genereRG = (RadioGroup) view.findViewById(R.id.groupGenderSitterReg);
         cittaET = (EditText) view.findViewById(R.id.CittaSitterReg);
         listaET.add(cittaET);
+        retribuzioneET = (EditText) view.findViewById(R.id.retribuzioneSitterReg);
+        listaET.add(retribuzioneET);
         autoSW = (Switch) view.findViewById(R.id.switch1);
         confRegistration = (Button) view.findViewById(R.id.buttonReg);
     }
