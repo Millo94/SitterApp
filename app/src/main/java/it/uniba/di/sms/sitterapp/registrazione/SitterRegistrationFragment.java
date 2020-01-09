@@ -132,8 +132,8 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                 } else {
                     UtenteSitter sitter = new UtenteSitter("",
                             nomeCompletoET.getText().toString(),
-                            emailET.getText().toString(),
                             pathFoto,
+                            emailET.getText().toString(),
                             passwordET.getText().toString(),
                             nazioni.getSelectedItem().toString(),
                             cittaET.getText().toString(),

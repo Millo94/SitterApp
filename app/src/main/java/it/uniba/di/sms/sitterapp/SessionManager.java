@@ -39,6 +39,7 @@ public class SessionManager {
      */
     public static final String IS_LOGGED = "IsLoggedIn";
     public static final String USERNAME = "username";
+    public static final String UID = "uid";
     public static final String TYPE = "type";
     public static final String PATHFOTO = "pathfoto";
 
@@ -62,9 +63,10 @@ public class SessionManager {
     /**
      * Funzione che salva i dati nel file di sessione
      */
-    public void createLoginSession(String username, int type) {
+    public void createLoginSession(String username, String uid, int type) {
         editor.putBoolean(IS_LOGGED, true);
         editor.putString(USERNAME, username);
+        editor.putString(UID, uid);
         editor.putInt(TYPE, type);
         editor.commit();
     }
@@ -81,6 +83,18 @@ public class SessionManager {
      */
     public String getSessionUsername() {
         return preferences.getString(USERNAME, null);
+    }
+
+
+    /**
+     * Aggiunto da Giacomo 09/01/2020
+     *
+     * Funzione che restituisce l'UID dell'utente
+     *
+     * @return uid
+     */
+    public String getSessionUid(){
+        return preferences.getString(UID, null);
     }
 
     /**

@@ -141,6 +141,7 @@ public class FamilyRegistrationFragment extends Fragment {
         nazioneET = (TextView) view.findViewById(R.id.nazioneFamiglia);
         animaliSW = (Switch) view.findViewById(R.id.petSwitchFamiglia);
         confRegistration = (Button) view.findViewById(R.id.confermaButton);
+
     }
 
     //controllo campi password e conferma password
