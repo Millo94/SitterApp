@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 DocumentSnapshot documentSnapshot = task.getResult();
                                                 final Integer tipoUtente = documentSnapshot.getLong("tipoUtente").intValue();
                                                 Toast.makeText(getApplicationContext(), R.string.loginSuccess, Toast.LENGTH_LONG).show();
-                                                session.createLoginSession(emailEt.getText().toString(), currentUser.getUid(), tipoUtente);
+                                                session.createLoginSession(emailEt.getText().toString(), currentUser.getUid(), tipoUtente, documentSnapshot.getString("NomeCompleto"));
                                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                                 intent.putExtra(Constants.TYPE, tipoUtente);
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

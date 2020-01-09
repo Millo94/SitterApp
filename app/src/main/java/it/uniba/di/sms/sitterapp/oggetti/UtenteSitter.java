@@ -23,13 +23,14 @@ public class UtenteSitter extends User {
                           String citta,
                           String telefono,
                           boolean online,
+                          String descrizione,
                           String dataNascita,
                           String genere,
                           float rating,
                           int numLavori,
                           Boolean auto,
                         String retribuzioneOra) {
-        super(id,nameC,avatar,email,password,nazione,citta,telefono,online);
+        super(id,nameC,avatar,email,password,nazione,citta,telefono,online,descrizione);
         this.dataNascita = dataNascita;
         this.genere = genere;
         this.rating = rating;

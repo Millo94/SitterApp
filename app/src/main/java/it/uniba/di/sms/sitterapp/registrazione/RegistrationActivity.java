@@ -84,6 +84,7 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
                             utente.put("Nazione",famiglia.getNazione());
                             utente.put("Citta", famiglia.getCitta());
                             utente.put("online", famiglia.isOnline());
+                            utente.put("Descrizione", famiglia.getDescrizione());
                             utente.put("tipoUtente", Constants.TYPE_FAMILY);
                             Map<String,Object> famigliaExtra = new HashMap<>();
                             famigliaExtra.put("numFigli",famiglia.getNumFigli());
@@ -137,7 +138,6 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
                         if (task.isSuccessful()) {
                             Map<String,Object> utente = new HashMap<>();
                             utente.put("password",sitter.getPassword());
-                            utente.put("tipoUtente",Constants.TYPE_SITTER);
                             utente.put("babysitter",sitter);
                             utente.put("NomeCompleto",sitter.getName());
                             utente.put("Email",sitter.getEmail());
@@ -146,6 +146,8 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
                             utente.put("Citta", sitter.getCitta());
                             utente.put("Telefono", sitter.getTelefono());
                             utente.put("online", sitter.isOnline());
+                            utente.put("Descrizione", sitter.getDescrizione());
+                            utente.put("tipoUtente",Constants.TYPE_SITTER);
                             Map<String,Object> babysitterExtra = new HashMap<>();
                             babysitterExtra.put("dataNascita", sitter.getDataNascita());
                             babysitterExtra.put("Genere", sitter.getGenere());

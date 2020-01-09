@@ -139,6 +139,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                             cittaET.getText().toString(),
                             numeroET.getText().toString(),
                             true,
+                            "",
                             Constants.dateToSQL(dataNascitaET.getText().toString()),
                             genere,
                             0,

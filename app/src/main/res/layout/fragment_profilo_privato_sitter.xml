@@ -9,211 +9,222 @@
     android:padding="20dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgPrSitter"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="5dp"
-            android:padding="15dp"
-            android:src="@drawable/ic_account_circle_black_56dp" />
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgPrSitter"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginEnd="5dp"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_account_circle_black_56dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/nomeCompletoPrSitter"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:layout_marginEnd="5dp"
+                        android:paddingStart="5dp"
+                        android:text="@string/nomeCompleto"
+                        android:textColor="@color/colorScritte"
+                        android:textSize="40sp" />
+
+                    <RatingBar
+                        android:id="@+id/ratingPrSitter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:backgroundTint="@color/colorPrimary" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/descrizionePrSitter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp" />
 
             <TextView
-                android:id="@+id/nomeCompletoPrSitter"
-                android:layout_width="240dp"
+                android:id="@+id/emailPrSitter"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:layout_marginEnd="5dp"
-                android:paddingStart="5dp"
-                android:text="@string/nomeCompleto"
+                android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
+                android:text="@string/email"
                 android:textColor="@color/colorScritte"
-                android:textSize="40sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-            <RatingBar
-                android:id="@+id/ratingPrSitter"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:backgroundTint="@color/colorPrimary" />
+            <EditText
+                android:id="@+id/emailPrSitter2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/email"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/telefonoPrSitter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
+                android:text="@string/telefono"
+                android:textColor="@color/colorScritte"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/telefonoPrSitter2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/telefono"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/nascitaPrSitter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
+                android:text="@string/datanascita"
+                android:textColor="@color/colorScritte"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/nascitaPrSitter2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/datanascita"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/sessoPrSitter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
+                android:text="@string/sesso"
+                android:textColor="@color/colorScritte"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/sessoPrSitter2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/sesso"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/ingaggiPrSitter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
+                android:text="@string/numlavori"
+                android:textColor="@color/colorScritte"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/ingaggiPrSitter2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/numlavori"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tariffaPrSitter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="fill_vertical"
+                android:text="@string/tariffa"
+                android:textColor="@color/colorScritte"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/tariffaPrSitter2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/tariffa"
+                android:textSize="18sp" />
+
+            <Switch
+                android:id="@+id/carPrSit"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/automunito"
+                android:textColor="@color/colorScritte"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ToggleButton
+                android:id="@+id/modificaProfilo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@android:color/background_light"
+                android:textOff="@string/modificaProfiloOn"
+                android:textOn="@string/modificaProfiloOff"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/editDisp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="@string/editDisp"
+                android:textAllCaps="false"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/exit_button2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:text="@string/exit"
+                android:textAllCaps="false"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp" />
         </LinearLayout>
-
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/descrizionePrSitter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp" />
-
-    <TextView
-        android:id="@+id/emailPrSitter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="fill_vertical"
-        android:text="@string/email"
-        android:textColor="@color/colorScritte"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/emailPrSitter2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/email"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/telefonoPrSitter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="fill_vertical"
-        android:text="@string/telefono"
-        android:textColor="@color/colorScritte"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/telefonoPrSitter2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/telefono"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/nascitaPrSitter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="fill_vertical"
-        android:text="@string/datanascita"
-        android:textColor="@color/colorScritte"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/nascitaPrSitter2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/datanascita"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/sessoPrSitter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="fill_vertical"
-        android:text="@string/sesso"
-        android:textColor="@color/colorScritte"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/sessoPrSitter2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/sesso"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/ingaggiPrSitter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="fill_vertical"
-        android:text="@string/numlavori"
-        android:textColor="@color/colorScritte"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/ingaggiPrSitter2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/numlavori"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/tariffaPrSitter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="fill_vertical"
-        android:text="@string/tariffa"
-        android:textColor="@color/colorScritte"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/tariffaPrSitter2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/tariffa"
-        android:textSize="18sp" />
-
-    <Switch
-        android:id="@+id/carPrSit"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/automunito"
-        android:textColor="@color/colorScritte"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <ToggleButton
-        android:id="@+id/modificaProfilo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@android:color/background_light"
-        android:textOff="@string/modificaProfiloOn"
-        android:textOn="@string/modificaProfiloOff"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/editDisp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
-        android:text="@string/editDisp"
-        android:textAllCaps="false"
-        android:textColor="@android:color/background_light"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/exit_button2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="40dp"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:text="@string/exit"
-        android:textAllCaps="false"
-        android:textColor="@android:color/background_light"
-        android:textSize="18sp" />
+    </ScrollView>
 
 </LinearLayout>

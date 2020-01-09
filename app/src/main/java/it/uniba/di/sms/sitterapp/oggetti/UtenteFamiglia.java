@@ -20,10 +20,11 @@ public class UtenteFamiglia extends User{
                           String citta,
                           String telefono,
                           boolean online,
+                          String descrizione,
                           String numFigli,
                           Boolean animali,
                           float rating) {
-        super(id,nameC,avatar,email,password,nazione,citta,telefono,online);
+        super(id,nameC,avatar,email,password,nazione,citta,telefono,online,descrizione);
         this.numFigli = numFigli;
         this.animali = animali;
         this.rating = rating;

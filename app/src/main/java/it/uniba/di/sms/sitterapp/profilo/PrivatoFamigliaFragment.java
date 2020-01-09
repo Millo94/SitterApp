@@ -175,7 +175,7 @@ public class PrivatoFamigliaFragment extends Fragment {
     private void inizializzazione() {
 
         nomeCompletoPrFam = (TextView) view.findViewById(R.id.nomeCompletoPrFamiglia);
-        nomeCompletoPrFam.setText(sessionManager.getSessionUsername());
+        nomeCompletoPrFam.setText(sessionManager.getNomeCompleto());
 
         descrPrFam = (EditText) view.findViewById(R.id.descrizionePrFamiglia);
         descrPrFam.setEnabled(false);

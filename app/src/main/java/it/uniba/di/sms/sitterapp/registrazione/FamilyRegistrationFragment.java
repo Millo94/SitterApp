@@ -86,6 +86,7 @@ public class FamilyRegistrationFragment extends Fragment {
                             cittaET.getText().toString(),
                             numeroET.getText().toString(),
                             true,
+                            "",
                             numFigliET.getText().toString(),
                             animali,
                             0);

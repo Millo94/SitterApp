@@ -207,7 +207,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     public void inizializzazione(final DatePickerDialog datePickerDialog) {
 
         nomeCompletoPrSit = (TextView) view.findViewById(R.id.nomeCompletoPrSitter);
-        nomeCompletoPrSit.setText(sessionManager.getSessionUsername());
+        nomeCompletoPrSit.setText(sessionManager.getNomeCompleto());
 
         descrPrSit = (EditText) view.findViewById(R.id.descrizionePrSitter);
         descrPrSit.setEnabled(false);
