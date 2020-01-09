@@ -165,10 +165,12 @@ public class HomeActivity extends DrawerActivity
 
             caricaAnnunci();
 
+
         } else if (sessionManager.getSessionType() == Constants.TYPE_FAMILY) {
 
             sitterList = new ArrayList<>();
             sitterAdapter = new SitterAdapter(HomeActivity.this, sitterList, HomeActivity.this);
+
 
             recyclerView.setAdapter(sitterAdapter);
 
@@ -176,7 +178,8 @@ public class HomeActivity extends DrawerActivity
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-            //loadSitter();
+            caricaSitter();
+
         }
     }
 
@@ -206,6 +209,50 @@ public class HomeActivity extends DrawerActivity
                             }
                         }
                         noticeAdapter.notifyDataSetChanged();
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(HomeActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
+
+    /**
+     * Caricamento delle babysitter nella home per l'utente famiglia
+     */
+
+    private void caricaSitter(){
+
+        CollectionReference colRef = db.collection("utente");
+
+        colRef
+                .whereEqualTo("tipoUtente", 1)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                        Iterator<QueryDocumentSnapshot> iterableSitter = queryDocumentSnapshots.iterator();
+                        while(iterableSitter.hasNext()){
+                            DocumentSnapshot documentSnapshot = iterableSitter.next();
+                            UtenteSitter bs = new UtenteSitter(
+                                     documentSnapshot.getId(),
+                                    (String) documentSnapshot.get("babysitter.nome"),
+                                    (String) documentSnapshot.get("babysitter.citta"),
+                                    (boolean) documentSnapshot.get("babysitter.auto"),
+                                    0,
+                                    1);
+
+
+                                sitterList.add(bs);
+
+                        }
+                        sitterAdapter.notifyDataSetChanged();
 
                     }
                 })
