@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
+                    <EditText
                         android:id="@+id/nomeCompletoPrSitter"
                         android:layout_width="240dp"
                         android:layout_height="wrap_content"

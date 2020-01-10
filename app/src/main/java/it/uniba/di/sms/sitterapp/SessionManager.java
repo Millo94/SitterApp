@@ -102,7 +102,7 @@ public class SessionManager {
     /**
      * Aggiunto da Giacomo 09/01/2020
      *
-     * Funzione che restituisce l'UID dell'utente
+     * Funzione che restituisce il nome completo dell'utente
      *
      * @return uid
      */

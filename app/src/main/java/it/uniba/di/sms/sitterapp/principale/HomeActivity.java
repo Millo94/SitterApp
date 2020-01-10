@@ -1,6 +1,5 @@
 package it.uniba.di.sms.sitterapp.principale;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
