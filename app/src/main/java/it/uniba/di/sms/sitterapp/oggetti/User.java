@@ -15,10 +15,11 @@ public class User implements IUser {
     private String nazione;
     private String citta;
     private String telefono;
+    private String descrizione;
     private boolean online;
 
     public User(String id, String nameC, String avatar, String email, String password,
-                String nazione, String citta, String telefono, boolean online) {
+                String nazione, String citta, String telefono, boolean online, String descrizione) {
         this.id = id;
         this.nameC = nameC;
         this.avatar = avatar;
@@ -28,6 +29,7 @@ public class User implements IUser {
         this.citta = citta;
         this.telefono = telefono;
         this.online = online;
+        this.descrizione = descrizione;
     }
 
     public User(String id, String nameC, String avatar, boolean online) {
@@ -66,6 +68,10 @@ public class User implements IUser {
 
     public String getCitta() {
         return citta;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
     }
 
     public String getTelefono() {

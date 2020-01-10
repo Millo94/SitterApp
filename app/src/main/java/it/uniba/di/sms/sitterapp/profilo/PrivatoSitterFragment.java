@@ -74,9 +74,11 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     private SessionManager sessionManager;
 
     View view;
+    //NomeCompleto, E-mail, dataNascita, Avatar, Telefono, Rating, Retribuzione Oraria,
+    //Auto,
     RatingBar ratingPrSitter;
-    TextView usernamePrSit, nomePrSit, cognomePrSit, emailPrSit, numeroPrSit, sessoPrSit, dataPrSit, tariffaPrSit, ingaggiPrSit;
-    EditText descrPrSit, nomePrSit2, cognomePrSit2, emailPrSit2, numeroPrSit2, sessoPrSit2, dataPrSit2, tariffaPrSit2, ingaggiPrSit2;
+    TextView nomeCompletoPrSit, emailPrSit, numeroPrSit, sessoPrSit, dataPrSit, tariffaPrSit, ingaggiPrSit;
+    EditText descrPrSit, nomeCompletoPrSit2, cognomePrSit2, emailPrSit2, numeroPrSit2, sessoPrSit2, dataPrSit2, tariffaPrSit2, ingaggiPrSit2;
     Switch carPrSit2;
     ImageView profilePic;
     ToggleButton modificaProfilo;
@@ -115,7 +117,6 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
         //apertura del profilo
         apriProfilo();
-        //openProfile();
 
         // Modifica
         modificaProfilo.setOnClickListener(new View.OnClickListener() {
@@ -145,22 +146,22 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     private void apriProfilo(){
 
         db.collection("utente")
-                .document(sessionManager.getSessionUsername())
+                .document(sessionManager.getSessionUid())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        descrPrSit.setText(documentSnapshot.getString("babysitter.descrizione"));
-                        nomePrSit2.setText(documentSnapshot.getString("babysitter.nome"));
-                        cognomePrSit2.setText(documentSnapshot.getString("babysitter.cognome"));
-                        emailPrSit2.setText(documentSnapshot.getString("babysitter.email"));
-                        numeroPrSit2.setText(documentSnapshot.getString("babyistter.numero"));
-                        carPrSit2.setChecked(documentSnapshot.getBoolean("babysitter.auto"));
-                        sessoPrSit2.setText(documentSnapshot.getString("babysitter.genere"));
+                        descrPrSit.setText(documentSnapshot.getString("Descrizione"));
+                        nomeCompletoPrSit2.setText(documentSnapshot.getString("NomeCompleto"));
+                        emailPrSit2.setText(documentSnapshot.getString("Email"));
+                        numeroPrSit2.setText(documentSnapshot.getString("Telefono"));
+                        carPrSit2.setChecked(documentSnapshot.getBoolean("babysitter.Auto"));
+                        sessoPrSit2.setText(documentSnapshot.getString("babysitter.Genere"));
                         dataPrSit2.setText(documentSnapshot.getString("babysitter.dataNascita"));
-
+                        ingaggiPrSit.setText(Integer.valueOf(documentSnapshot.getString("babysitter.numLavori")));
+                        ratingPrSitter.setRating(Float.valueOf(documentSnapshot.getString("babysitter.Rating")));
+                        tariffaPrSit2.setText(documentSnapshot.getString("babysitter.Retribuzione"));
                         //TODO AGGIUNGI FOTO
-                        //TODO AGGIUNGI RATING
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -171,94 +172,20 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                 });
     }
 
-    //metodo che inizializza i dati del profilo all'apertura.
-    private void openProfile() {
-
-        StringRequest profileRequest = new StringRequest(Request.Method.POST, Php.PROFILO, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONObject json = new JSONObject(response);
-                    String result = json.getString("open");
-
-                    if (result.equals("true")) {
-                        usernamePrSit.setText(sessionManager.getSessionUsername());
-                        if (!json.getString("rating").equals("null")) {
-                            ratingPrSitter.setRating((float) json.getDouble("rating"));
-                        }
-                        if (json.getString("descrizione").equals("null")) {
-                            descrPrSit.setHint(R.string.missingdescription);
-                        } else {
-                            descrPrSit.setText(json.getString("descrizione"));
-                        }
-                        nomePrSit2.setText(json.getString("nome"));
-                        cognomePrSit2.setText(json.getString("cognome"));
-                        emailPrSit2.setText(json.getString("email"));
-                        numeroPrSit2.setText(json.getString("telefono"));
-
-                        // Conversione del flag auto
-                        if (json.getString("auto").equals("0"))
-                            carPrSit2.setChecked(true);
-                        else
-                            carPrSit2.setChecked(false);
-
-                        // Conversione del flag genere
-                        if (json.getString("genere").equals(("M")))
-                            sessoPrSit2.setText("Uomo");
-                        else
-                            sessoPrSit2.setText("Donna");
-
-                        dataPrSit2.setText(Constants.SQLtoDate(json.getString("dataNascita")));
-                        tariffaPrSit2.setText(json.getString("tariffaOraria"));
-
-                        Glide
-                                .with(PrivatoSitterFragment.this.getContext())
-                                .load(sessionManager.getProfilePic())
-                                .into(profilePic);
-
-                    } else if (result.equals("false")) {
-                        Toast.makeText(getContext(), R.string.profileError, Toast.LENGTH_SHORT).show();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), R.string.profileError, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("operation", "open");
-                params.put("type", String.valueOf(Constants.TYPE_SITTER));
-                params.put("username", sessionManager.getSessionUsername());
-                return params;
-            }
-        };
-
-        requestQueue.add(profileRequest);
-    }
 
     private void modifica(){
 
         DocumentReference docRef = db.collection("utente")
                 .document(sessionManager.getSessionUsername());
 
-        docRef.update("babysitter.descrizione", descrPrSit.getText().toString(),
-                "babysitter.nome", nomePrSit2.getText().toString(),
-                "babysitter.cognome", cognomePrSit2.getText().toString(),
-                "babysitter.email", emailPrSit2.getText().toString(),
-                "babysitter.numero", numeroPrSit2.getText().toString(),
-                "babysitter.genere", sessoPrSit2.getText().toString(),
+        docRef.update("Descrizione", descrPrSit.getText().toString(),
+                "NomeCompleto", nomeCompletoPrSit2.getText().toString(),
+                "Email", emailPrSit2.getText().toString(),
+                "Telefono", numeroPrSit2.getText().toString(),
+                "babysitter.Genere", sessoPrSit2.getText().toString(),
                 "babysitter.dataNascita", dataPrSit2.getText().toString(),
-                "babysitter.auto", carPrSit2.isChecked()
-                //TODO retribuzione oraria
-                //TODO ingaggi ??
+                "babysitter.Auto", carPrSit2.isChecked(),
+                "babysitter.Retribuzione", tariffaPrSit2.getText().toString()
         )
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -274,76 +201,19 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                 });
     }
 
-    //volley per la modifica del profilo
-    private void modifyProfile() {
 
-        StringRequest modify = new StringRequest(Request.Method.POST, Php.PROFILO, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONObject json = new JSONObject(response);
-                    String result = json.optString("modify");
-                    if (json.getString("modify").equals("true")) {
-                        Toast.makeText(getActivity().getApplicationContext(), R.string.modifySuccess, Toast.LENGTH_SHORT).show();
-                    } else if (result.equals("false")) {
-                        Toast.makeText(getActivity().getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("operation", "modify");
-                params.put("type", String.valueOf(Constants.TYPE_SITTER));
-                params.put("username", sessionManager.getSessionUsername());
-                params.put("descrizione", descrPrSit.getText().toString());
-                params.put("nome", nomePrSit2.getText().toString());
-                params.put("cognome", cognomePrSit2.getText().toString());
-                params.put("email", emailPrSit2.getText().toString());
-                params.put("telefono", numeroPrSit2.getText().toString());
-                params.put("dataNascita", Constants.dateToSQL(dataPrSit2.getText().toString()));
-                // Conversione del flag auto
-                if (carPrSit2.isChecked())
-                    params.put("auto", "0");
-                else
-                    params.put("auto", "1");
-                params.put("tariffaOraria", tariffaPrSit2.getText().toString());
-                return params;
-            }
-        };
-
-        requestQueue.add(modify);
-    }
 
     //inizializzazione dei campi
     public void inizializzazione(final DatePickerDialog datePickerDialog) {
 
-        usernamePrSit = (TextView) view.findViewById(R.id.usernamePrSitter);
-        usernamePrSit.setText(sessionManager.getSessionUsername());
+        nomeCompletoPrSit = (TextView) view.findViewById(R.id.nomeCompletoPrSitter);
+        nomeCompletoPrSit.setText(sessionManager.getNomeCompleto());
 
         descrPrSit = (EditText) view.findViewById(R.id.descrizionePrSitter);
         descrPrSit.setEnabled(false);
 
         ratingPrSitter = (RatingBar) view.findViewById(R.id.ratingPrSitter);
         ratingPrSitter.setEnabled(false);
-
-        nomePrSit = (TextView) view.findViewById(R.id.nomePrSitter);
-        nomePrSit2 = (EditText) view.findViewById(R.id.nomePrSitter2);
-        nomePrSit2.setEnabled(false);
-
-        cognomePrSit = (TextView) view.findViewById(R.id.cognomePrSitter);
-        cognomePrSit2 = (EditText) view.findViewById(R.id.cognomePrSitter2);
-        cognomePrSit2.setEnabled(false);
 
         emailPrSit = (TextView) view.findViewById(R.id.emailPrSitter);
         emailPrSit2 = (EditText) view.findViewById(R.id.emailPrSitter2);
@@ -496,8 +366,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     private void goEditable() {
         if (!edit) {
             descrPrSit.setEnabled(true);
-            nomePrSit2.setEnabled(true);
-            cognomePrSit2.setEnabled(true);
+            nomeCompletoPrSit2.setEnabled(true);
             emailPrSit2.setEnabled(true);
             numeroPrSit2.setEnabled(true);
             carPrSit2.setEnabled(true);
@@ -506,8 +375,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
             edit = true;
         } else {
             descrPrSit.setEnabled(false);
-            nomePrSit2.setEnabled(false);
-            cognomePrSit2.setEnabled(false);
+            nomeCompletoPrSit2.setEnabled(false);
             emailPrSit2.setEnabled(false);
             numeroPrSit2.setEnabled(false);
             carPrSit2.setEnabled(false);

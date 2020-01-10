@@ -16,18 +16,19 @@ import it.uniba.di.sms.sitterapp.R;
  * Adapter per le recensioni
  */
 
-public class RecensioniAdapter extends RecyclerView.Adapter<RecensioniAdapter.MyViewHolder> {
+public class RecensioniRicevuteAdapter extends RecyclerView.Adapter<RecensioniRicevuteAdapter.MyViewHolder> {
 
     //Lista per le recensioni
     private List<Recensione> recensioneList;
 
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView username, description;
+        private TextView labelDest, username, description, idAnnuncio;
         private RatingBar ratingBar;
 
         private MyViewHolder(View view) {
             super(view);
+            labelDest = (TextView) view.findViewById(R.id.destinatario);
             username = (TextView) view.findViewById(R.id.usernameRecensione);
             description = (TextView) view.findViewById(R.id.descrizioneRecensione);
             ratingBar = (RatingBar) view.findViewById(R.id.ratingBarRecensione);
@@ -37,24 +38,25 @@ public class RecensioniAdapter extends RecyclerView.Adapter<RecensioniAdapter.My
     }
 
     //costruttore
-    public RecensioniAdapter(List<Recensione> recensioneList) {
+    public RecensioniRicevuteAdapter(List<Recensione> recensioneList) {
         this.recensioneList = recensioneList;
     }
 
     @Override
-    public RecensioniAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecensioniRicevuteAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View viewItem = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_recensione, parent, false);
 
 
-        return new RecensioniAdapter.MyViewHolder(viewItem);
+        return new RecensioniRicevuteAdapter.MyViewHolder(viewItem);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final Recensione recensione = recensioneList.get(position);
         //attribuzione dei dettagli dell'annuncio alle varie View
-        holder.username.setText(recensione.getUsername());
+        holder.labelDest.setText("From:");
+        holder.username.setText(recensione.getSender());
         holder.description.setText(recensione.getDescrizione());
         holder.ratingBar.setRating(recensione.getRating());
     }

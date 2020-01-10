@@ -31,7 +31,7 @@
             android:layout_toRightOf="@+id/thumbnail"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:text="@string/username"
+            android:text="@string/nomeCompleto"
             android:textColor="#000"
             android:textSize="28sp" />
 

@@ -19,13 +19,13 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/lblUsername"
+            android:id="@+id/lblEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textAccount"
             android:layout_alignParentStart="true"
             android:layout_margin="16dp"
-            android:hint="Username"
+            android:hint="@string/email"
             android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
 

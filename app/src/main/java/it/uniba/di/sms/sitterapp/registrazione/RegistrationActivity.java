@@ -76,20 +76,26 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Map<String,Object> utente = new HashMap<>();
+                            utente.put("Avatar",famiglia.getAvatar());
+                            utente.put("NomeCompleto",famiglia.getName());
                             utente.put("password", famiglia.getPassword());
+                            utente.put("E-mail",famiglia.getEmail());
+                            utente.put("Telefono", famiglia.getTelefono());
+                            utente.put("Nazione",famiglia.getNazione());
+                            utente.put("Citta", famiglia.getCitta());
+                            utente.put("online", famiglia.isOnline());
+                            utente.put("Descrizione", famiglia.getDescrizione());
                             utente.put("tipoUtente", Constants.TYPE_FAMILY);
                             Map<String,Object> famigliaExtra = new HashMap<>();
-                            famigliaExtra.put("NomeCompleto",famiglia.getName());
-                            famigliaExtra.put("E-mail",famiglia.getEmail());
-                            famigliaExtra.put("Telefono", famiglia.getTelefono());
-                            famigliaExtra.put("nazione",famiglia.getNazione());
-                            famigliaExtra.put("citta", famiglia.getCitta());
                             famigliaExtra.put("numFigli",famiglia.getNumFigli());
-                            famigliaExtra.put("animali", famiglia.getAnimali());
-                            //famigliaExtra.put("rating", famiglia.getR);
+                            famigliaExtra.put("Animali", famiglia.getAnimali());
+                            famigliaExtra.put("rating", famiglia.getRating());
                             utente.put("famiglia",famigliaExtra);
+
+                            FirebaseUser firebaseUser = mAuth.getCurrentUser();
+
                             db.collection("utente")
-                                    .document(task.getResult().getUser().getUid())
+                                    .document(firebaseUser.getUid())
                                     .set(utente)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -124,46 +130,68 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
 
     //volley per la registrazione di un utente sitter
     private void register(final UtenteSitter sitter) {
-        Map<String,Object> utente = new HashMap<>();
-        utente.put("password",sitter.getPassword());
-        utente.put("tipoUtente",Constants.TYPE_SITTER);
-        utente.put("babysitter",sitter);
-        Map<String,Object> babysitterExtra = new HashMap<>();
-        babysitterExtra.put("NomeCompleto",sitter.getName());
-        babysitterExtra.put("Email",sitter.getEmail());
-        babysitterExtra.put("Telefono", sitter.getTelefono());
-        babysitterExtra.put("Nazione",sitter.getNazione());
-        babysitterExtra.put("Citta", sitter.getCitta());
-        babysitterExtra.put("Auto",sitter.getAuto());
-        babysitterExtra.put("Avatar", sitter.getAvatar());
-        babysitterExtra.put("Genere", sitter.getGenere());
-        babysitterExtra.put("numLavori", sitter.getNumLavori());
-        babysitterExtra.put("Rating", sitter.getRating());
-        babysitterExtra.put("dataNascita", sitter.getDataNascita());
-        babysitterExtra.put("retribuzione", "");
-        utente.put("babysitter",babysitterExtra);
-        db.collection("utente")
-                .document()
-                .set(utente)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+
+        mAuth.createUserWithEmailAndPassword(sitter.getEmail(),sitter.getPassword())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(getApplicationContext(), R.string.registrationSuccess, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // termina tutte le activity sopra quella chiamata
-                        startActivity(intent);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                        Toast.makeText(getApplicationContext(), R.string.registrationFail, Toast.LENGTH_SHORT).show();
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Map<String,Object> utente = new HashMap<>();
+                            utente.put("password",sitter.getPassword());
+                            utente.put("babysitter",sitter);
+                            utente.put("NomeCompleto",sitter.getName());
+                            utente.put("Email",sitter.getEmail());
+                            utente.put("Avatar", sitter.getAvatar());
+                            utente.put("Nazione",sitter.getNazione());
+                            utente.put("Citta", sitter.getCitta());
+                            utente.put("Telefono", sitter.getTelefono());
+                            utente.put("online", sitter.isOnline());
+                            utente.put("Descrizione", sitter.getDescrizione());
+                            utente.put("tipoUtente",Constants.TYPE_SITTER);
+                            Map<String,Object> babysitterExtra = new HashMap<>();
+                            babysitterExtra.put("dataNascita", sitter.getDataNascita());
+                            babysitterExtra.put("Genere", sitter.getGenere());
+                            babysitterExtra.put("Rating", sitter.getRating());
+                            babysitterExtra.put("numLavori", sitter.getNumLavori());
+                            babysitterExtra.put("Auto",sitter.getAuto());
+                            babysitterExtra.put("Retribuzione", sitter.getRetribuzioneOra());
+                            utente.put("babysitter",babysitterExtra);
+
+                            FirebaseUser firebaseUser = mAuth.getCurrentUser();
+
+                            db.collection("utente")
+                                    .document(firebaseUser.getUid())
+                                    .set(utente)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(getApplicationContext(), R.string.registrationSuccess, Toast.LENGTH_LONG).show();
+                                            Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // termina tutte le activity sopra quella chiamata
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w(TAG, "Error adding document", e);
+                                            Toast.makeText(getApplicationContext(), R.string.registrationFail, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+
+                        }
+
+                        // ...
                     }
                 });
+                        }
+
 
 
     }
-
-
-}

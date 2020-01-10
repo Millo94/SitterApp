@@ -23,7 +23,7 @@
 
             <Button
                 android:id="@+id/vediDispSitter"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:backgroundTint="@color/colorPrimary"
@@ -38,7 +38,7 @@
 
             <Button
                 android:id="@+id/contattaSitter"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/colorPrimary"
@@ -52,7 +52,7 @@
 
             <Button
                 android:id="@+id/feedbackSitter"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
                 android:layout_marginTop="8dp"
@@ -69,7 +69,7 @@
 
             <TextView
                 android:id="@+id/nazionePuSitter"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/nazione"
@@ -81,7 +81,7 @@
 
             <TextView
                 android:id="@+id/nazionePuSitter2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/nazione"
@@ -92,7 +92,7 @@
 
             <TextView
                 android:id="@+id/cittaPuSitter"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/citta"
@@ -104,7 +104,7 @@
 
             <TextView
                 android:id="@+id/cittaPuSitter2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/citta"
@@ -147,7 +147,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginTop="28dp"
                 android:paddingStart="5dp"
-                android:text="@string/username"
+                android:text="@string/nomeCompleto"
                 android:textSize="40sp"
                 app:layout_constraintBottom_toTopOf="@+id/ratingPuSitter"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -158,7 +158,7 @@
 
             <TextView
                 android:id="@+id/descrizionePuSitter"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:text="@string/descrizione"
@@ -169,7 +169,7 @@
 
             <TextView
                 android:id="@+id/nomePuSitter"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:text="@string/nome"
@@ -182,7 +182,7 @@
 
             <TextView
                 android:id="@+id/nomePuSitter2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/nome"
@@ -194,7 +194,7 @@
 
             <TextView
                 android:id="@+id/cognomePuSitter"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/cognome"
@@ -206,7 +206,7 @@
 
             <TextView
                 android:id="@+id/cognomePuSitter2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/cognome"
@@ -218,7 +218,7 @@
 
             <TextView
                 android:id="@+id/emailPuSitter"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/email"
@@ -230,7 +230,7 @@
 
             <TextView
                 android:id="@+id/emailPuSitter2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/email"
@@ -242,7 +242,7 @@
 
             <TextView
                 android:id="@+id/telefonoPuSitter"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/telefono"
@@ -255,7 +255,7 @@
 
             <TextView
                 android:id="@+id/telefonoPuSitter2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/telefono"
@@ -267,7 +267,7 @@
 
             <TextView
                 android:id="@+id/sessoPuSitter"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/sesso"
@@ -279,7 +279,7 @@
 
             <TextView
                 android:id="@+id/sessoPuSitter2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/sesso"
@@ -291,7 +291,7 @@
 
             <TextView
                 android:id="@+id/nascitaPuSitter"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/datanascita"
@@ -304,7 +304,7 @@
 
             <TextView
                 android:id="@+id/nascitaPuSitter2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/datanascita"
@@ -316,7 +316,7 @@
 
             <TextView
                 android:id="@+id/autoPuSitter"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/automunito"
@@ -328,7 +328,7 @@
 
             <TextView
                 android:id="@+id/autoPuSitter2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/automunito"
@@ -340,7 +340,7 @@
 
             <TextView
                 android:id="@+id/tariffaPuSitter"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/tariffa"
@@ -352,7 +352,7 @@
 
             <TextView
                 android:id="@+id/tariffaPuSitter2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/tariffa"
@@ -364,7 +364,7 @@
 
             <TextView
                 android:id="@+id/ingaggiPuSitter"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/numlavori"
@@ -376,7 +376,7 @@
 
             <TextView
                 android:id="@+id/ingaggiPuSitter2"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/numlavori"

@@ -10,12 +10,25 @@
     app:cardBackgroundColor="#fff"
     app:cardCornerRadius="5dp"
     app:cardElevation="4dp"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="vertical" android:padding="8dp">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="horizontal" android:padding="8dp">
+
+
+        <TextView
+            android:id="@+id/destinatario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/usernameRecensione"
+            android:layout_alignLeft="@+id/usernameRecensione"
+            android:text="TextView"
+             />
 
 
         <TextView
@@ -24,9 +37,12 @@
             android:layout_height="wrap_content"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:text="@string/username"
+            android:text="@string/nomeCompleto"
             android:textColor="#000"
-            android:textSize="28sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        </LinearLayout>
 
         <RatingBar
             android:id="@+id/ratingBarRecensione"
@@ -46,6 +62,8 @@
             android:layout_below="@+id/ratingBarRecensione"
             android:padding="8dp"/>
 
-    </RelativeLayout>
+        </LinearLayout>
+
+
 
 </androidx.cardview.widget.CardView>
