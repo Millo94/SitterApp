@@ -21,7 +21,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
     private final static int TEXT_TO_SHOW = 100;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView family_name, date, start_time, end_time, description, scad;
+        private TextView family_name, date, start_time, end_time, description, stato;
 
         MyViewHolder(View view) {
             super(view);
@@ -30,7 +30,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
             start_time = (TextView) view.findViewById(R.id.appuntamento_item_start);
             end_time = (TextView) view.findViewById(R.id.appuntamento_item_end);
             date = (TextView) view.findViewById(R.id.appuntamento_item_data);
-            scad = (TextView) view.findViewById(R.id.scadutoCard);
+            stato = (TextView) view.findViewById(R.id.statoAnnuncio);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -43,7 +43,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
     }
 
 
-    //castruttore
+    //costruttore
     public NoticeAdapter(Context context, List<Notice> noticeList, NoticeAdapterListener listener) {
         this.context = context;
         this.listener = listener;
@@ -72,13 +72,32 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
 
 
         //Controllo se l'annuncio è scaduto
-        boolean scaduto= annuncioScaduto(noticeListFiltered.get(position));
+        boolean scaduto = annuncioScaduto(noticeListFiltered.get(position));
 
         if (scaduto) {
-            //se l'annuncio è scaduto setto la visibilità a VISIBLE della textView
-            if (holder.scad.getVisibility() == View.GONE) {
-                holder.scad.setVisibility(View.VISIBLE);
+            //se l'annuncio è scaduto setto la visibilità a VISIBLE della textView e l'apposita stringa
+            if (holder.stato.getVisibility() == View.GONE) {
+                holder.stato.setText(R.string.scaduto);
+                holder.stato.setVisibility(View.VISIBLE);
             }
+        }
+
+        else if (notice.getConferma() == false) {
+
+            if (holder.stato.getVisibility() == View.GONE) {
+                holder.stato.setText(R.string.in_attesa);
+                holder.stato.setVisibility(View.VISIBLE);
+            }
+
+        }
+
+        else if (notice.getConferma() == true) {
+
+            if (holder.stato.getVisibility() == View.GONE) {
+                holder.stato.setText(R.string.confermato);
+                holder.stato.setVisibility(View.VISIBLE);
+            }
+
         }
 
 
@@ -141,6 +160,16 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
     //interfaccia di comunicazione tra adapter e listView
     public interface NoticeAdapterListener {
         void onNoticeSelected(Notice notice);
+    }
+
+
+    public void clear() {
+        if(noticeList != null) {
+            noticeList.clear();
+        }
+
+        notifyDataSetChanged();
+
     }
 
 

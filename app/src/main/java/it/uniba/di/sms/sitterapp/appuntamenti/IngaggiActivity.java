@@ -113,7 +113,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
 
         if(sessionManager.getSessionType() == Constants.TYPE_FAMILY){
             colRef
-                    .whereEqualTo("family", sessionManager.getSessionUsername())
+                    .whereEqualTo("family", sessionManager.getSessionUid())
                     .get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
@@ -137,7 +137,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                     });
         }else{
             colRef
-                    .whereEqualTo("sitter", sessionManager.getSessionUsername())
+                    .whereEqualTo("candidatura." + sessionManager.getSessionUid(), sessionManager.getSessionUid())
                     .get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
@@ -169,7 +169,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
     @Override
     public void onNoticeSelected(Notice notice) {
 
-        DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice, sessionManager.getSessionUsername());
+        DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice, sessionManager.getSessionUid());
         dialogs.hideButton();
         dialogs.show(getSupportFragmentManager(), "dialog");
 

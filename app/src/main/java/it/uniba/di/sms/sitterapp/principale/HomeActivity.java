@@ -3,11 +3,10 @@ package it.uniba.di.sms.sitterapp.principale;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,7 +21,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -115,7 +116,7 @@ public class HomeActivity extends DrawerActivity
         if (type == Constants.TYPE_SITTER) {
 
             noticeList = new ArrayList<>();
-            noticeList.add(new Notice("1", "Ladisa", "23-06-2018", "17.00", "20.00", "Ho bisogno di qualcuno che badi ai miei figli mentre faccio la spesa."));
+            noticeList.add(new Notice("1", "Ladisa","23-06-2018", "17.00", "20.00", "Ho bisogno di qualcuno che badi ai miei figli mentre faccio la spesa."));
             noticeList.add(new Notice("2", "Luprano", "24-06-2018", "07.30", "12.30", "Cerco babysitter che badi a mio figlio durante il mio turno di lavoro."));
             noticeList.add(new Notice("3", "Deperte", "25-06-2018", "13.00", "16.00", "Cercasi babysitter per i miei due figli."));
             noticeList.add(new Notice("4", "Angarano", "25-06-2018", "19.00", "22.00", "Ho bisogno di una babysitter che prepari la cena per mia figlia"));
@@ -190,32 +191,31 @@ public class HomeActivity extends DrawerActivity
     private void caricaAnnunci(){
 
         CollectionReference colRef = db.collection("annuncio");
-
         colRef
                 .whereEqualTo("conferma", false)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                .orderBy("date")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if(e!=null){
+                            Toast.makeText(HomeActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
+                        }
 
+                        else {
+                            noticeList.clear();
                         Iterator<QueryDocumentSnapshot> iterableCandidature = queryDocumentSnapshots.iterator();
                         while(iterableCandidature.hasNext()){
                             DocumentSnapshot documentSnapshot = iterableCandidature.next();
                             Notice notice = documentSnapshot.toObject(Notice.class);
-                            //mostra solo gli ingaggi non scaduti
-                            if (noticeAdapter.annuncioScaduto(notice) == false) {
+                            //mostra solo gli ingaggi ancora disponibili alla candidatura
+                            if (noticeAdapter.annuncioScaduto(notice) == false && !notice.containsCandidatura(sessionManager.getSessionUid())) {
                                 noticeList.add(notice);
                             }
                         }
                         noticeAdapter.notifyDataSetChanged();
 
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(HomeActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
-                    }
+                    }}
+
                 });
 
     }
@@ -270,7 +270,7 @@ public class HomeActivity extends DrawerActivity
     public void onNoticeSelected(Notice notice) {
 
         if (sessionManager.checkLogin()) {
-            DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice, sessionManager.getSessionUsername());
+            DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice, sessionManager.getSessionUid());
             dialogs.show(getSupportFragmentManager(), "dialog");
         } else {
             sessionManager.forceLogin(this);

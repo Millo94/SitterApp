@@ -52,6 +52,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     SessionManager sessionManager;
     private static final String elimina = "delete";
     private String idAnnuncio;
+    private String stato = new String();
     RequestQueue requestQueue;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -85,6 +86,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
             start =(TextView)view.findViewById(R.id.oraInizioDettagliSit2);
             end = (TextView) view.findViewById(R.id.oraFineDettagliSit2);
             desc = (TextView) view.findViewById(R.id.descrizioneDettagliSit2);
+            //stato = (textView) view.findViewById(R.id.);
 
             Button openProfile = (Button) view.findViewById(R.id.openFamilyProfile);
             openProfile.setOnClickListener(openProfileListener);
@@ -95,7 +97,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
             Button confirm = (Button) view.findViewById(R.id.confirmSit);
             //viene visualizzato quando la babysitter, candidata, viene scelta dalla famiglia e deve confermare la scelta
-            confirm.setVisibility(getArguments().getString("sitter").equals(sessionManager.getSessionUsername()) && !getArguments().getBoolean("conferma")?View.VISIBLE:View.GONE);
+            confirm.setVisibility(getArguments().getString("sitter").equals(sessionManager.getSessionUid()) && !getArguments().getBoolean("conferma")?View.VISIBLE:View.GONE);
             confirm.setOnClickListener(confirmEngageListener);
 
             Button deleteCandidatura = (Button) view.findViewById(R.id.deleteApplication);
@@ -320,11 +322,11 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     public void candidaSitter(){
 
 
-        String username = sessionManager.getSessionUsername();
+        String userID = sessionManager.getSessionUid();
 
         db.collection("annuncio")
                 .document(idAnnuncio)
-                .update("candidatura." + username , username)
+                .update("candidatura." + userID , userID)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -345,7 +347,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
     private void eliminaCandidatura(){
         Map<String, Object> deleteSitter = new HashMap<>();
-        deleteSitter.put("candidatura."+sessionManager.getSessionUsername(), FieldValue.delete());
+        deleteSitter.put("candidatura."+ sessionManager.getSessionUid(), FieldValue.delete());
 
         db.collection("annuncio")
                 .document(idAnnuncio)
@@ -354,6 +356,8 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(getActivity().getApplicationContext(), R.string.deleteSuccess, Toast.LENGTH_SHORT).show();
+                        Intent intentback = new Intent(getContext(),HomeActivity.class);
+                        startActivity(intentback);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

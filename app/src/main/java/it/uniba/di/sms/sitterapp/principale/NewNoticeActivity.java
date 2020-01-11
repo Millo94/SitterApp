@@ -121,11 +121,7 @@ public class NewNoticeActivity extends AppCompatActivity implements DatePickerDi
     // Creazione della stringa dalla data scelta con il DatePicker
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        data.setText(
-                new StringBuilder()
-                        .append(dayOfMonth).append("-")
-                        .append(month + 1).append("-")
-                        .append(year));
+        data.setText(String.format("%02d-%02d-%04d", dayOfMonth, month + 1, year));
 
     }
 
