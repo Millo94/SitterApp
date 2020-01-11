@@ -15,12 +15,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -29,15 +24,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import it.uniba.di.sms.sitterapp.Constants;
-import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteFamiglia;
 import it.uniba.di.sms.sitterapp.SessionManager;
@@ -49,8 +38,9 @@ public class PrivatoFamigliaFragment extends Fragment {
 
 
     View view;
-    TextView usernamePrFam, nomePrFam, cognomePrFam, emailPrFam, numeroPrFam, nazionePrFam, cittaPrFam, numFigliPrFam;
-    EditText descrPrFam, nomePrFam2, cognomePrFam2, emailPrFam2, numeroPrFam2, nazionePrFam2, cittaPrFam2,  numFigliPrFam2;
+    //TODO modifica dell'avatar
+    TextView emailPrFam, nazionePrFam, cittaPrFam, numFigliPrFam, telPrFam;
+    EditText nomeCompletoPrFam,descrPrFam, emailPrFam2, nazionePrFam2, cittaPrFam2, telPrFam2, numFigliPrFam2;
     Switch animaliPrFam2;
     RatingBar ratingPrFam;
     Button modificaProfilo,exit_button;
@@ -93,33 +83,52 @@ public class PrivatoFamigliaFragment extends Fragment {
         return view;
     }
 
-    private void getRatingFamily(final String username){
+    private void getRatingFamily(final String uid){
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("recensione");
+        db.collection("recensione").whereEqualTo("receiver", uid)
+            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot querySnapshot = task.getResult();
+                    float sumRating = 0;
+                    int i = 0;
+                    for(QueryDocumentSnapshot queryDocumentSnapshot : querySnapshot){
 
+                        sumRating += queryDocumentSnapshot.getDouble("rating").floatValue();
+                        i++;
 
+                    }
+
+                    ratingPrFam.setRating(sumRating/i);
+
+                }else{
+                    Toast.makeText(getContext(), R.string.genericError ,Toast.LENGTH_SHORT).show();                }
+            }
+        });
 
     }
 
     private void apriProfilo(){
 
         db.collection("utente")
-                .document(sessionManager.getSessionUsername())
+                .document(sessionManager.getSessionUid())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        descrPrFam.setText(documentSnapshot.getString("famiglia.descrizione"));
-                        nomePrFam2.setText(documentSnapshot.getString("famiglia.nome"));
-                        cognomePrFam2.setText(documentSnapshot.getString("famiglia.cognome"));
-                        emailPrFam2.setText(documentSnapshot.getString("famiglia.email"));
-                        numeroPrFam2.setText(documentSnapshot.getString("famiglia.numero"));
-                        animaliPrFam2.setChecked(documentSnapshot.getBoolean("famiglia.animali"));
+                        nomeCompletoPrFam.setText(documentSnapshot.getString("NomeCompleto"));
+                        descrPrFam.setText(documentSnapshot.getString("Descrizione"));
+                        emailPrFam2.setText(documentSnapshot.getString("E-mail"));
+                        telPrFam2.setText(documentSnapshot.getString("Telefono"));
+                        animaliPrFam2.setChecked(documentSnapshot.getBoolean("famiglia.Animali"));
                         numFigliPrFam2.setText(documentSnapshot.getString("famiglia.numFigli"));
-                        nazionePrFam2.setText(documentSnapshot.getString("famiglia.nazione"));
-                        cittaPrFam2.setText(documentSnapshot.getString("famiglia.citta"));
-                        //TODO AGGIUNGI RATING
+                        nazionePrFam2.setText(documentSnapshot.getString("Nazione"));
+                        cittaPrFam2.setText(documentSnapshot.getString("Citta"));
+                        getRatingFamily(sessionManager.getSessionUid());
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -130,98 +139,29 @@ public class PrivatoFamigliaFragment extends Fragment {
                 });
     }
 
-    //volley per aprire il profilo privato
-    /*private void openProfile(){
-
-        StringRequest profileRequest = new StringRequest(Request.Method.POST, Php.PROFILO , new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONObject json = new JSONObject(response);
-                    String result = json.getString("open");
-
-                    if (result.equals("true")){
-                        usernamePrFam.setText(sessionManager.getSessionUsername());
-                        if(!json.getString("rating").equals("null")) {
-                            ratingPrFam.setRating((float) json.getDouble("rating"));
-                        }
-                        if(json.getString("descrizione").equals("null")){
-                            descrPrFam.setHint(R.string.missingdescription);
-                        } else {
-                            descrPrFam.setText(json.getString("descrizione"));
-                        }
-                        nomePrFam2.setText(json.getString("nome"));
-                        cognomePrFam2.setText(json.getString("cognome"));
-                        emailPrFam2.setText(json.getString("email"));
-                        numeroPrFam2.setText(json.getString("telefono"));
-                        nazionePrFam2.setText(json.getString("nazione"));
-                        cittaPrFam2.setText(json.getString("citta"));
-                        // Conversione del flag animali
-                        if(json.getString("animali").equals("0"))
-                            animaliPrFam2.setChecked(true);
-                        else
-                            animaliPrFam2.setChecked(false);
-                        // Setta numero figli
-                        if(!json.getString("numFigli").equals("null"))
-                            numFigliPrFam2.setText(json.getString("numFigli"));
-                        else
-                            numFigliPrFam2.setText("0");
-
-                    } else if(result.equals("false")) {
-                        Toast.makeText(getContext(), R.string.profileError ,Toast.LENGTH_SHORT).show();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), R.string.profileError ,Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("operation", "open");
-                params.put("type", String.valueOf(Constants.TYPE_FAMILY));
-                params.put("username", sessionManager.getSessionUsername());
-                return params;
-            }
-        };
-
-        requestQueue.add(profileRequest);
-    }*/
-
     //per modificare i dati
     public View.OnClickListener goEditable = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (!edit) {
 
+                nomeCompletoPrFam.setEnabled(true);
                 descrPrFam.setEnabled(true);
-                nomePrFam2.setEnabled(true);
-                cognomePrFam2.setEnabled(true);
-                emailPrFam2.setEnabled(true);
-                numeroPrFam2.setEnabled(true);
                 animaliPrFam2.setEnabled(true);
                 cittaPrFam2.setEnabled(true);
                 numFigliPrFam2.setEnabled(true);
+                telPrFam2.setEnabled(true);
 
                 edit = true;
 
             } else {
 
+                nomeCompletoPrFam.setEnabled(false);
                 descrPrFam.setEnabled(false);
-                nomePrFam2.setEnabled(false);
-                cognomePrFam2.setEnabled(false);
-                emailPrFam2.setEnabled(false);
-                numeroPrFam2.setEnabled(false);
                 animaliPrFam2.setEnabled(false);
                 cittaPrFam2.setEnabled(false);
                 numFigliPrFam2.setEnabled(false);
+                telPrFam2.setEnabled(false);
                 modifica();
                 edit = false;
             }
@@ -231,17 +171,16 @@ public class PrivatoFamigliaFragment extends Fragment {
     private void modifica(){
 
         DocumentReference docRef = db.collection("utente")
-                .document(sessionManager.getSessionUsername());
+                .document(sessionManager.getSessionUid());
 
-        docRef.update("famiglia.numFigli", numeroPrFam2.getText().toString(),
-                "famiglia.nazione", nazionePrFam2.getText().toString(),
-                "famiglia.descrizione", descrPrFam.getText().toString(),
-                "famiglia.citta", cittaPrFam2.getText().toString(),
-                "famiglia.email", emailPrFam2.getText().toString(),
-                "famiglia.nome", nomePrFam2.getText().toString(),
-                "famiglia.cognome", cognomePrFam2.getText().toString(),
-                "famiglia.numero", numeroPrFam2.getText().toString(),
-                "famiglia.animali", animaliPrFam2.isChecked()
+        docRef.update("famiglia.numFigli", numFigliPrFam2.getText().toString(),
+                "Nazione", nazionePrFam2.getText().toString(),
+                "Descrizione", descrPrFam.getText().toString(),
+                "Citta", cittaPrFam2.getText().toString(),
+                "E-mail", emailPrFam2.getText().toString(),
+                "Telefono", telPrFam2.getText().toString(),
+                "famiglia.Animali", animaliPrFam2.isChecked(),
+                "NomeCompleto", nomeCompletoPrFam.getText().toString()
                 )
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -257,60 +196,10 @@ public class PrivatoFamigliaFragment extends Fragment {
                 });
     }
 
-    /*private void modifyProfile(){
-
-        StringRequest modify = new StringRequest(Request.Method.POST, Php.PROFILO, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONObject json = new JSONObject(response);
-                    String result = json.optString("modify");
-                    if(json.getString("modify").equals("true")){
-                        Toast.makeText(getActivity().getApplicationContext(), R.string.modifySuccess,Toast.LENGTH_SHORT).show();
-                    } else if (result.equals("false")) {
-                        Toast.makeText(getActivity().getApplicationContext(), R.string.genericError,Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), R.string.genericError,Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("operation", "modify");
-                params.put("type", String.valueOf(Constants.TYPE_FAMILY));
-                params.put("username", sessionManager.getSessionUsername());
-                params.put("descrizione", descrPrFam.getText().toString());
-                params.put("nome", nomePrFam2.getText().toString());
-                params.put("cognome", cognomePrFam2.getText().toString());
-                params.put("email", emailPrFam2.getText().toString());
-                params.put("telefono", numeroPrFam2.getText().toString());
-                params.put("nazione", nazionePrFam2.getText().toString());
-                params.put("citta", cittaPrFam2.getText().toString());
-                params.put("numFigli", numFigliPrFam2.getText().toString());
-                // Conversione del flag animali
-                if(animaliPrFam2.isChecked())
-                    params.put("animali", "0");
-                else
-                    params.put("animali", "1");
-                return params;
-            }
-        };
-
-        requestQueue.add(modify);
-    }*/
-
     private void inizializzazione() {
-        usernamePrFam = (TextView) view.findViewById(R.id.usernamePrFamiglia);
-        usernamePrFam.setText(sessionManager.getSessionUsername());
+
+        nomeCompletoPrFam = (EditText) view.findViewById(R.id.nomeCompletoPrFamiglia);
+        nomeCompletoPrFam.setEnabled(false);
 
         descrPrFam = (EditText) view.findViewById(R.id.descrizionePrFamiglia);
         descrPrFam.setEnabled(false);
@@ -318,21 +207,9 @@ public class PrivatoFamigliaFragment extends Fragment {
         ratingPrFam = (RatingBar) view.findViewById(R.id.ratingPrFamiglia);
         ratingPrFam.setEnabled(false);
 
-        nomePrFam = (TextView) view.findViewById(R.id.nomePrFamiglia);
-        nomePrFam2 = (EditText) view.findViewById(R.id.nomePrFamiglia2);
-        nomePrFam2.setEnabled(false);
-
-        cognomePrFam = (TextView) view.findViewById(R.id.cognomePrFamiglia);
-        cognomePrFam2 = (EditText) view.findViewById(R.id.cognomePrFamiglia2);
-        cognomePrFam2.setEnabled(false);
-
         emailPrFam = (TextView) view.findViewById(R.id.emailPrFamiglia);
         emailPrFam2 = (EditText) view.findViewById(R.id.emailPrFamiglia2);
         emailPrFam2.setEnabled(false);
-
-        numeroPrFam = (TextView) view.findViewById(R.id.telefonoPrFamiglia);
-        numeroPrFam2 = (EditText) view.findViewById(R.id.telefonoPrFamiglia2);
-        numeroPrFam2.setEnabled(false);
 
         nazionePrFam = (TextView) view.findViewById(R.id.nazionePrFamiglia);
         nazionePrFam2 = (EditText) view.findViewById(R.id.nazionePrFamiglia2);
@@ -345,6 +222,11 @@ public class PrivatoFamigliaFragment extends Fragment {
         numFigliPrFam = (TextView) view.findViewById(R.id.figliPrFamiglia);
         numFigliPrFam2 = (EditText) view.findViewById(R.id.figliPrFamiglia2);
         numFigliPrFam2.setEnabled(false);
+
+        telPrFam = (TextView) view.findViewById(R.id.telefonoPrFamiglia);
+        telPrFam2 = (EditText) view.findViewById(R.id.telefonoPrFamiglia2);
+        telPrFam2.setEnabled(false);
+
         animaliPrFam2 = (Switch) view.findViewById(R.id.animaliPrFamiglia);
         animaliPrFam2.setEnabled(false);
 

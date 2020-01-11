@@ -8,7 +8,7 @@ public class UtenteFamiglia extends User{
 
     private String numFigli;
     private Boolean animali;
-
+    private float rating;
 
     //costruttore
     public UtenteFamiglia(String id,
@@ -20,11 +20,14 @@ public class UtenteFamiglia extends User{
                           String citta,
                           String telefono,
                           boolean online,
+                          String descrizione,
                           String numFigli,
-                          Boolean animali) {
-        super(id,nameC,avatar,email,password,nazione,citta,telefono,online);
+                          Boolean animali,
+                          float rating) {
+        super(id,nameC,avatar,email,password,nazione,citta,telefono,online,descrizione);
         this.numFigli = numFigli;
         this.animali = animali;
+        this.rating = rating;
     }
 
     //metodi get e set
@@ -35,5 +38,9 @@ public class UtenteFamiglia extends User{
 
     public Boolean getAnimali() {
         return animali;
+    }
+
+    public float getRating() {
+        return rating;
     }
 }

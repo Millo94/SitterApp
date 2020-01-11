@@ -7,39 +7,25 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import it.uniba.di.sms.sitterapp.Constants;
-import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
-import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
 import it.uniba.di.sms.sitterapp.registrazione.RegistrationActivity;
 import it.uniba.di.sms.sitterapp.SessionManager;
 
@@ -49,12 +35,13 @@ import it.uniba.di.sms.sitterapp.SessionManager;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText usernameEt, passwordEt;
+    private EditText emailEt, passwordEt;
     private TextView nuovoAccount,nuovoAccountFB;
     private StringRequest request;
     private RequestQueue RequestQueue;
     private SessionManager session;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth;
     String TAG = "LoginActivity";
 
     @Override
@@ -65,9 +52,10 @@ public class LoginActivity extends AppCompatActivity {
         // Creazione del nuovo manager di sessione
         session = new SessionManager(getApplicationContext());
 
-        usernameEt = (EditText) findViewById(R.id.lblUsername);
+        emailEt = (EditText) findViewById(R.id.lblEmail);
         passwordEt = (EditText) findViewById(R.id.lblPassword);
         nuovoAccount = (TextView) findViewById(R.id.creaAccount);
+        mAuth = FirebaseAuth.getInstance();
 
 
         //aller dialog per la scelta del tipo del nuovo utente
@@ -108,36 +96,38 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLogin(View view) {
 
-        final DocumentReference docRef = db.collection("utente").document(usernameEt.getText().toString());
-
-        docRef.get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        mAuth.signInWithEmailAndPassword(emailEt.getText().toString().toLowerCase(), passwordEt.getText().toString())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                if(passwordEt.getText().toString().equals(document.getString("password"))){
-                                    final Integer tipoUtente = document.getLong("tipoUtente").intValue();
-                                    Toast.makeText(getApplicationContext(), R.string.loginSuccess, Toast.LENGTH_LONG).show();
-                                    session.createLoginSession(usernameEt.getText().toString(),  tipoUtente);
-                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                    intent.putExtra(Constants.TYPE, tipoUtente);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(intent);
-                                    finish();
-                                }
-
-                            } else {
-                                Toast.makeText(getApplicationContext(), R.string.loginerror, Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            Toast.makeText(LoginActivity.this, R.string.genericError, Toast.LENGTH_LONG).show();
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            final FirebaseUser currentUser = mAuth.getCurrentUser();
+                            db.collection("utente")
+                                    .document(currentUser.getUid())
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if(task.isSuccessful()) {
+                                                DocumentSnapshot documentSnapshot = task.getResult();
+                                                final Integer tipoUtente = documentSnapshot.getLong("tipoUtente").intValue();
+                                                Toast.makeText(getApplicationContext(), R.string.loginSuccess, Toast.LENGTH_LONG).show();
+                                                session.createLoginSession(emailEt.getText().toString(), currentUser.getUid(), tipoUtente, documentSnapshot.getString("NomeCompleto"));
+                                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                                intent.putExtra(Constants.TYPE, tipoUtente);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                startActivity(intent);
+                                                finish();
+                                            }else{
+                                                Toast.makeText(LoginActivity.this, R.string.genericError, Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    });
+                        }else{
+                            Toast.makeText(getApplicationContext(), R.string.loginerror, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
-
-
 
 }

@@ -11,28 +11,32 @@ public class UtenteSitter extends User {
     private Boolean auto;
     private float rating;
     private int numLavori;
+    private String retribuzioneOra;
 
     //costruttore
     public UtenteSitter(String id,
-                          String nameC,
-                          String avatar,
-                          String email,
-                          String password,
-                          String nazione,
-                          String citta,
-                          String telefono,
-                          boolean online,
-                          String dataNascita,
-                          String genere,
-                          float rating,
-                          int numLavori,
-                          Boolean auto) {
-        super(id,nameC,avatar,email,password,nazione,citta,telefono,online);
+                        String nameC,
+                        String avatar,
+                        String email,
+                        String password,
+                        String nazione,
+                        String citta,
+                        String telefono,
+                        boolean online,
+                        String descrizione,
+                        String dataNascita,
+                        String genere,
+                        float rating,
+                        int numLavori,
+                        Boolean auto,
+                        String retribuzioneOra) {
+        super(id,nameC,avatar,email,password,nazione,citta,telefono,online,descrizione);
         this.dataNascita = dataNascita;
         this.genere = genere;
         this.rating = rating;
         this.numLavori = numLavori;
         this.auto = auto;
+        this.retribuzioneOra = retribuzioneOra;
     }
 
 
@@ -68,5 +72,9 @@ public class UtenteSitter extends User {
 
     public int getNumLavori() {
         return numLavori;
+    }
+
+    public String getRetribuzioneOra() {
+        return retribuzioneOra;
     }
 }
