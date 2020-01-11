@@ -243,7 +243,7 @@ public class HomeActivity extends DrawerActivity
                             UtenteSitter bs = new UtenteSitter(
                                      documentSnapshot.getId(),
                                     (String) documentSnapshot.get("babysitter.nome"),
-                                    (String) documentSnapshot.get("babysitter.citta"),
+                                    (String) documentSnapshot.get("citta"),
                                     (boolean) documentSnapshot.get("babysitter.auto"),
                                     3,
                                     1);
@@ -265,9 +265,6 @@ public class HomeActivity extends DrawerActivity
 
     }
 
-    /**
-     * TODO CREARE METODO DEL CARICAMENTO DELLE BABYSITTER PER LA HOME DELLA FAMIGLIA !!!
-     */
 
     //al click su un annuncio visualizza i dettagli
     @Override
