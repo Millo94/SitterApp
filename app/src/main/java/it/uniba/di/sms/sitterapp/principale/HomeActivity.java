@@ -177,7 +177,7 @@ public class HomeActivity extends DrawerActivity
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-            caricaSitter();
+           // caricaSitter();
 
         }
     }
@@ -225,7 +225,7 @@ public class HomeActivity extends DrawerActivity
      * Caricamento delle babysitter nella home per l'utente famiglia
      */
 
-    private void caricaSitter(){
+    /*/private void caricaSitter(){
 
         CollectionReference colRef = db.collection("utente");
 
@@ -262,7 +262,7 @@ public class HomeActivity extends DrawerActivity
                     }
                 });
 
-    }
+    }*/
 
 
     //al click su un annuncio visualizza i dettagli
