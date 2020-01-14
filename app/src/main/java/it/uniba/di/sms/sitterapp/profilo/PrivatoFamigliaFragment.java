@@ -17,11 +17,15 @@ import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteFamiglia;
@@ -35,8 +39,8 @@ public class PrivatoFamigliaFragment extends Fragment {
 
     View view;
     //TODO modifica dell'avatar
-    TextView nomeCompletoPrFam, emailPrFam, numeroPrFam, nazionePrFam, cittaPrFam, numFigliPrFam;
-    EditText descrPrFam, emailPrFam2, numeroPrFam2, nazionePrFam2, cittaPrFam2,  numFigliPrFam2;
+    TextView emailPrFam, nazionePrFam, cittaPrFam, numFigliPrFam, telPrFam;
+    EditText nomeCompletoPrFam,descrPrFam, emailPrFam2, nazionePrFam2, cittaPrFam2, telPrFam2, numFigliPrFam2;
     Switch animaliPrFam2;
     RatingBar ratingPrFam;
     Button modificaProfilo,exit_button;
@@ -79,12 +83,31 @@ public class PrivatoFamigliaFragment extends Fragment {
         return view;
     }
 
-    private void getRatingFamily(final String username){
+    private void getRatingFamily(final String uid){
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("recensione");
+        db.collection("recensione").whereEqualTo("receiver", uid)
+            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot querySnapshot = task.getResult();
+                    float sumRating = 0;
+                    int i = 0;
+                    for(QueryDocumentSnapshot queryDocumentSnapshot : querySnapshot){
 
+                        sumRating += queryDocumentSnapshot.getDouble("rating").floatValue();
+                        i++;
 
+                    }
+
+                    ratingPrFam.setRating(sumRating/i);
+
+                }else{
+                    Toast.makeText(getContext(), R.string.genericError ,Toast.LENGTH_SHORT).show();                }
+            }
+        });
 
     }
 
@@ -96,14 +119,16 @@ public class PrivatoFamigliaFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        nomeCompletoPrFam.setText(documentSnapshot.getString("NomeCompleto"));
                         descrPrFam.setText(documentSnapshot.getString("Descrizione"));
                         emailPrFam2.setText(documentSnapshot.getString("E-mail"));
-                        numeroPrFam2.setText(documentSnapshot.getString("Telefono"));
+                        telPrFam2.setText(documentSnapshot.getString("Telefono"));
                         animaliPrFam2.setChecked(documentSnapshot.getBoolean("famiglia.Animali"));
                         numFigliPrFam2.setText(documentSnapshot.getString("famiglia.numFigli"));
                         nazionePrFam2.setText(documentSnapshot.getString("Nazione"));
                         cittaPrFam2.setText(documentSnapshot.getString("Citta"));
-                        //TODO AGGIUNGI RATING
+                        getRatingFamily(sessionManager.getSessionUid());
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -122,11 +147,10 @@ public class PrivatoFamigliaFragment extends Fragment {
 
                 nomeCompletoPrFam.setEnabled(true);
                 descrPrFam.setEnabled(true);
-                emailPrFam2.setEnabled(true);
-                numeroPrFam2.setEnabled(true);
                 animaliPrFam2.setEnabled(true);
                 cittaPrFam2.setEnabled(true);
                 numFigliPrFam2.setEnabled(true);
+                telPrFam2.setEnabled(true);
 
                 edit = true;
 
@@ -134,11 +158,10 @@ public class PrivatoFamigliaFragment extends Fragment {
 
                 nomeCompletoPrFam.setEnabled(false);
                 descrPrFam.setEnabled(false);
-                emailPrFam2.setEnabled(false);
-                numeroPrFam2.setEnabled(false);
                 animaliPrFam2.setEnabled(false);
                 cittaPrFam2.setEnabled(false);
                 numFigliPrFam2.setEnabled(false);
+                telPrFam2.setEnabled(false);
                 modifica();
                 edit = false;
             }
@@ -148,15 +171,16 @@ public class PrivatoFamigliaFragment extends Fragment {
     private void modifica(){
 
         DocumentReference docRef = db.collection("utente")
-                .document(sessionManager.getSessionUsername());
+                .document(sessionManager.getSessionUid());
 
-        docRef.update("famiglia.numFigli", numeroPrFam2.getText().toString(),
+        docRef.update("famiglia.numFigli", numFigliPrFam2.getText().toString(),
                 "Nazione", nazionePrFam2.getText().toString(),
                 "Descrizione", descrPrFam.getText().toString(),
                 "Citta", cittaPrFam2.getText().toString(),
                 "E-mail", emailPrFam2.getText().toString(),
-                "Telefono", numeroPrFam2.getText().toString(),
-                "famiglia.Animali", animaliPrFam2.isChecked()
+                "Telefono", telPrFam2.getText().toString(),
+                "famiglia.Animali", animaliPrFam2.isChecked(),
+                "NomeCompleto", nomeCompletoPrFam.getText().toString()
                 )
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -174,8 +198,8 @@ public class PrivatoFamigliaFragment extends Fragment {
 
     private void inizializzazione() {
 
-        nomeCompletoPrFam = (TextView) view.findViewById(R.id.nomeCompletoPrFamiglia);
-        nomeCompletoPrFam.setText(sessionManager.getNomeCompleto());
+        nomeCompletoPrFam = (EditText) view.findViewById(R.id.nomeCompletoPrFamiglia);
+        nomeCompletoPrFam.setEnabled(false);
 
         descrPrFam = (EditText) view.findViewById(R.id.descrizionePrFamiglia);
         descrPrFam.setEnabled(false);
@@ -186,10 +210,6 @@ public class PrivatoFamigliaFragment extends Fragment {
         emailPrFam = (TextView) view.findViewById(R.id.emailPrFamiglia);
         emailPrFam2 = (EditText) view.findViewById(R.id.emailPrFamiglia2);
         emailPrFam2.setEnabled(false);
-
-        numeroPrFam = (TextView) view.findViewById(R.id.telefonoPrFamiglia);
-        numeroPrFam2 = (EditText) view.findViewById(R.id.telefonoPrFamiglia2);
-        numeroPrFam2.setEnabled(false);
 
         nazionePrFam = (TextView) view.findViewById(R.id.nazionePrFamiglia);
         nazionePrFam2 = (EditText) view.findViewById(R.id.nazionePrFamiglia2);
@@ -202,6 +222,11 @@ public class PrivatoFamigliaFragment extends Fragment {
         numFigliPrFam = (TextView) view.findViewById(R.id.figliPrFamiglia);
         numFigliPrFam2 = (EditText) view.findViewById(R.id.figliPrFamiglia2);
         numFigliPrFam2.setEnabled(false);
+
+        telPrFam = (TextView) view.findViewById(R.id.telefonoPrFamiglia);
+        telPrFam2 = (EditText) view.findViewById(R.id.telefonoPrFamiglia2);
+        telPrFam2.setEnabled(false);
+
         animaliPrFam2 = (Switch) view.findViewById(R.id.animaliPrFamiglia);
         animaliPrFam2.setEnabled(false);
 

@@ -115,8 +115,8 @@ public class Notice {
         return copia;
     }
 
-    public boolean containsCandidatura(String username){
-        return candidatura.containsKey(username);
+    public boolean containsCandidatura(String userID){
+        return candidatura.containsKey(userID);
     }
 
 }

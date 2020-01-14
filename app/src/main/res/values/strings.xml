@@ -156,6 +156,8 @@
 
 
     <string name="scaduto">Expired</string>
+    <string name="in_attesa" translatable="false">Waiting for confirm</string>
+    <string name="confermato" translatable="false">Confirmed</string>
     <string name="mail_oggetto">SitterApp: engagments</string>
     <string name="mail_testo">Email sent by SitterApp</string>
     <string name="sms_testo">SMS from SitterApp:</string>

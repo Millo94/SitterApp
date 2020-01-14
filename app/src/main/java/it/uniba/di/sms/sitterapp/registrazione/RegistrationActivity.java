@@ -131,7 +131,7 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
     //volley per la registrazione di un utente sitter
     private void register(final UtenteSitter sitter) {
 
-        mAuth.createUserWithEmailAndPassword(sitter.getEmail(),sitter.getPassword())
+        mAuth.createUserWithEmailAndPassword(sitter.getEmail().toLowerCase(), sitter.getPassword())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
