@@ -1,6 +1,5 @@
 package it.uniba.di.sms.sitterapp.principale;
 
-import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -9,7 +8,6 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -265,15 +263,19 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     }
     private void executeShakeAction() {
 
-        Context context = getApplicationContext();
-        CharSequence text = "Hello toast!";
-        int duration = Toast.LENGTH_SHORT;
+        if(sessionManager.getSessionType() == Constants.TYPE_FAMILY ){
+            Intent ii = new Intent(this,NewNoticeActivity.class);
+            ii.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(ii);
+        }
+
+//        Context context = getApplicationContext();
+//        CharSequence text = "Hello toast!";
+//        int duration = Toast.LENGTH_SHORT;
 
         //Toast toast = Toast.makeText(context, text, duration);
         //toast.show();
-        Intent ii = new Intent(this,NewNoticeActivity.class);
-        ii.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(ii);
+
     }
 
     @Override
