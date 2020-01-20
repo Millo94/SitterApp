@@ -34,6 +34,7 @@ public class NewNoticeActivity  extends AppCompatActivity implements DatePickerD
     EditText descrizione, data, oraInizio, oraFine;
     Button post;
     SessionManager sessionManager;
+    Button cancella;
     private static final String posta = "POST";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -49,6 +50,7 @@ public class NewNoticeActivity  extends AppCompatActivity implements DatePickerD
         oraFine = (EditText) findViewById(R.id.oraFineNewNotice);
         post = (Button) findViewById(R.id.confermaNewNotice);
         sessionManager = new SessionManager(getApplicationContext());
+        cancella = (Button) findViewById(R.id.annulla);
 
         // DATE PICKER
         // Creazione del Date Picker
@@ -112,6 +114,17 @@ public class NewNoticeActivity  extends AppCompatActivity implements DatePickerD
                 } else {
                     Toast.makeText(NewNoticeActivity.this, R.string.missingFields, Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+
+        cancella.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                descrizione.setText("");
+                data.setText("");
+                oraFine.setText("");
+                oraInizio.setText("");
             }
         });
 
