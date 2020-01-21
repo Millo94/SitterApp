@@ -64,6 +64,7 @@ public class HomeActivity extends DrawerActivity
     //Items family
     private List<UtenteSitter> sitterList;
     private List<UtenteSitter> filteredSitterList; //per la lista dopo aver applicato un filtro
+
     private SitterAdapter sitterAdapter;
 
 
@@ -94,6 +95,16 @@ public class HomeActivity extends DrawerActivity
             });
         } else if (sessionManager.getSessionType() == Constants.TYPE_SITTER && cercaSitter.getVisibility() == View.VISIBLE) {
             cercaSitter.hide();
+        }
+
+        sitterList = new ArrayList<>();
+        ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+        if (sitterList.size() == 0) {
+            errorView.setTitle(R.string.niente_sitter);
+            errorView.setVisibility(View.VISIBLE);
+
+        } else {
+            errorView.setVisibility(View.GONE);
         }
 
         //CARICAMENTO DEGLI ANNUNCI
@@ -330,8 +341,9 @@ public class HomeActivity extends DrawerActivity
 
         ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
         if (filteredSitterList.size() == 0) {
-            errorView.setVisibility(View.VISIBLE);
             errorView.setTitle(R.string.niente_sitter);
+            errorView.setVisibility(View.VISIBLE);
+
         } else {
             errorView.setVisibility(View.GONE);
         }

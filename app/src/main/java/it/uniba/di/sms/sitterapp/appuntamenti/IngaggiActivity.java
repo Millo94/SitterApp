@@ -4,48 +4,33 @@ package it.uniba.di.sms.sitterapp.appuntamenti;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import it.uniba.di.sms.sitterapp.adapter.NoticeAdapter;
 import it.uniba.di.sms.sitterapp.Constants;
-import it.uniba.di.sms.sitterapp.oggetti.Notice;
-import it.uniba.di.sms.sitterapp.Php;
-import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
-import it.uniba.di.sms.sitterapp.principale.HomeActivity;
-import it.uniba.di.sms.sitterapp.principale.NewNoticeActivity;
 import it.uniba.di.sms.sitterapp.R;
+import it.uniba.di.sms.sitterapp.adapter.NoticeAdapter;
+import it.uniba.di.sms.sitterapp.oggetti.Notice;
+import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
+import it.uniba.di.sms.sitterapp.principale.NewNoticeActivity;
 import tr.xip.errorview.ErrorView;
 
 public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.NoticeAdapterListener {
@@ -58,8 +43,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
 
         //FAB
         FloatingActionButton addNotice = (FloatingActionButton) findViewById(R.id.addNotice);
@@ -75,7 +58,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         } else if (sessionManager.getSessionType() == Constants.TYPE_SITTER && addNotice.getVisibility() == View.VISIBLE) {
             addNotice.hide();
         }
-
         //caricamento degli annunci
         noticeList = new ArrayList<>();
         noticeAdapter = new NoticeAdapter(IngaggiActivity.this, noticeList, IngaggiActivity.this);
@@ -87,7 +69,16 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+        if (noticeList.size() == 0) {
+            errorView.setTitle(R.string.niente_annunci);
+            errorView.setVisibility(View.VISIBLE);
+
+        } else {
+            caricaIngaggi();
+        }
     }
+
 
     @Override
     protected void onStart() {

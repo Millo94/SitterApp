@@ -137,6 +137,7 @@
     <string name="niente_scrivi_recensioni">Nessuna Recensione</string>
     <string name="niente_recensioni_ricevute">Nessuna recensione ricevuta</string>
     <string name="niente_recensioni_scritte">Nessuna recensione scritta</string>
+    <string name="niente_messaggi">Nessuna chat da mostrare</string>
     <string name="usaGalleria">Scegli immagine dalla Galleria</string>
     <string name="usaCamera">Scatta una foto</string>
     <string name="risutltatoCaricamento">Foto modificata correttamente</string>
@@ -153,6 +154,7 @@
     <string name="caricamentoFoto">Caricamento...</string>
     <string name="ContentDescriptionClockImage">Clock image</string>
     <string name="ContentDescriptionCalendarImage">Calendar image</string>
+
     <string name="action_copy">Copia</string>
     <string name="action_delete">Cancella</string>
     <string name="copied_message">Messaggio copiato!</string>

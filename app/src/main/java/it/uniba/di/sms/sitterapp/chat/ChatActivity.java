@@ -1,54 +1,40 @@
 package it.uniba.di.sms.sitterapp.chat;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
+import androidx.annotation.Nullable;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 import com.stfalcon.chatkit.commons.ImageLoader;
 import com.stfalcon.chatkit.dialogs.DialogsList;
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter;
 
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.chat.dialogs.CustomDialogViewHolder;
-import it.uniba.di.sms.sitterapp.chat.fixtures.DialogsFixtures;
 import it.uniba.di.sms.sitterapp.oggetti.Dialog;
 import it.uniba.di.sms.sitterapp.oggetti.Message;
 import it.uniba.di.sms.sitterapp.oggetti.User;
 import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
 import it.uniba.di.sms.sitterapp.utils.AppUtils;
+import tr.xip.errorview.ErrorView;
 
 public class ChatActivity extends DrawerActivity implements DialogsListAdapter.OnDialogClickListener<Dialog>,
         DialogsListAdapter.OnDialogLongClickListener<Dialog>{
@@ -139,7 +125,6 @@ public class ChatActivity extends DrawerActivity implements DialogsListAdapter.O
                                             mapUserList.remove(i);
                                         }
                                     }
-
                                     //avvaloro la lista degli utenti (nel nostro caso c'è solo un utente
                                     ArrayList<User> userList = new ArrayList<>();
                                     userList.add(new User((String) mapUserList.get(0).get("id"), (String) mapUserList.get(0).get("name"), (String) mapUserList.get(0).get("avatar"), (Boolean) mapUserList.get(0).get("online")));
@@ -162,6 +147,9 @@ public class ChatActivity extends DrawerActivity implements DialogsListAdapter.O
                                 dialogsAdapter.addItems(dialogList);
                             }
                             else{
+                                ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+                                errorView.setTitle(R.string.niente_messaggi);
+                                errorView.setVisibility(View.VISIBLE);
                                 
                             }
                         }
