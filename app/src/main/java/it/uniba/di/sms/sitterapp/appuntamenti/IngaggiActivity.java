@@ -69,14 +69,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
-        if (noticeList.size() == 0) {
-            errorView.setTitle(R.string.niente_annunci);
-            errorView.setVisibility(View.VISIBLE);
-
-        } else {
-            caricaIngaggi();
-        }
     }
 
 
@@ -86,7 +78,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         noticeList.clear();
         caricaIngaggi();
     }
-
 
 
     /**
@@ -109,15 +100,21 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
                             Iterator<QueryDocumentSnapshot> listNotice = queryDocumentSnapshots.iterator();
-                            while(listNotice.hasNext()){
-                                DocumentSnapshot documentSnapshot = listNotice.next();
-                                Notice notice = documentSnapshot.toObject(Notice.class);
-                                noticeList.add(notice);
-                            }
-                            noticeAdapter.notifyDataSetChanged();
+                            ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+                            if (!listNotice.hasNext()) {
+                                errorView.setTitle(R.string.niente_annunci);
+                                errorView.setVisibility(View.VISIBLE);
 
+                            } else {
+
+                                while (listNotice.hasNext()) {
+                                    DocumentSnapshot documentSnapshot = listNotice.next();
+                                    Notice notice = documentSnapshot.toObject(Notice.class);
+                                    noticeList.add(notice);
+                                }
+                                noticeAdapter.notifyDataSetChanged();
+                            }
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -151,9 +148,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                         }
                     });
         }
-
-
-
     }
 
     // al click su un annuncio visualizza i dettagli

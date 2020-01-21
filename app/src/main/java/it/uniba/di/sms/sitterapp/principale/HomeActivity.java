@@ -97,16 +97,6 @@ public class HomeActivity extends DrawerActivity
             cercaSitter.hide();
         }
 
-        sitterList = new ArrayList<>();
-        ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
-        if (sitterList.size() == 0) {
-            errorView.setTitle(R.string.niente_sitter);
-            errorView.setVisibility(View.VISIBLE);
-
-        } else {
-            errorView.setVisibility(View.GONE);
-        }
-
         //CARICAMENTO DEGLI ANNUNCI
         recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
 
@@ -139,6 +129,7 @@ public class HomeActivity extends DrawerActivity
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+
         } else if (type == Constants.TYPE_FAMILY) {
 
             sitterList = new ArrayList<>();
@@ -151,6 +142,7 @@ public class HomeActivity extends DrawerActivity
             sitterAdapter = new SitterAdapter(HomeActivity.this, sitterList, HomeActivity.this);
 
             recyclerView.setAdapter(sitterAdapter);
+
 
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
             recyclerView.setLayoutManager(mLayoutManager);
@@ -166,6 +158,16 @@ public class HomeActivity extends DrawerActivity
             noticeList = new ArrayList<>();
             noticeAdapter = new NoticeAdapter(HomeActivity.this, noticeList, HomeActivity.this);
 
+            ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+            if (noticeList.size() == 0) {
+                errorView.setTitle(R.string.niente_sitter);
+                errorView.setVisibility(View.VISIBLE);
+
+            } else {
+                errorView.setVisibility(View.GONE);
+            }
+
+
             recyclerView.setAdapter(noticeAdapter);
 
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -180,6 +182,14 @@ public class HomeActivity extends DrawerActivity
             sitterList = new ArrayList<>();
             sitterAdapter = new SitterAdapter(HomeActivity.this, sitterList, HomeActivity.this);
 
+            ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+            if (sitterList.size() == 0) {
+                errorView.setTitle(R.string.niente_famiglia);
+                errorView.setVisibility(View.VISIBLE);
+
+            } else {
+                errorView.setVisibility(View.GONE);
+            }
 
             recyclerView.setAdapter(sitterAdapter);
 
