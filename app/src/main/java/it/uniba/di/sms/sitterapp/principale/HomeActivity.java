@@ -160,7 +160,7 @@ public class HomeActivity extends DrawerActivity
 
             ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
             if (noticeList.size() == 0) {
-                errorView.setTitle(R.string.niente_sitter);
+                errorView.setTitle(R.string.niente_famiglia);
                 errorView.setVisibility(View.VISIBLE);
 
             } else {
@@ -184,7 +184,7 @@ public class HomeActivity extends DrawerActivity
 
             ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
             if (sitterList.size() == 0) {
-                errorView.setTitle(R.string.niente_famiglia);
+                errorView.setTitle(R.string.niente_sitter);
                 errorView.setVisibility(View.VISIBLE);
 
             } else {
