@@ -33,6 +33,7 @@
                 android:id="@+id/profilePictureSitter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:src="@drawable/ic_account_circle_black_56dp" />
 
             <com.google.android.material.textfield.TextInputLayout

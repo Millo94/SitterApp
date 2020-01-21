@@ -32,6 +32,7 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

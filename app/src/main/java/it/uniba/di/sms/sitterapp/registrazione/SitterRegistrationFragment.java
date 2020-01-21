@@ -2,9 +2,20 @@ package it.uniba.di.sms.sitterapp.registrazione;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +24,33 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Random;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class SitterRegistrationFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
@@ -32,8 +58,9 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
     ArrayList<EditText> listaET = new ArrayList<>();
     View view;
     //NomeCompleto, Email, Telefono, Nazione, Citta, dataNascita,
-    EditText nomeCompletoET, passwordET, confermaPasswordET, nomeET, cognomeET, emailET, numeroET, dataNascitaET, cittaET, retribuzioneET;
+    EditText nomeCompletoET, passwordET, confermaPasswordET, emailET, numeroET, dataNascitaET, cittaET, retribuzioneET;
     //Avatar
+    ImageView imgProfile;
     String pathFoto = "";
     RadioGroup genereRG;
     Switch autoSW;
@@ -45,6 +72,16 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
     Boolean auto = false;
     Spinner nazioni;
     String arraypaesi[];
+    private static final int CAMERA_PIC_REQUEST = 22;
+    Uri selectedImage;
+    Bitmap sImage;
+    
+
+    //Creazione delle referenze per lo storage di firebase
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
+
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -70,6 +107,8 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_registration_sitter, container, false);
 
@@ -118,10 +157,60 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
             }
         });
 
+
+
+        // Gestione foto/avatar
+        imgProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final CharSequence optionsPicture[] = new CharSequence[]{getString(R.string.takePic), getString(R.string.uploadImg)};
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                builder.setTitle(R.string.choosePic);
+                builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setItems(optionsPicture, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        switch(i){
+                            case 0:
+                                Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                                startActivityForResult(takePicture, 0);
+                                break;
+                            case 1:
+                                Intent pickPicture = new Intent(Intent.ACTION_PICK,
+                                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                startActivityForResult(pickPicture, 1);
+                                break;
+                        }
+
+                        dialogInterface.dismiss();
+
+                    }
+
+                });
+
+                builder.show();
+
+
+            }
+        });
+
+
+
         // Click listener di conferma registrazione
         confRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                uploadImage();
 
                 if (isEmpty()) {
                     Toast.makeText(getContext(), R.string.missingFields, Toast.LENGTH_LONG).show();
@@ -130,6 +219,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                 } else if (!checkEmail(emailET.getText().toString())) {
                     Toast.makeText(getContext(), R.string.invalidEmail, Toast.LENGTH_LONG).show();
                 } else {
+
                     UtenteSitter sitter = new UtenteSitter("",
                             nomeCompletoET.getText().toString(),
                             pathFoto,
@@ -153,6 +243,106 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
 
         return view;
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+        switch (requestCode) {
+            case 0:
+                if (requestCode == 0 && resultCode == RESULT_OK) {
+                    Bundle bundle = imageReturnedIntent.getExtras();
+                    sImage = (Bitmap) bundle.get("data");
+                    imgProfile.setImageBitmap(sImage);
+                }
+                break;
+            case 1:
+                if (requestCode == 1 && resultCode == RESULT_OK) {
+
+                    selectedImage = imageReturnedIntent.getData();
+                    Bitmap bitmap = null;
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    imgProfile.setImageBitmap(bitmap);
+
+                }
+                break;
+        }
+
+    }
+
+    //Metodo per convertire la foto da Bitmap a Uri
+    public static Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    //Metodo per caricare l'immagine profilo sullo storage
+    private void uploadImage(){
+
+        String randUid = UUID.randomUUID().toString();
+
+        if (selectedImage != null) {
+
+            // Defining the child of storageReference
+
+            storageRef.child("img/user_img/" + randUid)
+                    .putFile(selectedImage)
+                    .addOnSuccessListener(
+                            new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot){
+
+                                    // Image uploaded successfully
+                                    // Dismiss dialog
+
+                                }
+                            })
+
+                    .addOnFailureListener(new OnFailureListener(){
+                        @Override
+                        public void onFailure(@NonNull Exception e){
+
+                            // Error, Image not uploaded
+
+                        }
+                    });
+
+        } else {
+
+            storageRef.child("img/user_img/" + randUid)
+                    .putFile(getImageUri(getContext(), sImage))
+                    .addOnSuccessListener(
+                            new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot){
+
+                                    // Image uploaded successfully
+                                    // Dismiss dialog
+
+                                }
+                            })
+
+                    .addOnFailureListener(new OnFailureListener(){
+                        @Override
+                        public void onFailure(@NonNull Exception e){
+
+                            // Error, Image not uploaded
+
+                        }
+                    });
+
+        }
+
+        pathFoto = storageRef.child("img/user_img/" + randUid).toString();
+
+    }
+
 
 
     @Override
@@ -183,7 +373,8 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
 
     //inizializzazione delle view
     public void initialization() {
-        //TODO FOTO
+
+        imgProfile = (ImageView) view.findViewById(R.id.profilePictureSitter);
         nomeCompletoET = (EditText) view.findViewById(R.id.nomeCompletoSitterReg);
         listaET.add(nomeCompletoET);
         passwordET = (EditText) view.findViewById(R.id.passwordSitterReg);
@@ -203,6 +394,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
         listaET.add(retribuzioneET);
         autoSW = (Switch) view.findViewById(R.id.Auto);
         confRegistration = (Button) view.findViewById(R.id.buttonReg);
+
     }
 
     //controllo che le password siano uguali
@@ -231,6 +423,8 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
 
         return empty;
     }
+
+
 
 
 }

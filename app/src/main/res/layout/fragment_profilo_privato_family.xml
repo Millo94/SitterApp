@@ -23,7 +23,7 @@
                 android:orientation="horizontal">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imgPrSitter2"
+                    android:id="@+id/imgPrFamily"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginStart="5dp"

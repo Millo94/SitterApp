@@ -89,7 +89,6 @@ public class PubblicoFamigliaFragment extends Fragment {
         requestQueue = Volley.newRequestQueue(getContext());
         inizializzazione();
         mostraProfilo(getActivity().getIntent().getStringExtra("username"));
-       // showProfile(getActivity().getIntent().getStringExtra("username"));
         return view;
     }
 
