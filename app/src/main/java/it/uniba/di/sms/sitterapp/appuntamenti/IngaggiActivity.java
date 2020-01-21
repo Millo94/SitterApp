@@ -113,7 +113,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
 
         if(sessionManager.getSessionType() == Constants.TYPE_FAMILY){
             colRef
-                    .whereEqualTo("family", sessionManager.getSessionUid())
+                    .whereEqualTo("family", sessionManager.getNomeCompleto())
                     .get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
