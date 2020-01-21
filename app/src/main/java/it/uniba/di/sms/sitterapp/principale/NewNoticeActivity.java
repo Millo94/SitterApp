@@ -146,7 +146,7 @@ public class NewNoticeActivity  extends AppCompatActivity implements DatePickerD
 
         Map<String, Object> annuncio = new HashMap<>();
         annuncio.put("idAnnuncio", UUID.randomUUID().toString());
-        annuncio.put("family", sessionManager.getSessionUsername());
+        annuncio.put("family", sessionManager.getSessionUid());
         annuncio.put("date", data.getText().toString().trim());
         annuncio.put("start_time", oraInizio.getText().toString().trim());
         annuncio.put("end_time", oraFine.getText().toString().trim());
