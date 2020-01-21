@@ -72,13 +72,14 @@ public class ChatActivity extends DrawerActivity implements DialogsListAdapter.O
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.getMenu().findItem(getIntent().getIntExtra(SELECTED,R.id.nav_chat)).setChecked(true);
+        dialogsList = (DialogsList) findViewById(R.id.dialogsList);
+
         imageLoader = new ImageLoader() {
             @Override
             public void loadImage(ImageView imageView, String url, Object payload) {
                 Picasso.with(ChatActivity.this).load(url).into(imageView);
             }
         };
-        dialogsList = (DialogsList) findViewById(R.id.dialogsList);
         initAdapter();
     }
 
@@ -86,7 +87,8 @@ public class ChatActivity extends DrawerActivity implements DialogsListAdapter.O
         //ChatConversationActivity.open(this);
         Intent chatConversationIntent = new Intent(this, ChatConversationActivity.class);
         chatConversationIntent.putExtra("conversationName",dialog.getDialogName());
-        chatConversationIntent.putExtra("senderId",sessionManager.getSessionUsername());
+        chatConversationIntent.putExtra("senderId",sessionManager.getSessionUid());
+        chatConversationIntent.putExtra("receiverId",dialog.getUsers().get(0).getId());
         chatConversationIntent.putExtra("conversationUID",dialog.getId());
         startActivity(chatConversationIntent);
     }
@@ -98,7 +100,7 @@ public class ChatActivity extends DrawerActivity implements DialogsListAdapter.O
                 imageLoader);
 
         dialogsAdapter.setItems(new ArrayList<Dialog>());
-        getDialogs(sessionManager.getSessionUsername());
+        getDialogs(sessionManager.getSessionUid());
 
         dialogsAdapter.setOnDialogClickListener(this);
         dialogsAdapter.setOnDialogLongClickListener(this);
@@ -115,48 +117,55 @@ public class ChatActivity extends DrawerActivity implements DialogsListAdapter.O
 
     private void getDialogs(final String user) {
         db.collection("chat")
-                .whereArrayContains("UsersList",sessionManager.getSessionUsername())
+                .whereArrayContains("UsersList",sessionManager.getSessionUid())
                 .orderBy("lastMessage.timestamp", Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
                         if(e!=null){
                             Log.d(TAG,"Error:"+e.getMessage());
-                        }else{
+                        }else {
                             //ripulisco la lista dei dialogs
                             dialogsAdapter.clear();
                             List<Dialog> dialogList = new ArrayList<>();
-                            //aggiungo ogni conversazione alla lista
-                            for(DocumentSnapshot documentSnapshot:querySnapshot.getDocuments()){
-                                List<Map<String,Object>> mapUserList = (ArrayList<Map<String,Object>>) documentSnapshot.get("Users");
-                                //rimuovo dell'utente che non sono necessarie
-                                for(int i=0;i<mapUserList.size();++i){
-                                    Map<String,Object> user = mapUserList.get(i);
-                                    if(user.get("id").equals(sessionManager.getSessionUsername())){
-                                        mapUserList.remove(i);
+                            if (!querySnapshot.isEmpty()) {
+                                //aggiungo ogni conversazione alla lista
+                                for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                                    List<Map<String, Object>> mapUserList = (ArrayList<Map<String, Object>>) documentSnapshot.get("Users");
+                                    //rimuovo dell'utente che non sono necessarie
+                                    for (int i = 0; i < mapUserList.size(); ++i) {
+                                        Map<String, Object> user = mapUserList.get(i);
+                                        if (user.get("id").equals(sessionManager.getSessionUid())) {
+                                            mapUserList.remove(i);
+                                        }
                                     }
+
+                                    //avvaloro la lista degli utenti (nel nostro caso c'è solo un utente
+                                    ArrayList<User> userList = new ArrayList<>();
+                                    userList.add(new User((String) mapUserList.get(0).get("id"), (String) mapUserList.get(0).get("name"), (String) mapUserList.get(0).get("avatar"), (Boolean) mapUserList.get(0).get("online")));
+
+                                    //avvaloro il campo ultimo messaggio
+                                    Map<String, Object> mapMessage = (HashMap<String, Object>) documentSnapshot.get("lastMessage");
+                                    String textMessage = (String) mapMessage.get("text");
+                                    User userMessage = new User(documentSnapshot.getString("lastMessage.user.id"),
+                                            documentSnapshot.getString("lastMessage.user.name"),
+                                            documentSnapshot.getString("lastMessage.user.avatar"),
+                                            documentSnapshot.getBoolean("lastMessage.user.online"));
+                                    String idMessage = (String) mapMessage.get("id").toString();
+                                    Date dateMessage = ((Timestamp) mapMessage.get("timestamp")).toDate();
+                                    Message lastMessage = new Message(idMessage, userMessage, textMessage, dateMessage);
+
+
+                                    //creo il dialog per la conversazione
+                                    dialogList.add(new Dialog(documentSnapshot.getId(), userList.get(0).getName(), userList.get(0).getAvatar(), userList, lastMessage, 0));
                                 }
-
-                                //avvaloro la lista degli utenti (nel nostro caso c'è solo un utente
-                                ArrayList<User> userList = new ArrayList<>();
-                                userList.add(new User((String) mapUserList.get(0).get("id"),(String) mapUserList.get(0).get("name"),(String) mapUserList.get(0).get("avatar"),(Boolean) mapUserList.get(0).get("online")));
-
-                                //avvaloro il campo ultimo messaggio
-                                Map<String,Object> mapMessage = (HashMap<String,Object>) documentSnapshot.get("lastMessage");
-                                String textMessage = (String) mapMessage.get("text");
-                                User userMessage = new User(documentSnapshot.getString("lastMessage.user.id"),
-                                        documentSnapshot.getString("lastMessage.user.name"),
-                                        documentSnapshot.getString("lastMessage.user.avatar"),
-                                        documentSnapshot.getBoolean("lastMessage.user.online"));
-                                String idMessage = (String) mapMessage.get("id").toString();
-                                Date dateMessage = ((Timestamp) mapMessage.get("timestamp")).toDate();
-                                Message lastMessage = new Message(idMessage,userMessage,textMessage,dateMessage);
-
-                                //creo il dialog per la conversazione
-                                dialogList.add(new Dialog(documentSnapshot.getId(),userList.get(0).getName(),userList.get(0).getAvatar(),userList,lastMessage,0));
+                                dialogsAdapter.addItems(dialogList);
                             }
-                            dialogsAdapter.addItems(dialogList);
+                            else{
+                                
+                            }
                         }
+
                     }
                 });
     }

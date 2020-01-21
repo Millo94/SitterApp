@@ -3,78 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
 
     <ScrollView
-        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
             <TableLayout
                 android:id="@+id/tableNewNotice"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="40dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:padding="10dp">
 
-                <TableRow
+
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/nav_header_vertical_spacing">
-
-                    <ImageView
-                        android:id="@+id/imageView5"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="8dp"
-                        app:srcCompat="@drawable/ic_descrizione" />
-
-                    <com.google.android.material.textfield.TextInputLayout>
-
-                        <EditText
-                            android:id="@+id/descrizioneNewNotice"
-                            android:layout_width="235dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:hint="@string/descrizione"
-                            android:textSize="14sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:padding="@dimen/nav_header_vertical_spacing">
 
                     <ImageView
                         android:id="@+id/imageView6"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="8dp"
                         app:srcCompat="@drawable/ic_data" />
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical">
+                        android:layout_marginStart="40dp">
 
                         <EditText
                             android:id="@+id/dataNewNotice"
-                            android:layout_width="230dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:focusableInTouchMode="false"
                             android:hint="@string/data"
@@ -83,62 +51,67 @@
                             android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                </TableRow>
+                </FrameLayout>
 
-                <TableRow
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_margin="8dp"
-                    android:layout_marginLeft="8dp">
-
-                    <ImageView
-                        android:id="@+id/imageView7"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="8dp"
-                        app:srcCompat="@drawable/ic_time" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical">
-
-                        <EditText
-                            android:id="@+id/oraInizioNewNotice"
-                            android:layout_width="235dp"
-                            android:layout_height="wrap_content"
-                            android:focusableInTouchMode="false"
-                            android:hint="@string/orainizio"
-                            android:inputType="date"
-                            android:textColorLink="@color/colorPrimary"
-                            android:textSize="14sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </TableRow>
-
-                <TableRow
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
                     android:padding="@dimen/nav_header_vertical_spacing">
 
-                    <ImageView
-                        android:id="@+id/imageView10"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="8dp"
-                        app:srcCompat="@drawable/ic_time" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/imageView7"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:srcCompat="@drawable/ic_time" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:gravity="center_vertical">
+
+                            <EditText
+                                android:id="@+id/oraInizioNewNotice"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusableInTouchMode="false"
+                                android:hint="@string/orainizio"
+                                android:inputType="date"
+                                android:textColorLink="@color/colorPrimary"
+                                android:textSize="14sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </FrameLayout>
+
+                </RelativeLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/nav_header_vertical_spacing">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/imageView10"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:srcCompat="@drawable/ic_time" />
+                    </FrameLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical">
+                        android:layout_marginStart="40dp">
 
                         <EditText
                             android:id="@+id/oraFineNewNotice"
-                            android:layout_width="235dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:focusableInTouchMode="false"
                             android:hint="@string/orafine"
@@ -148,24 +121,71 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
 
-                </TableRow>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:padding="@dimen/nav_header_vertical_spacing">
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        app:srcCompat="@drawable/ic_descrizione" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp">
+
+                        <EditText
+                            android:id="@+id/descrizioneNewNotice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="false"
+                            android:layout_centerVertical="false"
+                            android:hint="@string/descrizione"
+                            android:inputType="textMultiLine"
+                            android:textSize="14sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </FrameLayout>
 
             </TableLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
+                <Button
+                    android:id="@+id/annulla"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="40dp"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:elevation="50dp"
+                    android:text="@string/Cancel"
+                    android:textColor="@android:color/background_light" />
+
+                <Button
+                    android:id="@+id/confermaNewNotice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="40dp"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:elevation="50dp"
+                    android:text="@string/pubblicaAnnuncio"
+                    android:textColor="@android:color/background_light" />
+            </LinearLayout>
+
+        </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/confermaNewNotice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/scrollView3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:elevation="2dp"
-        android:text="@string/pubblicaAnnuncio"
-        android:textColor="@android:color/background_light" />
 
 </RelativeLayout>
