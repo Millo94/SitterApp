@@ -83,7 +83,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
             openProfile.setOnClickListener(openProfileListener);
             Button candidate = (Button) view.findViewById(R.id.candidamiSit);
             //viene visualizzato quando una babysitter si può candidare ad un annuncio
-            candidate.setVisibility((getArguments().getBoolean("candidatura") || sessionManager.getSessionType() == Constants.TYPE_FAMILY)?View.GONE:View.VISIBLE);
+            candidate.setVisibility((getArguments().getBoolean("isCandidato") || sessionManager.getSessionType() == Constants.TYPE_FAMILY)?View.GONE:View.VISIBLE);
             candidate.setOnClickListener(candidateListener);
 
             Button confirm = (Button) view.findViewById(R.id.confirmSit);
@@ -92,8 +92,8 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
             confirm.setOnClickListener(confirmEngageListener);
 
             Button deleteCandidatura = (Button) view.findViewById(R.id.deleteApplication);
-            //viene visualizzato quando una babysitter, candidata, può rimuovere la sua candidatura
-            deleteCandidatura.setVisibility((getArguments().getBoolean("candidatura") && !getArguments().getBoolean("conferma"))?View.VISIBLE:View.GONE);
+            //viene visualizzato quando una babysitter, candidata, vpuò rimuovere la sua candidatura
+            deleteCandidatura.setVisibility((getArguments().getBoolean("isCandidato") && !getArguments().getBoolean("conferma"))?View.VISIBLE:View.GONE);
             deleteCandidatura.setOnClickListener(deleteCandidaturaListener);
 
             user.setText(getArguments().getString("username"));

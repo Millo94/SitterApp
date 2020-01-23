@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,15 +38,16 @@ import it.uniba.di.sms.sitterapp.R;
 public class SceltaSitter extends DrawerActivity
         implements SitterAdapter.ContactsSitterAdapterListener {
 
+    private static final String SELECTED = "selected";
     private List<UtenteSitter> sitterList;
     private SitterAdapter sitterAdapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String idAnnuncio;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // caricamento degli annunci nella recyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
 
@@ -53,6 +56,11 @@ public class SceltaSitter extends DrawerActivity
 
 
         recyclerView.setAdapter(sitterAdapter);
+
+        //BottomNavigationView
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigationView.getMenu().findItem(getIntent().getIntExtra(SELECTED,R.id.nav_engagements)).setChecked(true);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -74,20 +82,35 @@ public class SceltaSitter extends DrawerActivity
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        DocumentSnapshot docRef = task.getResult();
+                        final DocumentSnapshot docRef = task.getResult();
                         Notice notice =  docRef.toObject(Notice.class);
                         Map<String, Object> listSitter = notice.getCandidatura();
-                        for(String u : listSitter.keySet()){
-                            UtenteSitter uS = new UtenteSitter("",(String) listSitter.get(u),"",true);
-                            sitterList.add(uS);
+                        for(String u : listSitter.keySet()) {
+                            FirebaseFirestore db2 = FirebaseFirestore.getInstance();
+                            db2.collection("utente")
+                                    .document(listSitter.get(u).toString())
+                                    .get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                            UtenteSitter uS = new UtenteSitter(
+                                                    documentSnapshot.getId(),
+                                                    documentSnapshot.getString("NomeCompleto"),
+                                                    documentSnapshot.getString("Avatar"),
+                                                    documentSnapshot.getBoolean("online"));
+                                            sitterList.add(uS);
+                                            sitterAdapter.notifyDataSetChanged();
+                                        }
+                                    });
+                            //sitterList.add(new UtenteSitter(u,u,"gs://sitterapp-223aa.appspot.com/img/user_img/de00fa77-e3a6-4fe8-a4bb-f7bda5e4102e",true));
                         }
-                        sitterAdapter.notifyDataSetChanged();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(SceltaSitter.this, "", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SceltaSitter.this, R.string.genericError, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -118,7 +141,7 @@ public class SceltaSitter extends DrawerActivity
                     case 0:
                         Intent detailIntent = new Intent(SceltaSitter.this, ProfiloPubblicoActivity.class);
                         detailIntent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
-                        detailIntent.putExtra("username", sitter.getName());
+                        detailIntent.putExtra("uid", sitter.getId());
                         startActivity(detailIntent);
                         break;
                     //assegna incarico

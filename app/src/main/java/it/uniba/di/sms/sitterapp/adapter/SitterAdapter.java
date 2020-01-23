@@ -2,6 +2,9 @@ package it.uniba.di.sms.sitterapp.adapter;
 
 import android.content.Context;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.net.Uri;
+import android.os.storage.StorageManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -72,14 +78,22 @@ public class SitterAdapter extends RecyclerView.Adapter<SitterAdapter.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
         final UtenteSitter contact = sitterList.get(position);
         //attribuzione dei dettagli dell'annuncio alle varie View
         holder.name.setText(contact.getName());
         holder.ratingBar.setRating(contact.getRating());
         holder.engages.setText(String.valueOf(contact.getNumLavori()));
 
-        Glide.with(context).load(contact.getAvatar()).apply(RequestOptions.centerCropTransform()).into(holder.photo);
+        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(contact.getAvatar());
+        storageReference.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Glide.with(context).load(uri).apply(RequestOptions.centerCropTransform()).into(holder.photo);
+
+                    }
+                });
     }
 
     //restituisce il numero degli elementi in sitter list

@@ -129,7 +129,6 @@ public class HomeActivity extends DrawerActivity
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-
         } else if (type == Constants.TYPE_FAMILY) {
 
             sitterList = new ArrayList<>();
@@ -142,7 +141,6 @@ public class HomeActivity extends DrawerActivity
             sitterAdapter = new SitterAdapter(HomeActivity.this, sitterList, HomeActivity.this);
 
             recyclerView.setAdapter(sitterAdapter);
-
 
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
             recyclerView.setLayoutManager(mLayoutManager);
@@ -171,6 +169,7 @@ public class HomeActivity extends DrawerActivity
 
             sitterList = new ArrayList<>();
             sitterAdapter = new SitterAdapter(HomeActivity.this, sitterList, HomeActivity.this);
+
 
             recyclerView.setAdapter(sitterAdapter);
 
@@ -203,7 +202,6 @@ public class HomeActivity extends DrawerActivity
                         }
 
                         else {
-
                             noticeList.clear();
                         Iterator<QueryDocumentSnapshot> iterableNotice = queryDocumentSnapshots.iterator();
                          ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
@@ -296,7 +294,7 @@ public class HomeActivity extends DrawerActivity
         if (sessionManager.checkLogin()) {
             Intent detailIntent = new Intent(HomeActivity.this, ProfiloPubblicoActivity.class);
             detailIntent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
-            detailIntent.putExtra("username", sitter.getName());
+            detailIntent.putExtra("uid", sitter.getId());
             startActivity(detailIntent);
         } else {
             sessionManager.forceLogin(this);

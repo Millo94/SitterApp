@@ -43,6 +43,8 @@ import java.util.Map;
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
+import it.uniba.di.sms.sitterapp.SessionManager;
+import it.uniba.di.sms.sitterapp.chat.ChatConversationActivity;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
 import it.uniba.di.sms.sitterapp.recensioni.RecensioniPubblicoActivity;
 
@@ -57,10 +59,14 @@ public class PubblicoSitterFragment extends Fragment {
     TextView usernamePuSit, descrPuSit, nomePuSit, cognomePuSit, emailPuSit, numeroPuSit, carPuSit, sessoPuSit, dataPuSit, tariffaPuSit, ingaggiPuSit, nazionePuSit, cittaPuSit;
     TextView nomePuSit2, cognomePuSit2, emailPuSit2, numeroPuSit2, carPuSit2, sessoPuSit2, dataPuSit2, tariffaPuSit2, ingaggiPuSit2, nazionePuSit2, cittaPuSit2;
     Button contattaSitter, feedbackSit, disponibilitaSitter;
-
+    SessionManager sessionManager;
     //per salvare mail e telefono del contatto
     private String telefono;
     private String email;
+
+    //uid per creare una chat
+    private String receiverId;
+
 
     RequestQueue requestQueue;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -86,34 +92,35 @@ public class PubblicoSitterFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_profilo_pubblico_sitter, container, false);
         requestQueue = Volley.newRequestQueue(getContext());
         inizializzazione();
-        mostraProfilo(getActivity().getIntent().getStringExtra("username"));
+        mostraProfilo(getActivity().getIntent().getStringExtra("uid"));
+        sessionManager = new SessionManager(getContext());
         return view;
     }
 
 
-    private void mostraProfilo(final String username){
+    private void mostraProfilo(final String uid){
 
         db.collection("utente")
-                .document(username)
+                .document(uid)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        usernamePuSit.setText(username);
-                        emailPuSit2.setText((documentSnapshot.getString("babysitter.email")));
-                        email = documentSnapshot.getString("babysitter.email");
-                        nomePuSit2.setText(documentSnapshot.getString("babysitter.nome"));
-                        cognomePuSit2.setText(documentSnapshot.getString("babysitter.cognome"));
-                        numeroPuSit2.setText(documentSnapshot.getString("babysitter.numero"));
-                        telefono = documentSnapshot.getString("babysitter.numero");
-                        nazionePuSit2.setText(documentSnapshot.getString("babysitter.nazione"));
-                        cittaPuSit2.setText(documentSnapshot.getString("babysitter.citta"));
+                        usernamePuSit.setText(documentSnapshot.getString("NomeCompleto"));
+                        emailPuSit2.setText((documentSnapshot.getString("E-mail")));
+                        email = documentSnapshot.getString("E-mail");
+                        nomePuSit2.setText(documentSnapshot.getString("Nome"));
+                        cognomePuSit2.setText(documentSnapshot.getString("NomeCompleto"));
+                        numeroPuSit2.setText(documentSnapshot.getString("Telefono"));
+                        telefono = documentSnapshot.getString("Telefono");
+                        nazionePuSit2.setText(documentSnapshot.getString("Nazione"));
+                        cittaPuSit2.setText(documentSnapshot.getString("Citta"));
                         //TODO rating bar
                         //TODO tariffaoraria
-                        sessoPuSit2.setText(documentSnapshot.getString("babysitter.genere"));
-                        carPuSit2.setText(documentSnapshot.getBoolean("babysitter.auto").toString());
+                        sessoPuSit2.setText(documentSnapshot.getString("babysitter.Genere"));
+                        carPuSit2.setText(documentSnapshot.getBoolean("babysitter.Auto").toString());
                         ingaggiPuSit2.setText(documentSnapshot.get("babysitter.numLavori").toString());
-                        descrPuSit.setText(documentSnapshot.getString("babysitter.descrizione"));
+                        descrPuSit.setText(documentSnapshot.getString("Descrizione"));
 
                     }
                 })
@@ -126,7 +133,7 @@ public class PubblicoSitterFragment extends Fragment {
 
     }
     //volley per mostrare il profilo
-    private void showProfile(final String username) {
+    private void showProfile(final String uid) {
 
         StringRequest request = new StringRequest(Request.Method.POST, Php.PROFILO, new Response.Listener<String>() {
             @Override
@@ -138,7 +145,7 @@ public class PubblicoSitterFragment extends Fragment {
 
                     if (result.equals("true")) {
                         Glide.with(getContext()).load(json.getString("pathFoto")).into(profilePic);
-                        usernamePuSit.setText(username);
+                        usernamePuSit.setText(uid);
                         emailPuSit2.setText(json.getString("email"));
                         email = json.getString("email");
                         nomePuSit2.setText(json.getString("nome"));
@@ -198,7 +205,7 @@ public class PubblicoSitterFragment extends Fragment {
                 Map<String, String> params = new HashMap<>();
                 params.put("operation", "show");
                 params.put("type", String.valueOf(Constants.TYPE_SITTER));
-                params.put("username", username);
+                params.put("uid", uid);
                 return params;
             }
         };
@@ -269,7 +276,7 @@ public class PubblicoSitterFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                CharSequence servizi[] = new CharSequence[]{getString(R.string.chiamata), getString(R.string.email), getString(R.string.sms)};
+                CharSequence servizi[] = new CharSequence[]{getString(R.string.chiamata), getString(R.string.email), getString(R.string.sms), getString(R.string.chat)};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -302,6 +309,15 @@ public class PubblicoSitterFragment extends Fragment {
                             //invio sms
                             case 2:
                                 requestSMSPermission();
+                                break;
+                            case 3:
+                                //TODO FIX bottone per creare chat
+                                Intent chatConversationIntent = new Intent(getActivity(), ChatConversationActivity.class);
+                                chatConversationIntent.putExtra("conversationName",nomePuSit2.getText().toString());
+                                chatConversationIntent.putExtra("senderId",sessionManager.getSessionUid());
+                                chatConversationIntent.putExtra("receiverId",receiverId);
+                                chatConversationIntent.putExtra("conversationUID","NEWUID");
+                                startActivity(chatConversationIntent);
                                 break;
                             default:
                                 break;
