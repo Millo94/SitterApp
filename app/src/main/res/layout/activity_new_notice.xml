@@ -170,6 +170,7 @@
                     android:layout_marginTop="40dp"
                     android:backgroundTint="@color/colorPrimary"
                     android:elevation="50dp"
+                    android:gravity="center|center_horizontal"
                     android:text="@string/Cancel"
                     android:textColor="@android:color/background_light" />
 
@@ -181,6 +182,7 @@
                     android:layout_marginTop="40dp"
                     android:backgroundTint="@color/colorPrimary"
                     android:elevation="50dp"
+                    android:gravity="center|center_horizontal"
                     android:text="@string/pubblicaAnnuncio"
                     android:textColor="@android:color/background_light" />
             </LinearLayout>
