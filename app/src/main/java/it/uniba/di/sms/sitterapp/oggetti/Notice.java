@@ -101,12 +101,12 @@ public class Notice {
         return conferma;
     }
 
-    public boolean addCandidatura(String username){
-        return (candidatura.put(username,username) == null) ? true:false;
+    public boolean addCandidatura(String userID){
+        return (candidatura.put(userID, userID) == null) ? true:false;
     }
 
-    public boolean removeCandidatura(String username){
-       return (candidatura.remove(username) == null) ? false:true;
+    public boolean removeCandidatura(String userID){
+       return (candidatura.remove(userID) == null) ? false:true;
     }
 
     public Map<String, Object> getCandidatura(){

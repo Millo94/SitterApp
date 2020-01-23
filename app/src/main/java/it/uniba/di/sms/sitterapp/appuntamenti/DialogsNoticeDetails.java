@@ -140,7 +140,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     }
 
     //per recuperare le informazioni dalla pagina precedente
-    public static DialogsNoticeDetails newInstance(Notice notice, String username) {
+    public static DialogsNoticeDetails newInstance(Notice notice, String userID) {
 
         Bundle args = new Bundle();
         args.putString("username", notice.getFamily());
@@ -149,7 +149,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
         args.putString("oraFine", notice.getEnd_time());
         args.putString("descrizione", notice.getDescription());
         args.putString("idAnnuncio", notice.getIdAnnuncio());
-        args.putBoolean("candidatura", notice.containsCandidatura(username));
+        args.putBoolean("candidatura", notice.containsCandidatura(userID));
         args.putString("sitter", notice.getSitter());
         args.putBoolean("conferma", notice.getConferma());
 
