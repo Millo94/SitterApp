@@ -84,6 +84,8 @@
     <string name="pubblicaAnnuncio">Pubblica Annuncio</string>
     <string name="selezionaOra">Seleziona Orario</string>
     <string name="annuncioPubblicato">Annuncio pubblicato.</string>
+    <string name="annuncioCancellato">Annuncio cancellato.</string>
+    <string name="annuncioNonCancellato">Notice is not deleted.</string>
     <string name="recensioniScritte">Recensioni Scritte</string>
     <string name="recensioniRicevute">Recensioni Ricevute</string>
     <string name="destinatario">A:</string>
@@ -137,6 +139,8 @@
     <string name="niente_scrivi_recensioni">Nessuna Recensione</string>
     <string name="niente_recensioni_ricevute">Nessuna recensione ricevuta</string>
     <string name="niente_recensioni_scritte">Nessuna recensione scritta</string>
+    <string name="niente_messaggi">Nessuna chat da mostrare</string>
+    <string name="niente_famiglia">Non ci sono famiglie in cerca di baby sitter </string>
     <string name="usaGalleria">Scegli immagine dalla Galleria</string>
     <string name="usaCamera">Scatta una foto</string>
     <string name="risutltatoCaricamento">Foto modificata correttamente</string>
@@ -153,6 +157,7 @@
     <string name="caricamentoFoto">Caricamento...</string>
     <string name="ContentDescriptionClockImage">Clock image</string>
     <string name="ContentDescriptionCalendarImage">Calendar image</string>
+
     <string name="action_copy">Copia</string>
     <string name="action_delete">Cancella</string>
     <string name="copied_message">Messaggio copiato!</string>

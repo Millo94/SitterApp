@@ -2,17 +2,14 @@ package it.uniba.di.sms.sitterapp.principale;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -20,9 +17,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -36,15 +36,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import it.uniba.di.sms.sitterapp.Constants;
+import it.uniba.di.sms.sitterapp.Php;
+import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.adapter.NoticeAdapter;
 import it.uniba.di.sms.sitterapp.adapter.SitterAdapter;
 import it.uniba.di.sms.sitterapp.appuntamenti.DialogsNoticeDetails;
-import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.oggetti.Notice;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
-import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.profilo.ProfiloPubblicoActivity;
-import it.uniba.di.sms.sitterapp.R;
 import tr.xip.errorview.ErrorView;
 
 /**
@@ -54,7 +54,7 @@ public class HomeActivity extends DrawerActivity
         implements NoticeAdapter.NoticeAdapterListener, SitterAdapter.ContactsSitterAdapterListener, DialogFiltro.DialogListener {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    private final String TAG = "HomeActivity";
     // Vista
     private RecyclerView recyclerView;
 
@@ -65,8 +65,8 @@ public class HomeActivity extends DrawerActivity
     //Items family
     private List<UtenteSitter> sitterList;
     private List<UtenteSitter> filteredSitterList; //per la lista dopo aver applicato un filtro
-    private SitterAdapter sitterAdapter;
 
+    private SitterAdapter sitterAdapter;
 
     FloatingActionButton cercaSitter;
 
@@ -115,7 +115,7 @@ public class HomeActivity extends DrawerActivity
         if (type == Constants.TYPE_SITTER) {
 
             noticeList = new ArrayList<>();
-            noticeList.add(new Notice("1", "Ladisa", "23-06-2018", "17.00", "20.00", "Ho bisogno di qualcuno che badi ai miei figli mentre faccio la spesa."));
+            noticeList.add(new Notice("1", "Ladisa","23-06-2018", "17.00", "20.00", "Ho bisogno di qualcuno che badi ai miei figli mentre faccio la spesa."));
             noticeList.add(new Notice("2", "Luprano", "24-06-2018", "07.30", "12.30", "Cerco babysitter che badi a mio figlio durante il mio turno di lavoro."));
             noticeList.add(new Notice("3", "Deperte", "25-06-2018", "13.00", "16.00", "Cercasi babysitter per i miei due figli."));
             noticeList.add(new Notice("4", "Angarano", "25-06-2018", "19.00", "22.00", "Ho bisogno di una babysitter che prepari la cena per mia figlia"));
@@ -164,10 +164,12 @@ public class HomeActivity extends DrawerActivity
 
             caricaAnnunci();
 
+
         } else if (sessionManager.getSessionType() == Constants.TYPE_FAMILY) {
 
             sitterList = new ArrayList<>();
             sitterAdapter = new SitterAdapter(HomeActivity.this, sitterList, HomeActivity.this);
+
 
             recyclerView.setAdapter(sitterAdapter);
 
@@ -175,7 +177,8 @@ public class HomeActivity extends DrawerActivity
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-            //loadSitter();
+            caricaSitter();
+
         }
     }
 
@@ -187,46 +190,96 @@ public class HomeActivity extends DrawerActivity
     private void caricaAnnunci(){
 
         CollectionReference colRef = db.collection("annuncio");
-
         colRef
                 .whereEqualTo("conferma", false)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                //.orderBy("date")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
-                        Iterator<QueryDocumentSnapshot> iterableCandidature = queryDocumentSnapshots.iterator();
-                        while(iterableCandidature.hasNext()){
-                            DocumentSnapshot documentSnapshot = iterableCandidature.next();
-                            Notice notice = documentSnapshot.toObject(Notice.class);
-                            //mostra solo gli ingaggi non scaduti
-                            if (noticeAdapter.annuncioScaduto(notice) == false) {
-                                noticeList.add(notice);
-                            }
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if(e!=null){
+                            Log.i(TAG,e.getMessage());
+                            Toast.makeText(HomeActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
                         }
-                        noticeAdapter.notifyDataSetChanged();
 
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(HomeActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
-                    }
+                        else {
+                            noticeList.clear();
+                        Iterator<QueryDocumentSnapshot> iterableNotice = queryDocumentSnapshots.iterator();
+                         ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+
+                            if (!iterableNotice.hasNext()) {
+                                errorView.setTitle(R.string.niente_annunci);
+                                errorView.setVisibility(View.VISIBLE);
+
+                            } else {
+                                errorView.setVisibility(View.INVISIBLE);
+                                while (iterableNotice.hasNext()) {
+                                    DocumentSnapshot documentSnapshot = iterableNotice.next();
+                                    Notice notice = documentSnapshot.toObject(Notice.class);
+                                    //mostra solo gli ingaggi ancora disponibili alla candidatura
+                                    if (noticeAdapter.annuncioScaduto(notice) == false && !notice.containsCandidatura(sessionManager.getSessionUid())) {
+                                        noticeList.add(notice);
+                                    }
+                                }
+                                noticeAdapter.notifyDataSetChanged();
+                            }
+                    }}
+
                 });
 
     }
 
+
     /**
-     * TODO CREARE METODO DEL CARICAMENTO DELLE BABYSITTER PER LA HOME DELLA FAMIGLIA !!!
+     * Caricamento delle babysitter nella home
      */
+
+    private void caricaSitter(){
+
+        CollectionReference colRef = db.collection("utente");
+
+        colRef
+                .whereEqualTo("tipoUtente", 1)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if(e != null){
+                            Toast.makeText(HomeActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
+
+                        }else {
+                            sitterList.clear();
+                            Iterator<QueryDocumentSnapshot> iterableSitter = queryDocumentSnapshots.iterator();
+                            ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+                            if (!iterableSitter.hasNext()) {
+                                errorView.setTitle(R.string.niente_sitter);
+                                errorView.setVisibility(View.VISIBLE);
+                            } else {
+                            errorView.setVisibility(View.INVISIBLE);
+                            while (iterableSitter.hasNext()) {
+                                DocumentSnapshot documentSnapshot = iterableSitter.next();
+                                UtenteSitter bs = new UtenteSitter(
+                                        documentSnapshot.getId(),
+                                        (String) documentSnapshot.get("NomeCompleto"),
+                                        (String) documentSnapshot.get("Avatar"),
+                                        (boolean) documentSnapshot.get("online"),
+                                        3,
+                                        1);
+
+
+                                sitterList.add(bs);
+
+                            }
+                            sitterAdapter.notifyDataSetChanged();
+                        }
+                        }}});
+    }
+
 
     //al click su un annuncio visualizza i dettagli
     @Override
     public void onNoticeSelected(Notice notice) {
 
         if (sessionManager.checkLogin()) {
-            DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice, sessionManager.getSessionUsername());
+            DialogsNoticeDetails dialogs = DialogsNoticeDetails.newInstance(notice, sessionManager.getSessionUid());
             dialogs.show(getSupportFragmentManager(), "dialog");
         } else {
             sessionManager.forceLogin(this);
@@ -241,7 +294,7 @@ public class HomeActivity extends DrawerActivity
         if (sessionManager.checkLogin()) {
             Intent detailIntent = new Intent(HomeActivity.this, ProfiloPubblicoActivity.class);
             detailIntent.putExtra(Constants.TYPE, Constants.TYPE_SITTER);
-            detailIntent.putExtra("username", sitter.getName());
+            detailIntent.putExtra("uid", sitter.getId());
             startActivity(detailIntent);
         } else {
             sessionManager.forceLogin(this);
@@ -288,8 +341,9 @@ public class HomeActivity extends DrawerActivity
 
         ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
         if (filteredSitterList.size() == 0) {
-            errorView.setVisibility(View.VISIBLE);
             errorView.setTitle(R.string.niente_sitter);
+            errorView.setVisibility(View.VISIBLE);
+
         } else {
             errorView.setVisibility(View.GONE);
         }

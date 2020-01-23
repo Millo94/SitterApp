@@ -105,6 +105,8 @@
     <string name="pubblicaAnnuncio">Post Notice</string>
     <string name="selezionaOra">Select Time</string>
     <string name="annuncioPubblicato">Notice published.</string>
+    <string name="annuncioCancellato">Notice is deleted.</string>
+    <string name="annuncioNonCancellato">Notice is not deleted.</string>
     <string name="sceltaAzione">Choose how to perform the action:</string>
     <string name="sms" translatable="false">SMS</string>
     <string name="chiamata">Call</string>
@@ -164,6 +166,8 @@
 
 
     <string name="scaduto">Expired</string>
+    <string name="in_attesa" translatable="false">Waiting for confirm</string>
+    <string name="confermato" translatable="false">Confirmed</string>
     <string name="mail_oggetto">SitterApp: engagments</string>
     <string name="mail_testo">Email sent by SitterApp</string>
     <string name="sms_testo">SMS from SitterApp:</string>
@@ -174,6 +178,8 @@
     <string name="niente_scrivi_recensioni">Nothing to review</string>
     <string name="niente_recensioni_ricevute">No review received</string>
     <string name="niente_recensioni_scritte">No review written</string>
+    <string name="niente_famiglia">No family to show</string>
+    <string name="niente_messaggi">No message to show</string>
     <string name="lavoroAssegnato">Engagment Assigned</string>
     <string name="permessoRichiesto">Permession needed</string>
     <string name="stringPermissionRequest">Permission is required to complete the operation. Do you want to authorize?</string>

@@ -107,6 +107,13 @@
             android:name=".appuntamenti.SceltaSitter"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Light.NoActionBar" />
+
+
+
+
+
+
+
     </application>
 
 </manifest>

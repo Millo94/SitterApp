@@ -77,4 +77,5 @@ public class UtenteSitter extends User {
     public String getRetribuzioneOra() {
         return retribuzioneOra;
     }
+
 }

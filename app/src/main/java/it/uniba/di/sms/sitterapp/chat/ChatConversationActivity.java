@@ -1,8 +1,6 @@
 package it.uniba.di.sms.sitterapp.chat;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -13,13 +11,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 import com.stfalcon.chatkit.commons.ImageLoader;
@@ -49,14 +47,15 @@ import it.uniba.di.sms.sitterapp.oggetti.Message;
 import it.uniba.di.sms.sitterapp.oggetti.User;
 import it.uniba.di.sms.sitterapp.utils.AppUtils;
 
+
+
 public class ChatConversationActivity extends Activity
         implements MessagesListAdapter.OnMessageLongClickListener<Message>,
         MessageInput.InputListener,
         MessageInput.AttachmentsListener, MessagesListAdapter.SelectionListener,
         MessagesListAdapter.OnLoadMoreListener {
-
-    private int TOTAL_MESSAGES_COUNT = 1000;
-
+    private int TOTAL_MESSAGES_COUNT = 0;
+    private final int MESSAGE_LIMIT = 10;
     protected ImageLoader imageLoader;
     protected MessagesListAdapter<Message> messagesAdapter;
 
@@ -68,9 +67,12 @@ public class ChatConversationActivity extends Activity
     private Bundle BUNDLE;
     private String CONVERSATION_UID;
     private String CONVERSATION_NAME;
-    private String senderId;
+    private String senderId, receiverId;
+    private User senderUser,receiverUser;
 
+    //recycler view for messageList
     private MessagesList messagesList;
+    private List<Message> messageArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,15 +83,16 @@ public class ChatConversationActivity extends Activity
         CONVERSATION_UID =BUNDLE.getString("conversationUID");
         CONVERSATION_NAME = BUNDLE.getString("conversationName");
         senderId = BUNDLE.getString("senderId");
-
+        receiverId = BUNDLE.getString("receiverId");
         messagesList = (MessagesList) findViewById(R.id.messagesList);
-        initAdapter();
         imageLoader = new ImageLoader() {
             @Override
             public void loadImage(ImageView imageView, String url, Object payload) {
                 Picasso.with(ChatConversationActivity.this).load(url).into(imageView);
             }
         };
+
+        initAdapter();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(CONVERSATION_NAME);
@@ -102,6 +105,12 @@ public class ChatConversationActivity extends Activity
     @Override
     protected void onStart() {
         super.onStart();
+
+        getReceiverUser(receiverId);
+        getSenderUser(senderId);
+
+        if(TOTAL_MESSAGES_COUNT == 0)loadMessages();
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("chat").document(CONVERSATION_UID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -114,8 +123,14 @@ public class ChatConversationActivity extends Activity
                         documentSnapshot.getBoolean("lastMessage.user.online"));
                 String idMessage = (String) mapMessage.get("id");
                 Date dateMessage = ((Timestamp) mapMessage.get("timestamp")).toDate();
-                lastMessage = new Message(idMessage,userMessage,textMessage,dateMessage);
-                messagesAdapter.addToStart(lastMessage, true);
+                Message message = new Message(idMessage,userMessage,textMessage,dateMessage);
+
+                //verifica che il messaggio successivo sia diverso da quello precedente
+                // e che non faccia il comando all'apertura dell'app (perché viene caricata tutta la lista dei messaggi)
+                if(!message.equals(lastMessage)&& TOTAL_MESSAGES_COUNT>0) {
+                    lastMessage = message;
+                    messagesAdapter.addToStart(lastMessage, true);
+                }
             }
         });
 
@@ -154,38 +169,13 @@ public class ChatConversationActivity extends Activity
 
     @Override
     public void onLoadMore(int page, final int totalItemsCount) {
-        Log.i("TAG", "onLoadMore: " + page + " " + totalItemsCount);
-        if (totalItemsCount < TOTAL_MESSAGES_COUNT) {
-            //loadMessages();
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("chat")
-                    .document(CONVERSATION_UID)
-                    .collection("Messages")
-                    .orderBy("timestamp", Query.Direction.ASCENDING)
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
-                            if(!querySnapshot.isEmpty()){
-                                List<DocumentSnapshot> documentSnapshotList = querySnapshot.getDocuments();
-                                Integer i = 0;
-                                ArrayList<Message> messageList = new ArrayList<>();
-                                for(DocumentSnapshot SnapshotMessageList : documentSnapshotList){
-                                    String textMessage = (String) SnapshotMessageList.get("text");
-                                    User userMessage = new User((String) SnapshotMessageList.get("user"),(String) SnapshotMessageList.get("user"),"",true);
-                                    String idMessage = i.toString();
-                                    i++;
-                                    Date dateMessage = ((Timestamp) SnapshotMessageList.get("timestamp")).toDate();
-                                    Message message = new Message(idMessage,userMessage,textMessage,dateMessage);
 
-                                    if(!(message.getText().equals(lastMessage.getText()) ||
-                                            message.getUser().equals(lastMessage.getUser()) ||
-                                            message.getCreatedAt().equals(lastMessage.getCreatedAt()))) messageList.add(message);
-                                }
-                                TOTAL_MESSAGES_COUNT = i;
-                                messagesAdapter.addToEnd(messageList,true);
-                            }
-                        }
-                    });
+        Log.i("TAG", "onLoadMore: " + page + " " + totalItemsCount);
+        if (totalItemsCount+MESSAGE_LIMIT < TOTAL_MESSAGES_COUNT) {
+
+            messagesAdapter.addToEnd(messageArrayList.subList(totalItemsCount,totalItemsCount+MESSAGE_LIMIT-1),false);
+        }else if(totalItemsCount < TOTAL_MESSAGES_COUNT){
+            messagesAdapter.addToEnd(messageArrayList.subList(totalItemsCount,TOTAL_MESSAGES_COUNT-1),false);
         }
     }
 
@@ -197,14 +187,43 @@ public class ChatConversationActivity extends Activity
     }
 
     protected void loadMessages() {
-        new Handler().postDelayed(new Runnable() { //imitation of internet connection
-            @Override
-            public void run() {
-                ArrayList<Message> messages = MessagesFixtures.getMessages(lastLoadedDate);
-                lastLoadedDate = messages.get(messages.size() - 1).getCreatedAt();
-                messagesAdapter.addToEnd(messages, false);
-            }
-        }, 1000);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("chat")
+                .document(CONVERSATION_UID)
+                .collection("Messages")
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            QuerySnapshot  querySnapshot= task.getResult();
+                            if(!querySnapshot.isEmpty()){
+                                List<DocumentSnapshot> documentSnapshotList = querySnapshot.getDocuments();
+                                TOTAL_MESSAGES_COUNT = documentSnapshotList.size();
+                                for(int i=0;i<TOTAL_MESSAGES_COUNT;++i){
+                                    DocumentSnapshot SnapshotMessageList = documentSnapshotList.get(i);
+                                    String textMessage = (String) SnapshotMessageList.get("text");
+                                    User userMessage;
+                                    if(SnapshotMessageList.getString("user").equals(senderId)){
+                                        userMessage = senderUser;
+                                    }else{
+                                        userMessage = receiverUser;
+                                    }
+                                    String idMessage = String.valueOf(i);
+                                    Date dateMessage = ((Timestamp) SnapshotMessageList.get("timestamp")).toDate();
+                                    Message message = new Message(idMessage,userMessage,textMessage,dateMessage);
+
+                                    messageArrayList.add(message);
+                                }
+                                messagesAdapter.addToEnd(messageArrayList.subList(0,MESSAGE_LIMIT-1),false);
+                            }
+                        }else{
+                            Log.i("TAG", "onLoadMore: " +task.getResult());
+                        }
+                    }
+                });
+
     }
 
     private MessagesListAdapter.Formatter<Message> getMessageStringFormatter() {
@@ -231,21 +250,19 @@ public class ChatConversationActivity extends Activity
         message.put("timestamp",timestamp);
         message.put("user",senderId);
 
-        Map<String,Object> lastMessage = new HashMap<>();
-        lastMessage.put("text",input.toString());
-        lastMessage.put("id","");
-        lastMessage.put("timestamp",timestamp);
+        Map<String,Object> lastMsg = new HashMap<>();
+        lastMsg.put("text",input.toString());
+        lastMsg.put("id",String.valueOf(TOTAL_MESSAGES_COUNT+1));
+        lastMsg.put("timestamp",timestamp);
         Map<String,Object> user = new HashMap<>();
-        user.put("id",senderId);
-        user.put("name",senderId);
-        //TODO DA CORREGGERE BUG FOTO DA MODIFICARE
-        final String url = "https://www.studiofrancesconi.com/wp-content/uploads/2019/03/placeholder-profile-sq.jpg";
-        user.put("avatar",url);
-        user.put("online",true);
-        lastMessage.put("user",user);
+        user.put("id",senderUser.getId());
+        user.put("name",senderUser.getName());
+        user.put("avatar",senderUser.getAvatar());
+        user.put("online",senderUser.isOnline());
+        lastMsg.put("user",user);
 
         Map<String,Object> mapLastMessage = new HashMap<>();
-        mapLastMessage.put("lastMessage",lastMessage);
+        mapLastMessage.put("lastMessage",lastMsg);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("chat").document(CONVERSATION_UID).collection("Messages").add(message);
@@ -295,5 +312,49 @@ public class ChatConversationActivity extends Activity
         messagesAdapter.setOnMessageLongClickListener(this);
         messagesAdapter.setLoadMoreListener(this);
         messagesList.setAdapter(messagesAdapter);
+        messageArrayList = new ArrayList<Message>();
+    }
+
+    private void getReceiverUser(String userID){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("utente").document(userID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if(e != null){
+
+                }else{
+                    User user = new User(documentSnapshot.getId(),
+                            documentSnapshot.getString("NomeCompleto"),
+                            documentSnapshot.getString("Avatar"),
+                            documentSnapshot.getBoolean("online"));
+                    if(!user.equals(receiverUser)){
+                        receiverUser = user;
+                        messagesAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
+    }
+    private void getSenderUser(String userID){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("utente").document(userID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if(e != null){
+
+                }else{
+                    User user = new User(documentSnapshot.getId(),
+                            documentSnapshot.getString("NomeCompleto"),
+                                    documentSnapshot.getString("Avatar"),
+                                    documentSnapshot.getBoolean("online"));
+                    if(!user.equals(senderUser)){
+                        senderUser = user;
+                        messagesAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
     }
 }

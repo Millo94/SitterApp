@@ -2,9 +2,6 @@ package it.uniba.di.sms.sitterapp.principale;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +9,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,11 +29,12 @@ import it.uniba.di.sms.sitterapp.SessionManager;
 /**
  * Activity per caricare un nuovo annuncio
  */
-public class NewNoticeActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class NewNoticeActivity  extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     EditText descrizione, data, oraInizio, oraFine;
     Button post;
     SessionManager sessionManager;
+    Button cancella;
     private static final String posta = "POST";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -49,6 +50,7 @@ public class NewNoticeActivity extends AppCompatActivity implements DatePickerDi
         oraFine = (EditText) findViewById(R.id.oraFineNewNotice);
         post = (Button) findViewById(R.id.confermaNewNotice);
         sessionManager = new SessionManager(getApplicationContext());
+        cancella = (Button) findViewById(R.id.annulla);
 
         // DATE PICKER
         // Creazione del Date Picker
@@ -115,17 +117,24 @@ public class NewNoticeActivity extends AppCompatActivity implements DatePickerDi
             }
         });
 
+
+        cancella.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                descrizione.setText("");
+                data.setText("");
+                oraFine.setText("");
+                oraInizio.setText("");
+            }
+        });
+
     }
 
     // DATE PICKER
     // Creazione della stringa dalla data scelta con il DatePicker
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        data.setText(
-                new StringBuilder()
-                        .append(dayOfMonth).append("-")
-                        .append(month + 1).append("-")
-                        .append(year));
+        data.setText(String.format("%02d-%02d-%04d", dayOfMonth, month + 1, year));
 
     }
 
@@ -137,7 +146,7 @@ public class NewNoticeActivity extends AppCompatActivity implements DatePickerDi
 
         Map<String, Object> annuncio = new HashMap<>();
         annuncio.put("idAnnuncio", UUID.randomUUID().toString());
-        annuncio.put("family", sessionManager.getSessionUsername());
+        annuncio.put("family", sessionManager.getSessionUid());
         annuncio.put("date", data.getText().toString().trim());
         annuncio.put("start_time", oraInizio.getText().toString().trim());
         annuncio.put("end_time", oraFine.getText().toString().trim());

@@ -2,14 +2,14 @@ package it.uniba.di.sms.sitterapp.recensioni;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -18,18 +18,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import it.uniba.di.sms.sitterapp.adapter.RecensioniRicevuteAdapter;
-
-
-import it.uniba.di.sms.sitterapp.oggetti.Recensione;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
-
+import it.uniba.di.sms.sitterapp.adapter.RecensioniRicevuteAdapter;
+import it.uniba.di.sms.sitterapp.oggetti.Recensione;
 import tr.xip.errorview.ErrorView;
 
 
@@ -71,6 +67,14 @@ public class RecensioniRicevuteFragment extends Fragment {
         recycler.setAdapter(adapter);
 
         errorView = (ErrorView) view.findViewById(R.id.errorView);
+
+        if (recensioneList.size() == 0) {
+            errorView.setTitle(R.string.niente_recensioni_ricevute);
+            errorView.setVisibility(View.VISIBLE);
+
+        } else {
+            errorView.setVisibility(View.GONE);
+        }
 
         ReviewRicevute();
 
