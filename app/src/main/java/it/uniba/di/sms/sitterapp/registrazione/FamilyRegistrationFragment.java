@@ -24,6 +24,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -179,7 +180,9 @@ public class FamilyRegistrationFragment extends Fragment {
                 if (requestCode == 0 && resultCode == RESULT_OK) {
                     Bundle bundle = imageReturnedIntent.getExtras();
                     sImage = (Bitmap) bundle.get("data");
-                    imgProfile.setImageBitmap(sImage);
+                    Glide.with(FamilyRegistrationFragment.this.getContext())
+                            .load(sImage)
+                            .into(imgProfile);
                 }
                 break;
             case 1:
@@ -192,7 +195,9 @@ public class FamilyRegistrationFragment extends Fragment {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    imgProfile.setImageBitmap(bitmap);
+                    Glide.with(FamilyRegistrationFragment.this.getContext())
+                            .load(bitmap)
+                            .into(imgProfile);
 
                 }
                 break;

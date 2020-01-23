@@ -30,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -251,9 +252,13 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
         switch (requestCode) {
             case 0:
                 if (requestCode == 0 && resultCode == RESULT_OK) {
+
                     Bundle bundle = imageReturnedIntent.getExtras();
                     sImage = (Bitmap) bundle.get("data");
-                    imgProfile.setImageBitmap(sImage);
+                    Glide.with(SitterRegistrationFragment.this.getContext())
+                            .load(sImage)
+                            .into(imgProfile);
+
                 }
                 break;
             case 1:
@@ -266,7 +271,9 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    imgProfile.setImageBitmap(bitmap);
+                    Glide.with(SitterRegistrationFragment.this.getContext())
+                            .load(bitmap)
+                            .into(imgProfile);
 
                 }
                 break;

@@ -150,6 +150,7 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
                             utente.put("Descrizione", sitter.getDescrizione());
                             utente.put("tipoUtente",Constants.TYPE_SITTER);
                             Map<String,Object> babysitterExtra = new HashMap<>();
+                            babysitterExtra.put("Disponibilita", "");
                             babysitterExtra.put("dataNascita", sitter.getDataNascita());
                             babysitterExtra.put("Genere", sitter.getGenere());
                             babysitterExtra.put("Rating", sitter.getRating());
