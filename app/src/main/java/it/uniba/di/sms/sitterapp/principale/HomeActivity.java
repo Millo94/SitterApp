@@ -2,6 +2,7 @@ package it.uniba.di.sms.sitterapp.principale;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -53,7 +54,7 @@ public class HomeActivity extends DrawerActivity
         implements NoticeAdapter.NoticeAdapterListener, SitterAdapter.ContactsSitterAdapterListener, DialogFiltro.DialogListener {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    private final String TAG = "HomeActivity";
     // Vista
     private RecyclerView recyclerView;
 
@@ -66,7 +67,6 @@ public class HomeActivity extends DrawerActivity
     private List<UtenteSitter> filteredSitterList; //per la lista dopo aver applicato un filtro
 
     private SitterAdapter sitterAdapter;
-
 
     FloatingActionButton cercaSitter;
 
@@ -158,16 +158,6 @@ public class HomeActivity extends DrawerActivity
             noticeList = new ArrayList<>();
             noticeAdapter = new NoticeAdapter(HomeActivity.this, noticeList, HomeActivity.this);
 
-            ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
-            if (noticeList.size() == 0) {
-                errorView.setTitle(R.string.niente_famiglia);
-                errorView.setVisibility(View.VISIBLE);
-
-            } else {
-                errorView.setVisibility(View.GONE);
-            }
-
-
             recyclerView.setAdapter(noticeAdapter);
 
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -182,22 +172,13 @@ public class HomeActivity extends DrawerActivity
             sitterList = new ArrayList<>();
             sitterAdapter = new SitterAdapter(HomeActivity.this, sitterList, HomeActivity.this);
 
-            ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
-            if (sitterList.size() == 0) {
-                errorView.setTitle(R.string.niente_sitter);
-                errorView.setVisibility(View.VISIBLE);
-
-            } else {
-                errorView.setVisibility(View.GONE);
-            }
-
             recyclerView.setAdapter(sitterAdapter);
 
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-           // caricaSitter();
+            caricaSitter();
 
         }
     }
@@ -212,27 +193,37 @@ public class HomeActivity extends DrawerActivity
         CollectionReference colRef = db.collection("annuncio");
         colRef
                 .whereEqualTo("conferma", false)
-                .orderBy("date")
+                //.orderBy("date")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         if(e!=null){
+                            Log.i(TAG,e.getMessage());
                             Toast.makeText(HomeActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
                         }
 
                         else {
-                            noticeList.clear();
-                        Iterator<QueryDocumentSnapshot> iterableCandidature = queryDocumentSnapshots.iterator();
-                        while(iterableCandidature.hasNext()){
-                            DocumentSnapshot documentSnapshot = iterableCandidature.next();
-                            Notice notice = documentSnapshot.toObject(Notice.class);
-                            //mostra solo gli ingaggi ancora disponibili alla candidatura
-                            if (noticeAdapter.annuncioScaduto(notice) == false && !notice.containsCandidatura(sessionManager.getSessionUid())) {
-                                noticeList.add(notice);
-                            }
-                        }
-                        noticeAdapter.notifyDataSetChanged();
 
+                            noticeList.clear();
+                        Iterator<QueryDocumentSnapshot> iterableNotice = queryDocumentSnapshots.iterator();
+                         ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+
+                            if (!iterableNotice.hasNext()) {
+                                errorView.setTitle(R.string.niente_annunci);
+                                errorView.setVisibility(View.VISIBLE);
+
+                            } else {
+                                errorView.setVisibility(View.INVISIBLE);
+                                while (iterableNotice.hasNext()) {
+                                    DocumentSnapshot documentSnapshot = iterableNotice.next();
+                                    Notice notice = documentSnapshot.toObject(Notice.class);
+                                    //mostra solo gli ingaggi ancora disponibili alla candidatura
+                                    if (noticeAdapter.annuncioScaduto(notice) == false && !notice.containsCandidatura(sessionManager.getSessionUid())) {
+                                        noticeList.add(notice);
+                                    }
+                                }
+                                noticeAdapter.notifyDataSetChanged();
+                            }
                     }}
 
                 });
@@ -241,47 +232,48 @@ public class HomeActivity extends DrawerActivity
 
 
     /**
-     * Caricamento delle babysitter nella home per l'utente famiglia
+     * Caricamento delle babysitter nella home
      */
 
-    /*/private void caricaSitter(){
+    private void caricaSitter(){
 
         CollectionReference colRef = db.collection("utente");
 
         colRef
                 .whereEqualTo("tipoUtente", 1)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if(e != null){
+                            Toast.makeText(HomeActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
 
-                        Iterator<QueryDocumentSnapshot> iterableSitter = queryDocumentSnapshots.iterator();
-                        while(iterableSitter.hasNext()){
-                            DocumentSnapshot documentSnapshot = iterableSitter.next();
-                            UtenteSitter bs = new UtenteSitter(
-                                     documentSnapshot.getId(),
-                                    (String) documentSnapshot.get("babysitter.nome"),
-                                    (String) documentSnapshot.get("citta"),
-                                    (boolean) documentSnapshot.get("babysitter.auto"),
-                                    3,
-                                    1);
+                        }else {
+                            sitterList.clear();
+                            Iterator<QueryDocumentSnapshot> iterableSitter = queryDocumentSnapshots.iterator();
+                            ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+                            if (!iterableSitter.hasNext()) {
+                                errorView.setTitle(R.string.niente_sitter);
+                                errorView.setVisibility(View.VISIBLE);
+                            } else {
+                            errorView.setVisibility(View.INVISIBLE);
+                            while (iterableSitter.hasNext()) {
+                                DocumentSnapshot documentSnapshot = iterableSitter.next();
+                                UtenteSitter bs = new UtenteSitter(
+                                        documentSnapshot.getId(),
+                                        (String) documentSnapshot.get("NomeCompleto"),
+                                        (String) documentSnapshot.get("Avatar"),
+                                        (boolean) documentSnapshot.get("online"),
+                                        3,
+                                        1);
 
 
                                 sitterList.add(bs);
 
+                            }
+                            sitterAdapter.notifyDataSetChanged();
                         }
-                        sitterAdapter.notifyDataSetChanged();
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(HomeActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-    }*/
+                        }}});
+    }
 
 
     //al click su un annuncio visualizza i dettagli

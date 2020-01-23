@@ -263,19 +263,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     }
     private void executeShakeAction() {
 
-        if(sessionManager.getSessionType() == Constants.TYPE_FAMILY ){
+        if(sessionManager.getSessionType() == Constants.TYPE_FAMILY){
             Intent ii = new Intent(this,NewNoticeActivity.class);
             ii.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(ii);
         }
-
-//        Context context = getApplicationContext();
-//        CharSequence text = "Hello toast!";
-//        int duration = Toast.LENGTH_SHORT;
-
-        //Toast toast = Toast.makeText(context, text, duration);
-        //toast.show();
-
     }
 
     @Override

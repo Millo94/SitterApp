@@ -92,7 +92,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
             confirm.setOnClickListener(confirmEngageListener);
 
             Button deleteCandidatura = (Button) view.findViewById(R.id.deleteApplication);
-            //viene visualizzato quando una babysitter, candidata, vpuò rimuovere la sua candidatura
+            //viene visualizzato quando una babysitter, candidata, può rimuovere la sua candidatura
             deleteCandidatura.setVisibility((getArguments().getBoolean("candidatura") && !getArguments().getBoolean("conferma"))?View.VISIBLE:View.GONE);
             deleteCandidatura.setOnClickListener(deleteCandidaturaListener);
 
@@ -248,8 +248,6 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
         @Override
         public void onClick(View v) {
             eliminaAnnuncio();
-            Intent goEngagments = new Intent(getContext(), IngaggiActivity.class);
-            startActivity(goEngagments);
         }
     };
 
@@ -277,7 +275,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(getActivity().getApplicationContext(), R.string.annuncioCancellato, Toast.LENGTH_SHORT).show();
                         Intent intentback = new Intent(getContext(), IngaggiActivity.class);
-                        //startActivity(intentback);
+                        startActivity(intentback);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -287,6 +285,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                         Toast.makeText(getActivity().getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
                     }
                 });
+
     }
 
 
@@ -328,7 +327,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(getActivity().getApplicationContext(), R.string.deleteSuccess, Toast.LENGTH_SHORT).show();
-                        Intent intentback = new Intent(getContext(),HomeActivity.class);
+                        Intent intentback = new Intent(getContext(),IngaggiActivity.class);
                         startActivity(intentback);
                     }
                 })

@@ -7,17 +7,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -39,6 +40,8 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
     private List<Notice> noticeList;
     private NoticeAdapter noticeAdapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private BottomNavigationView bottomNavigationView;
+    private final String SELECTED = "selected";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,12 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
 
         //FAB
         FloatingActionButton addNotice = (FloatingActionButton) findViewById(R.id.addNotice);
+
+        //BottomNavigationView
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigationView.getMenu().findItem(getIntent().getIntExtra(SELECTED,R.id.nav_engagements)).setChecked(true);
+
         if (sessionManager.getSessionType() == Constants.TYPE_FAMILY && addNotice.getVisibility() == View.GONE) {
             addNotice.show();
             addNotice.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +84,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
     @Override
     protected void onStart() {
         super.onStart();
-        noticeList.clear();
         caricaIngaggi();
     }
 
@@ -96,55 +104,61 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         if(sessionManager.getSessionType() == Constants.TYPE_FAMILY){
             colRef
                     .whereEqualTo("family", sessionManager.getSessionUid())
-                    .get()
-                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            Iterator<QueryDocumentSnapshot> listNotice = queryDocumentSnapshots.iterator();
-                            ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
-                            if (!listNotice.hasNext()) {
-                                errorView.setTitle(R.string.niente_annunci);
-                                errorView.setVisibility(View.VISIBLE);
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                            if(e != null){
+                                Toast.makeText(IngaggiActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
 
-                            } else {
-
-                                while (listNotice.hasNext()) {
-                                    DocumentSnapshot documentSnapshot = listNotice.next();
-                                    Notice notice = documentSnapshot.toObject(Notice.class);
-                                    noticeList.add(notice);
-                                }
-                                noticeAdapter.notifyDataSetChanged();
                             }
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(IngaggiActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
+                            else{
+                                noticeList.clear();
+                                Iterator<QueryDocumentSnapshot> listNotice = queryDocumentSnapshots.iterator();
+                                ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+                                if (!listNotice.hasNext()) {
+                                    errorView.setTitle(R.string.niente_annunci);
+                                    errorView.setVisibility(View.VISIBLE);
+
+                                } else {
+                                    errorView.setVisibility(View.INVISIBLE);
+                                    while (listNotice.hasNext()) {
+                                        DocumentSnapshot documentSnapshot = listNotice.next();
+                                        Notice notice = documentSnapshot.toObject(Notice.class);
+                                        noticeList.add(notice);
+                                    }
+                                    noticeAdapter.notifyDataSetChanged();
+                                }
+                            }
                         }
                     });
         }else{
             colRef
                     .whereEqualTo("candidatura." + sessionManager.getSessionUid(), sessionManager.getSessionUid())
-                    .get()
-                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                            if(e != null){
+                                Toast.makeText(IngaggiActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
 
-                            Iterator<QueryDocumentSnapshot> listNotice = queryDocumentSnapshots.iterator();
-                            while(listNotice.hasNext()){
-                                DocumentSnapshot documentSnapshot = listNotice.next();
-                                Notice notice = documentSnapshot.toObject(Notice.class);
-                                noticeList.add(notice);
                             }
-                            noticeAdapter.notifyDataSetChanged();
+                            else{
+                                noticeList.clear();
+                                Iterator<QueryDocumentSnapshot> listNotice = queryDocumentSnapshots.iterator();
+                                ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+                                if (!listNotice.hasNext()) {
+                                    errorView.setTitle(R.string.niente_annunci);
+                                    errorView.setVisibility(View.VISIBLE);
 
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(IngaggiActivity.this,R.string.genericError, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    errorView.setVisibility(View.INVISIBLE);
+                                    while (listNotice.hasNext()) {
+                                        DocumentSnapshot documentSnapshot = listNotice.next();
+                                        Notice notice = documentSnapshot.toObject(Notice.class);
+                                        noticeList.add(notice);
+                                    }
+                                    noticeAdapter.notifyDataSetChanged();
+                                }
+                            }
                         }
                     });
         }
