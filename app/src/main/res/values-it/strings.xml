@@ -84,6 +84,8 @@
     <string name="pubblicaAnnuncio">Pubblica Annuncio</string>
     <string name="selezionaOra">Seleziona Orario</string>
     <string name="annuncioPubblicato">Annuncio pubblicato.</string>
+    <string name="annuncioCancellato">Annuncio cancellato.</string>
+    <string name="annuncioNonCancellato">Notice is not deleted.</string>
     <string name="recensioniScritte">Recensioni Scritte</string>
     <string name="recensioniRicevute">Recensioni Ricevute</string>
     <string name="destinatario">A:</string>

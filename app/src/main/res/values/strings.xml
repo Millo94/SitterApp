@@ -104,6 +104,8 @@
     <string name="pubblicaAnnuncio">Post Notice</string>
     <string name="selezionaOra">Select Time</string>
     <string name="annuncioPubblicato">Notice published.</string>
+    <string name="annuncioCancellato">Notice is deleted.</string>
+    <string name="annuncioNonCancellato">Notice is not deleted.</string>
     <string name="sceltaAzione">Choose how to perform the action:</string>
     <string name="sms" translatable="false">SMS</string>
     <string name="chiamata">Call</string>
