@@ -219,6 +219,7 @@ public class HomeActivity extends DrawerActivity
                                         noticeList.add(notice);
                                     }
                                 }
+                                if(noticeList.size()==0)errorView.setVisibility(View.VISIBLE);
                                 noticeAdapter.notifyDataSetChanged();
                             }
                         }

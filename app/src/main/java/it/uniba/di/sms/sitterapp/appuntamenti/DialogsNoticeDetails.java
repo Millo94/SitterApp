@@ -96,7 +96,8 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
             deleteCandidatura.setVisibility((getArguments().getBoolean("isCandidato") && !getArguments().getBoolean("conferma"))?View.VISIBLE:View.GONE);
             deleteCandidatura.setOnClickListener(deleteCandidaturaListener);
 
-            user.setText(getArguments().getString("username"));
+
+            user.setText(getArguments().getString("family"));
 
         } else if(sessionManager.getSessionType() == Constants.TYPE_FAMILY){            //dialog per la famiglia
             View view = inflater.inflate(R.layout.details_notice_family, null);
@@ -134,13 +135,13 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     public static DialogsNoticeDetails newInstance(Notice notice, String userID) {
 
         Bundle args = new Bundle();
-        args.putString("username", notice.getFamily());
+        args.putString("family", notice.getFamily());
         args.putString("data", notice.getDate());
         args.putString("oraInizio", notice.getStart_time());
         args.putString("oraFine", notice.getEnd_time());
         args.putString("descrizione", notice.getDescription());
         args.putString("idAnnuncio", notice.getIdAnnuncio());
-        args.putBoolean("candidatura", notice.containsCandidatura(userID));
+        args.putBoolean("isCandidato", notice.containsCandidatura(userID));
         args.putString("sitter", notice.getSitter());
         args.putBoolean("conferma", notice.getConferma());
 
@@ -157,7 +158,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
         public void onClick(View v) {
             Intent detailIntent = new Intent(getContext(), ProfiloPubblicoActivity.class);
             detailIntent.putExtra(Constants.TYPE, Constants.TYPE_FAMILY);
-            detailIntent.putExtra("username", user.getText().toString());
+            detailIntent.putExtra("uid", idAnnuncio);
             startActivity(detailIntent);
         }
     };

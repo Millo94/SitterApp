@@ -95,16 +95,15 @@ public class PubblicoFamigliaFragment extends Fragment {
         sessionManager = new SessionManager(getContext());
         requestQueue = Volley.newRequestQueue(getContext());
         inizializzazione();
-        mostraProfilo(getActivity().getIntent().getStringExtra("username"));
-       // showProfile(getActivity().getIntent().getStringExtra("username"));
+        mostraProfilo(getActivity().getIntent().getStringExtra("uid"));
         return view;
     }
 
 
-    private void mostraProfilo(final String username){
+    private void mostraProfilo(final String uid){
 
         db.collection("utente")
-                .document(username)
+                .document(uid)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -306,7 +305,7 @@ public class PubblicoFamigliaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent showfeedIntent = new Intent(getContext(), RecensioniPubblicoActivity.class);
-                showfeedIntent.putExtra("username", getActivity().getIntent().getStringExtra("username"));
+                showfeedIntent.putExtra("uid", getActivity().getIntent().getStringExtra("uid"));
                 startActivity(showfeedIntent);
             }
         });
