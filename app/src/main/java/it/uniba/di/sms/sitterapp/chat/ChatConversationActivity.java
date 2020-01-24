@@ -1,6 +1,7 @@
 package it.uniba.di.sms.sitterapp.chat;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -9,7 +10,10 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.Timestamp;
@@ -19,6 +23,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 import com.stfalcon.chatkit.commons.ImageLoader;
 import com.stfalcon.chatkit.messages.MessageHolders;
@@ -54,6 +60,9 @@ public class ChatConversationActivity extends Activity
         MessageInput.InputListener,
         MessageInput.AttachmentsListener, MessagesListAdapter.SelectionListener,
         MessagesListAdapter.OnLoadMoreListener {
+
+    private final String TAG = "ChatConversActivity";
+
     private int TOTAL_MESSAGES_COUNT = 0;
     private final int MESSAGE_LIMIT = 10;
     protected ImageLoader imageLoader;
@@ -87,8 +96,24 @@ public class ChatConversationActivity extends Activity
         messagesList = (MessagesList) findViewById(R.id.messagesList);
         imageLoader = new ImageLoader() {
             @Override
-            public void loadImage(ImageView imageView, String url, Object payload) {
-                Picasso.with(ChatConversationActivity.this).load(url).into(imageView);
+            public void loadImage(final ImageView imageView, String url, Object payload) {
+                //modifico il link per la foto
+                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(url);
+                storageReference.getDownloadUrl()
+                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Glide.with(ChatConversationActivity.this)
+                                        .load(uri== null?R.drawable.ic_account_circle_black_56dp:uri)
+                                        .into(imageView);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.i(TAG,e.getMessage());
+                            }
+                        });
             }
         };
 
@@ -330,6 +355,9 @@ public class ChatConversationActivity extends Activity
                             documentSnapshot.getBoolean("online"));
                     if(!user.equals(receiverUser)){
                         receiverUser = user;
+                        for(int i=0;i<messagesAdapter.getItemCount();++i){
+                            messagesAdapter.notifyItemChanged(i,senderUser);
+                        }
                         messagesAdapter.notifyDataSetChanged();
                     }
                 }

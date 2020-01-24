@@ -12,6 +12,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +35,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.stfalcon.chatkit.commons.ImageLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +57,8 @@ import it.uniba.di.sms.sitterapp.recensioni.RecensioniPubblicoActivity;
  * FRAGMENT PROFILO PUBBLICO SITTER
  */
 public class PubblicoSitterFragment extends Fragment {
+
+    private final String TAG = "PubblicoSitterFragment";
 
     View view;
     RatingBar ratingPuSitter;
@@ -77,6 +84,8 @@ public class PubblicoSitterFragment extends Fragment {
     private int CALL_PERMISSION = 1;
     private int SEND_SMS_PEMISSION = 2;
 
+    ImageLoader imageLoader;
+
     public PubblicoSitterFragment() {
     }
 
@@ -94,6 +103,30 @@ public class PubblicoSitterFragment extends Fragment {
         inizializzazione();
         mostraProfilo(getActivity().getIntent().getStringExtra("uid"));
         sessionManager = new SessionManager(getContext());
+
+        imageLoader = new ImageLoader() {
+            @Override
+            public void loadImage(final ImageView imageView, String url, Object payload) {
+                //modifico il link per la foto
+                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(url);
+                storageReference.getDownloadUrl()
+                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Glide.with(getActivity())
+                                        .load(uri == null ? R.drawable.ic_account_circle_black_56dp : uri)
+                                        .into(imageView);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.i(TAG, e.getMessage());
+                            }
+                        });
+            }
+        };
+
         return view;
     }
 
@@ -106,6 +139,7 @@ public class PubblicoSitterFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        imageLoader.loadImage((ImageView)getActivity().findViewById(R.id.imagePuSitter),documentSnapshot.getString("Avatar"),null);
                         usernamePuSit.setText(documentSnapshot.getString("NomeCompleto"));
                         emailPuSit2.setText((documentSnapshot.getString("E-mail")));
                         email = documentSnapshot.getString("E-mail");

@@ -19,7 +19,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="20dp">
 
             <Button
                 android:id="@+id/vediDispSitter"
@@ -31,10 +32,10 @@
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@id/contattaSitter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/contattaSitter"
-                app:layout_constraintTop_toBottomOf="@+id/cittaPuSitter2"/>
+                app:layout_constraintTop_toBottomOf="@+id/cittaPuSitter2" />
 
             <Button
                 android:id="@+id/contattaSitter"
@@ -54,8 +55,8 @@
                 android:id="@+id/feedbackSitter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="40dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:text="@string/review"
                 android:textAlignment="center"
@@ -117,9 +118,9 @@
                 android:id="@+id/imagePuSitter"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="28dp"
+                android:layout_marginEnd="5dp"
                 android:padding="15dp"
                 app:layout_constraintEnd_toStartOf="@+id/usernamePuSitter"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -131,8 +132,8 @@
                 android:id="@+id/ratingPuSitter"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
-                android:layout_marginEnd="5dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
                 android:backgroundTint="@color/colorPrimary"
                 app:layout_constraintBottom_toTopOf="@+id/descrizionePuSitter"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -144,8 +145,8 @@
                 android:id="@+id/usernamePuSitter"
                 android:layout_width="240dp"
                 android:layout_height="60dp"
-                android:layout_marginEnd="5dp"
                 android:layout_marginTop="28dp"
+                android:layout_marginEnd="5dp"
                 android:paddingStart="5dp"
                 android:text="@string/nomeCompleto"
                 android:textSize="40sp"
