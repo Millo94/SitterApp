@@ -1,6 +1,7 @@
 package it.uniba.di.sms.sitterapp.chat;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnPausedListener;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 import com.stfalcon.chatkit.commons.ImageLoader;
@@ -32,13 +35,18 @@ import com.stfalcon.chatkit.messages.MessageInput;
 import com.stfalcon.chatkit.messages.MessagesList;
 import com.stfalcon.chatkit.messages.MessagesListAdapter;
 
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -79,6 +87,8 @@ public class ChatConversationActivity extends Activity
     private String senderId, receiverId;
     private User senderUser,receiverUser;
 
+    SharedPreferences mPrefs;
+
     //recycler view for messageList
     private MessagesList messagesList;
     private List<Message> messageArrayList;
@@ -93,7 +103,35 @@ public class ChatConversationActivity extends Activity
         CONVERSATION_NAME = BUNDLE.getString("conversationName");
         senderId = BUNDLE.getString("senderId");
         receiverId = BUNDLE.getString("receiverId");
+
+        mPrefs = getSharedPreferences("lastMessage",MODE_PRIVATE);
+
+        if(CONVERSATION_UID.equals("NEWUID")){
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            ArrayList<String> userList = new ArrayList<>();
+            userList.add(senderId);
+            userList.add(receiverId);
+            Map<String,Object> mapUserList = new HashMap<>();
+            mapUserList.put("UsersList",userList);
+            db.collection("chat").add(mapUserList)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            CONVERSATION_UID = documentReference.getId();
+                            getSenderUser(senderId);
+                            getReceiverUser(receiverId);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+        }
+
         messagesList = (MessagesList) findViewById(R.id.messagesList);
+
         imageLoader = new ImageLoader() {
             @Override
             public void loadImage(final ImageView imageView, String url, Object payload) {
@@ -140,21 +178,27 @@ public class ChatConversationActivity extends Activity
         db.collection("chat").document(CONVERSATION_UID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                Map<String,?> mapMessage = (HashMap<String,?>) documentSnapshot.get("lastMessage");
-                String textMessage = (String) mapMessage.get("text");
-                User userMessage = new User(documentSnapshot.getString("lastMessage.user.id"),
-                        documentSnapshot.getString("lastMessage.user.name"),
-                        documentSnapshot.getString("lastMessage.user.avatar"),
-                        documentSnapshot.getBoolean("lastMessage.user.online"));
-                String idMessage = (String) mapMessage.get("id");
-                Date dateMessage = ((Timestamp) mapMessage.get("timestamp")).toDate();
-                Message message = new Message(idMessage,userMessage,textMessage,dateMessage);
-
-                //verifica che il messaggio successivo sia diverso da quello precedente
-                // e che non faccia il comando all'apertura dell'app (perché viene caricata tutta la lista dei messaggi)
-                if(!message.equals(lastMessage)&& TOTAL_MESSAGES_COUNT>0) {
-                    lastMessage = message;
-                    messagesAdapter.addToStart(lastMessage, true);
+                if (e != null) {
+                    Log.i(TAG,e.getMessage());
+                } else {
+                    Map<String, ?> mapMessage = (HashMap<String, ?>) documentSnapshot.get("lastMessage");
+                    if (mapMessage != null) {
+                        String textMessage = (String) mapMessage.get("text");
+                        User userMessage = new User(documentSnapshot.getString("lastMessage.user.id"),
+                                documentSnapshot.getString("lastMessage.user.name"),
+                                documentSnapshot.getString("lastMessage.user.avatar"),
+                                documentSnapshot.getBoolean("lastMessage.user.online"));
+                        String idMessage = (String) mapMessage.get("id");
+                        Date dateMessage = ((Timestamp) mapMessage.get("timestamp")).toDate();
+                        Message message = new Message(idMessage, userMessage, textMessage, dateMessage);
+                        if(lastMessage == null)lastMessage=message;
+                        //verifica che il messaggio successivo sia diverso da quello precedente
+                        // e che non faccia il comando all'apertura dell'app (perché viene caricata tutta la lista dei messaggi)
+                        if (!message.equals(lastMessage) && TOTAL_MESSAGES_COUNT>0) {
+                            lastMessage = message;
+                            messagesAdapter.addToStart(lastMessage, true);
+                        }
+                    }
                 }
             }
         });
@@ -184,6 +228,12 @@ public class ChatConversationActivity extends Activity
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+
+    @Override
     public void onBackPressed() {
         if (selectionCount == 0) {
             super.onBackPressed();
@@ -198,9 +248,9 @@ public class ChatConversationActivity extends Activity
         Log.i("TAG", "onLoadMore: " + page + " " + totalItemsCount);
         if (totalItemsCount+MESSAGE_LIMIT < TOTAL_MESSAGES_COUNT) {
 
-            messagesAdapter.addToEnd(messageArrayList.subList(totalItemsCount,totalItemsCount+MESSAGE_LIMIT-1),false);
+            messagesAdapter.addToEnd(messageArrayList.subList(totalItemsCount,totalItemsCount+MESSAGE_LIMIT),false);
         }else if(totalItemsCount < TOTAL_MESSAGES_COUNT){
-            messagesAdapter.addToEnd(messageArrayList.subList(totalItemsCount,TOTAL_MESSAGES_COUNT-1),false);
+            messagesAdapter.addToEnd(messageArrayList.subList(totalItemsCount,TOTAL_MESSAGES_COUNT),false);
         }
     }
 
@@ -241,7 +291,13 @@ public class ChatConversationActivity extends Activity
 
                                     messageArrayList.add(message);
                                 }
-                                messagesAdapter.addToEnd(messageArrayList.subList(0,MESSAGE_LIMIT-1),false);
+                                if(TOTAL_MESSAGES_COUNT<MESSAGE_LIMIT){
+                                    messagesAdapter.addToEnd(messageArrayList.subList(0,TOTAL_MESSAGES_COUNT),false);
+
+                                }else{
+                                    messagesAdapter.addToEnd(messageArrayList.subList(0,MESSAGE_LIMIT),false);
+
+                                }
                             }
                         }else{
                             Log.i("TAG", "onLoadMore: " +task.getResult());
@@ -268,6 +324,9 @@ public class ChatConversationActivity extends Activity
     }
     @Override
     public boolean onSubmit(CharSequence input) {
+
+        TOTAL_MESSAGES_COUNT++;
+
         Map<String,Object> message = new HashMap<>();
         message.put("text",input.toString());
         Date date = new Date();
@@ -277,7 +336,7 @@ public class ChatConversationActivity extends Activity
 
         Map<String,Object> lastMsg = new HashMap<>();
         lastMsg.put("text",input.toString());
-        lastMsg.put("id",String.valueOf(TOTAL_MESSAGES_COUNT+1));
+        lastMsg.put("id",String.valueOf(TOTAL_MESSAGES_COUNT));
         lastMsg.put("timestamp",timestamp);
         Map<String,Object> user = new HashMap<>();
         user.put("id",senderUser.getId());
@@ -288,6 +347,18 @@ public class ChatConversationActivity extends Activity
 
         Map<String,Object> mapLastMessage = new HashMap<>();
         mapLastMessage.put("lastMessage",lastMsg);
+
+        String textMessage = (String) input.toString();
+        User userMessage = new User(senderUser.getId(),
+                senderUser.getName(),
+                senderUser.getAvatar(),
+                senderUser.isOnline());
+        String idMessage = String.valueOf(TOTAL_MESSAGES_COUNT);
+        Date dateMessage = timestamp.toDate();
+        Message chatMessage = new Message(idMessage, userMessage, textMessage, dateMessage);
+        lastMessage = chatMessage;
+        messagesAdapter.addToStart(lastMessage, true);
+
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("chat").document(CONVERSATION_UID).collection("Messages").add(message);
@@ -340,8 +411,8 @@ public class ChatConversationActivity extends Activity
         messageArrayList = new ArrayList<Message>();
     }
 
-    private void getReceiverUser(String userID){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private void getReceiverUser(final String userID){
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("utente").document(userID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -356,16 +427,18 @@ public class ChatConversationActivity extends Activity
                     if(!user.equals(receiverUser)){
                         receiverUser = user;
                         for(int i=0;i<messagesAdapter.getItemCount();++i){
-                            messagesAdapter.notifyItemChanged(i,senderUser);
+                            messagesAdapter.notifyItemChanged(i,receiverUser);
                         }
                         messagesAdapter.notifyDataSetChanged();
                     }
+                    DocumentReference docRef = db.collection("chat").document(CONVERSATION_UID);
+                    docRef.update("Users."+receiverId,receiverUser);
                 }
             }
         });
     }
     private void getSenderUser(String userID){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("utente").document(userID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -379,8 +452,13 @@ public class ChatConversationActivity extends Activity
                                     documentSnapshot.getBoolean("online"));
                     if(!user.equals(senderUser)){
                         senderUser = user;
+                        for(int i=0;i<messagesAdapter.getItemCount();++i){
+                            messagesAdapter.notifyItemChanged(i,senderUser);
+                        }
                         messagesAdapter.notifyDataSetChanged();
                     }
+                    DocumentReference docRef = db.collection("chat").document(CONVERSATION_UID);
+                    docRef.update("Users."+senderId,senderUser);
                 }
             }
         });

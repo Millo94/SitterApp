@@ -43,6 +43,8 @@ import java.util.Map;
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
+import it.uniba.di.sms.sitterapp.SessionManager;
+import it.uniba.di.sms.sitterapp.chat.ChatConversationActivity;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteFamiglia;
 import it.uniba.di.sms.sitterapp.recensioni.RecensioniPubblicoActivity;
 
@@ -59,6 +61,8 @@ public class PubblicoFamigliaFragment extends Fragment {
     Button feedbackFam;
     RatingBar ratingPuFam;
 
+    SessionManager sessionManager;
+
     RequestQueue requestQueue;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -66,6 +70,9 @@ public class PubblicoFamigliaFragment extends Fragment {
     String telefono;
     //EMAIL ANNUNCIO
     String email;
+
+    //uid per creare una chat
+    private String receiverId;
 
     private OnFragmentInteractionListener mListener;
 
@@ -85,7 +92,7 @@ public class PubblicoFamigliaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profilo_pubblico_family, container, false);
-
+        sessionManager = new SessionManager(getContext());
         requestQueue = Volley.newRequestQueue(getContext());
         inizializzazione();
         mostraProfilo(getActivity().getIntent().getStringExtra("username"));
@@ -102,19 +109,18 @@ public class PubblicoFamigliaFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        usernamePuFam.setText(username);
-                        emailPuFam2.setText((documentSnapshot.getString("famiglia.email")));
-                        email = documentSnapshot.getString("famiglia.email");
-                        nomePuFam2.setText(documentSnapshot.getString("famiglia.nome"));
-                        cognomePuFam2.setText(documentSnapshot.getString("famiglia.cognome"));
-                        numeroPuFam2.setText(documentSnapshot.getString("famiglia.numero"));
-                        telefono = documentSnapshot.getString("famiglia.numero");
-                        nazionePuFam2.setText(documentSnapshot.getString("famiglia.nazione"));
-                        cittaPuFam2.setText(documentSnapshot.getString("famiglia.citta"));
+                        receiverId = documentSnapshot.getId();
+                        usernamePuFam.setText(documentSnapshot.getString("NomeCompleto"));
+                        emailPuFam2.setText((documentSnapshot.getString("Email")));
+                        email = documentSnapshot.getString("Email");
+                        numeroPuFam2.setText(documentSnapshot.getString("Telefono"));
+                        telefono = documentSnapshot.getString("Telefono");
+                        nazionePuFam2.setText(documentSnapshot.getString("Nazione"));
+                        cittaPuFam2.setText(documentSnapshot.getString("Citta"));
                         //TODO rating bar
-                        animaliPuFam2.setText(documentSnapshot.getBoolean("famiglia.animali").toString());
+                        animaliPuFam2.setText(documentSnapshot.getBoolean("famiglia.Animali").toString());
                         numFigliPuFam2.setText(documentSnapshot.getString("famiglia.numFigli"));
-                        descrPuFam.setText(documentSnapshot.getString("famiglia.descrizione"));
+                        descrPuFam.setText(documentSnapshot.getString("Descrizione"));
 
                     }
                 })
@@ -272,6 +278,14 @@ public class PubblicoFamigliaFragment extends Fragment {
                             //invio sms
                             case 2:
                                 requestSMSPermission();
+                                break;
+                            case 3:
+                                Intent chatConversationIntent = new Intent(getActivity(), ChatConversationActivity.class);
+                                chatConversationIntent.putExtra("conversationName",usernamePuFam.getText().toString());
+                                chatConversationIntent.putExtra("senderId",sessionManager.getSessionUid());
+                                chatConversationIntent.putExtra("receiverId",receiverId);
+                                chatConversationIntent.putExtra("conversationUID","NEWUID");
+                                startActivity(chatConversationIntent);
                                 break;
                             default:
                                 break;

@@ -139,10 +139,11 @@ public class PubblicoSitterFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        receiverId = uid;
                         imageLoader.loadImage((ImageView)getActivity().findViewById(R.id.imagePuSitter),documentSnapshot.getString("Avatar"),null);
                         usernamePuSit.setText(documentSnapshot.getString("NomeCompleto"));
-                        emailPuSit2.setText((documentSnapshot.getString("E-mail")));
-                        email = documentSnapshot.getString("E-mail");
+                        emailPuSit2.setText((documentSnapshot.getString("Email")));
+                        email = documentSnapshot.getString("Email");
                         nomePuSit2.setText(documentSnapshot.getString("Nome"));
                         cognomePuSit2.setText(documentSnapshot.getString("NomeCompleto"));
                         numeroPuSit2.setText(documentSnapshot.getString("Telefono"));
@@ -345,9 +346,8 @@ public class PubblicoSitterFragment extends Fragment {
                                 requestSMSPermission();
                                 break;
                             case 3:
-                                //TODO FIX bottone per creare chat
                                 Intent chatConversationIntent = new Intent(getActivity(), ChatConversationActivity.class);
-                                chatConversationIntent.putExtra("conversationName",nomePuSit2.getText().toString());
+                                chatConversationIntent.putExtra("conversationName",usernamePuSit.getText().toString());
                                 chatConversationIntent.putExtra("senderId",sessionManager.getSessionUid());
                                 chatConversationIntent.putExtra("receiverId",receiverId);
                                 chatConversationIntent.putExtra("conversationUID","NEWUID");

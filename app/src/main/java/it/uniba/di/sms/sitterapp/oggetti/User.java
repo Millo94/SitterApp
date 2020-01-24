@@ -2,6 +2,8 @@ package it.uniba.di.sms.sitterapp.oggetti;
 
 import com.stfalcon.chatkit.commons.models.IUser;
 
+import androidx.annotation.Nullable;
+
 /*
  * Created by troy379 on 04.04.17.
  */
@@ -81,4 +83,14 @@ public class User implements IUser {
     public boolean isOnline() {
         return online;
     }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(obj instanceof User){
+            User user = (User) obj;
+            return this.getId().equals(user.getId());
+        }
+        return false;
+    }
 }
+
