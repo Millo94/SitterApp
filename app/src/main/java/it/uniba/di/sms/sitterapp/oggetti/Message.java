@@ -1,9 +1,12 @@
 package it.uniba.di.sms.sitterapp.oggetti;
 
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.stfalcon.chatkit.commons.models.IMessage;
 import com.stfalcon.chatkit.commons.models.MessageContentType;
 
 import java.util.Date;
+
+import androidx.annotation.Nullable;
 
 /*
  * Created by troy379 on 04.04.17.
@@ -105,5 +108,20 @@ public class Message implements IMessage,
         public int getDuration() {
             return duration;
         }
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(obj instanceof Message){
+            Message message = (Message) obj;
+            if (this.getCreatedAt().equals(message.getCreatedAt())){
+                if(this.getUser().equals(message.getUser())){
+                    if(this.getText().equals(message.getText())){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

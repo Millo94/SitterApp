@@ -129,7 +129,7 @@ public class PrivatoFamigliaFragment extends Fragment {
                         showImage(documentSnapshot.getString("Avatar"));
                         nomeCompletoPrFam.setText(documentSnapshot.getString("NomeCompleto"));
                         descrPrFam.setText(documentSnapshot.getString("Descrizione"));
-                        emailPrFam2.setText(documentSnapshot.getString("E-mail"));
+                        emailPrFam2.setText(documentSnapshot.getString("Email"));
                         telPrFam2.setText(documentSnapshot.getString("Telefono"));
                         animaliPrFam2.setChecked(documentSnapshot.getBoolean("famiglia.Animali"));
                         numFigliPrFam2.setText(documentSnapshot.getString("famiglia.numFigli"));
@@ -186,7 +186,7 @@ public class PrivatoFamigliaFragment extends Fragment {
                 "Nazione", nazionePrFam2.getText().toString(),
                 "Descrizione", descrPrFam.getText().toString(),
                 "Citta", cittaPrFam2.getText().toString(),
-                "E-mail", emailPrFam2.getText().toString(),
+                "Email", emailPrFam2.getText().toString(),
                 "Telefono", telPrFam2.getText().toString(),
                 "famiglia.Animali", animaliPrFam2.isChecked(),
                 "NomeCompleto", nomeCompletoPrFam.getText().toString()

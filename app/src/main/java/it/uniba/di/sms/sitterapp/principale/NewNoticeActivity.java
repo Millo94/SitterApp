@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -145,7 +146,7 @@ public class NewNoticeActivity  extends AppCompatActivity implements DatePickerD
     private void sendNotice(){
 
         Map<String, Object> annuncio = new HashMap<>();
-        annuncio.put("idAnnuncio", UUID.randomUUID().toString());
+        annuncio.put("idAnnuncio", "");
         annuncio.put("family", sessionManager.getSessionUid());
         annuncio.put("date", data.getText().toString().trim());
         annuncio.put("start_time", oraInizio.getText().toString().trim());
@@ -156,12 +157,12 @@ public class NewNoticeActivity  extends AppCompatActivity implements DatePickerD
         annuncio.put("conferma", false);
 
         db.collection("annuncio")
-                .document(annuncio.get("idAnnuncio").toString())
-                .set(annuncio)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                .add(annuncio)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
+                    public void onSuccess(DocumentReference documentReference) {
                         Toast.makeText(NewNoticeActivity.this, R.string.annuncioPubblicato, Toast.LENGTH_SHORT).show();
+                        documentReference.update("idAnnuncio",documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

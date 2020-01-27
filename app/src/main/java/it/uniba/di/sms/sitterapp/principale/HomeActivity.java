@@ -132,12 +132,12 @@ public class HomeActivity extends DrawerActivity
         } else if (type == Constants.TYPE_FAMILY) {
 
             sitterList = new ArrayList<>();
-            sitterList.add(new UtenteSitter("","Francesca", "http://sitterapp.altervista.org/profilePicture/demoSitter/francesca.jpg",true, new Float(2.5), 4));
-            sitterList.add(new UtenteSitter("","Gabriella", "http://sitterapp.altervista.org/profilePicture/demoSitter/gabriella.jpg", true,4, 3));
-            sitterList.add(new UtenteSitter("","Gianluca", "http://sitterapp.altervista.org/profilePicture/demoSitter/gianluca.jpg", true,new Float(3.5), 7));
-            sitterList.add(new UtenteSitter("","Davide", "http://sitterapp.altervista.org/profilePicture/demoSitter/davide.jpg", true,3, 5));
-            sitterList.add(new UtenteSitter("","Monica", "http://sitterapp.altervista.org/profilePicture/demoSitter/monica.jpg", true,2, 4));
-            sitterList.add(new UtenteSitter("","Giorgia", "http://sitterapp.altervista.org/profilePicture/demoSitter/giorgia.jpg", true,5, 7));
+            sitterList.add(new UtenteSitter("","Francesca", "gs://sitterapp-223aa.appspot.com/img/user_img/demo_user_img/francesca.jpg",true, new Float(2.5), 4));
+            sitterList.add(new UtenteSitter("","Gabriella", "gs://sitterapp-223aa.appspot.com/img/user_img/demo_user_img/gabriella.jpg", true,4, 3));
+            sitterList.add(new UtenteSitter("","Gianluca", "gs://sitterapp-223aa.appspot.com/img/user_img/demo_user_img/gianluca.jpg", true,new Float(3.5), 7));
+            sitterList.add(new UtenteSitter("","Davide", "gs://sitterapp-223aa.appspot.com/img/user_img/demo_user_img/davide.jpg", true,3, 5));
+            sitterList.add(new UtenteSitter("","Monica", "gs://sitterapp-223aa.appspot.com/img/user_img/demo_user_img/monica.jpg", true,2, 4));
+            sitterList.add(new UtenteSitter("","Giorgia", "gs://sitterapp-223aa.appspot.com/img/user_img/demo_user_img/giorgia.jpg", true,5, 7));
             sitterAdapter = new SitterAdapter(HomeActivity.this, sitterList, HomeActivity.this);
 
             recyclerView.setAdapter(sitterAdapter);
@@ -182,7 +182,6 @@ public class HomeActivity extends DrawerActivity
         }
     }
 
-
     /**
      * Caricamento degli annunci sulla home per le babysitter
      */
@@ -220,10 +219,11 @@ public class HomeActivity extends DrawerActivity
                                         noticeList.add(notice);
                                     }
                                 }
+                                if(noticeList.size()==0)errorView.setVisibility(View.VISIBLE);
                                 noticeAdapter.notifyDataSetChanged();
                             }
-                    }}
-
+                        }
+                    }
                 });
 
     }
@@ -236,13 +236,13 @@ public class HomeActivity extends DrawerActivity
     private void caricaSitter(){
 
         CollectionReference colRef = db.collection("utente");
-
         colRef
-                .whereEqualTo("tipoUtente", 1)
+                .whereEqualTo("tipoUtente", Constants.TYPE_SITTER)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         if(e != null){
+                            Log.i(TAG,e.getMessage());
                             Toast.makeText(HomeActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
 
                         }else {
@@ -260,13 +260,11 @@ public class HomeActivity extends DrawerActivity
                                         documentSnapshot.getId(),
                                         (String) documentSnapshot.get("NomeCompleto"),
                                         (String) documentSnapshot.get("Avatar"),
-                                        (boolean) documentSnapshot.get("online"),
-                                        3,
-                                        1);
-
+                                        documentSnapshot.getBoolean("online"),
+                                        Float.valueOf(documentSnapshot.get("babysitter.Rating").toString()),
+                                        Integer.valueOf(documentSnapshot.get("babysitter.numLavori").toString()));
 
                                 sitterList.add(bs);
-
                             }
                             sitterAdapter.notifyDataSetChanged();
                         }

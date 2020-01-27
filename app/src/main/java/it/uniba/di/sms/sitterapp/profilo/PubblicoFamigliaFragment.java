@@ -43,6 +43,8 @@ import java.util.Map;
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
+import it.uniba.di.sms.sitterapp.SessionManager;
+import it.uniba.di.sms.sitterapp.chat.ChatConversationActivity;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteFamiglia;
 import it.uniba.di.sms.sitterapp.recensioni.RecensioniPubblicoActivity;
 
@@ -52,12 +54,14 @@ import it.uniba.di.sms.sitterapp.recensioni.RecensioniPubblicoActivity;
 public class PubblicoFamigliaFragment extends Fragment {
 
     View view;
-    TextView usernamePuFam, descrPuFam, nomePuFam, cognomePuFam, emailPuFam, numeroPuFam, nazionePuFam, cittaPuFam, numFigliPuFam, animaliPuFam;
+    TextView nomeCompletoPuFam, descrPuFam, nomePuFam, cognomePuFam, emailPuFam, numeroPuFam, nazionePuFam, cittaPuFam, numFigliPuFam, animaliPuFam;
     //STRINGHE DA COLLEGARE AL DATABASE
     TextView nomePuFam2, cognomePuFam2, emailPuFam2, numeroPuFam2, nazionePuFam2, cittaPuFam2, numFigliPuFam2, animaliPuFam2;
     Button contattaFamiglia;
     Button feedbackFam;
     RatingBar ratingPuFam;
+
+    SessionManager sessionManager;
 
     RequestQueue requestQueue;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -66,6 +70,9 @@ public class PubblicoFamigliaFragment extends Fragment {
     String telefono;
     //EMAIL ANNUNCIO
     String email;
+
+    //uid per creare una chat
+    private String receiverId;
 
     private OnFragmentInteractionListener mListener;
 
@@ -85,35 +92,34 @@ public class PubblicoFamigliaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profilo_pubblico_family, container, false);
-
+        sessionManager = new SessionManager(getContext());
         requestQueue = Volley.newRequestQueue(getContext());
         inizializzazione();
-        mostraProfilo(getActivity().getIntent().getStringExtra("username"));
+        mostraProfilo(getActivity().getIntent().getStringExtra("uid"));
         return view;
     }
 
 
-    private void mostraProfilo(final String username){
+    private void mostraProfilo(final String uid){
 
         db.collection("utente")
-                .document(username)
+                .document(uid)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        usernamePuFam.setText(username);
-                        emailPuFam2.setText((documentSnapshot.getString("famiglia.email")));
-                        email = documentSnapshot.getString("famiglia.email");
-                        nomePuFam2.setText(documentSnapshot.getString("famiglia.nome"));
-                        cognomePuFam2.setText(documentSnapshot.getString("famiglia.cognome"));
-                        numeroPuFam2.setText(documentSnapshot.getString("famiglia.numero"));
-                        telefono = documentSnapshot.getString("famiglia.numero");
-                        nazionePuFam2.setText(documentSnapshot.getString("famiglia.nazione"));
-                        cittaPuFam2.setText(documentSnapshot.getString("famiglia.citta"));
+                        receiverId = documentSnapshot.getId();
+                        nomeCompletoPuFam.setText(documentSnapshot.getString("NomeCompleto"));
+                        emailPuFam2.setText((documentSnapshot.getString("Email")));
+                        email = documentSnapshot.getString("Email");
+                        numeroPuFam2.setText(documentSnapshot.getString("Telefono"));
+                        telefono = documentSnapshot.getString("Telefono");
+                        nazionePuFam2.setText(documentSnapshot.getString("Nazione"));
+                        cittaPuFam2.setText(documentSnapshot.getString("Citta"));
                         //TODO rating bar
-                        animaliPuFam2.setText(documentSnapshot.getBoolean("famiglia.animali").toString());
+                        animaliPuFam2.setText(documentSnapshot.getBoolean("famiglia.Animali")?"Sì":"No");
                         numFigliPuFam2.setText(documentSnapshot.getString("famiglia.numFigli"));
-                        descrPuFam.setText(documentSnapshot.getString("famiglia.descrizione"));
+                        descrPuFam.setText(documentSnapshot.getString("Descrizione"));
 
                     }
                 })
@@ -127,7 +133,7 @@ public class PubblicoFamigliaFragment extends Fragment {
     }
 
 
-    //volley per la visualizzazione dei campi del profilo
+   /* //volley per la visualizzazione dei campi del profilo
     private void showProfile(final String username) {
 
         StringRequest request = new StringRequest(Request.Method.POST, Php.PROFILO, new Response.Listener<String>() {
@@ -194,23 +200,17 @@ public class PubblicoFamigliaFragment extends Fragment {
         };
 
         requestQueue.add(request);
-    }
+    }*/
 
     //inizializzazione dei campi del profilo
     public void inizializzazione() {
 
-        usernamePuFam = (TextView) view.findViewById(R.id.usernamePuFamiglia);
+        nomeCompletoPuFam = (TextView) view.findViewById(R.id.nomeCompletoPuFamiglia);
 
         descrPuFam = (TextView) view.findViewById(R.id.descrizionePuFamiglia);
 
         ratingPuFam = (RatingBar) view.findViewById(R.id.ratingPuFamiglia);
         ratingPuFam.setEnabled(false);
-
-        nomePuFam = (TextView) view.findViewById(R.id.nomePuFamiglia);
-        nomePuFam2 = (TextView) view.findViewById(R.id.nomePuFamiglia2);
-
-        cognomePuFam = (TextView) view.findViewById(R.id.cognomePuFamiglia);
-        cognomePuFam2 = (TextView) view.findViewById(R.id.cognomePuFamiglia2);
 
         emailPuFam = (TextView) view.findViewById(R.id.emailPuFamiglia);
         emailPuFam2 = (TextView) view.findViewById(R.id.emailPuFamiglia2);
@@ -237,7 +237,7 @@ public class PubblicoFamigliaFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                CharSequence servizi[] = new CharSequence[]{getString(R.string.chiamata), getString(R.string.email), getString(R.string.sms)};
+                CharSequence servizi[] = new CharSequence[]{getString(R.string.chiamata), getString(R.string.email), getString(R.string.sms), getString(R.string.chat)};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -272,6 +272,14 @@ public class PubblicoFamigliaFragment extends Fragment {
                             case 2:
                                 requestSMSPermission();
                                 break;
+                            case 3:
+                                Intent chatConversationIntent = new Intent(getActivity(), ChatConversationActivity.class);
+                                chatConversationIntent.putExtra("conversationName", nomeCompletoPuFam.getText().toString());
+                                chatConversationIntent.putExtra("senderId",sessionManager.getSessionUid());
+                                chatConversationIntent.putExtra("receiverId",receiverId);
+                                chatConversationIntent.putExtra("conversationUID","NEWUID");
+                                startActivity(chatConversationIntent);
+                                break;
                             default:
                                 break;
                         }
@@ -291,7 +299,7 @@ public class PubblicoFamigliaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent showfeedIntent = new Intent(getContext(), RecensioniPubblicoActivity.class);
-                showfeedIntent.putExtra("username", getActivity().getIntent().getStringExtra("username"));
+                showfeedIntent.putExtra("uid", getActivity().getIntent().getStringExtra("uid"));
                 startActivity(showfeedIntent);
             }
         });

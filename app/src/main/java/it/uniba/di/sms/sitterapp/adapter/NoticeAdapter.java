@@ -7,6 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -60,11 +64,19 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         //attribuzione dei dettagli dell'annuncio alle varie View
         final Notice notice = noticeListFiltered.get(position);
-        holder.family_name.setText(notice.getFamily());
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("utente").document(notice.getFamily())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        holder.family_name.setText(documentSnapshot.getString("NomeCompleto"));
+                    }
+                });
         holder.date.setText(notice.getDate());
         holder.description.setText((notice.getDescription().length() > TEXT_TO_SHOW ? notice.getDescription().substring(0, TEXT_TO_SHOW) + "..." : notice.getDescription()));
         holder.start_time.setText(notice.getStart_time());

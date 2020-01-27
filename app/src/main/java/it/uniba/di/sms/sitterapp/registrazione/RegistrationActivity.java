@@ -80,7 +80,7 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
                             utente.put("Avatar",famiglia.getAvatar());
                             utente.put("NomeCompleto",famiglia.getName());
                             utente.put("password", famiglia.getPassword());
-                            utente.put("E-mail",famiglia.getEmail());
+                            utente.put("Email",famiglia.getEmail());
                             utente.put("Telefono", famiglia.getTelefono());
                             utente.put("Nazione",famiglia.getNazione());
                             utente.put("Citta", famiglia.getCitta());
