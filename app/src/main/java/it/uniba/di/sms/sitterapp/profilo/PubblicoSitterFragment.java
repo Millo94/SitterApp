@@ -63,8 +63,8 @@ public class PubblicoSitterFragment extends Fragment {
     View view;
     RatingBar ratingPuSitter;
     ImageView profilePic;
-    TextView usernamePuSit, descrPuSit, nomePuSit, cognomePuSit, emailPuSit, numeroPuSit, carPuSit, sessoPuSit, dataPuSit, tariffaPuSit, ingaggiPuSit, nazionePuSit, cittaPuSit;
-    TextView nomePuSit2, cognomePuSit2, emailPuSit2, numeroPuSit2, carPuSit2, sessoPuSit2, dataPuSit2, tariffaPuSit2, ingaggiPuSit2, nazionePuSit2, cittaPuSit2;
+    TextView nomeCompletoPuSit, descrPuSit, emailPuSit, numeroPuSit, carPuSit, sessoPuSit, dataPuSit, tariffaPuSit, ingaggiPuSit, nazionePuSit, cittaPuSit;
+    TextView emailPuSit2, numeroPuSit2, carPuSit2, sessoPuSit2, dataPuSit2, tariffaPuSit2, ingaggiPuSit2, nazionePuSit2, cittaPuSit2;
     Button contattaSitter, feedbackSit, disponibilitaSitter;
     SessionManager sessionManager;
     //per salvare mail e telefono del contatto
@@ -141,19 +141,17 @@ public class PubblicoSitterFragment extends Fragment {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         receiverId = uid;
                         imageLoader.loadImage((ImageView)getActivity().findViewById(R.id.imagePuSitter),documentSnapshot.getString("Avatar"),null);
-                        usernamePuSit.setText(documentSnapshot.getString("NomeCompleto"));
+                        nomeCompletoPuSit.setText(documentSnapshot.getString("NomeCompleto"));
                         emailPuSit2.setText((documentSnapshot.getString("Email")));
                         email = documentSnapshot.getString("Email");
-                        nomePuSit2.setText(documentSnapshot.getString("Nome"));
-                        cognomePuSit2.setText(documentSnapshot.getString("NomeCompleto"));
                         numeroPuSit2.setText(documentSnapshot.getString("Telefono"));
                         telefono = documentSnapshot.getString("Telefono");
                         nazionePuSit2.setText(documentSnapshot.getString("Nazione"));
                         cittaPuSit2.setText(documentSnapshot.getString("Citta"));
                         //TODO rating bar
-                        //TODO tariffaoraria
+                        tariffaPuSit2.setText(documentSnapshot.getString("babysitter.Retribuzione"));
                         sessoPuSit2.setText(documentSnapshot.getString("babysitter.Genere"));
-                        carPuSit2.setText(documentSnapshot.getBoolean("babysitter.Auto").toString());
+                        carPuSit2.setText(documentSnapshot.getBoolean("babysitter.Auto")?"Sì":"No");
                         ingaggiPuSit2.setText(documentSnapshot.get("babysitter.numLavori").toString());
                         descrPuSit.setText(documentSnapshot.getString("Descrizione"));
 
@@ -167,8 +165,9 @@ public class PubblicoSitterFragment extends Fragment {
                 });
 
     }
+
     //volley per mostrare il profilo
-    private void showProfile(final String uid) {
+/*    private void showProfile(final String uid) {
 
         StringRequest request = new StringRequest(Request.Method.POST, Php.PROFILO, new Response.Listener<String>() {
             @Override
@@ -180,7 +179,7 @@ public class PubblicoSitterFragment extends Fragment {
 
                     if (result.equals("true")) {
                         Glide.with(getContext()).load(json.getString("pathFoto")).into(profilePic);
-                        usernamePuSit.setText(uid);
+                        nomeCompletoPuSit.setText(uid);
                         emailPuSit2.setText(json.getString("email"));
                         email = json.getString("email");
                         nomePuSit2.setText(json.getString("nome"));
@@ -246,12 +245,12 @@ public class PubblicoSitterFragment extends Fragment {
         };
 
         requestQueue.add(request);
-    }
+    }*/
 
     //inizializzazione dei campi del profilo
     public void inizializzazione() {
 
-        usernamePuSit = (TextView) view.findViewById(R.id.usernamePuSitter);
+        nomeCompletoPuSit = (TextView) view.findViewById(R.id.nomeCompletoPuSitter);
 
         profilePic = (ImageView) view.findViewById(R.id.imagePuSitter);
 
@@ -260,20 +259,11 @@ public class PubblicoSitterFragment extends Fragment {
         ratingPuSitter = (RatingBar) view.findViewById(R.id.ratingPuSitter);
         ratingPuSitter.setEnabled(false);
 
-        nomePuSit = (TextView) view.findViewById(R.id.nomePuSitter);
-        nomePuSit2 = (TextView) view.findViewById(R.id.nomePuSitter2);
-
-        cognomePuSit = (TextView) view.findViewById(R.id.cognomePuSitter);
-        cognomePuSit2 = (TextView) view.findViewById(R.id.cognomePuSitter2);
-
         emailPuSit = (TextView) view.findViewById(R.id.emailPuSitter);
         emailPuSit2 = (TextView) view.findViewById(R.id.emailPuSitter2);
 
         numeroPuSit = (TextView) view.findViewById(R.id.telefonoPuSitter);
         numeroPuSit2 = (TextView) view.findViewById(R.id.telefonoPuSitter2);
-
-        cognomePuSit = (TextView) view.findViewById(R.id.cognomePuSitter);
-        cognomePuSit2 = (TextView) view.findViewById(R.id.cognomePuSitter2);
 
         carPuSit = (TextView) view.findViewById(R.id.autoPuSitter);
         carPuSit2 = (TextView) view.findViewById(R.id.autoPuSitter2);
@@ -300,7 +290,7 @@ public class PubblicoSitterFragment extends Fragment {
         disponibilitaSitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DisponibilitaDialog dialog = DisponibilitaDialog.newInstance(usernamePuSit.getText().toString());
+                DisponibilitaDialog dialog = DisponibilitaDialog.newInstance(nomeCompletoPuSit.getText().toString());
                 dialog.show(getChildFragmentManager(), "dialog");
             }
         });
@@ -347,7 +337,7 @@ public class PubblicoSitterFragment extends Fragment {
                                 break;
                             case 3:
                                 Intent chatConversationIntent = new Intent(getActivity(), ChatConversationActivity.class);
-                                chatConversationIntent.putExtra("conversationName",usernamePuSit.getText().toString());
+                                chatConversationIntent.putExtra("conversationName", nomeCompletoPuSit.getText().toString());
                                 chatConversationIntent.putExtra("senderId",sessionManager.getSessionUid());
                                 chatConversationIntent.putExtra("receiverId",receiverId);
                                 chatConversationIntent.putExtra("conversationUID","NEWUID");

@@ -22,6 +22,19 @@
             android:orientation="vertical"
             android:padding="20dp">
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imagePuFamiglia"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="5dp"
+                android:padding="15dp"
+                app:layout_constraintEnd_toStartOf="@+id/nomeCompletoPuFamiglia"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <Button
                 android:id="@+id/contattaFamiglia"
                 android:layout_width="match_parent"
@@ -55,14 +68,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/contattaFamiglia" />
 
             <TextView
-                android:id="@+id/usernamePuFamiglia"
+                android:id="@+id/nomeCompletoPuFamiglia"
                 android:layout_width="wrap_content"
                 android:layout_height="58dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="24dp"
                 android:text="@string/nomeCompleto"
                 android:textSize="40sp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imagePuFamiglia"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -80,63 +93,9 @@
                 android:id="@+id/ratingPuFamiglia"
                 android:layout_width="wrap_content"
                 android:layout_height="59dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="10dp"
                 android:backgroundTint="@color/colorPrimary"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/usernamePuFamiglia" />
-
-            <TextView
-                android:id="@+id/nomePuFamiglia"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="@string/nome"
-                android:textColor="@color/colorScritte"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descrizionePuFamiglia" />
-
-            <TextView
-                android:id="@+id/nomePuFamiglia2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/nome"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nomePuFamiglia" />
-
-            <TextView
-                android:id="@+id/cognomePuFamiglia"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/cognome"
-                android:textColor="@color/colorScritte"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nomePuFamiglia2" />
-
-            <TextView
-                android:id="@+id/cognomePuFamiglia2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/cognome"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cognomePuFamiglia" />
+                app:layout_constraintStart_toEndOf="@+id/imagePuFamiglia"
+                app:layout_constraintTop_toBottomOf="@+id/nomeCompletoPuFamiglia" />
 
             <TextView
                 android:id="@+id/emailPuFamiglia"
@@ -144,18 +103,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/email"
-                android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cognomePuFamiglia2" />
+                app:layout_constraintTop_toBottomOf="@+id/descrizionePuFamiglia" />
 
             <TextView
                 android:id="@+id/emailPuFamiglia2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:text="@string/email"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -169,7 +127,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/telefono"
-                android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -181,7 +138,7 @@
                 android:id="@+id/telefonoPuFamiglia2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:text="@string/telefono"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -193,7 +150,7 @@
                 android:id="@+id/animaliPuFamiglia2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:text="@string/animali"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -207,7 +164,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/animali"
-                android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -220,7 +176,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/figlinum"
-                android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -231,7 +186,7 @@
                 android:id="@+id/figliPuFamiglia2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:text="@string/figlinum"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -243,7 +198,7 @@
                 android:id="@+id/nazionePuFamiglia2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:text="@string/nazione"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -257,7 +212,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/nazione"
-                android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -268,7 +222,7 @@
                 android:id="@+id/cittaPuFamily2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:text="@string/citta"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -282,7 +236,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/citta"
-                android:textColor="@color/colorScritte"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"

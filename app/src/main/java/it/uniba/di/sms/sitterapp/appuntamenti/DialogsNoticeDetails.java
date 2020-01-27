@@ -18,6 +18,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -38,7 +39,8 @@ import it.uniba.di.sms.sitterapp.profilo.ProfiloPubblicoActivity;
 public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
 
-    TextView user,dataDet,start,end,desc;
+    TextView familyName,dataDet,start,end,desc;
+    String userID;
     int visibility = View.VISIBLE;
     SessionManager sessionManager;
     private static final String elimina = "delete";
@@ -72,7 +74,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                         }
                     });
 
-            user = (TextView) view.findViewById(R.id.usernameDettagliSit2);
+            familyName = (TextView) view.findViewById(R.id.nomeCompletoSit2);
             dataDet= (TextView) view.findViewById(R.id.dataDettagliSit2);
             start =(TextView)view.findViewById(R.id.oraInizioDettagliSit2);
             end = (TextView) view.findViewById(R.id.oraFineDettagliSit2);
@@ -96,8 +98,16 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
             deleteCandidatura.setVisibility((getArguments().getBoolean("isCandidato") && !getArguments().getBoolean("conferma"))?View.VISIBLE:View.GONE);
             deleteCandidatura.setOnClickListener(deleteCandidaturaListener);
 
-
-            user.setText(getArguments().getString("family"));
+            userID = getArguments().getString("family");
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("utente").document(getArguments().getString("family"))
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            familyName.setText(documentSnapshot.getString("NomeCompleto"));
+                        }
+                    });
 
         } else if(sessionManager.getSessionType() == Constants.TYPE_FAMILY){            //dialog per la famiglia
             View view = inflater.inflate(R.layout.details_notice_family, null);
@@ -158,7 +168,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
         public void onClick(View v) {
             Intent detailIntent = new Intent(getContext(), ProfiloPubblicoActivity.class);
             detailIntent.putExtra(Constants.TYPE, Constants.TYPE_FAMILY);
-            detailIntent.putExtra("uid", idAnnuncio);
+            detailIntent.putExtra("uid", userID);
             startActivity(detailIntent);
         }
     };

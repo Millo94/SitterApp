@@ -20,12 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,14 +29,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import android.content.Intent;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import it.uniba.di.sms.sitterapp.Constants;
-import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.chat.ChatConversationActivity;
@@ -54,7 +41,7 @@ import it.uniba.di.sms.sitterapp.recensioni.RecensioniPubblicoActivity;
 public class PubblicoFamigliaFragment extends Fragment {
 
     View view;
-    TextView usernamePuFam, descrPuFam, nomePuFam, cognomePuFam, emailPuFam, numeroPuFam, nazionePuFam, cittaPuFam, numFigliPuFam, animaliPuFam;
+    TextView nomeCompletoPuFam, descrPuFam, nomePuFam, cognomePuFam, emailPuFam, numeroPuFam, nazionePuFam, cittaPuFam, numFigliPuFam, animaliPuFam;
     //STRINGHE DA COLLEGARE AL DATABASE
     TextView nomePuFam2, cognomePuFam2, emailPuFam2, numeroPuFam2, nazionePuFam2, cittaPuFam2, numFigliPuFam2, animaliPuFam2;
     Button contattaFamiglia;
@@ -109,7 +96,7 @@ public class PubblicoFamigliaFragment extends Fragment {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         receiverId = documentSnapshot.getId();
-                        usernamePuFam.setText(documentSnapshot.getString("NomeCompleto"));
+                        nomeCompletoPuFam.setText(documentSnapshot.getString("NomeCompleto"));
                         emailPuFam2.setText((documentSnapshot.getString("Email")));
                         email = documentSnapshot.getString("Email");
                         numeroPuFam2.setText(documentSnapshot.getString("Telefono"));
@@ -117,7 +104,7 @@ public class PubblicoFamigliaFragment extends Fragment {
                         nazionePuFam2.setText(documentSnapshot.getString("Nazione"));
                         cittaPuFam2.setText(documentSnapshot.getString("Citta"));
                         //TODO rating bar
-                        animaliPuFam2.setText(documentSnapshot.getBoolean("famiglia.Animali").toString());
+                        animaliPuFam2.setText(documentSnapshot.getBoolean("famiglia.Animali")?"Sì":"No");
                         numFigliPuFam2.setText(documentSnapshot.getString("famiglia.numFigli"));
                         descrPuFam.setText(documentSnapshot.getString("Descrizione"));
 
@@ -133,7 +120,7 @@ public class PubblicoFamigliaFragment extends Fragment {
     }
 
 
-    //volley per la visualizzazione dei campi del profilo
+   /* //volley per la visualizzazione dei campi del profilo
     private void showProfile(final String username) {
 
         StringRequest request = new StringRequest(Request.Method.POST, Php.PROFILO, new Response.Listener<String>() {
@@ -145,7 +132,7 @@ public class PubblicoFamigliaFragment extends Fragment {
                     String result = json.optString("show");
 
                     if (result.equals("true")) {
-                        usernamePuFam.setText(username);
+                        nomeCompletoPuFam.setText(username);
                         emailPuFam2.setText(json.getString("email"));
                         email = json.getString("email");
                         nomePuFam2.setText(json.getString("nome"));
@@ -200,23 +187,17 @@ public class PubblicoFamigliaFragment extends Fragment {
         };
 
         requestQueue.add(request);
-    }
+    }*/
 
     //inizializzazione dei campi del profilo
     public void inizializzazione() {
 
-        usernamePuFam = (TextView) view.findViewById(R.id.usernamePuFamiglia);
+        nomeCompletoPuFam = (TextView) view.findViewById(R.id.nomeCompletoPuFamiglia);
 
         descrPuFam = (TextView) view.findViewById(R.id.descrizionePuFamiglia);
 
         ratingPuFam = (RatingBar) view.findViewById(R.id.ratingPuFamiglia);
         ratingPuFam.setEnabled(false);
-
-        nomePuFam = (TextView) view.findViewById(R.id.nomePuFamiglia);
-        nomePuFam2 = (TextView) view.findViewById(R.id.nomePuFamiglia2);
-
-        cognomePuFam = (TextView) view.findViewById(R.id.cognomePuFamiglia);
-        cognomePuFam2 = (TextView) view.findViewById(R.id.cognomePuFamiglia2);
 
         emailPuFam = (TextView) view.findViewById(R.id.emailPuFamiglia);
         emailPuFam2 = (TextView) view.findViewById(R.id.emailPuFamiglia2);
@@ -243,7 +224,7 @@ public class PubblicoFamigliaFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                CharSequence servizi[] = new CharSequence[]{getString(R.string.chiamata), getString(R.string.email), getString(R.string.sms)};
+                CharSequence servizi[] = new CharSequence[]{getString(R.string.chiamata), getString(R.string.email), getString(R.string.sms), getString(R.string.chat)};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -280,7 +261,7 @@ public class PubblicoFamigliaFragment extends Fragment {
                                 break;
                             case 3:
                                 Intent chatConversationIntent = new Intent(getActivity(), ChatConversationActivity.class);
-                                chatConversationIntent.putExtra("conversationName",usernamePuFam.getText().toString());
+                                chatConversationIntent.putExtra("conversationName", nomeCompletoPuFam.getText().toString());
                                 chatConversationIntent.putExtra("senderId",sessionManager.getSessionUid());
                                 chatConversationIntent.putExtra("receiverId",receiverId);
                                 chatConversationIntent.putExtra("conversationUID","NEWUID");
