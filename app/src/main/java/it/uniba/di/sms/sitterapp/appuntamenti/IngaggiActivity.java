@@ -156,34 +156,36 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                             if(e != null){
                                 Toast.makeText(IngaggiActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
 
-                            Iterator<QueryDocumentSnapshot> listNotice = queryDocumentSnapshots.iterator();
-                            while(listNotice.hasNext()){
-
-                                DocumentSnapshot documentSnapshot = listNotice.next();
-
-
-                                Notice notice = new Notice(documentSnapshot.getId(),
-                                        documentSnapshot.getString("family"),
-                                        documentSnapshot.getString("date"),
-                                        documentSnapshot.getString("start_time"),
-                                        documentSnapshot.getString("end_time"),
-                                        documentSnapshot.getString("description"),
-                                        documentSnapshot.getString("sitter"),
-                                        (Map<String, Object>) documentSnapshot.get("candidatura"),
-                                        documentSnapshot.getBoolean("conferma"));
-                                noticeList.add(notice);
-                                noticeAdapter.notifyDataSetChanged();
-
                             }
+                            else{
+                                noticeList.clear();
+                                Iterator<QueryDocumentSnapshot> listNotice = queryDocumentSnapshots.iterator();
+                                ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+                                if (!listNotice.hasNext()) {
+                                    errorView.setTitle(R.string.niente_annunci);
+                                    errorView.setVisibility(View.VISIBLE);
 
-
+                                } else {
+                                    errorView.setVisibility(View.INVISIBLE);
+                                    while (listNotice.hasNext()) {
+                                        DocumentSnapshot documentSnapshot = listNotice.next();
+                                        Notice notice = new Notice(documentSnapshot.getId(),
+                                                documentSnapshot.getString("family"),
+                                                documentSnapshot.getString("date"),
+                                                documentSnapshot.getString("start_time"),
+                                                documentSnapshot.getString("end_time"),
+                                                documentSnapshot.getString("description"),
+                                                documentSnapshot.getString("sitter"),
+                                                (Map<String, Object>) documentSnapshot.get("candidatura"),
+                                                documentSnapshot.getBoolean("conferma"));
+                                        noticeList.add(notice);
+                                    }
+                                    noticeAdapter.notifyDataSetChanged();
+                                }
+                            }
                         }
-                    }
                     });
         }
-
-
-
     }
 
     // al click su un annuncio visualizza i dettagli
