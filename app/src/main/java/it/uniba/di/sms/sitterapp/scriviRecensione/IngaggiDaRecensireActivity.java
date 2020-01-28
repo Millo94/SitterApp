@@ -3,13 +3,13 @@ package it.uniba.di.sms.sitterapp.scriviRecensione;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -24,11 +24,11 @@ import java.util.List;
 import java.util.Queue;
 
 import it.uniba.di.sms.sitterapp.Constants;
+import it.uniba.di.sms.sitterapp.R;
+import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.adapter.NoticeAdapter;
 import it.uniba.di.sms.sitterapp.oggetti.Notice;
 import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
-import it.uniba.di.sms.sitterapp.R;
-import it.uniba.di.sms.sitterapp.SessionManager;
 import tr.xip.errorview.ErrorView;
 
 public class IngaggiDaRecensireActivity extends DrawerActivity implements NoticeAdapter.NoticeAdapterListener {
@@ -88,7 +88,7 @@ public class IngaggiDaRecensireActivity extends DrawerActivity implements Notice
         /**recupera gli annunci eseguiti */
 
         db.collection("annuncio")
-                .whereEqualTo(sessionManager.getSessionType() == Constants.TYPE_SITTER ? "sitter" : "family", sessionManager.getSessionUsername())
+                .whereEqualTo(sessionManager.getSessionType() == Constants.TYPE_SITTER ? "sitter" : "family", sessionManager.getSessionUid())
                 //aggiunto controllo per recuperare solo annunci con conferma
                 .whereEqualTo("conferma", true)
                 .get()
