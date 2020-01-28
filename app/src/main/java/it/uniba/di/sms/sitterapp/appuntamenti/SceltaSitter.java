@@ -3,13 +3,13 @@ package it.uniba.di.sms.sitterapp.appuntamenti;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -24,13 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import it.uniba.di.sms.sitterapp.adapter.SitterAdapter;
 import it.uniba.di.sms.sitterapp.Constants;
+import it.uniba.di.sms.sitterapp.R;
+import it.uniba.di.sms.sitterapp.adapter.SitterAdapter;
 import it.uniba.di.sms.sitterapp.oggetti.Notice;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
 import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
 import it.uniba.di.sms.sitterapp.profilo.ProfiloPubblicoActivity;
-import it.uniba.di.sms.sitterapp.R;
 
 /**
  * Sezione per le candidature: assegnare un lavoro a una baby sitter
@@ -160,7 +160,7 @@ public class SceltaSitter extends DrawerActivity
                                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        chooseSitter(sitter.getName());
+                                        chooseSitter(sitter.getId());
                                     }
                                 })
                                 .create()
@@ -177,12 +177,12 @@ public class SceltaSitter extends DrawerActivity
     }
 
 
-    public void chooseSitter(final String username){
+    public void chooseSitter(final String userID){
 
         DocumentReference docRef = db.collection("annuncio")
                 .document(idAnnuncio);
 
-        docRef.update("sitter",username)
+        docRef.update("sitter",userID)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
