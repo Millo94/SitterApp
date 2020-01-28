@@ -11,6 +11,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -77,7 +79,19 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
                         holder.family_name.setText(documentSnapshot.getString("NomeCompleto"));
                     }
                 });
-        holder.date.setText(notice.getDate());
+
+        String ds1 = notice.getDate();
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("dd-mm-yyyy");
+        String ds2 = null;
+
+        try {
+            ds2 = sdf2.format(sdf1.parse(ds1));
+        } catch (ParseException p) {
+            p.printStackTrace();
+        }
+
+        holder.date.setText(ds2);
         holder.description.setText((notice.getDescription().length() > TEXT_TO_SHOW ? notice.getDescription().substring(0, TEXT_TO_SHOW) + "..." : notice.getDescription()));
         holder.start_time.setText(notice.getStart_time());
         holder.end_time.setText(notice.getEnd_time());
@@ -144,9 +158,9 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
         //trasformo la data dell'annuncio in una stringa in forma AAAA-MM-GG
         String data = notice.getDate();
         String annoNotice, meseNotice, giornoNotice;
-        annoNotice = String.valueOf(data.substring(6, 10));
-        meseNotice = String.valueOf(data.substring(3, 5));
-        giornoNotice = String.valueOf(data.substring(0, 2));
+        annoNotice = String.valueOf(data.substring(0, 4));
+        meseNotice = String.valueOf(data.substring(5, 7));
+        giornoNotice = String.valueOf(data.substring(8, 10));
         String dataNoTrattini = annoNotice.concat(meseNotice).concat(giornoNotice);
 
         //trasformo le date in formato stringa in un intero

@@ -170,7 +170,6 @@ public class HomeActivity extends DrawerActivity
             sitterList = new ArrayList<>();
             sitterAdapter = new SitterAdapter(HomeActivity.this, sitterList, HomeActivity.this);
 
-
             recyclerView.setAdapter(sitterAdapter);
 
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -191,7 +190,7 @@ public class HomeActivity extends DrawerActivity
         CollectionReference colRef = db.collection("annuncio");
         colRef
                 .whereEqualTo("conferma", false)
-                //.orderBy("date")
+                .orderBy("date")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -267,8 +266,11 @@ public class HomeActivity extends DrawerActivity
                                 sitterList.add(bs);
                             }
                             sitterAdapter.notifyDataSetChanged();
+                            }
                         }
-                        }}});
+                    }
+                });
+
     }
 
 

@@ -34,6 +34,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import it.uniba.di.sms.sitterapp.R;
@@ -111,7 +113,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         editDisp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DisponibilitaDialog dialog = DisponibilitaDialog.newInstance(sessionManager.getSessionUsername());
+                DisponibilitaDialog dialog = DisponibilitaDialog.newInstance(sessionManager.getSessionUid());
                 dialog.show(getChildFragmentManager(), "dialog");
             }
         });
@@ -144,7 +146,19 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                         numeroPrSit2.setText(documentSnapshot.getString("Telefono"));
                         carPrSit2.setChecked(documentSnapshot.getBoolean("babysitter.Auto"));
                         sessoPrSit2.setText(documentSnapshot.getString("babysitter.Genere"));
-                        dataPrSit2.setText(documentSnapshot.getString("babysitter.dataNascita"));
+
+                        String ds1 = documentSnapshot.getString("babysitter.dataNascita");
+                        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd");
+                        SimpleDateFormat sdf2 = new SimpleDateFormat("dd-mm-yyyy");
+                        String ds2 = null;
+
+                        try {
+                            ds2 = sdf2.format(sdf1.parse(ds1));
+                        } catch (ParseException p) {
+                            p.printStackTrace();
+                        }
+
+                        dataPrSit2.setText(ds2);
                         ingaggiPrSit2.setText(documentSnapshot.get("babysitter.numLavori").toString());
                         ratingPrSitter.setRating(Float.valueOf(documentSnapshot.get("babysitter.Rating").toString()));
                         tariffaPrSit2.setText(documentSnapshot.getString("babysitter.Retribuzione"));

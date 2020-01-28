@@ -101,22 +101,23 @@ public class DisponibilitaDialog extends AppCompatDialogFragment {
                 @Override
                 public void onClick(View v) {
                     saveAvailability();
+                    Toast.makeText(v.getContext(), R.string.modifySuccess, Toast.LENGTH_SHORT);
                     dismiss();
                 }
             });
         }
 
-        loadAvailability();
+        loadAvailability(getArguments().getString("sitterUid"));
 
-        load(getArguments().getString("username"));
+        //load(getArguments().getString("username"));
         return builder.create();
     }
 
     //creazione della nuova istanza del dialog
-    public static DisponibilitaDialog newInstance(String username) {
+    public static DisponibilitaDialog newInstance(String sitterUid) {
 
         Bundle args = new Bundle();
-        args.putString("username", username);
+        args.putString("sitterUid", sitterUid);
 
         DisponibilitaDialog fragment = new DisponibilitaDialog();
         fragment.setArguments(args);
@@ -194,26 +195,23 @@ public class DisponibilitaDialog extends AppCompatDialogFragment {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
 
-                        //View view = inflater.inflate(R.id.fragment_profilo_privato_sitter, null);
-                        Snackbar.make(getActivity().findViewById(R.id.profiloPrivatoSitter), R.string.modifySuccess, Snackbar.LENGTH_SHORT)
-                                .show();
+
 
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        //Snackbar.make(getView(), "fail", Snackbar.LENGTH_SHORT);
+
                     }
                 });
 
     }
 
-    private void loadAvailability(){
-
+    private void loadAvailability(final String babysitter){
 
         db.collection("utente")
-                .document(sessionManager.getSessionUid())
+                .document(babysitter)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
