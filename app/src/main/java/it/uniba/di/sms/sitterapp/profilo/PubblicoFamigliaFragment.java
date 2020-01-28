@@ -20,7 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,6 +34,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import android.content.Intent;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import it.uniba.di.sms.sitterapp.Constants;
+import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.chat.ChatConversationActivity;
@@ -132,7 +145,7 @@ public class PubblicoFamigliaFragment extends Fragment {
                     String result = json.optString("show");
 
                     if (result.equals("true")) {
-                        nomeCompletoPuFam.setText(username);
+                        usernamePuFam.setText(username);
                         emailPuFam2.setText(json.getString("email"));
                         email = json.getString("email");
                         nomePuFam2.setText(json.getString("nome"));

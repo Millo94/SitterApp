@@ -18,35 +18,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.stfalcon.chatkit.commons.ImageLoader;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.ArrayList;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import it.uniba.di.sms.sitterapp.Constants;
-import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.chat.ChatConversationActivity;
@@ -60,6 +51,14 @@ public class PubblicoSitterFragment extends Fragment {
 
     private final String TAG = "PubblicoSitterFragment";
 
+    CheckBox MON1, MON2, MON3,
+            TUE1, TUE2, TUE3,
+            WED1, WED2, WED3,
+            THU1, THU2, THU3,
+            FRI1, FRI2, FRI3,
+            SAT1, SAT2, SAT3,
+            SUN1, SUN2, SUN3;
+
     View view;
     RatingBar ratingPuSitter;
     ImageView profilePic;
@@ -72,7 +71,7 @@ public class PubblicoSitterFragment extends Fragment {
     private String email;
 
     //uid per creare una chat
-    private String receiverId;
+    private String sitterUid;
 
 
     RequestQueue requestQueue;
@@ -85,6 +84,7 @@ public class PubblicoSitterFragment extends Fragment {
     private int SEND_SMS_PEMISSION = 2;
 
     ImageLoader imageLoader;
+
 
     public PubblicoSitterFragment() {
     }
@@ -99,7 +99,7 @@ public class PubblicoSitterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profilo_pubblico_sitter, container, false);
-        requestQueue = Volley.newRequestQueue(getContext());
+        //requestQueue = Volley.newRequestQueue(getContext());
         inizializzazione();
         mostraProfilo(getActivity().getIntent().getStringExtra("uid"));
         sessionManager = new SessionManager(getContext());
@@ -139,7 +139,7 @@ public class PubblicoSitterFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        receiverId = uid;
+                        sitterUid = uid;
                         imageLoader.loadImage((ImageView)getActivity().findViewById(R.id.imagePuSitter),documentSnapshot.getString("Avatar"),null);
                         nomeCompletoPuSit.setText(documentSnapshot.getString("NomeCompleto"));
                         emailPuSit2.setText((documentSnapshot.getString("Email")));
@@ -148,7 +148,7 @@ public class PubblicoSitterFragment extends Fragment {
                         telefono = documentSnapshot.getString("Telefono");
                         nazionePuSit2.setText(documentSnapshot.getString("Nazione"));
                         cittaPuSit2.setText(documentSnapshot.getString("Citta"));
-                        //TODO rating bar
+                        //ratingPuSitter.setRating(documentSnapshot.getString("babysitter.Rating"));
                         tariffaPuSit2.setText(documentSnapshot.getString("babysitter.Retribuzione"));
                         sessoPuSit2.setText(documentSnapshot.getString("babysitter.Genere"));
                         carPuSit2.setText(documentSnapshot.getBoolean("babysitter.Auto")?"Sì":"No");
@@ -166,86 +166,6 @@ public class PubblicoSitterFragment extends Fragment {
 
     }
 
-    //volley per mostrare il profilo
-/*    private void showProfile(final String uid) {
-
-        StringRequest request = new StringRequest(Request.Method.POST, Php.PROFILO, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONObject json = new JSONObject(response);
-                    String result = json.optString("show");
-
-                    if (result.equals("true")) {
-                        Glide.with(getContext()).load(json.getString("pathFoto")).into(profilePic);
-                        nomeCompletoPuSit.setText(uid);
-                        emailPuSit2.setText(json.getString("email"));
-                        email = json.getString("email");
-                        nomePuSit2.setText(json.getString("nome"));
-                        cognomePuSit2.setText(json.getString("cognome"));
-                        numeroPuSit2.setText(json.getString("telefono"));
-                        telefono = json.getString("telefono");
-                        nazionePuSit2.setText(json.getString("nazione"));
-                        cittaPuSit2.setText(json.getString("citta"));
-                        // Rating bar
-                        if (!json.getString("rating").equals("null")) {
-                            ratingPuSitter.setRating((float) json.getDouble("rating"));
-                        }
-                        // Setta numero ingaggi
-                        if (!json.getString("ingaggi").equals("null"))
-                            ingaggiPuSit2.setText(json.getString("ingaggi"));
-                        else
-                            ingaggiPuSit2.setText("0");
-                        // Setta il genere
-                        if (json.getString("genere").equals(("M")))
-                            sessoPuSit2.setText("Uomo");
-                        else
-                            sessoPuSit2.setText("Donna");
-                        // Setta l'auto
-                        if (json.getString("auto").equals("0"))
-                            carPuSit2.setText("Si");
-                        else
-                            //carPuSit2.setChecked(false);
-                            carPuSit2.setText("No");
-                        dataPuSit2.setText(Constants.SQLtoDate(json.getString("dataNascita")));
-                        // Check tariffa
-                        if (!json.getString("tariffaOraria").equals("null"))
-                            tariffaPuSit2.setText(json.getString("tariffaOraria"));
-                        else
-                            tariffaPuSit2.setText(R.string.tariffaAssente);
-                        // Check descrizione
-                        if (!json.getString("descrizione").equals("null"))
-                            descrPuSit.setText(json.getString("descrizione"));
-                        else
-                            descrPuSit.setText(R.string.descrizioneAssente);
-                    } else if (result.equals("false")) {
-                        Toast.makeText(getActivity().getApplicationContext(), R.string.profileError, Toast.LENGTH_SHORT).show();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity().getApplicationContext(), R.string.profileError, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("operation", "show");
-                params.put("type", String.valueOf(Constants.TYPE_SITTER));
-                params.put("uid", uid);
-                return params;
-            }
-        };
-
-        requestQueue.add(request);
-    }*/
 
     //inizializzazione dei campi del profilo
     public void inizializzazione() {
@@ -290,8 +210,10 @@ public class PubblicoSitterFragment extends Fragment {
         disponibilitaSitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DisponibilitaDialog dialog = DisponibilitaDialog.newInstance(nomeCompletoPuSit.getText().toString());
+
+                DisponibilitaDialog dialog = DisponibilitaDialog.newInstance(sitterUid);
                 dialog.show(getChildFragmentManager(), "dialog");
+
             }
         });
 
@@ -339,7 +261,7 @@ public class PubblicoSitterFragment extends Fragment {
                                 Intent chatConversationIntent = new Intent(getActivity(), ChatConversationActivity.class);
                                 chatConversationIntent.putExtra("conversationName", nomeCompletoPuSit.getText().toString());
                                 chatConversationIntent.putExtra("senderId",sessionManager.getSessionUid());
-                                chatConversationIntent.putExtra("receiverId",receiverId);
+                                chatConversationIntent.putExtra("receiverId", sitterUid);
                                 chatConversationIntent.putExtra("conversationUID","NEWUID");
                                 startActivity(chatConversationIntent);
                                 break;

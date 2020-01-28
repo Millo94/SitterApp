@@ -24,6 +24,7 @@
     <string name="tariffa">Hourly Pay</string>
     <string name="figlinum">Children Number</string>
 
+
     <plurals name="numfigli">
         <item quantity="one">Child</item>
         <item quantity="other">Children</item>
@@ -119,7 +120,14 @@
     <string name="engagementToDo">Done</string>
     <string name="engagementDone">To confirm</string>
 
-    <!-- Stringh per il dialog disponibilità -->
+
+    <!-- Stringhe per il dialog Scatta/Carica foto -->
+    <string name="takePic">Take picture</string>
+    <string name="uploadImg">Upload image</string>
+    <string name="choosePic">Choose avatar</string>
+
+
+    <!-- Stringhe per il dialog disponibilità -->
 
     <string name="DisponibilitaSitter">Sitter availabiity</string>
     <string name="Monday">Mon</string>
@@ -158,8 +166,8 @@
 
 
     <string name="scaduto">Expired</string>
-    <string name="in_attesa" translatable="false">Waiting for confirm</string>
-    <string name="confermato" translatable="false">Confirmed</string>
+    <string name="in_attesa">Waiting for confirm</string>
+    <string name="confermato">Confirmed</string>
     <string name="mail_oggetto">SitterApp: engagments</string>
     <string name="mail_testo">Email sent by SitterApp</string>
     <string name="sms_testo">SMS from SitterApp:</string>

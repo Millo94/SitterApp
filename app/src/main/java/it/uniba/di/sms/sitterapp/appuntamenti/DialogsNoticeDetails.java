@@ -22,6 +22,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -132,7 +134,19 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
             candidate.setOnClickListener(viewCandidateListener);
         }
 
-        dataDet.setText(getArguments().getString("data"));
+
+        String ds1 = getArguments().getString("data");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("dd-mm-yyyy");
+        String ds2 = null;
+
+        try {
+            ds2 = sdf2.format(sdf1.parse(ds1));
+        } catch (ParseException p) {
+            p.printStackTrace();
+        }
+
+        dataDet.setText(ds2);
         start.setText(getArguments().getString("oraInizio"));
         end.setText(getArguments().getString("oraFine"));
         desc.setText(getArguments().getString("descrizione"));

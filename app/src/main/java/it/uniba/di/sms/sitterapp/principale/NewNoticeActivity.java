@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -33,6 +35,7 @@ import it.uniba.di.sms.sitterapp.SessionManager;
 public class NewNoticeActivity  extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     EditText descrizione, data, oraInizio, oraFine;
+    int day,month,year;
     Button post;
     SessionManager sessionManager;
     Button cancella;
@@ -136,6 +139,9 @@ public class NewNoticeActivity  extends AppCompatActivity implements DatePickerD
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         data.setText(String.format("%02d-%02d-%04d", dayOfMonth, month + 1, year));
+        day = dayOfMonth;
+        this.month = month+1;
+        this.year = year;
 
     }
 
@@ -148,7 +154,8 @@ public class NewNoticeActivity  extends AppCompatActivity implements DatePickerD
         Map<String, Object> annuncio = new HashMap<>();
         annuncio.put("idAnnuncio", "");
         annuncio.put("family", sessionManager.getSessionUid());
-        annuncio.put("date", data.getText().toString().trim());
+        String dataAnnuncio = String.format("%04d-%02d-%02d", year, month, day);
+        annuncio.put("date", dataAnnuncio);
         annuncio.put("start_time", oraInizio.getText().toString().trim());
         annuncio.put("end_time", oraFine.getText().toString().trim());
         annuncio.put("description", descrizione.getText().toString());

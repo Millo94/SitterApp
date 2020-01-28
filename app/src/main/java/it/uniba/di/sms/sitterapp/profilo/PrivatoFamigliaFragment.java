@@ -1,6 +1,7 @@
 package it.uniba.di.sms.sitterapp.profilo;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,8 +29,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import it.uniba.di.sms.sitterapp.R;
+import it.uniba.di.sms.sitterapp.oggetti.Message;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteFamiglia;
 import it.uniba.di.sms.sitterapp.SessionManager;
 
@@ -38,7 +44,7 @@ public class PrivatoFamigliaFragment extends Fragment {
 
 
     View view;
-    //TODO modifica dell'avatar
+    ImageView profilePic;
     TextView emailPrFam, nazionePrFam, cittaPrFam, numFigliPrFam, telPrFam;
     EditText nomeCompletoPrFam,descrPrFam, emailPrFam2, nazionePrFam2, cittaPrFam2, telPrFam2, numFigliPrFam2;
     Switch animaliPrFam2;
@@ -105,7 +111,8 @@ public class PrivatoFamigliaFragment extends Fragment {
                     ratingPrFam.setRating(sumRating/i);
 
                 }else{
-                    Toast.makeText(getContext(), R.string.genericError ,Toast.LENGTH_SHORT).show();                }
+                    Toast.makeText(getContext(), R.string.genericError ,Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -119,6 +126,7 @@ public class PrivatoFamigliaFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        showImage(documentSnapshot.getString("Avatar"));
                         nomeCompletoPrFam.setText(documentSnapshot.getString("NomeCompleto"));
                         descrPrFam.setText(documentSnapshot.getString("Descrizione"));
                         emailPrFam2.setText(documentSnapshot.getString("Email"));
@@ -163,6 +171,7 @@ public class PrivatoFamigliaFragment extends Fragment {
                 numFigliPrFam2.setEnabled(false);
                 telPrFam2.setEnabled(false);
                 modifica();
+
                 edit = false;
             }
         }
@@ -192,6 +201,25 @@ public class PrivatoFamigliaFragment extends Fragment {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(getActivity().getApplicationContext(), R.string.genericError,Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void showImage(final String pathfoto){
+        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(pathfoto);
+        storageRef.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Glide.with(getContext())
+                                .load(uri)
+                                .into(profilePic);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //mamt fasc
                     }
                 });
     }
@@ -234,6 +262,8 @@ public class PrivatoFamigliaFragment extends Fragment {
         modificaProfilo.setOnClickListener(goEditable);
 
         exit_button = view.findViewById(R.id.exit_button);
+
+        profilePic = (ImageView) view.findViewById(R.id.imgPrFamily);
 
     }
 

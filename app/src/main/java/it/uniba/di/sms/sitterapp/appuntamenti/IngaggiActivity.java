@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
@@ -22,9 +24,12 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.R;
@@ -47,6 +52,8 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
         //FAB
         FloatingActionButton addNotice = (FloatingActionButton) findViewById(R.id.addNotice);
 
@@ -67,6 +74,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         } else if (sessionManager.getSessionType() == Constants.TYPE_SITTER && addNotice.getVisibility() == View.VISIBLE) {
             addNotice.hide();
         }
+
         //caricamento degli annunci
         noticeList = new ArrayList<>();
         noticeAdapter = new NoticeAdapter(IngaggiActivity.this, noticeList, IngaggiActivity.this);
@@ -79,7 +87,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
     }
-
 
     @Override
     protected void onStart() {
@@ -109,7 +116,6 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                             if(e != null){
                                 Toast.makeText(IngaggiActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
-
                             }
                             else{
                                 noticeList.clear();
@@ -122,8 +128,17 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                                 } else {
                                     errorView.setVisibility(View.INVISIBLE);
                                     while (listNotice.hasNext()) {
+
                                         DocumentSnapshot documentSnapshot = listNotice.next();
-                                        Notice notice = documentSnapshot.toObject(Notice.class);
+                                        Notice notice = new Notice(documentSnapshot.getId(),
+                                                documentSnapshot.getString("family"),
+                                                documentSnapshot.getString("date"),
+                                                documentSnapshot.getString("start_time"),
+                                                documentSnapshot.getString("end_time"),
+                                                documentSnapshot.getString("description"),
+                                                documentSnapshot.getString("sitter"),
+                                                (Map<String, Object>) documentSnapshot.get("candidatura"),
+                                                documentSnapshot.getBoolean("conferma"));
                                         noticeList.add(notice);
                                     }
                                     noticeAdapter.notifyDataSetChanged();
@@ -131,6 +146,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                             }
                         }
                     });
+
         }else{
             colRef
                     .whereEqualTo("candidatura." + sessionManager.getSessionUid(), sessionManager.getSessionUid())
@@ -153,7 +169,15 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                                     errorView.setVisibility(View.INVISIBLE);
                                     while (listNotice.hasNext()) {
                                         DocumentSnapshot documentSnapshot = listNotice.next();
-                                        Notice notice = documentSnapshot.toObject(Notice.class);
+                                        Notice notice = new Notice(documentSnapshot.getId(),
+                                                documentSnapshot.getString("family"),
+                                                documentSnapshot.getString("date"),
+                                                documentSnapshot.getString("start_time"),
+                                                documentSnapshot.getString("end_time"),
+                                                documentSnapshot.getString("description"),
+                                                documentSnapshot.getString("sitter"),
+                                                (Map<String, Object>) documentSnapshot.get("candidatura"),
+                                                documentSnapshot.getBoolean("conferma"));
                                         noticeList.add(notice);
                                     }
                                     noticeAdapter.notifyDataSetChanged();

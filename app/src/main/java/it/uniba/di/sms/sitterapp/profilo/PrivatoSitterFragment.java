@@ -1,20 +1,15 @@
 package it.uniba.di.sms.sitterapp.profilo;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;;
-import android.provider.MediaStore;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,12 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,19 +31,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 
-import it.uniba.di.sms.sitterapp.Constants;
-import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
@@ -105,6 +89,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
         requestQueue = Volley.newRequestQueue(getActivity());
 
+
         // Valorizzo il session manager
         sessionManager = new SessionManager(getActivity().getApplicationContext());
 
@@ -128,7 +113,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         editDisp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DisponibilitaDialog dialog = DisponibilitaDialog.newInstance(sessionManager.getSessionUsername());
+                DisponibilitaDialog dialog = DisponibilitaDialog.newInstance(sessionManager.getSessionUid());
                 dialog.show(getChildFragmentManager(), "dialog");
             }
         });
@@ -145,23 +130,38 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
     private void apriProfilo(){
 
+
+
         db.collection("utente")
                 .document(sessionManager.getSessionUid())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                        showImage(documentSnapshot.getString("Avatar"));
                         descrPrSit.setText(documentSnapshot.getString("Descrizione"));
                         nomeCompletoPrSit.setText(documentSnapshot.getString("NomeCompleto"));
                         emailPrSit2.setText(documentSnapshot.getString("Email"));
                         numeroPrSit2.setText(documentSnapshot.getString("Telefono"));
                         carPrSit2.setChecked(documentSnapshot.getBoolean("babysitter.Auto"));
                         sessoPrSit2.setText(documentSnapshot.getString("babysitter.Genere"));
-                        dataPrSit2.setText(documentSnapshot.getString("babysitter.dataNascita"));
+
+                        String ds1 = documentSnapshot.getString("babysitter.dataNascita");
+                        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd");
+                        SimpleDateFormat sdf2 = new SimpleDateFormat("dd-mm-yyyy");
+                        String ds2 = null;
+
+                        try {
+                            ds2 = sdf2.format(sdf1.parse(ds1));
+                        } catch (ParseException p) {
+                            p.printStackTrace();
+                        }
+
+                        dataPrSit2.setText(ds2);
                         ingaggiPrSit2.setText(documentSnapshot.get("babysitter.numLavori").toString());
                         ratingPrSitter.setRating(Float.valueOf(documentSnapshot.get("babysitter.Rating").toString()));
                         tariffaPrSit2.setText(documentSnapshot.getString("babysitter.Retribuzione"));
-                        //TODO AGGIUNGI FOTO
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -201,6 +201,25 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                 });
     }
 
+
+    public void showImage(final String pathfoto){
+        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(pathfoto);
+        storageRef.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getContext())
+                        .load(uri)
+                        .into(profilePic);
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //mamt fasc
+                    }
+                });
+    }
 
 
     //inizializzazione dei campi
@@ -255,112 +274,26 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
         // SCELTA DELLA FOTO
         profilePic = (ImageView) view.findViewById(R.id.imgPrSitter);
-        profilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                CharSequence options[] = new CharSequence[]{getString(R.string.usaGalleria), getString(R.string.usaCamera)};
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-                builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                }).setItems(options, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-
-                        switch (which) {
-
-                            case 0:
-                                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                startActivityForResult(i, GALLERY_REQUEST);
-                                break;
-
-                            case 1:
-                                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                if (takePicture.resolveActivity(getContext().getPackageManager()) != null) {
-                                    startActivityForResult(takePicture, REQUEST_IMAGE_CAPTURE);
-                                }
-                                break;
-                        }
-                    }
-                }).show();
-            }
-        });
     }
 
-    //riceve e gestisce il risultato dell'intent per cambiare la foto
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK && data != null) {
-            Uri pickedImage = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), pickedImage);
-                new AsyncCaller().execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
-            bitmap = (Bitmap) data.getExtras().get("data");
-            modificaFoto();
-        }
+    public void modificaFoto(){
+        /**
+         * TODO per la modifica della foto
+         * if (jsonObject.getString("response").equals("true")) {
+         *                         sessionManager.setProfilePic(jsonObject.optString("nomeFile"));
+         *                         Glide
+         *                                 .with(PrivatoSitterFragment.this.getContext())
+         *                                 .load(sessionManager.getProfilePic())
+         *                                 .into(profilePic);
+         *                         Toast.makeText(getContext(), R.string.risutltatoCaricamento, Toast.LENGTH_SHORT).show();
+         *                     } else if (jsonObject.getString("response").equals("false")) {
+         *                         Toast.makeText(getContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
+         *                     }
+         */
     }
 
-    //volley per la modifica della foto
-    public void modificaFoto() {
 
-        StringRequest request = new StringRequest(Request.Method.POST, Php.MODIFICA_FOTO, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-
-                    if (jsonObject.getString("response").equals("true")) {
-                        sessionManager.setProfilePic(jsonObject.optString("nomeFile"));
-                        Glide
-                                .with(PrivatoSitterFragment.this.getContext())
-                                .load(sessionManager.getProfilePic())
-                                .into(profilePic);
-                        Toast.makeText(getContext(), R.string.risutltatoCaricamento, Toast.LENGTH_SHORT).show();
-                    } else if (jsonObject.getString("response").equals("false")) {
-                        Toast.makeText(getContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", sessionManager.getSessionUsername());
-                params.put("nomeFile", sessionManager.getSessionUsername() + "Pic" + String.valueOf(new Random().nextInt(100)));
-                params.put("immagine", imageToString(bitmap));
-                return params;
-            }
-        };
-
-        Volley.newRequestQueue(getActivity()).add(request);
-    }
-
-    private String imageToString(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] imageBytes = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
-    }
 
     //per modificare le info del profilo
     private void goEditable() {

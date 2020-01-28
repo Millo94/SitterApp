@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,10 +60,13 @@ public class DisponibilitaDialog extends AppCompatDialogFragment {
     ArrayList<CheckBox> checkBoxArrayList;
     ArrayList<Integer> checkedBox;
 
+
     Button saveChanges;
 
     SessionManager sessionManager;
     RequestQueue requestQueue;
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     @Override
@@ -86,21 +100,24 @@ public class DisponibilitaDialog extends AppCompatDialogFragment {
             saveChanges.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new AsyncCaller().execute();
+                    saveAvailability();
+                    Toast.makeText(v.getContext(), R.string.modifySuccess, Toast.LENGTH_SHORT);
                     dismiss();
                 }
             });
         }
 
-        load(getArguments().getString("username"));
+        loadAvailability(getArguments().getString("sitterUid"));
+
+        //load(getArguments().getString("username"));
         return builder.create();
     }
 
     //creazione della nuova istanza del dialog
-    public static DisponibilitaDialog newInstance(String username) {
+    public static DisponibilitaDialog newInstance(String sitterUid) {
 
         Bundle args = new Bundle();
-        args.putString("username", username);
+        args.putString("sitterUid", sitterUid);
 
         DisponibilitaDialog fragment = new DisponibilitaDialog();
         fragment.setArguments(args);
@@ -159,6 +176,61 @@ public class DisponibilitaDialog extends AppCompatDialogFragment {
     private void disableClick() {
         for (CheckBox box : checkBoxArrayList)
             box.setClickable(false);
+    }
+
+
+    private void saveAvailability(){
+
+        DocumentReference docRef = db.collection("utente")
+                .document(sessionManager.getSessionUid());
+
+        checkedBox = new ArrayList<>();
+        for(int checked = 0; checked<checkBoxArrayList.size(); checked++){
+            if(checkBoxArrayList.get(checked).isChecked())
+                checkedBox.add(checked + 1);
+        }
+
+        docRef.update("babysitter.Disponibilita", checkedBox)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+    }
+
+    private void loadAvailability(final String babysitter){
+
+        db.collection("utente")
+                .document(babysitter)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            ArrayList<Long> checkedBoxList = new ArrayList<>();
+                            checkedBoxList.addAll((ArrayList<Long>) documentSnapshot.get("babysitter.Disponibilita"));
+                            for(Long i : checkedBoxList){
+                                checkBoxArrayList.get(i.intValue() - 1).setChecked(true);
+                            }
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
     }
 
     //volley per la richiesta della disponibilità
@@ -253,7 +325,8 @@ public class DisponibilitaDialog extends AppCompatDialogFragment {
 
         @Override
         protected Void doInBackground(Void... params) {
-            save();
+            //save();
+            //saveAvailability();
             return null;
         }
 
