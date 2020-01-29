@@ -66,7 +66,7 @@ public class RecensioniRicevuteFragment extends Fragment {
         adapter = new RecensioniRicevuteAdapter(recensioneList);
         recycler.setAdapter(adapter);
 
-        errorView = (ErrorView) view.findViewById(R.id.errorView);
+        errorView = (ErrorView) view.findViewById(R.id.errorViewContent);
 
 
         ReviewRicevute();
