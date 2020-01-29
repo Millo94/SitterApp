@@ -115,7 +115,7 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/eliminaAnnuncio"
+        android:id="@+id/visualCandidate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/scrollView4"
@@ -124,18 +124,22 @@
         android:layout_marginTop="10dp"
         android:textSize="@dimen/button_text_size"
         android:backgroundTint="@color/colorPrimary"
-        android:text="@string/eliminaAnnuncio"
+        android:text="@string/visualizzaCandidate"
         android:textColor="@android:color/background_light" />
 
     <Button
-        android:id="@+id/visualCandidate"
+        android:id="@+id/eliminaAnnuncio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/eliminaAnnuncio"
+        android:layout_below="@id/visualCandidate"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:text="@string/visualizzaCandidate"
+        android:layout_marginTop="10dp"
+        android:textSize="@dimen/button_text_size"
+        android:backgroundTint="@color/red"
+        android:text="@string/eliminaAnnuncio"
         android:textColor="@android:color/background_light" />
+
+
 
 </RelativeLayout>
