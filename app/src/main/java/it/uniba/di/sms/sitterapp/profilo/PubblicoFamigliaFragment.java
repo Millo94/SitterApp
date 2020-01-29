@@ -27,10 +27,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import android.content.Intent;
 
@@ -116,7 +120,7 @@ public class PubblicoFamigliaFragment extends Fragment {
                         telefono = documentSnapshot.getString("Telefono");
                         nazionePuFam2.setText(documentSnapshot.getString("Nazione"));
                         cittaPuFam2.setText(documentSnapshot.getString("Citta"));
-                        //TODO rating bar
+                        getRatingFamily(uid);
                         animaliPuFam2.setText(documentSnapshot.getBoolean("famiglia.Animali")?"Sì":"No");
                         numFigliPuFam2.setText(documentSnapshot.getString("famiglia.numFigli"));
                         descrPuFam.setText(documentSnapshot.getString("Descrizione"));
@@ -132,75 +136,34 @@ public class PubblicoFamigliaFragment extends Fragment {
 
     }
 
+    private void getRatingFamily(final String uid){
 
-   /* //volley per la visualizzazione dei campi del profilo
-    private void showProfile(final String username) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        StringRequest request = new StringRequest(Request.Method.POST, Php.PROFILO, new Response.Listener<String>() {
+        db.collection("recensione").whereEqualTo("receiver", uid)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onResponse(String response) {
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot querySnapshot = task.getResult();
+                    float sumRating = 0;
+                    int i = 0;
+                    for(QueryDocumentSnapshot queryDocumentSnapshot : querySnapshot){
 
-                try {
-                    JSONObject json = new JSONObject(response);
-                    String result = json.optString("show");
+                        sumRating += queryDocumentSnapshot.getDouble("rating").floatValue();
+                        i++;
 
-                    if (result.equals("true")) {
-                        usernamePuFam.setText(username);
-                        emailPuFam2.setText(json.getString("email"));
-                        email = json.getString("email");
-                        nomePuFam2.setText(json.getString("nome"));
-                        cognomePuFam2.setText(json.getString("cognome"));
-                        numeroPuFam2.setText(json.getString("telefono"));
-                        telefono = json.getString("telefono");
-                        nazionePuFam2.setText(json.getString("nazione"));
-                        cittaPuFam2.setText(json.getString("citta"));
-                        // Rating bar
-                        if (!json.getString("rating").equals("null")) {
-                            ratingPuFam.setRating((float) json.getDouble("rating"));
-                        }
-                        // Setta animali
-                        if (json.getString("animali").equals("0"))
-                            animaliPuFam2.setText("Si");
-                        else
-                            animaliPuFam2.setText("No");
-                        // Setta numero figli
-                        if (!json.getString("numFigli").equals("null"))
-                            numFigliPuFam2.setText(json.getString("numFigli"));
-                        else
-                            numFigliPuFam2.setText("0");
-                        // Check descrizione
-                        if (!json.getString("descrizione").equals("null"))
-                            descrPuFam.setText(json.getString("descrizione"));
-                        else
-                            descrPuFam.setText(R.string.descrizioneAssente);
-
-                    } else if (result.equals("false")) {
-                        Toast.makeText(getContext(), R.string.profileError, Toast.LENGTH_SHORT).show();
                     }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    ratingPuFam.setRating(sumRating/i);
+
+                }else{
+                    Toast.makeText(getContext(), R.string.genericError ,Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), R.string.profileError, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("operation", "show");
-                params.put("type", String.valueOf(Constants.TYPE_FAMILY));
-                params.put("username", username);
-                return params;
-            }
-        };
-
-        requestQueue.add(request);
-    }*/
+    }
 
     //inizializzazione dei campi del profilo
     public void inizializzazione() {

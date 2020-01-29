@@ -80,6 +80,9 @@ public class PrivatoFamigliaFragment extends Fragment {
         inizializzazione();
         //openProfile();
         apriProfilo();
+
+        //setRatingDb();
+
         exit_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 sessionManager.logout();
@@ -109,12 +112,35 @@ public class PrivatoFamigliaFragment extends Fragment {
                     }
 
                     ratingPrFam.setRating(sumRating/i);
+                    setRatingDb();
 
                 }else{
                     Toast.makeText(getContext(), R.string.genericError ,Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+    }
+
+    private void setRatingDb(){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("utente")
+                .document(sessionManager.getSessionUid())
+                .update("famiglia.rating", ratingPrFam.getRating())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
 
     }
 
@@ -145,7 +171,9 @@ public class PrivatoFamigliaFragment extends Fragment {
                         Toast.makeText(getContext(), R.string.profileError ,Toast.LENGTH_SHORT).show();
                     }
                 });
+
     }
+
 
     //per modificare i dati
     public View.OnClickListener goEditable = new View.OnClickListener() {

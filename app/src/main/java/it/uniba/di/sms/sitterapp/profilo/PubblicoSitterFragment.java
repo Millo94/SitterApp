@@ -32,6 +32,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.stfalcon.chatkit.commons.ImageLoader;
@@ -130,6 +132,35 @@ public class PubblicoSitterFragment extends Fragment {
         return view;
     }
 
+    private void getRatingSitter(final String uid){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("recensione").whereEqualTo("receiver", uid)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot querySnapshot = task.getResult();
+                    float sumRating = 0;
+                    int i = 0;
+                    for(QueryDocumentSnapshot queryDocumentSnapshot : querySnapshot){
+
+                        sumRating += queryDocumentSnapshot.getDouble("rating").floatValue();
+                        i++;
+
+                    }
+
+                    ratingPuSitter.setRating(sumRating/i);
+
+                }else{
+                    Toast.makeText(getContext(), R.string.genericError ,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
 
     private void mostraProfilo(final String uid){
 
@@ -148,7 +179,7 @@ public class PubblicoSitterFragment extends Fragment {
                         telefono = documentSnapshot.getString("Telefono");
                         nazionePuSit2.setText(documentSnapshot.getString("Nazione"));
                         cittaPuSit2.setText(documentSnapshot.getString("Citta"));
-                        //ratingPuSitter.setRating(documentSnapshot.getString("babysitter.Rating"));
+                        getRatingSitter(uid);
                         tariffaPuSit2.setText(documentSnapshot.getString("babysitter.Retribuzione"));
                         sessoPuSit2.setText(documentSnapshot.getString("babysitter.Genere"));
                         carPuSit2.setText(documentSnapshot.getBoolean("babysitter.Auto")?"Sì":"No");

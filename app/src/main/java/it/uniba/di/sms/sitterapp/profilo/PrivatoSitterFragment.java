@@ -26,11 +26,15 @@ import android.widget.ToggleButton;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -103,6 +107,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
         //apertura del profilo
         apriProfilo();
 
+
         // Modifica
         modificaProfilo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,8 +134,6 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     }
 
     private void apriProfilo(){
-
-
 
         db.collection("utente")
                 .document(sessionManager.getSessionUid())
@@ -160,7 +163,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
                         dataPrSit2.setText(ds2);
                         ingaggiPrSit2.setText(documentSnapshot.get("babysitter.numLavori").toString());
-                        ratingPrSitter.setRating(Float.valueOf(documentSnapshot.get("babysitter.Rating").toString()));
+                        getRatingSitter(sessionManager.getSessionUid());
                         tariffaPrSit2.setText(documentSnapshot.getString("babysitter.Retribuzione"));
                     }
                 })
@@ -219,6 +222,58 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                         //mamt fasc
                     }
                 });
+    }
+
+    private void setRatingDb(){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("utente")
+                .document(sessionManager.getSessionUid())
+                .update("babysitter.Rating", ratingPrSitter.getRating())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+    }
+
+    private void getRatingSitter(final String uid){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("recensione").whereEqualTo("receiver", uid)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot querySnapshot = task.getResult();
+                    float sumRating = 0;
+                    int i = 0;
+                    for(QueryDocumentSnapshot queryDocumentSnapshot : querySnapshot){
+
+                        sumRating += queryDocumentSnapshot.getDouble("rating").floatValue();
+                        i++;
+
+                    }
+
+                    ratingPrSitter.setRating(sumRating/i);
+                    setRatingDb();
+
+                }else{
+                    Toast.makeText(getContext(), R.string.genericError ,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
 
