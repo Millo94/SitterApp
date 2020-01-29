@@ -44,6 +44,7 @@ import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.adapter.NoticeAdapter;
+import it.uniba.di.sms.sitterapp.adapter.NoticeHomeAdapter;
 import it.uniba.di.sms.sitterapp.adapter.SitterAdapter;
 import it.uniba.di.sms.sitterapp.appuntamenti.DialogsNoticeDetails;
 import it.uniba.di.sms.sitterapp.oggetti.Notice;
@@ -55,7 +56,7 @@ import tr.xip.errorview.ErrorView;
  * Activity per la Home
  */
 public class HomeActivity extends DrawerActivity
-        implements NoticeAdapter.NoticeAdapterListener, SitterAdapter.ContactsSitterAdapterListener, DialogFiltro.DialogListener {
+        implements NoticeHomeAdapter.NoticeHomeAdapterListener, SitterAdapter.ContactsSitterAdapterListener, DialogFiltro.DialogListener {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final String TAG = "HomeActivity";
@@ -64,7 +65,7 @@ public class HomeActivity extends DrawerActivity
 
     //Items babysitter
     private List<Notice> noticeList;
-    private NoticeAdapter noticeAdapter;
+    private NoticeHomeAdapter noticeHomeAdapter;
 
     //Items family
     private List<UtenteSitter> sitterList;
@@ -127,9 +128,9 @@ public class HomeActivity extends DrawerActivity
             noticeList.add(new Notice("4", "Angarano", "2020-02-05", "19.00", "22.00", "Ho bisogno di una babysitter che prepari la cena per mia figlia"));
             noticeList.add(new Notice("5", "Cuccovillo", "2020-01-11", "18.00", "21.00", "Cercasi tata per i miei tre figli."));
             noticeList.add(new Notice("6", "Loiacono", "2020-02-18", "09.00", "13.00", "La mia tata è impegnata, e ho bisogno di una sostituta per un giorno."));
-            noticeAdapter = new NoticeAdapter(HomeActivity.this, noticeList, HomeActivity.this);
+            noticeHomeAdapter = new NoticeHomeAdapter(HomeActivity.this, noticeList, HomeActivity.this);
 
-            recyclerView.setAdapter(noticeAdapter);
+            recyclerView.setAdapter(noticeHomeAdapter);
 
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
             recyclerView.setLayoutManager(mLayoutManager);
@@ -160,9 +161,9 @@ public class HomeActivity extends DrawerActivity
         if ((sessionManager.getSessionType() == Constants.TYPE_SITTER)) {
 
             noticeList = new ArrayList<>();
-            noticeAdapter = new NoticeAdapter(HomeActivity.this, noticeList, HomeActivity.this);
+            noticeHomeAdapter = new NoticeHomeAdapter(HomeActivity.this, noticeList, HomeActivity.this);
 
-            recyclerView.setAdapter(noticeAdapter);
+            recyclerView.setAdapter(noticeHomeAdapter);
 
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
             recyclerView.setLayoutManager(mLayoutManager);
@@ -220,12 +221,12 @@ public class HomeActivity extends DrawerActivity
                                     DocumentSnapshot documentSnapshot = iterableNotice.next();
                                     Notice notice = documentSnapshot.toObject(Notice.class);
                                     //mostra solo gli ingaggi ancora disponibili alla candidatura
-                                    if (noticeAdapter.annuncioScaduto(notice) == false && !notice.containsCandidatura(sessionManager.getSessionUid())) {
+                                    if (noticeHomeAdapter.annuncioScaduto(notice) == false && !notice.containsCandidatura(sessionManager.getSessionUid())) {
                                         noticeList.add(notice);
                                     }
                                 }
                                 if(noticeList.size()==0)errorView.setVisibility(View.VISIBLE);
-                                noticeAdapter.notifyDataSetChanged();
+                                noticeHomeAdapter.notifyDataSetChanged();
                             }
                         }
                     }
