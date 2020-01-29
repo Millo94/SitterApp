@@ -17,7 +17,7 @@
     <!-- We need this loading wheel, only when loading more -->
 
     <tr.xip.errorview.ErrorView
-        android:id="@+id/errorView"
+        android:id="@+id/errorViewContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
@@ -25,7 +25,6 @@
         app:ev_showRetryButton="false"
         app:ev_showSubtitle="true"
         app:ev_showTitle="true"
-        app:ev_subtitle="@string/lista_vuota"
         app:ev_title="@string/error_view_oops">
 
     </tr.xip.errorview.ErrorView>

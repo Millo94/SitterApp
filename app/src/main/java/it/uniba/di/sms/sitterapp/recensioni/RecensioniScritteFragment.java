@@ -67,13 +67,6 @@ public class RecensioniScritteFragment extends Fragment {
         recycler.setAdapter(adapter);
 
         errorView = (ErrorView) view.findViewById(R.id.errorView);
-        if (recensioneList.size() == 0) {
-            errorView.setTitle(R.string.niente_recensioni_scritte);
-            errorView.setVisibility(View.VISIBLE);
-
-        } else {
-            errorView.setVisibility(View.GONE);
-        }
 
         ReviewScritte();
 
@@ -92,20 +85,26 @@ public class RecensioniScritteFragment extends Fragment {
 
 
         db.collection("recensione")
-                .whereEqualTo("sender", sessionManager.getSessionUsername())
+                .whereEqualTo("sender", sessionManager.getSessionUid())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        Iterator<QueryDocumentSnapshot> iterableReview = queryDocumentSnapshots.iterator();
-                        while(iterableReview.hasNext()){
-                            DocumentSnapshot documentSnapshot = iterableReview.next();
-                            Recensione recensione = documentSnapshot.toObject(Recensione.class);
-                            recensioneList.add(recensione);
+                        if (queryDocumentSnapshots.isEmpty()) {
+                            errorView.setTitle(R.string.niente_recensioni_ricevute);
+                            errorView.setVisibility(View.VISIBLE);
+
+                        } else {
+                            errorView.setVisibility(View.GONE);
+                            Iterator<QueryDocumentSnapshot> iterableReview = queryDocumentSnapshots.iterator();
+                            while(iterableReview.hasNext()){
+                                DocumentSnapshot documentSnapshot = iterableReview.next();
+                                Recensione recensione = documentSnapshot.toObject(Recensione.class);
+                                recensioneList.add(recensione);
+                            }
+
+                            adapter.notifyDataSetChanged();
                         }
-
-                        adapter.notifyDataSetChanged();
-
                     }
 
                 })

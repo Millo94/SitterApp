@@ -88,7 +88,7 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
             String bs = intentReview.getStringExtra("babysitter");
             //se manda la recensione (utente in sessione) utente tipo sitter allora recensisci famiglia, altrimenti recensisci babysitter
             String receiver = sessionManager.getSessionType() == Constants.TYPE_SITTER ? fam : bs;
-            String sender = sessionManager.getSessionUsername();
+            String sender = sessionManager.getSessionUid();
             Recensione recensione = new Recensione(commento, rate, idAnnuncio, receiver, sender);
 
             if (rate == 0.0 || commento.isEmpty()) {

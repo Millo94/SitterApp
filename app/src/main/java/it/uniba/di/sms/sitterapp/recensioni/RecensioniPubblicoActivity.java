@@ -2,6 +2,8 @@ package it.uniba.di.sms.sitterapp.recensioni;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +19,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +32,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +55,8 @@ public class RecensioniPubblicoActivity extends AppCompatActivity {
     private RecyclerView recycler;
     private RecensioniRicevuteAdapter adapter;
     private List<Recensione> recensioneList;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private ErrorView errorView;
 
     String user;
 
@@ -55,12 +66,14 @@ public class RecensioniPubblicoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_home);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        user = getIntent().getStringExtra("username");
+        user = getIntent().getStringExtra("uid");
         recycler = (RecyclerView) findViewById(R.id.recyclerHome);
 
         recensioneList = new ArrayList<>();
         adapter = new RecensioniRicevuteAdapter(recensioneList);
         recycler.setAdapter(adapter);
+
+        errorView = (ErrorView) findViewById(R.id.errorViewContent);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recycler.setLayoutManager(mLayoutManager);
@@ -82,8 +95,45 @@ public class RecensioniPubblicoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void loadFeedback(){
+        db.collection("recensione")
+                .whereEqualTo("receiver", user)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                        if (queryDocumentSnapshots.isEmpty()) {
+
+                            errorView.setTitle(R.string.niente_recensioni_ricevute);
+                            errorView.setVisibility(View.VISIBLE);
+
+                        } else {
+                            errorView.setVisibility(View.GONE);
+                            Iterator<QueryDocumentSnapshot> iterableReview = queryDocumentSnapshots.iterator();
+                            while(iterableReview.hasNext()){
+                                DocumentSnapshot documentSnapshot = iterableReview.next();
+                                Recensione recensione = documentSnapshot.toObject(Recensione.class);
+                                recensioneList.add(recensione);
+                            }
+
+                            adapter.notifyDataSetChanged();
+                        }
+
+                    }
+
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //TODO Sostituire "Errore" con la stringa di errore di riferimento.
+                        //Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     //volley per il caricamento delle recensioni
-    private void loadFeedback() {
+    private void load() {
 
 
         final ProgressDialog progressDialog = new ProgressDialog(this);

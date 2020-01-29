@@ -68,13 +68,6 @@ public class RecensioniRicevuteFragment extends Fragment {
 
         errorView = (ErrorView) view.findViewById(R.id.errorView);
 
-        if (recensioneList.size() == 0) {
-            errorView.setTitle(R.string.niente_recensioni_ricevute);
-            errorView.setVisibility(View.VISIBLE);
-
-        } else {
-            errorView.setVisibility(View.GONE);
-        }
 
         ReviewRicevute();
 
@@ -93,19 +86,27 @@ public class RecensioniRicevuteFragment extends Fragment {
 
 
         db.collection("recensione")
-                .whereEqualTo("receiver", sessionManager.getSessionUsername())
+                .whereEqualTo("receiver", sessionManager.getSessionUid())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        Iterator<QueryDocumentSnapshot> iterableReview = queryDocumentSnapshots.iterator();
-                        while(iterableReview.hasNext()){
-                            DocumentSnapshot documentSnapshot = iterableReview.next();
-                            Recensione recensione = documentSnapshot.toObject(Recensione.class);
-                            recensioneList.add(recensione);
-                        }
 
-                        adapter.notifyDataSetChanged();
+                        if (queryDocumentSnapshots.isEmpty()) {
+                            errorView.setTitle(R.string.niente_recensioni_ricevute);
+                            errorView.setVisibility(View.VISIBLE);
+
+                        } else {
+                            errorView.setVisibility(View.GONE);
+                            Iterator<QueryDocumentSnapshot> iterableReview = queryDocumentSnapshots.iterator();
+                            while(iterableReview.hasNext()){
+                                DocumentSnapshot documentSnapshot = iterableReview.next();
+                                Recensione recensione = documentSnapshot.toObject(Recensione.class);
+                                recensioneList.add(recensione);
+                            }
+
+                            adapter.notifyDataSetChanged();
+                        }
 
                     }
 

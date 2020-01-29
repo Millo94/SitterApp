@@ -99,7 +99,6 @@
         app:ev_showRetryButton="false"
         app:ev_showSubtitle="true"
         app:ev_showTitle="true"
-        app:ev_subtitle="@string/lista_vuota"
         app:ev_title="@string/error_view_oops">
 
     </tr.xip.errorview.ErrorView>
