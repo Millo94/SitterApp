@@ -30,13 +30,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.stfalcon.chatkit.commons.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
@@ -258,12 +263,29 @@ public class PubblicoSitterFragment extends Fragment {
                                 requestSMSPermission();
                                 break;
                             case 3:
-                                Intent chatConversationIntent = new Intent(getActivity(), ChatConversationActivity.class);
-                                chatConversationIntent.putExtra("conversationName", nomeCompletoPuSit.getText().toString());
-                                chatConversationIntent.putExtra("senderId",sessionManager.getSessionUid());
-                                chatConversationIntent.putExtra("receiverId", sitterUid);
-                                chatConversationIntent.putExtra("conversationUID","NEWUID");
-                                startActivity(chatConversationIntent);
+
+                                db.collection("chat")
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                QuerySnapshot querySnapshot = task.getResult();
+                                                List<DocumentSnapshot> documentsList = querySnapshot.getDocuments();
+                                                String code = "NEWUID";
+                                                Intent chatConversationIntent = new Intent(getActivity(), ChatConversationActivity.class);
+                                                chatConversationIntent.putExtra("conversationName", nomeCompletoPuSit.getText().toString());
+                                                chatConversationIntent.putExtra("senderId",sessionManager.getSessionUid());
+                                                chatConversationIntent.putExtra("receiverId", sitterUid);
+                                                for(DocumentSnapshot docSnap : documentsList){
+                                                    List<String> users = (List<String>)docSnap.get("UsersList");
+                                                    if(users.contains(sessionManager.getSessionUid()) && users.contains(sitterUid));
+                                                    code = docSnap.getId();
+                                                }
+                                                chatConversationIntent.putExtra("conversationUID",code);
+                                                startActivity(chatConversationIntent);
+
+                                            }
+                                        });
                                 break;
                             default:
                                 break;

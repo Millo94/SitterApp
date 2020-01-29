@@ -11,10 +11,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,17 +30,26 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.stfalcon.chatkit.commons.ImageLoader;
 
 import android.content.Intent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import it.uniba.di.sms.sitterapp.Constants;
@@ -53,6 +65,7 @@ import it.uniba.di.sms.sitterapp.recensioni.RecensioniPubblicoActivity;
  */
 public class PubblicoFamigliaFragment extends Fragment {
 
+    private final String TAG = "PubSitterFrag";
     View view;
     TextView nomeCompletoPuFam, descrPuFam, nomePuFam, cognomePuFam, emailPuFam, numeroPuFam, nazionePuFam, cittaPuFam, numFigliPuFam, animaliPuFam;
     //STRINGHE DA COLLEGARE AL DATABASE
@@ -60,6 +73,7 @@ public class PubblicoFamigliaFragment extends Fragment {
     Button contattaFamiglia;
     Button feedbackFam;
     RatingBar ratingPuFam;
+    ImageLoader imageLoader;
 
     SessionManager sessionManager;
 
@@ -95,6 +109,30 @@ public class PubblicoFamigliaFragment extends Fragment {
         sessionManager = new SessionManager(getContext());
         requestQueue = Volley.newRequestQueue(getContext());
         inizializzazione();
+
+        imageLoader = new ImageLoader() {
+            @Override
+            public void loadImage(final ImageView imageView, String url, Object payload) {
+                //modifico il link per la foto
+                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(url);
+                storageReference.getDownloadUrl()
+                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Glide.with(getActivity())
+                                        .load(uri == null ? R.drawable.ic_account_circle_black_56dp : uri)
+                                        .into(imageView);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.i(TAG, e.getMessage());
+                            }
+                        });
+            }
+        };
+
         mostraProfilo(getActivity().getIntent().getStringExtra("uid"));
         return view;
     }
@@ -109,6 +147,7 @@ public class PubblicoFamigliaFragment extends Fragment {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         receiverId = documentSnapshot.getId();
+                        imageLoader.loadImage((ImageView)getActivity().findViewById(R.id.imagePuFamiglia),documentSnapshot.getString("Avatar"),null);
                         nomeCompletoPuFam.setText(documentSnapshot.getString("NomeCompleto"));
                         emailPuFam2.setText((documentSnapshot.getString("Email")));
                         email = documentSnapshot.getString("Email");
@@ -273,12 +312,28 @@ public class PubblicoFamigliaFragment extends Fragment {
                                 requestSMSPermission();
                                 break;
                             case 3:
-                                Intent chatConversationIntent = new Intent(getActivity(), ChatConversationActivity.class);
-                                chatConversationIntent.putExtra("conversationName", nomeCompletoPuFam.getText().toString());
-                                chatConversationIntent.putExtra("senderId",sessionManager.getSessionUid());
-                                chatConversationIntent.putExtra("receiverId",receiverId);
-                                chatConversationIntent.putExtra("conversationUID","NEWUID");
-                                startActivity(chatConversationIntent);
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                db.collection("chat")
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                QuerySnapshot querySnapshot = task.getResult();
+                                                List<DocumentSnapshot> documentsList = querySnapshot.getDocuments();
+                                                String code = "NEWUID";
+                                                Intent chatConversationIntent = new Intent(getActivity(), ChatConversationActivity.class);
+                                                chatConversationIntent.putExtra("conversationName", nomeCompletoPuFam.getText().toString());
+                                                chatConversationIntent.putExtra("senderId",sessionManager.getSessionUid());
+                                                chatConversationIntent.putExtra("receiverId", receiverId);
+                                                for(DocumentSnapshot docSnap : documentsList){
+                                                    List<String> users = (List<String>)docSnap.get("UsersList");
+                                                    if(users.contains(sessionManager.getSessionUid()) && users.contains(receiverId));
+                                                    code = docSnap.getId();
+                                                }
+                                                chatConversationIntent.putExtra("conversationUID",code);
+                                                startActivity(chatConversationIntent);
+                                            }
+                                        });
                                 break;
                             default:
                                 break;

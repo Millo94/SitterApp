@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLogin(View view) {
 
-        mAuth.signInWithEmailAndPassword(emailEt.getText().toString().toLowerCase(), passwordEt.getText().toString())
+        mAuth.signInWithEmailAndPassword(emailEt.getText().toString().trim().toLowerCase(), passwordEt.getText().toString())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
