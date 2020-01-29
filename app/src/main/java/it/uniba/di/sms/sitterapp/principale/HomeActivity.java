@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -74,7 +78,7 @@ public class HomeActivity extends DrawerActivity
     private static final String annunci = "ANNUNCI";
 
     // Filtro disponibilità
-    Map<String, ArrayList<Integer>> dispTotali;
+    public Map<String, ArrayList<Long>> dispTotali;
 
 
     @Override
@@ -105,6 +109,8 @@ public class HomeActivity extends DrawerActivity
         } else {
             loadDemo();
         }
+
+
 
     }
 
@@ -235,6 +241,7 @@ public class HomeActivity extends DrawerActivity
     private void caricaSitter(){
 
         CollectionReference colRef = db.collection("utente");
+        /**
         colRef
                 .whereEqualTo("tipoUtente", Constants.TYPE_SITTER)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -268,6 +275,50 @@ public class HomeActivity extends DrawerActivity
                             sitterAdapter.notifyDataSetChanged();
                             }
                         }
+                    }
+                });
+        */
+        colRef
+                .whereEqualTo("tipoUtente", Constants.TYPE_SITTER)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            QuerySnapshot querySnapshot = task.getResult();
+                            sitterList.clear();
+                            Iterator<QueryDocumentSnapshot> querySnapshotIterator = querySnapshot.iterator();
+                            ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+                            if (!querySnapshotIterator.hasNext()) {
+                                errorView.setTitle(R.string.niente_sitter);
+                                errorView.setVisibility(View.VISIBLE);
+                            } else {
+                                errorView.setVisibility(View.INVISIBLE);
+                                while (querySnapshotIterator.hasNext()) {
+                                    DocumentSnapshot documentSnapshot = querySnapshotIterator.next();
+                                    UtenteSitter bs = new UtenteSitter(
+                                            documentSnapshot.getId(),
+                                            (String) documentSnapshot.get("NomeCompleto"),
+                                            (String) documentSnapshot.get("Avatar"),
+                                            documentSnapshot.getBoolean("online"),
+                                            Float.valueOf(documentSnapshot.get("babysitter.Rating").toString()),
+                                            Integer.valueOf(documentSnapshot.get("babysitter.numLavori").toString()));
+
+                                    sitterList.add(bs);
+                                    dispTotali.put(documentSnapshot.getId(), new ArrayList<Long>());
+                                    loadAvailability(documentSnapshot.getId());
+                                }
+                                sitterAdapter.notifyDataSetChanged();
+                            }
+                        }
+
+                    }
+
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(HomeActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -326,9 +377,8 @@ public class HomeActivity extends DrawerActivity
 
 
             // CHECK SULLA DISPONIBILITA
-
             for (Integer checked : checkedBox) {
-                if (!dispTotali.get(sitter.getName()).contains(checked)) {
+                if (!dispTotali.get(sitter.getId()).contains(checked.longValue())) {
                     removeList.add(sitter);
                     break;
                 }
@@ -349,6 +399,29 @@ public class HomeActivity extends DrawerActivity
         }
     }
 
+    private void loadAvailability(final String babysitter){
+
+        db.collection("utente")
+                .document(babysitter)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            if(documentSnapshot.get("babysitter.Disponibilita") != null){
+                                dispTotali.get(babysitter).addAll((ArrayList<Long>) documentSnapshot.get("babysitter.Disponibilita"));
+                            }
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
     //volley per la disponibilità delle sitter
     private void getDisponibilita(final String username) {
 
@@ -361,7 +434,7 @@ public class HomeActivity extends DrawerActivity
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         int fascia = jsonObject.getInt("fascia");
-                        dispTotali.get(username).add(fascia);
+                       // dispTotali.get(username).add(fascia);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
