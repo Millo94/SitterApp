@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -114,8 +115,7 @@ public class RecensioniRicevuteFragment extends Fragment {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        //TODO Sostituire "Errore" con la stringa di errore di riferimento.
-                        //Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 

@@ -55,7 +55,7 @@ public class RecensioniRicevuteAdapter extends RecyclerView.Adapter<RecensioniRi
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final Recensione recensione = recensioneList.get(position);
         //attribuzione dei dettagli dell'annuncio alle varie View
-        holder.labelDest.setText("From:");
+        holder.labelDest.setText(R.string.from);
         holder.username.setText(recensione.getSender());
         holder.description.setText(recensione.getDescrizione());
         holder.ratingBar.setRating(recensione.getRating());

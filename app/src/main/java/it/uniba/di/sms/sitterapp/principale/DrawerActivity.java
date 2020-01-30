@@ -78,35 +78,15 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //TODO controlla le cose commentate
-        /*// Drawer Layout
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();*/
 
         //BottomNavigationView
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.getMenu().findItem(getIntent().getIntExtra(SELECTED,R.id.nav_home)).setChecked(true);
-        //TODO RIMUOVI CODICE COMMENTATO
-        //NavigationView
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(this);
-
-        // Evidenzio l'elemento selezionato del drawer
-        //navigationView.getMenu().findItem(getIntent().getIntExtra(SELECTED, R.id.nav_home)).setChecked(true);
 
         // Valorizzo il session manager
         sessionManager = new SessionManager(getApplicationContext());
-        //TODO RIMUOVI CODICE COMMENTATO
-        //per l'immagine e il testo dell'utente
-        //ImageView profile_image = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.ProfileImageView);
-        //TextView profile_username = (TextView) navigationView.getHeaderView(0).findViewById(R.id.ProfileUsernameView);
 
-        //Glide.with(this).load((sessionManager.getSessionType() == Constants.TYPE_SITTER) ? sessionManager.getProfilePic() : Constants.BASE_URL + "profilePicture/family.png").into(profile_image);
-        //profile_username.setText(sessionManager.getSessionUsername());
     }
 
 /*
@@ -134,13 +114,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
                 // Gestisce la navigazione al click del menu
                 int id = item.getItemId();
-                //TODO RIMUOVERE CODICE COMMENTATO
-                /*if (id == R.id.nav_recensioni_mie) {
-                    //collegamento alla sezione recensioni
-                    Intent recensioni = new Intent(DrawerActivity.this, RecensioniActivity.class);
-                    startActivity(recensioni);
-
-                } else*/ if (id == R.id.nav_home) {
+                if (id == R.id.nav_home) {
                     //Activity principale
                     Intent home = new Intent(DrawerActivity.this, HomeActivity.class);
                     startActivity(home);
@@ -165,14 +139,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                     menuIngaggi.putExtra(SELECTED, id);
                     startActivity(menuIngaggi);
 
-                } else if (id == R.id.nav_scrivi_feedback) {
-                    //TODO da rimuovere, bisogna aggiungere un bottone nell'activity recensioni per crearne una nuova
-                    //collegamento a scrivi recensione
-                    Intent scrivirecIntent = new Intent(DrawerActivity.this, IngaggiDaRecensireActivity.class);
-                    scrivirecIntent.putExtra(SELECTED, id);
-                    startActivity(scrivirecIntent);
-
-                } else if (id == R.id.nav_account) {
+                }else if (id == R.id.nav_account) {
                     //collegamento a profilo privato
                     //porta alle informazioni sul proprio profilo
                     Intent intent = new Intent(DrawerActivity.this, ProfiloPrivatoActivity.class);
@@ -180,17 +147,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                     startActivity(intent);
 
                 }
-                //TODO RIMUOVI CODICE COMMENTATO
-
-                /* else if (id == R.id.nav_exit) {
-                    // Chiama la funzione di logout
-                    sessionManager.logout();
-                }
-                //drawer.closeDrawer(GravityCompat.START);
-
-            } else {
-                //drawer.closeDrawer(GravityCompat.START);
-            */
             }
         }
 

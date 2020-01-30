@@ -1,6 +1,8 @@
 package it.uniba.di.sms.sitterapp.chat;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -50,7 +53,9 @@ import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.chat.fixtures.MessagesFixtures;
 import it.uniba.di.sms.sitterapp.chat.messages.CustomIncomingImageMessageViewHolder;
@@ -63,7 +68,7 @@ import it.uniba.di.sms.sitterapp.utils.AppUtils;
 
 
 
-public class ChatConversationActivity extends Activity
+public class ChatConversationActivity extends AppCompatActivity
         implements MessagesListAdapter.OnMessageLongClickListener<Message>,
         MessageInput.InputListener,
         MessageInput.AttachmentsListener, MessagesListAdapter.SelectionListener,
@@ -97,7 +102,6 @@ public class ChatConversationActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_holder_messages);
-
         BUNDLE = getIntent().getExtras();
         CONVERSATION_UID =BUNDLE.getString("conversationUID");
         CONVERSATION_NAME = BUNDLE.getString("conversationName");
@@ -159,11 +163,21 @@ public class ChatConversationActivity extends Activity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(CONVERSATION_NAME);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         MessageInput input = (MessageInput) findViewById(R.id.input);
         input.setInputListener(this);
         input.setAttachmentsListener(this);
 
     }
+
+
 
     @Override
     protected void onStart() {

@@ -53,7 +53,7 @@ import it.uniba.di.sms.sitterapp.oggetti.Recensione;
         public void onBindViewHolder(RecensioniScritteAdapter.MyViewHolder holder, int position) {
             final Recensione recensione = recensioneList.get(position);
             //attribuzione dei dettagli dell'annuncio alle varie View
-            holder.labelDest.setText("To:");
+            holder.labelDest.setText(R.string.To);
             holder.username.setText(recensione.getReceiver());
             holder.description.setText(recensione.getDescrizione());
             holder.ratingBar.setRating(recensione.getRating());

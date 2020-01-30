@@ -183,6 +183,7 @@ public class PubblicoSitterFragment extends Fragment {
                         nazionePuSit2.setText(documentSnapshot.getString("Nazione"));
                         cittaPuSit2.setText(documentSnapshot.getString("Citta"));
                         getRatingSitter(uid);
+                        dataPuSit2.setText(documentSnapshot.getString("babysitter.dataNascita"));
                         tariffaPuSit2.setText(documentSnapshot.getString("babysitter.Retribuzione"));
                         sessoPuSit2.setText(documentSnapshot.getString("babysitter.Genere"));
                         carPuSit2.setText(documentSnapshot.getBoolean("babysitter.Auto")?"Sì":"No");

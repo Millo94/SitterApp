@@ -126,8 +126,7 @@ public class RecensioniPubblicoActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        //TODO Sostituire "Errore" con la stringa di errore di riferimento.
-                        //Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -13,10 +13,15 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,13 +56,13 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scrivi_recensione);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sessionManager = new SessionManager(getApplicationContext());
 
         famiglia = getIntent().getStringExtra("famiglia");
         id = getIntent().getStringExtra("idAnnuncio");
         sitter = getIntent().getStringExtra("sitter");
-
 
 
         user = (TextView) findViewById(R.id.usernameRecensione);
@@ -67,11 +72,29 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
         scriviRec = (Button) findViewById(R.id.inviaRecensione);
         scriviRec.setOnClickListener(inviarecListener);
 
+        final String userID;
         if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
-            user.setText(famiglia);
-        } else if (sessionManager.getSessionType() == Constants.TYPE_FAMILY) {
-            user.setText(sitter);
+            userID = famiglia;
+        } else {
+            userID = sitter;
         }
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("utente")
+                .document(userID)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                         if(task.isSuccessful()){
+                             DocumentSnapshot documentSnapshot = task.getResult();
+                             user.setText(documentSnapshot.getString("NomeCompleto"));
+                         }else{
+                             user.setText(userID);
+                         }
+                    }
+                });
+
 
     }
 
@@ -104,7 +127,7 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
     /**
      *
      * Metodo per l'invio di una recensione sia da parte della babysitter che da parte della famiglia.
-     * /TODO Inserire un controllo che permetta di inviare la recensione sull'annuncio desiderato
+     *
      *
      */
     public void inviaDati(final Recensione recensione) {

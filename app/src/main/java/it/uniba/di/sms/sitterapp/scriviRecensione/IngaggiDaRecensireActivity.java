@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -36,6 +37,7 @@ public class IngaggiDaRecensireActivity extends DrawerActivity implements Notice
     protected SessionManager sessionManager;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    private final String SELECTED = "selected";
     //Items ingaggi
     private List<Notice> noticeList;
     private Queue<Notice> remainingNoticeList;
@@ -52,6 +54,11 @@ public class IngaggiDaRecensireActivity extends DrawerActivity implements Notice
         noticeList = new ArrayList<>();
         noticeAdapter = new NoticeAdapter(IngaggiDaRecensireActivity.this, noticeList, IngaggiDaRecensireActivity.this);
         remainingNoticeList = new LinkedList<>();
+
+        //BottomNavigationView
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigationView.getMenu().findItem(getIntent().getIntExtra(SELECTED,R.id.nav_recensioni)).setChecked(true);
 
         recyclerView.setAdapter(noticeAdapter);
 
@@ -128,8 +135,7 @@ public class IngaggiDaRecensireActivity extends DrawerActivity implements Notice
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        //TODO sostiture "Errore" con la stringa di riferimento
-                        Toast.makeText(getApplicationContext(), "Errore", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
                     }
                 });
 

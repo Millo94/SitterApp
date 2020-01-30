@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -77,13 +78,6 @@ public class RecensioniScritteFragment extends Fragment {
     private void ReviewScritte() {
 
 
-        final ProgressDialog progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-        progressDialog.dismiss();
-
-
         db.collection("recensione")
                 .whereEqualTo("sender", sessionManager.getSessionUid())
                 .get()
@@ -111,8 +105,7 @@ public class RecensioniScritteFragment extends Fragment {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        //TODO Sostituire "Errore" con la stringa di errore di riferimento.
-                        //Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
