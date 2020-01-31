@@ -38,7 +38,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
     private ViewPager mViewPager;
 
-    private static final int SHAKE_SLOP_TIME_MS = 500;
+    private static final int SHAKE_SLOP_TIME_MS = 1000;
     float xAccel,yAccel,zAccel;
     float xPreviousAccel,yPreviousAccel,zPreviousAccel;
     private long mShakeTimestamp;

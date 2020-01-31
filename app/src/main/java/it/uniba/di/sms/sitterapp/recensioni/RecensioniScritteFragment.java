@@ -92,12 +92,19 @@ public class RecensioniScritteFragment extends Fragment {
                             errorView.setVisibility(View.GONE);
                             Iterator<QueryDocumentSnapshot> iterableReview = queryDocumentSnapshots.iterator();
                             while(iterableReview.hasNext()){
-                                DocumentSnapshot documentSnapshot = iterableReview.next();
-                                Recensione recensione = documentSnapshot.toObject(Recensione.class);
-                                recensioneList.add(recensione);
+                                final DocumentSnapshot docSnap = iterableReview.next();
+                                db.collection("utente").document(docSnap.getString("receiver"))
+                                        .get()
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                Recensione recensione = docSnap.toObject(Recensione.class);
+                                                recensione.setReceiver(documentSnapshot.getString("NomeCompleto"));
+                                                recensioneList.add(recensione);
+                                                adapter.notifyDataSetChanged();
+                                            }
+                                        });
                             }
-
-                            adapter.notifyDataSetChanged();
                         }
                     }
 

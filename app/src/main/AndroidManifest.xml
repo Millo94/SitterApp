@@ -90,8 +90,8 @@
             android:name=".scriviRecensione.IngaggiDaRecensireActivity"
             android:screenOrientation="portrait"
             android:label="@string/scrivi_recensione"
-            android:parentActivityName=".principale.HomeActivity"
-            android:theme="@style/AppTheme.Light.NoActionBar" />
+            android:parentActivityName=".recensioni.RecensioniActivity"
+            android:theme="@style/AppTheme.Light.NoActionBar"/>
         <activity
             android:name=".scriviRecensione.ScriviRecensioneActivity"
             android:screenOrientation="portrait"

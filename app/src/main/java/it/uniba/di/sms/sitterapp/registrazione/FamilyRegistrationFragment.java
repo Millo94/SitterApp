@@ -48,9 +48,10 @@ public class FamilyRegistrationFragment extends Fragment {
 
     ArrayList<EditText> listaET = new ArrayList<>();
     View view;
+    final String STOCK_PATH_PHOTO = "gs://sitterapp-223aa.appspot.com/img/stock_img/placeholder-profile-sq.jpg";
     Spinner nazioni;
     String arraypaesi[];
-    String pathFoto = "gs://sitterapp-223aa.appspot.com/img/stock_img/placeholder-profile-sq.jpg";
+    String pathFoto = STOCK_PATH_PHOTO;
     EditText nomeCompletoET, passwordET, confermaPasswordET, emailET, numeroET, cittaET, numFigliET;
     ImageView imgProfile;
     TextView nazioneET;

@@ -7,15 +7,19 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -58,11 +63,14 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
 
     ArrayList<EditText> listaET = new ArrayList<>();
     View view;
+
+    final String STOCK_PATH_PHOTO = "gs://sitterapp-223aa.appspot.com/img/stock_img/placeholder-profile-sq.jpg";
+
     //NomeCompleto, Email, Telefono, Nazione, Citta, dataNascita,
     EditText nomeCompletoET, passwordET, confermaPasswordET, emailET, numeroET, dataNascitaET, cittaET, retribuzioneET;
     //Avatar
     ImageView imgProfile;
-    String pathFoto = "";
+    String pathFoto = STOCK_PATH_PHOTO;
     RadioGroup genereRG;
     Switch autoSW;
     Button confRegistration;
@@ -211,6 +219,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
             @Override
             public void onClick(View v) {
 
+
                 uploadImage();
 
                 if (isEmpty()) {
@@ -231,7 +240,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                             numeroET.getText().toString(),
                             true,
                             "",
-                            Constants.dateToSQL(dataNascitaET.getText().toString()),
+                            dataNascitaET.getText().toString(),
                             genere,
                             0,
                             0,
@@ -293,6 +302,9 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
     private void uploadImage(){
 
         String randUid = UUID.randomUUID().toString();
+
+        Resources res = getResources();
+        Drawable drawable = ResourcesCompat.getDrawable(res, R.drawable.edit_image, null);
 
         if (selectedImage != null) {
 

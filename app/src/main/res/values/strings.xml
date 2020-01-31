@@ -164,7 +164,6 @@
     <item name="visible" type="id" />
     <item name="masked" type="id" />
 
-
     <string name="from">From:</string>
     <string name="scaduto">Expired</string>
     <string name="in_attesa">Waiting for confirm</string>

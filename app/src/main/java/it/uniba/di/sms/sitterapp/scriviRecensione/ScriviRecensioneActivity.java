@@ -30,6 +30,7 @@ import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.oggetti.Recensione;
+import it.uniba.di.sms.sitterapp.recensioni.RecensioniActivity;
 
 /**
  * Classe che gestisce la parte della scrittura delle recensioni
@@ -108,7 +109,7 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
             intentReview = getIntent();
             String idAnnuncio = intentReview.getStringExtra("idAnnuncio");
             String fam = intentReview.getStringExtra("famiglia");
-            String bs = intentReview.getStringExtra("babysitter");
+            String bs = intentReview.getStringExtra("sitter");
             //se manda la recensione (utente in sessione) utente tipo sitter allora recensisci famiglia, altrimenti recensisci babysitter
             String receiver = sessionManager.getSessionType() == Constants.TYPE_SITTER ? fam : bs;
             String sender = sessionManager.getSessionUid();
@@ -146,7 +147,7 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Toast.makeText(getApplicationContext(), R.string.recensioneEffettuata, Toast.LENGTH_LONG).show();
-                        Intent backIntent = new Intent(ScriviRecensioneActivity.this, IngaggiDaRecensireActivity.class);
+                        Intent backIntent = new Intent(ScriviRecensioneActivity.this, RecensioniActivity.class);
                         startActivity(backIntent);
                     }
                 })
