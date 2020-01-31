@@ -242,43 +242,6 @@ public class HomeActivity extends DrawerActivity
     private void caricaSitter(){
 
         CollectionReference colRef = db.collection("utente");
-        /**
-        colRef
-                .whereEqualTo("tipoUtente", Constants.TYPE_SITTER)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        if(e != null){
-                            Log.i(TAG,e.getMessage());
-                            Toast.makeText(HomeActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
-
-                        }else {
-                            sitterList.clear();
-                            Iterator<QueryDocumentSnapshot> iterableSitter = queryDocumentSnapshots.iterator();
-                            ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
-                            if (!iterableSitter.hasNext()) {
-                                errorView.setTitle(R.string.niente_sitter);
-                                errorView.setVisibility(View.VISIBLE);
-                            } else {
-                            errorView.setVisibility(View.INVISIBLE);
-                            while (iterableSitter.hasNext()) {
-                                DocumentSnapshot documentSnapshot = iterableSitter.next();
-                                UtenteSitter bs = new UtenteSitter(
-                                        documentSnapshot.getId(),
-                                        (String) documentSnapshot.get("NomeCompleto"),
-                                        (String) documentSnapshot.get("Avatar"),
-                                        documentSnapshot.getBoolean("online"),
-                                        Float.valueOf(documentSnapshot.get("babysitter.Rating").toString()),
-                                        Integer.valueOf(documentSnapshot.get("babysitter.numLavori").toString()));
-
-                                sitterList.add(bs);
-                            }
-                            sitterAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    }
-                });
-        */
         colRef
                 .whereEqualTo("tipoUtente", Constants.TYPE_SITTER)
                 .get()
@@ -290,8 +253,8 @@ public class HomeActivity extends DrawerActivity
                             sitterList.clear();
                             Iterator<QueryDocumentSnapshot> querySnapshotIterator = querySnapshot.iterator();
                             ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+                            errorView.setTitle(R.string.niente_sitter);
                             if (!querySnapshotIterator.hasNext()) {
-                                errorView.setTitle(R.string.niente_sitter);
                                 errorView.setVisibility(View.VISIBLE);
                             } else {
                                 errorView.setVisibility(View.INVISIBLE);
