@@ -1,14 +1,18 @@
 package it.uniba.di.sms.sitterapp.registrazione;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -60,6 +64,10 @@ public class FamilyRegistrationFragment extends Fragment {
 
     Bitmap sImage;
     Uri selectedImage;
+
+    private int imageChanged = 0;
+    private static final int CAMERA_PERMISSION_CODE = 100;
+    private static final int STORAGE_PERMISSION_CODE = 101;
 
     //Creazione delle referenze per lo storage di firebase
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -116,13 +124,12 @@ public class FamilyRegistrationFragment extends Fragment {
 
                         switch(i){
                             case 0:
-                                Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                                startActivityForResult(takePicture, 0);
+                                photoPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
+                                imageChanged++;
                                 break;
                             case 1:
-                                Intent pickPicture = new Intent(Intent.ACTION_PICK,
-                                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                startActivityForResult(pickPicture, 1);
+                                galleryPermission(Manifest.permission.READ_EXTERNAL_STORAGE, STORAGE_PERMISSION_CODE);
+                                imageChanged++;
                                 break;
                         }
 
@@ -142,7 +149,10 @@ public class FamilyRegistrationFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                uploadImage();
+                if(imageChanged != 0){
+                    uploadImage();
+                }
+
 
                 if (isEmpty()) {
                     Toast.makeText(getContext(), R.string.missingFields, Toast.LENGTH_LONG).show();
@@ -172,17 +182,48 @@ public class FamilyRegistrationFragment extends Fragment {
         return view;
     }
 
+    public void photoPermission(String permission, int requestCode){
+
+        if (ContextCompat.checkSelfPermission(getContext(), permission)
+                == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat
+                    .requestPermissions(getActivity(), new String[] { permission }, requestCode);
+
+        }
+        else {
+            Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(takePicture, 0);
+        }
+
+    }
+
+    public void galleryPermission(String permission, int requestCode){
+
+        if(ContextCompat.checkSelfPermission(getContext(), permission)== PackageManager.PERMISSION_DENIED) {
+
+            ActivityCompat.requestPermissions(getActivity(), new String[] {permission}, requestCode);
+
+        }else {
+            Intent pickPicture = new Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(pickPicture, 1);
+        }
+
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
         switch (requestCode) {
             case 0:
                 if (requestCode == 0 && resultCode == RESULT_OK) {
+
                     Bundle bundle = imageReturnedIntent.getExtras();
                     sImage = (Bitmap) bundle.get("data");
                     Glide.with(FamilyRegistrationFragment.this.getContext())
                             .load(sImage)
                             .into(imgProfile);
+
                 }
                 break;
             case 1:

@@ -1,5 +1,6 @@
 package it.uniba.di.sms.sitterapp.registrazione;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -7,12 +8,15 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -76,7 +80,9 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
     private static final int CAMERA_PIC_REQUEST = 22;
     Uri selectedImage;
     Bitmap sImage;
-    
+    private int imageChanged = 0;
+    private static final int CAMERA_PERMISSION_CODE = 100;
+    private static final int STORAGE_PERMISSION_CODE = 101;
 
     //Creazione delle referenze per lo storage di firebase
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -165,6 +171,8 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
             @Override
             public void onClick(View v) {
 
+
+
                 final CharSequence optionsPicture[] = new CharSequence[]{getString(R.string.takePic), getString(R.string.uploadImg)};
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -180,15 +188,16 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
+                        //photoPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
+
                         switch(i){
                             case 0:
-                                Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                                startActivityForResult(takePicture, 0);
+                                photoPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
+                                imageChanged++;
                                 break;
                             case 1:
-                                Intent pickPicture = new Intent(Intent.ACTION_PICK,
-                                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                startActivityForResult(pickPicture, 1);
+                                galleryPermission(Manifest.permission.READ_EXTERNAL_STORAGE, STORAGE_PERMISSION_CODE);
+                                imageChanged++;
                                 break;
                         }
 
@@ -211,7 +220,10 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
             @Override
             public void onClick(View v) {
 
-                uploadImage();
+                if(imageChanged != 0){
+                    uploadImage();
+                }
+
 
                 if (isEmpty()) {
                     Toast.makeText(getContext(), R.string.missingFields, Toast.LENGTH_LONG).show();
@@ -243,6 +255,35 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
         });
 
         return view;
+    }
+
+    public void photoPermission(String permission, int requestCode){
+
+        if (ContextCompat.checkSelfPermission(getContext(), permission)
+                == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat
+                    .requestPermissions(getActivity(), new String[] { permission }, requestCode);
+
+        }
+        else {
+            Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(takePicture, 0);
+        }
+
+    }
+
+    public void galleryPermission(String permission, int requestCode){
+
+        if(ContextCompat.checkSelfPermission(getContext(), permission)== PackageManager.PERMISSION_DENIED) {
+
+            ActivityCompat.requestPermissions(getActivity(), new String[] {permission}, requestCode);
+
+        }else {
+            Intent pickPicture = new Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(pickPicture, 1);
+        }
+
     }
 
 
