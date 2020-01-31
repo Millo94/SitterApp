@@ -71,8 +71,6 @@ public class NoticeHomeAdapter extends RecyclerView.Adapter<NoticeHomeAdapter.My
         //attribuzione dei dettagli dell'annuncio alle varie View
         final Notice notice = noticeListFiltered.get(position);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        holder.family_name.setText(notice.getFamily());
-
         db.collection("utente").document(notice.getFamily())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
