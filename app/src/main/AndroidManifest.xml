@@ -110,7 +110,9 @@
         <activity
             android:name=".appuntamenti.SceltaSitter"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Light.NoActionBar" />
+            android:theme="@style/AppTheme.Light.NoActionBar"
+            android:parentActivityName=".appuntamenti.IngaggiActivity"
+            />
 
 
 

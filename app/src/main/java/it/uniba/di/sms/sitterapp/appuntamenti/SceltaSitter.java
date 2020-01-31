@@ -51,6 +51,7 @@ public class SceltaSitter extends DrawerActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // caricamento degli annunci nella recyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
 
