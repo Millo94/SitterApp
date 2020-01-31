@@ -361,7 +361,7 @@ public class PubblicoFamigliaFragment extends Fragment {
     public void requestSMSPermission() {
 
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent(Intent.ACTION_SEND);
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
             intent.setData(Uri.parse("smsto:" + telefono));
             intent.putExtra("sms_body", getString(R.string.sms_testo));
             startActivity(intent);
