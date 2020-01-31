@@ -289,7 +289,7 @@ public class PubblicoFamigliaFragment extends Fragment {
                                                 chatConversationIntent.putExtra("receiverId", receiverId);
                                                 for(DocumentSnapshot docSnap : documentsList){
                                                     List<String> users = (List<String>)docSnap.get("UsersList");
-                                                    if(users.contains(sessionManager.getSessionUid()) && users.contains(receiverId));
+                                                    if(users.contains(sessionManager.getSessionUid()) & users.contains(receiverId))
                                                     code = docSnap.getId();
                                                 }
                                                 chatConversationIntent.putExtra("conversationUID",code);
