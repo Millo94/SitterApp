@@ -3,6 +3,7 @@ package it.uniba.di.sms.sitterapp.appuntamenti;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ import it.uniba.di.sms.sitterapp.oggetti.Notice;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
 import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
 import it.uniba.di.sms.sitterapp.profilo.ProfiloPubblicoActivity;
+import tr.xip.errorview.ErrorView;
 
 /**
  * Sezione per le candidature: assegnare un lavoro a una baby sitter
@@ -44,12 +46,17 @@ public class SceltaSitter extends DrawerActivity
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String idAnnuncio;
     private BottomNavigationView bottomNavigationView;
+    private ErrorView errorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // caricamento degli annunci nella recyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
+
+        //error view in caso non ci siano babysitter candidate
+        errorView = (ErrorView) findViewById(R.id.errorView);
+        errorView.setTitle(R.string.niente_sitter);
 
         sitterList = new ArrayList<>();
         sitterAdapter = new SitterAdapter(SceltaSitter.this, sitterList, SceltaSitter.this);
@@ -85,7 +92,11 @@ public class SceltaSitter extends DrawerActivity
                         final DocumentSnapshot docRef = task.getResult();
                         Notice notice =  docRef.toObject(Notice.class);
                         Map<String, Object> listSitter = notice.getCandidatura();
-                        for(String u : listSitter.keySet()) {
+                        if(listSitter.isEmpty()){
+                            errorView.setVisibility(View.VISIBLE);
+                        }else{
+                            errorView.setVisibility(View.INVISIBLE);
+                            for(String u : listSitter.keySet()) {
                             FirebaseFirestore db2 = FirebaseFirestore.getInstance();
                             db2.collection("utente")
                                     .document(listSitter.get(u).toString())
@@ -104,6 +115,7 @@ public class SceltaSitter extends DrawerActivity
                                         }
                                     });
                             //sitterList.add(new UtenteSitter(u,u,"gs://sitterapp-223aa.appspot.com/img/user_img/de00fa77-e3a6-4fe8-a4bb-f7bda5e4102e",true));
+                        }
                         }
                     }
                 })

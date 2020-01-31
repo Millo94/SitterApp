@@ -1,11 +1,17 @@
 package it.uniba.di.sms.sitterapp.adapter;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -23,9 +29,8 @@ public class RecensioniRicevuteAdapter extends RecyclerView.Adapter<RecensioniRi
 
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView labelDest, username, description, idAnnuncio;
+        private TextView labelDest, username, description;
         private RatingBar ratingBar;
-
         private MyViewHolder(View view) {
             super(view);
             labelDest = (TextView) view.findViewById(R.id.destinatario);
@@ -55,7 +60,7 @@ public class RecensioniRicevuteAdapter extends RecyclerView.Adapter<RecensioniRi
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final Recensione recensione = recensioneList.get(position);
         //attribuzione dei dettagli dell'annuncio alle varie View
-        holder.labelDest.setText("From:");
+        holder.labelDest.setText(R.string.from);
         holder.username.setText(recensione.getSender());
         holder.description.setText(recensione.getDescrizione());
         holder.ratingBar.setRating(recensione.getRating());

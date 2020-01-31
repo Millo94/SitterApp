@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -62,11 +63,14 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
 
     ArrayList<EditText> listaET = new ArrayList<>();
     View view;
+
+    final String STOCK_PATH_PHOTO = "gs://sitterapp-223aa.appspot.com/img/stock_img/placeholder-profile-sq.jpg";
+
     //NomeCompleto, Email, Telefono, Nazione, Citta, dataNascita,
     EditText nomeCompletoET, passwordET, confermaPasswordET, emailET, numeroET, dataNascitaET, cittaET, retribuzioneET;
     //Avatar
     ImageView imgProfile;
-    String pathFoto = "";
+    String pathFoto = STOCK_PATH_PHOTO;
     RadioGroup genereRG;
     Switch autoSW;
     Button confRegistration;
@@ -171,8 +175,6 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
             @Override
             public void onClick(View v) {
 
-
-
                 final CharSequence optionsPicture[] = new CharSequence[]{getString(R.string.takePic), getString(R.string.uploadImg)};
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -187,8 +189,6 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                 builder.setItems(optionsPicture, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
-                        //photoPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
 
                         switch(i){
                             case 0:
@@ -243,7 +243,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                             numeroET.getText().toString(),
                             true,
                             "",
-                            Constants.dateToSQL(dataNascitaET.getText().toString()),
+                            dataNascitaET.getText().toString(),
                             genere,
                             0,
                             0,

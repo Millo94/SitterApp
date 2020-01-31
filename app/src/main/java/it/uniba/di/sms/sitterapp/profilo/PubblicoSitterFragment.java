@@ -183,6 +183,7 @@ public class PubblicoSitterFragment extends Fragment {
                         nazionePuSit2.setText(documentSnapshot.getString("Nazione"));
                         cittaPuSit2.setText(documentSnapshot.getString("Citta"));
                         getRatingSitter(uid);
+                        dataPuSit2.setText(documentSnapshot.getString("babysitter.dataNascita"));
                         tariffaPuSit2.setText(documentSnapshot.getString("babysitter.Retribuzione"));
                         sessoPuSit2.setText(documentSnapshot.getString("babysitter.Genere"));
                         carPuSit2.setText(documentSnapshot.getBoolean("babysitter.Auto")?"Sì":"No");
@@ -377,7 +378,7 @@ public class PubblicoSitterFragment extends Fragment {
     public void requestSMSPermission() {
 
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent(Intent.ACTION_SEND);
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
             intent.setData(Uri.parse("smsto:" + telefono));
             intent.putExtra("sms_body", getString(R.string.sms_testo));
             startActivity(intent);

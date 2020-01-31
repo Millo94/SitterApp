@@ -372,12 +372,25 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(getActivity().getApplicationContext(), R.string.candidateSucces, Toast.LENGTH_SHORT).show();
+                        Intent intentback = new Intent(getContext(),IngaggiActivity.class);
+                        startActivity(intentback);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(getActivity().getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
+                    }
+                });
+        db.collection("utente").document(sessionManager.getSessionUid())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        final Long ingaggi = documentSnapshot.getLong("numLavori");
+                        db.collection("utente")
+                                .document(sessionManager.getSessionUid())
+                                .update("numLavori",ingaggi+1);
                     }
                 });
     }

@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +32,6 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
     private static final String TAG = "RegistrationActivity";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,7 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Map<String,Object> utente = new HashMap<>();
-                            utente.put("Avatar",famiglia.getAvatar());
+                            utente.put("Avatar", famiglia.getAvatar());
                             utente.put("NomeCompleto",famiglia.getName());
                             utente.put("password", famiglia.getPassword());
                             utente.put("Email",famiglia.getEmail());
@@ -157,6 +157,7 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
                             babysitterExtra.put("numLavori", sitter.getNumLavori());
                             babysitterExtra.put("Auto",sitter.getAuto());
                             babysitterExtra.put("Retribuzione", sitter.getRetribuzioneOra());
+                            babysitterExtra.put("Disponibilita", new ArrayList<Long>());
                             utente.put("babysitter",babysitterExtra);
 
                             FirebaseUser firebaseUser = mAuth.getCurrentUser();

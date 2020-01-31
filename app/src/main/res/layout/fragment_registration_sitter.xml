@@ -39,7 +39,7 @@
                 android:layout_marginEnd="5dp"
                 android:clickable="true"
                 android:padding="15dp"
-                android:src="@drawable/ic_account_circle_black_56dp" />
+                android:src="@drawable/edit_image" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/nomeCompletoSitter"
@@ -213,7 +213,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@string/uomo" />
+                    android:text="@string/uomo"
+                    android:textSize="18sp" />
 
                 <RadioButton
                     android:id="@+id/femaleSitterReg"
@@ -221,7 +222,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/donna" />
+                    android:text="@string/donna"
+                    android:textSize="18sp" />
 
             </RadioGroup>
 

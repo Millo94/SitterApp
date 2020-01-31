@@ -164,7 +164,7 @@
     <item name="visible" type="id" />
     <item name="masked" type="id" />
 
-
+    <string name="from">From:</string>
     <string name="scaduto">Expired</string>
     <string name="in_attesa">Waiting for confirm</string>
     <string name="confermato">Confirmed</string>
@@ -206,5 +206,6 @@
     <string name="copied_message">Message copied!</string>
     <string name="sender">sender</string>
     <string name="receiver">receiver</string>
+    <string name="To">To:</string>
 
 </resources>

@@ -13,7 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -36,15 +39,18 @@ public class IngaggiDaRecensireActivity extends DrawerActivity implements Notice
     protected SessionManager sessionManager;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    private final String SELECTED = "selected";
     //Items ingaggi
     private List<Notice> noticeList;
     private Queue<Notice> remainingNoticeList;
     private NoticeAdapter noticeAdapter;
+    private ErrorView errorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sessionManager = new SessionManager(getApplicationContext());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
 
@@ -53,12 +59,20 @@ public class IngaggiDaRecensireActivity extends DrawerActivity implements Notice
         noticeAdapter = new NoticeAdapter(IngaggiDaRecensireActivity.this, noticeList, IngaggiDaRecensireActivity.this);
         remainingNoticeList = new LinkedList<>();
 
+        //BottomNavigationView
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigationView.getMenu().findItem(getIntent().getIntExtra(SELECTED,R.id.nav_recensioni)).setChecked(true);
+
         recyclerView.setAdapter(noticeAdapter);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        //errorview in caso non ci siano annunci da recensire
+        errorView = (ErrorView) findViewById(R.id.errorView);
+        errorView.setSubtitle(R.string.niente_annunci);
         //caricamento di annunci
         caricaNotices();
 
@@ -98,26 +112,36 @@ public class IngaggiDaRecensireActivity extends DrawerActivity implements Notice
                         progressDialog.dismiss();
                         if (task.isSuccessful()) {
                             if (task.getResult().isEmpty()) {
-                                ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
-                                errorView.setSubtitle(R.string.niente_annunci);
                                 errorView.setVisibility(View.VISIBLE);
                             } else {
-
-                                String username;
                                 //visualizza gli ingaggi effettutati
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     document.getData();
-                                    Notice notice = document.toObject(Notice.class);
+                                    final Notice notice = document.toObject(Notice.class);
+                                    db.collection("recensione")
+                                            .whereEqualTo("idAnnuncio",notice.getIdAnnuncio())
+                                            .whereEqualTo("sender",sessionManager.getSessionUid())
+                                            .get()
+                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onSuccess(QuerySnapshot querySnapshot) {
+                                                    List<DocumentSnapshot> reviewList = querySnapshot.getDocuments();
+                                                    if(reviewList.isEmpty()){
+                                                        if (noticeAdapter.annuncioScaduto(notice) == true) {
+                                                            errorView.setVisibility(View.INVISIBLE);
+                                                            noticeList.add(notice);
+                                                            noticeAdapter.notifyDataSetChanged();
+                                                        }
+                                                    }else{
+                                                        errorView.setVisibility(View.VISIBLE);
+                                                    }
+                                                }
+                                            });
                                     //mostra solo gli ingaggi già completati (ovvero scaduti) per recensirli
-                                    if (noticeAdapter.annuncioScaduto(notice) == true) {
-                                        noticeList.add(notice);
-                                    }
+
                                 }
 
                             }
-
-                            noticeAdapter.notifyDataSetChanged();
-
                         } else {
 
                             Toast.makeText(getApplicationContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
@@ -128,8 +152,7 @@ public class IngaggiDaRecensireActivity extends DrawerActivity implements Notice
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        //TODO sostiture "Errore" con la stringa di riferimento
-                        Toast.makeText(getApplicationContext(), "Errore", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
                     }
                 });
 

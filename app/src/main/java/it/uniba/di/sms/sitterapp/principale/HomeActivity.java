@@ -122,12 +122,12 @@ public class HomeActivity extends DrawerActivity
         if (type == Constants.TYPE_SITTER) {
 
             noticeList = new ArrayList<>();
-            noticeList.add(new Notice("1", "Ladisa","2020-01-02", "17.00", "20.00", "Ho bisogno di qualcuno che badi ai miei figli mentre faccio la spesa."));
-            noticeList.add(new Notice("2", "Luprano", "2020-02-01", "07.30", "12.30", "Cerco babysitter che badi a mio figlio durante il mio turno di lavoro."));
-            noticeList.add(new Notice("3", "Deperte", "2020-01-04", "13.00", "16.00", "Cercasi babysitter per i miei due figli."));
-            noticeList.add(new Notice("4", "Angarano", "2020-02-05", "19.00", "22.00", "Ho bisogno di una babysitter che prepari la cena per mia figlia"));
-            noticeList.add(new Notice("5", "Cuccovillo", "2020-01-11", "18.00", "21.00", "Cercasi tata per i miei tre figli."));
-            noticeList.add(new Notice("6", "Loiacono", "2020-02-18", "09.00", "13.00", "La mia tata è impegnata, e ho bisogno di una sostituta per un giorno."));
+            noticeList.add(new Notice("1", "mprR1ipx4WaDxDJPMhDWL7bHP4E3","2020-01-02", "17.00", "20.00", "Ho bisogno di qualcuno che badi ai miei figli mentre faccio la spesa."));
+            noticeList.add(new Notice("2", "1uqr4Gf4MiPcdFrMd1KXILGf1i32", "2020-02-01", "07.30", "12.30", "Cerco babysitter che badi a mio figlio durante il mio turno di lavoro."));
+            noticeList.add(new Notice("3", "Z8rFjbxGUDOLFHvWXGkSyDfq1R32", "2020-01-04", "13.00", "16.00", "Cercasi babysitter per i miei due figli."));
+            noticeList.add(new Notice("4", "mprR1ipx4WaDxDJPMhDWL7bHP4E3", "2020-02-05", "19.00", "22.00", "Ho bisogno di una babysitter che prepari la cena per mia figlia"));
+            noticeList.add(new Notice("5", "1uqr4Gf4MiPcdFrMd1KXILGf1i32", "2020-01-11", "18.00", "21.00", "Cercasi tata per i miei tre figli."));
+            noticeList.add(new Notice("6", "Z8rFjbxGUDOLFHvWXGkSyDfq1R32", "2020-02-18", "09.00", "13.00", "La mia tata è impegnata, e ho bisogno di una sostituta per un giorno."));
             noticeHomeAdapter = new NoticeHomeAdapter(HomeActivity.this, noticeList, HomeActivity.this);
 
             recyclerView.setAdapter(noticeHomeAdapter);
@@ -242,43 +242,6 @@ public class HomeActivity extends DrawerActivity
     private void caricaSitter(){
 
         CollectionReference colRef = db.collection("utente");
-        /**
-        colRef
-                .whereEqualTo("tipoUtente", Constants.TYPE_SITTER)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        if(e != null){
-                            Log.i(TAG,e.getMessage());
-                            Toast.makeText(HomeActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
-
-                        }else {
-                            sitterList.clear();
-                            Iterator<QueryDocumentSnapshot> iterableSitter = queryDocumentSnapshots.iterator();
-                            ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
-                            if (!iterableSitter.hasNext()) {
-                                errorView.setTitle(R.string.niente_sitter);
-                                errorView.setVisibility(View.VISIBLE);
-                            } else {
-                            errorView.setVisibility(View.INVISIBLE);
-                            while (iterableSitter.hasNext()) {
-                                DocumentSnapshot documentSnapshot = iterableSitter.next();
-                                UtenteSitter bs = new UtenteSitter(
-                                        documentSnapshot.getId(),
-                                        (String) documentSnapshot.get("NomeCompleto"),
-                                        (String) documentSnapshot.get("Avatar"),
-                                        documentSnapshot.getBoolean("online"),
-                                        Float.valueOf(documentSnapshot.get("babysitter.Rating").toString()),
-                                        Integer.valueOf(documentSnapshot.get("babysitter.numLavori").toString()));
-
-                                sitterList.add(bs);
-                            }
-                            sitterAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    }
-                });
-        */
         colRef
                 .whereEqualTo("tipoUtente", Constants.TYPE_SITTER)
                 .get()
@@ -290,8 +253,8 @@ public class HomeActivity extends DrawerActivity
                             sitterList.clear();
                             Iterator<QueryDocumentSnapshot> querySnapshotIterator = querySnapshot.iterator();
                             ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
+                            errorView.setTitle(R.string.niente_sitter);
                             if (!querySnapshotIterator.hasNext()) {
-                                errorView.setTitle(R.string.niente_sitter);
                                 errorView.setVisibility(View.VISIBLE);
                             } else {
                                 errorView.setVisibility(View.INVISIBLE);

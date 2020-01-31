@@ -59,8 +59,13 @@ public class Recensione {
         return sender;
     }
 
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
 
-
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
 }
 
 

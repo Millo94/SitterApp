@@ -133,12 +133,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/visualCandidate"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="10dp"
-        android:textSize="@dimen/button_text_size"
-        android:backgroundTint="@color/red"
+        android:layout_marginRight="16dp"
+        android:backgroundTint="@android:color/holo_red_dark"
         android:text="@string/eliminaAnnuncio"
-        android:textColor="@android:color/background_light" />
+        android:textColor="@android:color/background_light"
+        android:textSize="@dimen/button_text_size" />
 
 
 

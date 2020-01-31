@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -77,13 +78,6 @@ public class RecensioniScritteFragment extends Fragment {
     private void ReviewScritte() {
 
 
-        final ProgressDialog progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-        progressDialog.dismiss();
-
-
         db.collection("recensione")
                 .whereEqualTo("sender", sessionManager.getSessionUid())
                 .get()
@@ -98,12 +92,19 @@ public class RecensioniScritteFragment extends Fragment {
                             errorView.setVisibility(View.GONE);
                             Iterator<QueryDocumentSnapshot> iterableReview = queryDocumentSnapshots.iterator();
                             while(iterableReview.hasNext()){
-                                DocumentSnapshot documentSnapshot = iterableReview.next();
-                                Recensione recensione = documentSnapshot.toObject(Recensione.class);
-                                recensioneList.add(recensione);
+                                final DocumentSnapshot docSnap = iterableReview.next();
+                                db.collection("utente").document(docSnap.getString("receiver"))
+                                        .get()
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                Recensione recensione = docSnap.toObject(Recensione.class);
+                                                recensione.setReceiver(documentSnapshot.getString("NomeCompleto"));
+                                                recensioneList.add(recensione);
+                                                adapter.notifyDataSetChanged();
+                                            }
+                                        });
                             }
-
-                            adapter.notifyDataSetChanged();
                         }
                     }
 
@@ -111,8 +112,7 @@ public class RecensioniScritteFragment extends Fragment {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        //TODO Sostituire "Errore" con la stringa di errore di riferimento.
-                        //Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
