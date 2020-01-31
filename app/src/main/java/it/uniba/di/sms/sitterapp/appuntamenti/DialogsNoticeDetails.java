@@ -372,6 +372,8 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(getActivity().getApplicationContext(), R.string.candidateSucces, Toast.LENGTH_SHORT).show();
+                        Intent intentback = new Intent(getContext(),IngaggiActivity.class);
+                        startActivity(intentback);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

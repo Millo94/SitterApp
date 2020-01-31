@@ -149,19 +149,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                         numeroPrSit2.setText(documentSnapshot.getString("Telefono"));
                         carPrSit2.setChecked(documentSnapshot.getBoolean("babysitter.Auto"));
                         sessoPrSit2.setText(documentSnapshot.getString("babysitter.Genere"));
-
-                        String ds1 = documentSnapshot.getString("babysitter.dataNascita");
-                        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd");
-                        SimpleDateFormat sdf2 = new SimpleDateFormat("dd-mm-yyyy");
-                        String ds2 = null;
-
-                        try {
-                            ds2 = sdf2.format(sdf1.parse(ds1));
-                        } catch (ParseException p) {
-                            p.printStackTrace();
-                        }
-
-                        dataPrSit2.setText(ds2);
+                        dataPrSit2.setText(documentSnapshot.getString("babysitter.dataNascita"));
                         ingaggiPrSit2.setText(documentSnapshot.get("babysitter.numLavori").toString());
                         getRatingSitter(sessionManager.getSessionUid());
                         tariffaPrSit2.setText(documentSnapshot.getString("babysitter.Retribuzione"));
