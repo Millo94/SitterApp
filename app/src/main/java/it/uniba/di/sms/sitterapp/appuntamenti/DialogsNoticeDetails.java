@@ -382,6 +382,17 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                         Toast.makeText(getActivity().getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
                     }
                 });
+        db.collection("utente").document(sessionManager.getSessionUid())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        final Long ingaggi = documentSnapshot.getLong("numLavori");
+                        db.collection("utente")
+                                .document(sessionManager.getSessionUid())
+                                .update("numLavori",ingaggi+1);
+                    }
+                });
     }
 
 }
