@@ -116,7 +116,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
             builder.setView(view)
                     .setTitle(R.string.dettaglioAnnuncio)
-                    .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
@@ -196,13 +196,13 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
             builder.setTitle(R.string.candidami)
                     .setMessage(R.string.confermaCandidatura)
-                    .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
                         }
                     })
-                    .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             candidaSitter();
@@ -222,13 +222,13 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
             builder.setTitle(R.string.confermaCandidaturaSit)
                     .setMessage(R.string.confermaConfermaCandidaturaSit)
-                    .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
                         }
                     })
-                    .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //va aggiunto TRUE al campo conferma nella collezione annuncio
@@ -249,13 +249,13 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
             builder.setTitle(R.string.eliminaCandidatura)
                     .setMessage(R.string.confermaEliminaCandidatura)
-                    .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
                         }
                     })
-                    .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 

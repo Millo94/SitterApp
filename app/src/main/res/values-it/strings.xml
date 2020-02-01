@@ -181,6 +181,7 @@
     <string name="To">A:</string>
     <string name="from">Da:</string>
     <string name="back">Indietro</string>
+    <string name="confirm">Conferma</string>
 
 
 </resources>
