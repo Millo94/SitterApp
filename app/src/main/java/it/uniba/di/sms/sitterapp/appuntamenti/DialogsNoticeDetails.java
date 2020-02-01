@@ -342,26 +342,40 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     }
 
     private void eliminaCandidatura(){
+
+
+        //elimina la sitter nel caso in cui fosse stata scelta dalla famiglia
+        db.collection("annuncio").document(idAnnuncio)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                          @Override
+                                          public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                              if(documentSnapshot.getString("sitter").equals(sessionManager.getSessionUid())){
+                                                  db.collection("annuncio").document(idAnnuncio).update("sitter","");
+                                              }
+                                          }
+                                      });
+
+        //elimina la babysitter dalla lista delle candidate
         Map<String, Object> deleteSitter = new HashMap<>();
         deleteSitter.put("candidatura."+ sessionManager.getSessionUid(), FieldValue.delete());
-
         db.collection("annuncio")
-                .document(idAnnuncio)
-                .update(deleteSitter)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(getActivity().getApplicationContext(), R.string.deleteSuccess, Toast.LENGTH_SHORT).show();
-                        Intent intentback = new Intent(getContext(),IngaggiActivity.class);
-                        startActivity(intentback);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity().getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                                .document(idAnnuncio)
+                                .update(deleteSitter)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(getActivity().getApplicationContext(), R.string.deleteSuccess, Toast.LENGTH_SHORT).show();
+                                        Intent intentback = new Intent(getContext(), IngaggiActivity.class);
+                                        startActivity(intentback);
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getActivity().getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
     }
 
     private void confermaCandidatura(){

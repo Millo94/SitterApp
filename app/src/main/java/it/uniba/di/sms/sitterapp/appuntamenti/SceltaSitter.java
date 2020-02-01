@@ -164,13 +164,13 @@ public class SceltaSitter extends DrawerActivity
 
                         builder.setTitle(R.string.assegnaIncarico)
                                 .setMessage(R.string.confermaIncarico)
-                                .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                                .setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
                                     }
                                 })
-                                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         chooseSitter(sitter.getId());
