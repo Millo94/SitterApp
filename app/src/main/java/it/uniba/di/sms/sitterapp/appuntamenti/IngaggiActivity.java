@@ -37,6 +37,7 @@ import it.uniba.di.sms.sitterapp.adapter.NoticeAdapter;
 import it.uniba.di.sms.sitterapp.oggetti.Notice;
 import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
 import it.uniba.di.sms.sitterapp.principale.NewNoticeActivity;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 import tr.xip.errorview.ErrorView;
 
 public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.NoticeAdapterListener {
@@ -106,11 +107,11 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         progressDialog.show();
 
 
-        CollectionReference colRef = db.collection("annuncio");
+        CollectionReference colRef = db.collection(FirebaseDb.ENGAGES);
 
         if(sessionManager.getSessionType() == Constants.TYPE_FAMILY){
             colRef
-                    .whereEqualTo("family", sessionManager.getSessionUid())
+                    .whereEqualTo(FirebaseDb.ENGAGES_FAMIGLIA, sessionManager.getSessionUid())
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -132,14 +133,14 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
 
                                         DocumentSnapshot documentSnapshot = listNotice.next();
                                         Notice notice = new Notice(documentSnapshot.getId(),
-                                                documentSnapshot.getString("family"),
-                                                documentSnapshot.getString("date"),
-                                                documentSnapshot.getString("start_time"),
-                                                documentSnapshot.getString("end_time"),
-                                                documentSnapshot.getString("description"),
-                                                documentSnapshot.getString("sitter"),
-                                                (Map<String, Object>) documentSnapshot.get("candidatura"),
-                                                documentSnapshot.getBoolean("conferma"));
+                                                documentSnapshot.getString(FirebaseDb.ENGAGES_FAMIGLIA),
+                                                documentSnapshot.getString(FirebaseDb.ENGAGES_DATA),
+                                                documentSnapshot.getString(FirebaseDb.ENGAGES_ORAINIZIO),
+                                                documentSnapshot.getString(FirebaseDb.ENGAGES_ORAFINE),
+                                                documentSnapshot.getString(FirebaseDb.ENGAGES_DESCRIZIONE),
+                                                documentSnapshot.getString(FirebaseDb.ENGAGES_SITTER),
+                                                (Map<String, Object>) documentSnapshot.get(FirebaseDb.ENGAGE_CANDIDATURA),
+                                                documentSnapshot.getBoolean(FirebaseDb.ENGAGES_CONFERMA));
                                         noticeList.add(notice);
                                     }
                                     noticeAdapter.notifyDataSetChanged();
@@ -150,7 +151,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
 
         }else{
             colRef
-                    .whereEqualTo("candidatura." + sessionManager.getSessionUid(), sessionManager.getSessionUid())
+                    .whereEqualTo(FirebaseDb.ENGAGE_CANDIDATURA+"." + sessionManager.getSessionUid(), sessionManager.getSessionUid())
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -172,14 +173,14 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                                     while (listNotice.hasNext()) {
                                         DocumentSnapshot documentSnapshot = listNotice.next();
                                         Notice notice = new Notice(documentSnapshot.getId(),
-                                                documentSnapshot.getString("family"),
-                                                documentSnapshot.getString("date"),
-                                                documentSnapshot.getString("start_time"),
-                                                documentSnapshot.getString("end_time"),
-                                                documentSnapshot.getString("description"),
-                                                documentSnapshot.getString("sitter"),
-                                                (Map<String, Object>) documentSnapshot.get("candidatura"),
-                                                documentSnapshot.getBoolean("conferma"));
+                                                documentSnapshot.getString(FirebaseDb.ENGAGES_FAMIGLIA),
+                                                documentSnapshot.getString(FirebaseDb.ENGAGES_DATA),
+                                                documentSnapshot.getString(FirebaseDb.ENGAGES_ORAINIZIO),
+                                                documentSnapshot.getString(FirebaseDb.ENGAGES_ORAFINE),
+                                                documentSnapshot.getString(FirebaseDb.ENGAGES_DESCRIZIONE),
+                                                documentSnapshot.getString(FirebaseDb.ENGAGES_SITTER),
+                                                (Map<String, Object>) documentSnapshot.get(FirebaseDb.ENGAGE_CANDIDATURA),
+                                                documentSnapshot.getBoolean(FirebaseDb.ENGAGES_CONFERMA));
                                         noticeList.add(notice);
                                     }
                                     noticeAdapter.notifyDataSetChanged();

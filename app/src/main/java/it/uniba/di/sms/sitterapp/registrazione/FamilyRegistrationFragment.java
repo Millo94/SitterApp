@@ -43,6 +43,7 @@ import java.util.regex.Pattern;
 
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteFamiglia;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -52,10 +53,9 @@ public class FamilyRegistrationFragment extends Fragment {
 
     ArrayList<EditText> listaET = new ArrayList<>();
     View view;
-    final String STOCK_PATH_PHOTO = "gs://sitterapp-223aa.appspot.com/img/stock_img/placeholder-profile-sq.jpg";
     Spinner nazioni;
     String arraypaesi[];
-    String pathFoto = STOCK_PATH_PHOTO;
+    String pathFoto = FirebaseDb.STOCK_PATH_PHOTO;
     EditText nomeCompletoET, passwordET, confermaPasswordET, emailET, numeroET, cittaET, numFigliET;
     ImageView imgProfile;
     TextView nazioneET;
@@ -113,7 +113,7 @@ public class FamilyRegistrationFragment extends Fragment {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
                 builder.setTitle(R.string.choosePic);
-                builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -264,7 +264,7 @@ public class FamilyRegistrationFragment extends Fragment {
 
             // Defining the child of storageReference
 
-            storageRef.child("img/user_img/" + randUid)
+            storageRef.child(FirebaseDb.LOCAL_USERIMAGE_PATH + randUid)
                     .putFile(selectedImage)
                     .addOnSuccessListener(
                             new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -288,7 +288,7 @@ public class FamilyRegistrationFragment extends Fragment {
 
         } else {
 
-            storageRef.child("img/user_img/" + randUid)
+            storageRef.child(FirebaseDb.LOCAL_USERIMAGE_PATH + randUid)
                     .putFile(getImageUri(getContext(), sImage))
                     .addOnSuccessListener(
                             new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -312,7 +312,7 @@ public class FamilyRegistrationFragment extends Fragment {
 
         }
 
-        pathFoto = storageRef.child("img/user_img/" + randUid).toString();
+        pathFoto = storageRef.child(FirebaseDb.LOCAL_USERIMAGE_PATH + randUid).toString();
 
     }
 

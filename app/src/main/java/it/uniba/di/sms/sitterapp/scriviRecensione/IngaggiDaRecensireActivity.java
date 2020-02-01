@@ -32,6 +32,7 @@ import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.adapter.NoticeAdapter;
 import it.uniba.di.sms.sitterapp.oggetti.Notice;
 import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 import tr.xip.errorview.ErrorView;
 
 public class IngaggiDaRecensireActivity extends DrawerActivity implements NoticeAdapter.NoticeAdapterListener {
@@ -101,10 +102,10 @@ public class IngaggiDaRecensireActivity extends DrawerActivity implements Notice
 
         /**recupera gli annunci eseguiti */
 
-        db.collection("annuncio")
-                .whereEqualTo(sessionManager.getSessionType() == Constants.TYPE_SITTER ? "sitter" : "family", sessionManager.getSessionUid())
+        db.collection(FirebaseDb.ENGAGES)
+                .whereEqualTo(sessionManager.getSessionType() == Constants.TYPE_SITTER ? FirebaseDb.ENGAGES_SITTER : FirebaseDb.ENGAGES_FAMIGLIA, sessionManager.getSessionUid())
                 //aggiunto controllo per recuperare solo annunci con conferma
-                .whereEqualTo("conferma", true)
+                .whereEqualTo(FirebaseDb.ENGAGES_CONFERMA, true)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -118,9 +119,9 @@ public class IngaggiDaRecensireActivity extends DrawerActivity implements Notice
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     document.getData();
                                     final Notice notice = document.toObject(Notice.class);
-                                    db.collection("recensione")
-                                            .whereEqualTo("idAnnuncio",notice.getIdAnnuncio())
-                                            .whereEqualTo("sender",sessionManager.getSessionUid())
+                                    db.collection(FirebaseDb.REVIEWS)
+                                            .whereEqualTo(FirebaseDb.REVIEW_IDANNUNCIO,notice.getIdAnnuncio())
+                                            .whereEqualTo(FirebaseDb.REVIEW_SENDER,sessionManager.getSessionUid())
                                             .get()
                                             .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                                 @Override

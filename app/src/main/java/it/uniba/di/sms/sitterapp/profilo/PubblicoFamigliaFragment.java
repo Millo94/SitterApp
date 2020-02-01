@@ -56,12 +56,12 @@ import java.util.List;
 import java.util.Map;
 
 import it.uniba.di.sms.sitterapp.Constants;
-import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.chat.ChatConversationActivity;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteFamiglia;
 import it.uniba.di.sms.sitterapp.recensioni.RecensioniPubblicoActivity;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 
 /**
  * FRAGMENT PROFILO PUBBLICO FAMIGLIA
@@ -143,25 +143,25 @@ public class PubblicoFamigliaFragment extends Fragment {
 
     private void mostraProfilo(final String uid){
 
-        db.collection("utente")
+        db.collection(FirebaseDb.USERS)
                 .document(uid)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         receiverId = documentSnapshot.getId();
-                        imageLoader.loadImage((ImageView)getActivity().findViewById(R.id.imagePuFamiglia),documentSnapshot.getString("Avatar"),null);
-                        nomeCompletoPuFam.setText(documentSnapshot.getString("NomeCompleto"));
-                        emailPuFam2.setText((documentSnapshot.getString("Email")));
-                        email = documentSnapshot.getString("Email");
-                        numeroPuFam2.setText(documentSnapshot.getString("Telefono"));
-                        telefono = documentSnapshot.getString("Telefono");
-                        nazionePuFam2.setText(documentSnapshot.getString("Nazione"));
-                        cittaPuFam2.setText(documentSnapshot.getString("Citta"));
-                        ratingPuFam.setRating(documentSnapshot.getDouble("famiglia.rating").floatValue());
-                        animaliPuFam2.setText(documentSnapshot.getBoolean("famiglia.Animali")?"Sì":"No");
-                        numFigliPuFam2.setText(documentSnapshot.getString("famiglia.numFigli"));
-                        descrPuFam.setText(documentSnapshot.getString("Descrizione"));
+                        imageLoader.loadImage((ImageView)getActivity().findViewById(R.id.imagePuFamiglia),documentSnapshot.getString(FirebaseDb.USER_AVATAR),null);
+                        nomeCompletoPuFam.setText(documentSnapshot.getString(FirebaseDb.USER_NOME_COMPLETO));
+                        emailPuFam2.setText((documentSnapshot.getString(FirebaseDb.USER_EMAIL)));
+                        email = documentSnapshot.getString(FirebaseDb.USER_EMAIL);
+                        numeroPuFam2.setText(documentSnapshot.getString(FirebaseDb.USER_TELEFONO));
+                        telefono = documentSnapshot.getString(FirebaseDb.USER_TELEFONO);
+                        nazionePuFam2.setText(documentSnapshot.getString(FirebaseDb.USER_NAZIONE));
+                        cittaPuFam2.setText(documentSnapshot.getString(FirebaseDb.USER_CITTA));
+                        ratingPuFam.setRating(documentSnapshot.getDouble(FirebaseDb.FAMIGLIA+"."+FirebaseDb.FAMIGLIA_RATING).floatValue());
+                        animaliPuFam2.setText(documentSnapshot.getBoolean(FirebaseDb.FAMIGLIA+"."+FirebaseDb.FAMIGLIA_ANIMALI)?R.string.yes:R.string.no);
+                        numFigliPuFam2.setText(documentSnapshot.getString(FirebaseDb.FAMIGLIA+"."+FirebaseDb.FAMIGLIA_NUMFIGLI));
+                        descrPuFam.setText(documentSnapshot.getString(FirebaseDb.USER_DESCRIZIONE));
 
                     }
                 })
@@ -214,7 +214,7 @@ public class PubblicoFamigliaFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                 builder.setTitle(R.string.sceltaAzione);
-                builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -246,7 +246,7 @@ public class PubblicoFamigliaFragment extends Fragment {
                                 break;
                             case 3:
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                db.collection("chat")
+                                db.collection(FirebaseDb.CHAT)
                                         .get()
                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                             @Override
@@ -259,7 +259,7 @@ public class PubblicoFamigliaFragment extends Fragment {
                                                 chatConversationIntent.putExtra("senderId",sessionManager.getSessionUid());
                                                 chatConversationIntent.putExtra("receiverId", receiverId);
                                                 for(DocumentSnapshot docSnap : documentsList){
-                                                    List<String> users = (List<String>)docSnap.get("UsersList");
+                                                    List<String> users = (List<String>)docSnap.get(FirebaseDb.CHAT_USERSLIST);
                                                     if(users.contains(sessionManager.getSessionUid()) & users.contains(receiverId)){
                                                         code = docSnap.getId();
                                                     }
@@ -308,13 +308,13 @@ public class PubblicoFamigliaFragment extends Fragment {
                 new AlertDialog.Builder(getContext())
                         .setTitle(R.string.permessoRichiesto)
                         .setMessage(R.string.stringPermissionRequest)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, CALL_PERMISSION);
                             }
                         })
-                        .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -345,13 +345,13 @@ public class PubblicoFamigliaFragment extends Fragment {
                 new AlertDialog.Builder(getContext())
                         .setTitle(R.string.permessoRichiesto)
                         .setMessage(R.string.stringPermissionRequest)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.SEND_SMS}, SEND_SMS_PEMISSION);
                             }
                         })
-                        .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();

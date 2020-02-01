@@ -65,7 +65,7 @@ import it.uniba.di.sms.sitterapp.chat.messages.CustomOutcomingTextMessageViewHol
 import it.uniba.di.sms.sitterapp.oggetti.Message;
 import it.uniba.di.sms.sitterapp.oggetti.User;
 import it.uniba.di.sms.sitterapp.utils.AppUtils;
-
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 
 
 public class ChatConversationActivity extends AppCompatActivity
@@ -116,8 +116,8 @@ public class ChatConversationActivity extends AppCompatActivity
             userList.add(senderId);
             userList.add(receiverId);
             Map<String,Object> mapUserList = new HashMap<>();
-            mapUserList.put("UsersList",userList);
-            db.collection("chat").add(mapUserList)
+            mapUserList.put(FirebaseDb.CHAT_USERSLIST,userList);
+            db.collection(FirebaseDb.CHAT).add(mapUserList)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
@@ -189,21 +189,21 @@ public class ChatConversationActivity extends AppCompatActivity
         if(TOTAL_MESSAGES_COUNT == 0)loadMessages();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("chat").document(CONVERSATION_UID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        db.collection(FirebaseDb.CHAT).document(CONVERSATION_UID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 if (e != null) {
                     Log.i(TAG,e.getMessage());
                 } else {
-                    Map<String, ?> mapMessage = (HashMap<String, ?>) documentSnapshot.get("lastMessage");
+                    Map<String, ?> mapMessage = (HashMap<String, ?>) documentSnapshot.get(FirebaseDb.CHAT_LASTMESSAGE);
                     if (mapMessage != null) {
-                        String textMessage = (String) mapMessage.get("text");
-                        User userMessage = new User(documentSnapshot.getString("lastMessage.user.id"),
-                                documentSnapshot.getString("lastMessage.user.name"),
-                                documentSnapshot.getString("lastMessage.user.avatar"),
-                                documentSnapshot.getBoolean("lastMessage.user.online"));
-                        String idMessage = (String) mapMessage.get("id");
-                        Date dateMessage = ((Timestamp) mapMessage.get("timestamp")).toDate();
+                        String textMessage = (String) mapMessage.get(FirebaseDb.LASTMESSAGE_TEXT);
+                        User userMessage = new User(documentSnapshot.getString(FirebaseDb.CHAT_LASTMESSAGE+"."+FirebaseDb.LASTMESSAGE_USER+"."+FirebaseDb.LASTMESSAGE_USER_ID),
+                                documentSnapshot.getString(FirebaseDb.CHAT_LASTMESSAGE+"."+FirebaseDb.LASTMESSAGE_USER+"."+FirebaseDb.LASTMESSAGE_USER_NAME),
+                                documentSnapshot.getString(FirebaseDb.CHAT_LASTMESSAGE+"."+FirebaseDb.LASTMESSAGE_USER+"."+FirebaseDb.LASTMESSAGE_USER_AVATAR),
+                                documentSnapshot.getBoolean(FirebaseDb.CHAT_LASTMESSAGE+"."+FirebaseDb.LASTMESSAGE_USER+"."+FirebaseDb.LASTMESSAGE_USER_ONLINE));
+                        String idMessage = (String) mapMessage.get(FirebaseDb.LASTMESSAGE_ID);
+                        Date dateMessage = ((Timestamp) mapMessage.get(FirebaseDb.LASTMESSAGE_TIMESTAMP)).toDate();
                         Message message = new Message(idMessage, userMessage, textMessage, dateMessage);
                         if(lastMessage == null)lastMessage=message;
                         //verifica che il messaggio successivo sia diverso da quello precedente
@@ -277,10 +277,10 @@ public class ChatConversationActivity extends AppCompatActivity
 
     protected void loadMessages() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("chat")
+        db.collection(FirebaseDb.CHAT)
                 .document(CONVERSATION_UID)
-                .collection("Messages")
-                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .collection(FirebaseDb.CHAT_MESSAGES)
+                .orderBy(FirebaseDb.CHAT_MESSAGES_TIMESTAMP, Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -292,15 +292,15 @@ public class ChatConversationActivity extends AppCompatActivity
                                 TOTAL_MESSAGES_COUNT = documentSnapshotList.size();
                                 for(int i=0;i<TOTAL_MESSAGES_COUNT;++i){
                                     DocumentSnapshot SnapshotMessageList = documentSnapshotList.get(i);
-                                    String textMessage = (String) SnapshotMessageList.get("text");
+                                    String textMessage = (String) SnapshotMessageList.get(FirebaseDb.CHAT_MESSAGES_TEXT);
                                     User userMessage;
-                                    if(SnapshotMessageList.getString("user").equals(senderId)){
+                                    if(SnapshotMessageList.getString(FirebaseDb.CHAT_MESSAGES_USER).equals(senderId)){
                                         userMessage = senderUser;
                                     }else{
                                         userMessage = receiverUser;
                                     }
                                     String idMessage = String.valueOf(i);
-                                    Date dateMessage = ((Timestamp) SnapshotMessageList.get("timestamp")).toDate();
+                                    Date dateMessage = ((Timestamp) SnapshotMessageList.get(FirebaseDb.CHAT_MESSAGES_TIMESTAMP)).toDate();
                                     Message message = new Message(idMessage,userMessage,textMessage,dateMessage);
 
                                     messageArrayList.add(message);
@@ -342,25 +342,25 @@ public class ChatConversationActivity extends AppCompatActivity
         TOTAL_MESSAGES_COUNT++;
 
         Map<String,Object> message = new HashMap<>();
-        message.put("text",input.toString());
+        message.put(FirebaseDb.CHAT_MESSAGES_TEXT,input.toString());
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date);
-        message.put("timestamp",timestamp);
-        message.put("user",senderId);
+        message.put(FirebaseDb.CHAT_MESSAGES_TIMESTAMP,timestamp);
+        message.put(FirebaseDb.CHAT_MESSAGES_USER,senderId);
 
         Map<String,Object> lastMsg = new HashMap<>();
-        lastMsg.put("text",input.toString());
-        lastMsg.put("id",String.valueOf(TOTAL_MESSAGES_COUNT));
-        lastMsg.put("timestamp",timestamp);
+        lastMsg.put(FirebaseDb.LASTMESSAGE_TEXT,input.toString());
+        lastMsg.put(FirebaseDb.LASTMESSAGE_ID,String.valueOf(TOTAL_MESSAGES_COUNT));
+        lastMsg.put(FirebaseDb.LASTMESSAGE_TIMESTAMP,timestamp);
         Map<String,Object> user = new HashMap<>();
-        user.put("id",senderUser.getId());
-        user.put("name",senderUser.getName());
-        user.put("avatar",senderUser.getAvatar());
-        user.put("online",senderUser.isOnline());
-        lastMsg.put("user",user);
+        user.put(FirebaseDb.LASTMESSAGE_USER_ID,senderUser.getId());
+        user.put(FirebaseDb.LASTMESSAGE_USER_NAME,senderUser.getName());
+        user.put(FirebaseDb.LASTMESSAGE_USER_AVATAR,senderUser.getAvatar());
+        user.put(FirebaseDb.LASTMESSAGE_USER_ONLINE,senderUser.isOnline());
+        lastMsg.put(FirebaseDb.LASTMESSAGE_USER,user);
 
         Map<String,Object> mapLastMessage = new HashMap<>();
-        mapLastMessage.put("lastMessage",lastMsg);
+        mapLastMessage.put(FirebaseDb.CHAT_LASTMESSAGE,lastMsg);
 
         String textMessage = (String) input.toString();
         User userMessage = new User(senderUser.getId(),
@@ -375,8 +375,8 @@ public class ChatConversationActivity extends AppCompatActivity
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("chat").document(CONVERSATION_UID).collection("Messages").add(message);
-        db.collection("chat").document(CONVERSATION_UID).update(mapLastMessage);
+        db.collection(FirebaseDb.CHAT).document(CONVERSATION_UID).collection(FirebaseDb.CHAT_MESSAGES).add(message);
+        db.collection(FirebaseDb.CHAT).document(CONVERSATION_UID).update(mapLastMessage);
         return true;
     }
 
@@ -428,16 +428,16 @@ public class ChatConversationActivity extends AppCompatActivity
     private void getReceiverUser(final String userID){
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("utente").document(userID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        db.collection(FirebaseDb.USERS).document(userID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 if(e != null){
 
                 }else{
                     User user = new User(documentSnapshot.getId(),
-                            documentSnapshot.getString("NomeCompleto"),
-                            documentSnapshot.getString("Avatar"),
-                            documentSnapshot.getBoolean("online"));
+                            documentSnapshot.getString(FirebaseDb.USER_NOME_COMPLETO),
+                            documentSnapshot.getString(FirebaseDb.USER_AVATAR),
+                            documentSnapshot.getBoolean(FirebaseDb.USER_ONLINE));
                     if(!user.equals(receiverUser)){
                         receiverUser = user;
                         for(int i=0;i<messagesAdapter.getItemCount();++i){
@@ -445,8 +445,8 @@ public class ChatConversationActivity extends AppCompatActivity
                         }
                         messagesAdapter.notifyDataSetChanged();
                     }
-                    DocumentReference docRef = db.collection("chat").document(CONVERSATION_UID);
-                    docRef.update("Users."+receiverId,receiverUser);
+                    DocumentReference docRef = db.collection(FirebaseDb.CHAT).document(CONVERSATION_UID);
+                    docRef.update(FirebaseDb.CHAT_USERS+"."+receiverId,receiverUser);
                 }
             }
         });
@@ -454,16 +454,16 @@ public class ChatConversationActivity extends AppCompatActivity
     private void getSenderUser(String userID){
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("utente").document(userID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        db.collection(FirebaseDb.USERS).document(userID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 if(e != null){
 
                 }else{
                     User user = new User(documentSnapshot.getId(),
-                            documentSnapshot.getString("NomeCompleto"),
-                                    documentSnapshot.getString("Avatar"),
-                                    documentSnapshot.getBoolean("online"));
+                            documentSnapshot.getString(FirebaseDb.USER_NOME_COMPLETO),
+                                    documentSnapshot.getString(FirebaseDb.USER_AVATAR),
+                                    documentSnapshot.getBoolean(FirebaseDb.USER_ONLINE));
                     if(!user.equals(senderUser)){
                         senderUser = user;
                         for(int i=0;i<messagesAdapter.getItemCount();++i){
@@ -471,8 +471,8 @@ public class ChatConversationActivity extends AppCompatActivity
                         }
                         messagesAdapter.notifyDataSetChanged();
                     }
-                    DocumentReference docRef = db.collection("chat").document(CONVERSATION_UID);
-                    docRef.update("Users."+senderId,senderUser);
+                    DocumentReference docRef = db.collection(FirebaseDb.CHAT).document(CONVERSATION_UID);
+                    docRef.update(FirebaseDb.CHAT_USERS+"."+senderId,senderUser);
                 }
             }
         });

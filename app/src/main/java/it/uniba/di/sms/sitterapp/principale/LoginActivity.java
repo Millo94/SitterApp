@@ -26,6 +26,7 @@ import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.registrazione.RegistrationActivity;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 
 
 /**
@@ -66,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
 
                 builder.setTitle(R.string.registrazione);
-                builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -100,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             final FirebaseUser currentUser = mAuth.getCurrentUser();
-                            db.collection("utente")
+                            db.collection(FirebaseDb.USERS)
                                     .document(currentUser.getUid())
                                     .get()
                                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -108,9 +109,9 @@ public class LoginActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                             if(task.isSuccessful()) {
                                                 DocumentSnapshot documentSnapshot = task.getResult();
-                                                final Integer tipoUtente = documentSnapshot.getLong("tipoUtente").intValue();
+                                                final Integer tipoUtente = documentSnapshot.getLong(FirebaseDb.USER_TIPOUTENTE).intValue();
                                                 Toast.makeText(getApplicationContext(), R.string.loginSuccess, Toast.LENGTH_LONG).show();
-                                                session.createLoginSession(emailEt.getText().toString(), currentUser.getUid(), tipoUtente, documentSnapshot.getString("NomeCompleto"));
+                                                session.createLoginSession(emailEt.getText().toString(), currentUser.getUid(), tipoUtente, documentSnapshot.getString(FirebaseDb.USER_NOME_COMPLETO));
                                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                                 intent.putExtra(Constants.TYPE, tipoUtente);
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

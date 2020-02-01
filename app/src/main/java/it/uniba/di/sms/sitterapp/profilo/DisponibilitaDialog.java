@@ -24,10 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,9 +38,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.uniba.di.sms.sitterapp.Constants;
-import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 
 /**
  * Dialog per la disponibilità della baby sitter
@@ -181,7 +178,7 @@ public class DisponibilitaDialog extends AppCompatDialogFragment {
 
     private void saveAvailability(){
 
-        DocumentReference docRef = db.collection("utente")
+        DocumentReference docRef = db.collection(FirebaseDb.USERS)
                 .document(sessionManager.getSessionUid());
 
         checkedBox = new ArrayList<>();
@@ -190,7 +187,7 @@ public class DisponibilitaDialog extends AppCompatDialogFragment {
                 checkedBox.add(checked + 1);
         }
 
-        docRef.update("babysitter.Disponibilita", checkedBox)
+        docRef.update(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_DISPONIBILITA, checkedBox)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -210,7 +207,7 @@ public class DisponibilitaDialog extends AppCompatDialogFragment {
 
     private void loadAvailability(final String babysitter){
 
-        db.collection("utente")
+        db.collection(FirebaseDb.USERS)
                 .document(babysitter)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -219,7 +216,7 @@ public class DisponibilitaDialog extends AppCompatDialogFragment {
                         if (task.isSuccessful()) {
                             DocumentSnapshot documentSnapshot = task.getResult();
                             ArrayList<Long> checkedBoxList = new ArrayList<>();
-                            checkedBoxList.addAll((ArrayList<Long>) documentSnapshot.get("babysitter.Disponibilita"));
+                            checkedBoxList.addAll((ArrayList<Long>) documentSnapshot.get(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_DISPONIBILITA));
                             for(Long i : checkedBoxList){
                                 checkBoxArrayList.get(i.intValue() - 1).setChecked(true);
                             }
@@ -231,111 +228,5 @@ public class DisponibilitaDialog extends AppCompatDialogFragment {
 
             }
         });
-    }
-
-    //volley per la richiesta della disponibilità
-    private void save() {
-
-        StringRequest save = new StringRequest(Request.Method.POST, Php.DISPONIBILITA, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<>();
-
-                // Popolo l'array delle checkbox selezionate
-                checkedBox = new ArrayList<>();
-                for (int checked = 0; checked < checkBoxArrayList.size(); checked++) {
-                    if (checkBoxArrayList.get(checked).isChecked())
-                        checkedBox.add(checked + 1);
-                }
-
-                // Creo l'oggetto json da inviare come parametro
-                JSONArray JSONChecked = new JSONArray(checkedBox);
-
-                params.put("operation", "save");
-                params.put("username", sessionManager.getSessionUsername());
-                params.put("checkedArray", JSONChecked.toString());
-                return params;
-            }
-        };
-
-        requestQueue.add(save);
-    }
-
-    //caricamento della disponibilità
-    private void load(final String babysitter) {
-
-        StringRequest load = new StringRequest(Request.Method.POST, Php.DISPONIBILITA, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        int fascia = jsonObject.getInt("fascia");
-                        checkBoxArrayList.get(fascia - 1).setChecked(true);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("operation", "load");
-                params.put("username", babysitter);
-                return params;
-            }
-        };
-
-        requestQueue.add(load);
-    }
-
-    //barra di caricamento
-    private class AsyncCaller extends AsyncTask<Void, Void, Void> {
-        ProgressDialog pdLoading = new ProgressDialog(getActivity());
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            //this method will be running on UI thread
-            pdLoading.setMessage("\tSaving...");
-            pdLoading.show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            //save();
-            //saveAvailability();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            Toast.makeText(getContext(), R.string.modifySuccess, Toast.LENGTH_SHORT).show();
-            pdLoading.dismiss();
-        }
-
     }
 }

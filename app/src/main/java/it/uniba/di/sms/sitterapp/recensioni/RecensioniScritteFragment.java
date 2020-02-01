@@ -27,6 +27,7 @@ import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.adapter.RecensioniScritteAdapter;
 import it.uniba.di.sms.sitterapp.oggetti.Recensione;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 import tr.xip.errorview.ErrorView;
 
 
@@ -78,8 +79,8 @@ public class RecensioniScritteFragment extends Fragment {
     private void ReviewScritte() {
 
 
-        db.collection("recensione")
-                .whereEqualTo("sender", sessionManager.getSessionUid())
+        db.collection(FirebaseDb.REVIEWS)
+                .whereEqualTo(FirebaseDb.REVIEW_SENDER, sessionManager.getSessionUid())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -93,13 +94,13 @@ public class RecensioniScritteFragment extends Fragment {
                             Iterator<QueryDocumentSnapshot> iterableReview = queryDocumentSnapshots.iterator();
                             while(iterableReview.hasNext()){
                                 final DocumentSnapshot docSnap = iterableReview.next();
-                                db.collection("utente").document(docSnap.getString("receiver"))
+                                db.collection(FirebaseDb.USERS).document(docSnap.getString(FirebaseDb.REVIEW_RECEIVER))
                                         .get()
                                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                             @Override
                                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                                 Recensione recensione = docSnap.toObject(Recensione.class);
-                                                recensione.setReceiver(documentSnapshot.getString("NomeCompleto"));
+                                                recensione.setReceiver(documentSnapshot.getString(FirebaseDb.USER_NOME_COMPLETO));
                                                 recensioneList.add(recensione);
                                                 adapter.notifyDataSetChanged();
                                             }

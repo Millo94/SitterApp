@@ -189,6 +189,8 @@
     <string name="usaCamera">Take a photo with your camera</string>
     <string name="risutltatoCaricamento">Photo changed correctly</string>
 
+    <string name="yes">Yes</string>
+    <string name="no" translatable="false">No</string>
     <string name="attention">Attention</string>
     <string name="loginMessage">To use this functionality, you must sign in.</string>
     <string name="signIn">Sign In</string>

@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 import it.uniba.di.sms.sitterapp.Constants;
-import it.uniba.di.sms.sitterapp.Php;
+
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.adapter.NoticeAdapter;
 import it.uniba.di.sms.sitterapp.adapter.NoticeHomeAdapter;
@@ -51,6 +51,7 @@ import it.uniba.di.sms.sitterapp.appuntamenti.DialogsNoticeDetails;
 import it.uniba.di.sms.sitterapp.oggetti.Notice;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
 import it.uniba.di.sms.sitterapp.profilo.ProfiloPubblicoActivity;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 import tr.xip.errorview.ErrorView;
 
 /**
@@ -76,9 +77,6 @@ public class HomeActivity extends DrawerActivity
 
     FloatingActionButton cercaSitter;
     ProgressDialog progressDialog;
-
-    //richieste
-    private static final String annunci = "ANNUNCI";
 
     // Filtro disponibilità
     public Map<String, ArrayList<Long>> dispTotali;
@@ -201,10 +199,10 @@ public class HomeActivity extends DrawerActivity
 
     private void caricaAnnunci(){
 
-        CollectionReference colRef = db.collection("annuncio");
+        CollectionReference colRef = db.collection(FirebaseDb.ENGAGES);
         colRef
-                .whereEqualTo("conferma", false)
-                .orderBy("date")
+                .whereEqualTo(FirebaseDb.ENGAGES_CONFERMA, false)
+                .orderBy(FirebaseDb.ENGAGES_DATA)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -249,9 +247,9 @@ public class HomeActivity extends DrawerActivity
 
     private void caricaSitter(){
 
-        CollectionReference colRef = db.collection("utente");
+        CollectionReference colRef = db.collection(FirebaseDb.USERS);
         colRef
-                .whereEqualTo("tipoUtente", Constants.TYPE_SITTER)
+                .whereEqualTo(FirebaseDb.USER_TIPOUTENTE, Constants.TYPE_SITTER)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -271,11 +269,11 @@ public class HomeActivity extends DrawerActivity
                                     DocumentSnapshot documentSnapshot = querySnapshotIterator.next();
                                     UtenteSitter bs = new UtenteSitter(
                                             documentSnapshot.getId(),
-                                            (String) documentSnapshot.get("NomeCompleto"),
-                                            (String) documentSnapshot.get("Avatar"),
-                                            documentSnapshot.getBoolean("online"),
-                                            documentSnapshot.getDouble("babysitter.Rating").floatValue(),
-                                            documentSnapshot.getLong("babysitter.numLavori").intValue());
+                                            (String) documentSnapshot.get(FirebaseDb.USER_NOME_COMPLETO),
+                                            (String) documentSnapshot.get(FirebaseDb.USER_AVATAR),
+                                            documentSnapshot.getBoolean(FirebaseDb.USER_ONLINE),
+                                            documentSnapshot.getDouble(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_RATING).floatValue(),
+                                            documentSnapshot.getLong(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_NUMLAVORI).intValue());
 
                                     sitterList.add(bs);
                                     dispTotali.put(documentSnapshot.getId(), new ArrayList<Long>());
@@ -374,7 +372,7 @@ public class HomeActivity extends DrawerActivity
 
     private void loadAvailability(final String babysitter){
 
-        db.collection("utente")
+        db.collection(FirebaseDb.USERS)
                 .document(babysitter)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -382,8 +380,8 @@ public class HomeActivity extends DrawerActivity
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot documentSnapshot = task.getResult();
-                            if(documentSnapshot.get("babysitter.Disponibilita") != null){
-                                dispTotali.get(babysitter).addAll((ArrayList<Long>) documentSnapshot.get("babysitter.Disponibilita"));
+                            if(documentSnapshot.get(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_DISPONIBILITA) != null){
+                                dispTotali.get(babysitter).addAll((ArrayList<Long>) documentSnapshot.get(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_DISPONIBILITA));
                             }
                         }
                     }
@@ -395,40 +393,4 @@ public class HomeActivity extends DrawerActivity
         });
     }
 
-    //volley per la disponibilità delle sitter
-    private void getDisponibilita(final String username) {
-
-        StringRequest load = new StringRequest(Request.Method.POST, Php.DISPONIBILITA, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        int fascia = jsonObject.getInt("fascia");
-                       // dispTotali.get(username).add(fascia);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("operation", "load");
-                params.put("username", username);
-                return params;
-            }
-        };
-
-        Volley.newRequestQueue(this).add(load);
-    }
 }

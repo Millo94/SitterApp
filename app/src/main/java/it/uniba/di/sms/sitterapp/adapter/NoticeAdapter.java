@@ -18,6 +18,7 @@ import java.util.List;
 
 import it.uniba.di.sms.sitterapp.oggetti.Notice;
 import it.uniba.di.sms.sitterapp.R;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 
 public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHolder> {
     private Context context;
@@ -71,12 +72,12 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
         //attribuzione dei dettagli dell'annuncio alle varie View
         final Notice notice = noticeListFiltered.get(position);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("utente").document(notice.getFamily())
+        db.collection(FirebaseDb.USERS).document(notice.getFamily())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        holder.family_name.setText(documentSnapshot.getString("NomeCompleto"));
+                        holder.family_name.setText(documentSnapshot.getString(FirebaseDb.USER_NOME_COMPLETO));
                     }
                 });
 

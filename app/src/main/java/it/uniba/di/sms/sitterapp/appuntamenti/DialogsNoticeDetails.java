@@ -33,6 +33,7 @@ import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.oggetti.Notice;
 import it.uniba.di.sms.sitterapp.principale.HomeActivity;
 import it.uniba.di.sms.sitterapp.profilo.ProfiloPubblicoActivity;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 
 /**
  * Dialogs per i dettagli di un annuncio
@@ -102,12 +103,12 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
             userID = getArguments().getString("family");
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("utente").document(getArguments().getString("family"))
+            db.collection(FirebaseDb.USERS).document(getArguments().getString("family"))
                     .get()
                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            familyName.setText(documentSnapshot.getString("NomeCompleto"));
+                            familyName.setText(documentSnapshot.getString(FirebaseDb.USER_NOME_COMPLETO));
                         }
                     });
 
@@ -293,7 +294,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
 
     public void eliminaAnnuncio() {
-        db.collection("annuncio").document(idAnnuncio)
+        db.collection(FirebaseDb.ENGAGES).document(idAnnuncio)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -320,9 +321,9 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
         String userID = sessionManager.getSessionUid();
 
-        db.collection("annuncio")
+        db.collection(FirebaseDb.ENGAGES)
                 .document(idAnnuncio)
-                .update("candidatura." + userID , userID)
+                .update(FirebaseDb.ENGAGE_CANDIDATURA+"." + userID , userID)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -345,21 +346,21 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
 
         //elimina la sitter nel caso in cui fosse stata scelta dalla famiglia
-        db.collection("annuncio").document(idAnnuncio)
+        db.collection(FirebaseDb.ENGAGES).document(idAnnuncio)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                           @Override
                                           public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                              if(documentSnapshot.getString("sitter").equals(sessionManager.getSessionUid())){
-                                                  db.collection("annuncio").document(idAnnuncio).update("sitter","");
+                                              if(documentSnapshot.getString(FirebaseDb.ENGAGES_SITTER).equals(sessionManager.getSessionUid())){
+                                                  db.collection(FirebaseDb.ENGAGES).document(idAnnuncio).update(FirebaseDb.ENGAGES_SITTER,"");
                                               }
                                           }
                                       });
 
         //elimina la babysitter dalla lista delle candidate
         Map<String, Object> deleteSitter = new HashMap<>();
-        deleteSitter.put("candidatura."+ sessionManager.getSessionUid(), FieldValue.delete());
-        db.collection("annuncio")
+        deleteSitter.put(FirebaseDb.ENGAGE_CANDIDATURA+"."+ sessionManager.getSessionUid(), FieldValue.delete());
+        db.collection(FirebaseDb.ENGAGES)
                                 .document(idAnnuncio)
                                 .update(deleteSitter)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -379,9 +380,9 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
     }
 
     private void confermaCandidatura(){
-        db.collection("annuncio")
+        db.collection(FirebaseDb.ENGAGES)
                 .document(idAnnuncio)
-                .update("conferma",true)
+                .update(FirebaseDb.ENGAGES_CONFERMA,true)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -396,15 +397,15 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                         Toast.makeText(getActivity().getApplicationContext(), R.string.genericError, Toast.LENGTH_SHORT).show();
                     }
                 });
-        db.collection("utente").document(sessionManager.getSessionUid())
+        db.collection(FirebaseDb.USERS).document(sessionManager.getSessionUid())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        final Long ingaggi = documentSnapshot.getLong("babysitter.numLavori");
-                        db.collection("utente")
+                        final Long ingaggi = documentSnapshot.getLong(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_NUMLAVORI);
+                        db.collection(FirebaseDb.USERS)
                                 .document(sessionManager.getSessionUid())
-                                .update("babysitter.numLavori",ingaggi+1);
+                                .update(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_NUMLAVORI,ingaggi+1);
                     }
                 });
     }

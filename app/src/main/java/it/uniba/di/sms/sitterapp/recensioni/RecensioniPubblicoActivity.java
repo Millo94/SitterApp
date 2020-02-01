@@ -39,9 +39,9 @@ import java.util.Map;
 import it.uniba.di.sms.sitterapp.adapter.RecensioniRicevuteAdapter;
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.oggetti.Recensione;
-import it.uniba.di.sms.sitterapp.Php;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 import tr.xip.errorview.ErrorView;
 
 /**
@@ -96,8 +96,8 @@ public class RecensioniPubblicoActivity extends AppCompatActivity {
     }
 
     private void loadFeedback(){
-        db.collection("recensione")
-                .whereEqualTo("receiver", user)
+        db.collection(FirebaseDb.REVIEWS)
+                .whereEqualTo(FirebaseDb.REVIEW_RECEIVER, user)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -113,13 +113,13 @@ public class RecensioniPubblicoActivity extends AppCompatActivity {
                             Iterator<QueryDocumentSnapshot> iterableReview = queryDocumentSnapshots.iterator();
                             while(iterableReview.hasNext()){
                                 final DocumentSnapshot docSnap = iterableReview.next();
-                                db.collection("utente").document(docSnap.getString("sender"))
+                                db.collection(FirebaseDb.USERS).document(docSnap.getString(FirebaseDb.REVIEW_SENDER))
                                         .get()
                                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                             @Override
                                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                                 Recensione recensione = docSnap.toObject(Recensione.class);
-                                                recensione.setSender(documentSnapshot.getString("NomeCompleto"));
+                                                recensione.setSender(documentSnapshot.getString(FirebaseDb.USER_NOME_COMPLETO));
                                                 recensioneList.add(recensione);
                                                 adapter.notifyDataSetChanged();
                                             }
@@ -136,85 +136,6 @@ public class RecensioniPubblicoActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-    }
-
-    //volley per il caricamento delle recensioni
-    private void load() {
-
-
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-        progressDialog.dismiss();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Php.RECENSIONI,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        progressDialog.dismiss();
-
-                        try {
-                            JSONArray recensione = new JSONArray(response);
-
-                            if (recensione.length() == 0) {
-                                ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
-                                errorView.setSubtitle(R.string.niente_recensioni);
-                                errorView.setVisibility(View.VISIBLE);
-                            } else {
-
-                                for (int i = 0; i < recensione.length(); i++) {
-
-                                    JSONObject recensioneObject = recensione.getJSONObject(i);
-                                    String username;
-
-                                    if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
-                                        username = recensioneObject.getString("sender");
-                                    } else {
-                                        username = recensioneObject.getString("famiglia");
-                                    }
-
-                                    String sender = "";
-                                    String receiver = "";
-                                    String idAnnuncio = "";
-                                    String descrizione = recensioneObject.getString("commento");
-                                    Float rating = (float) recensioneObject.getDouble("rating");
-
-                                    Recensione r = new Recensione(descrizione, rating, idAnnuncio, sender, receiver);
-
-                                    recensioneList.add(r);
-                                }
-                            }
-
-
-                            adapter.notifyDataSetChanged();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", user);
-
-                if (sessionManager.getSessionType() == Constants.TYPE_SITTER) {
-                    params.put("tipoUtente", String.valueOf(Constants.TYPE_FAMILY));
-                } else {
-                    params.put("tipoUtente", String.valueOf(Constants.TYPE_SITTER));
-                }
-
-                params.put("operation", "received");
-                return params;
-            }
-        };
-        Volley.newRequestQueue(this).add(stringRequest);
     }
 }
 

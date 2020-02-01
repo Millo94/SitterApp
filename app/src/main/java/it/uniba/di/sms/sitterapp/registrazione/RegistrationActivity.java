@@ -26,6 +26,7 @@ import it.uniba.di.sms.sitterapp.principale.LoginActivity;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteFamiglia;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 
 public class RegistrationActivity extends AppCompatActivity implements SitterRegistrationFragment.OnFragmentInteractionListener, FamilyRegistrationFragment.OnFragmentInteractionListener {
 
@@ -77,25 +78,25 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Map<String,Object> utente = new HashMap<>();
-                            utente.put("Avatar", famiglia.getAvatar());
-                            utente.put("NomeCompleto",famiglia.getName());
-                            utente.put("password", famiglia.getPassword());
-                            utente.put("Email",famiglia.getEmail());
-                            utente.put("Telefono", famiglia.getTelefono());
-                            utente.put("Nazione",famiglia.getNazione());
-                            utente.put("Citta", famiglia.getCitta());
-                            utente.put("online", famiglia.isOnline());
-                            utente.put("Descrizione", famiglia.getDescrizione());
-                            utente.put("tipoUtente", Constants.TYPE_FAMILY);
+                            utente.put(FirebaseDb.USER_AVATAR, famiglia.getAvatar());
+                            utente.put(FirebaseDb.USER_NOME_COMPLETO,famiglia.getName());
+                            utente.put(FirebaseDb.USER_PASSWORD, famiglia.getPassword());
+                            utente.put(FirebaseDb.USER_EMAIL,famiglia.getEmail());
+                            utente.put(FirebaseDb.USER_TELEFONO, famiglia.getTelefono());
+                            utente.put(FirebaseDb.USER_NAZIONE,famiglia.getNazione());
+                            utente.put(FirebaseDb.USER_CITTA, famiglia.getCitta());
+                            utente.put(FirebaseDb.USER_ONLINE, famiglia.isOnline());
+                            utente.put(FirebaseDb.USER_DESCRIZIONE, famiglia.getDescrizione());
+                            utente.put(FirebaseDb.USER_TIPOUTENTE, Constants.TYPE_FAMILY);
                             Map<String,Object> famigliaExtra = new HashMap<>();
-                            famigliaExtra.put("numFigli",famiglia.getNumFigli());
-                            famigliaExtra.put("Animali", famiglia.getAnimali());
-                            famigliaExtra.put("rating", famiglia.getRating());
-                            utente.put("famiglia",famigliaExtra);
+                            famigliaExtra.put(FirebaseDb.FAMIGLIA_NUMFIGLI,famiglia.getNumFigli());
+                            famigliaExtra.put(FirebaseDb.FAMIGLIA_ANIMALI, famiglia.getAnimali());
+                            famigliaExtra.put(FirebaseDb.FAMIGLIA_RATING, famiglia.getRating());
+                            utente.put(FirebaseDb.FAMIGLIA,famigliaExtra);
 
                             FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
-                            db.collection("utente")
+                            db.collection(FirebaseDb.USERS)
                                     .document(firebaseUser.getUid())
                                     .set(utente)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -138,31 +139,29 @@ public class RegistrationActivity extends AppCompatActivity implements SitterReg
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Map<String,Object> utente = new HashMap<>();
-                            utente.put("password",sitter.getPassword());
-                            utente.put("babysitter",sitter);
-                            utente.put("NomeCompleto",sitter.getName());
-                            utente.put("Email",sitter.getEmail());
-                            utente.put("Avatar", sitter.getAvatar());
-                            utente.put("Nazione",sitter.getNazione());
-                            utente.put("Citta", sitter.getCitta());
-                            utente.put("Telefono", sitter.getTelefono());
-                            utente.put("online", sitter.isOnline());
-                            utente.put("Descrizione", sitter.getDescrizione());
-                            utente.put("tipoUtente",Constants.TYPE_SITTER);
+                            utente.put(FirebaseDb.USER_PASSWORD,sitter.getPassword());
+                            utente.put(FirebaseDb.USER_NOME_COMPLETO,sitter.getName());
+                            utente.put(FirebaseDb.USER_EMAIL,sitter.getEmail());
+                            utente.put(FirebaseDb.USER_AVATAR, sitter.getAvatar());
+                            utente.put(FirebaseDb.USER_NAZIONE,sitter.getNazione());
+                            utente.put(FirebaseDb.USER_CITTA, sitter.getCitta());
+                            utente.put(FirebaseDb.USER_TELEFONO, sitter.getTelefono());
+                            utente.put(FirebaseDb.USER_ONLINE, sitter.isOnline());
+                            utente.put(FirebaseDb.USER_DESCRIZIONE, sitter.getDescrizione());
+                            utente.put(FirebaseDb.USER_TIPOUTENTE,Constants.TYPE_SITTER);
                             Map<String,Object> babysitterExtra = new HashMap<>();
-                            babysitterExtra.put("Disponibilita", "");
-                            babysitterExtra.put("dataNascita", sitter.getDataNascita());
-                            babysitterExtra.put("Genere", sitter.getGenere());
-                            babysitterExtra.put("Rating", sitter.getRating());
-                            babysitterExtra.put("numLavori", sitter.getNumLavori());
-                            babysitterExtra.put("Auto",sitter.getAuto());
-                            babysitterExtra.put("Retribuzione", sitter.getRetribuzioneOra());
-                            babysitterExtra.put("Disponibilita", new ArrayList<Long>());
-                            utente.put("babysitter",babysitterExtra);
+                            babysitterExtra.put(FirebaseDb.BABYSITTER_DATANASCITA, sitter.getDataNascita());
+                            babysitterExtra.put(FirebaseDb.BABYSITTER_GENERE, sitter.getGenere());
+                            babysitterExtra.put(FirebaseDb.BABYSITTER_RATING, sitter.getRating());
+                            babysitterExtra.put(FirebaseDb.BABYSITTER_NUMLAVORI, sitter.getNumLavori());
+                            babysitterExtra.put(FirebaseDb.BABYSITTER_AUTO,sitter.getAuto());
+                            babysitterExtra.put(FirebaseDb.BABYSITTER_RETRIBUZIONE, sitter.getRetribuzioneOra());
+                            babysitterExtra.put(FirebaseDb.BABYSITTER_DISPONIBILITA, new ArrayList<Long>());
+                            utente.put(FirebaseDb.BABYSITTER,babysitterExtra);
 
                             FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
-                            db.collection("utente")
+                            db.collection(FirebaseDb.USERS)
                                     .document(firebaseUser.getUid())
                                     .set(utente)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -45,6 +45,7 @@ import java.util.Calendar;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -142,24 +143,24 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
     private void apriProfilo(){
 
-        db.collection("utente")
+        db.collection(FirebaseDb.USERS)
                 .document(sessionManager.getSessionUid())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         progressDialog.dismiss();
-                        showImage(documentSnapshot.getString("Avatar"));
-                        descrPrSit.setText(documentSnapshot.getString("Descrizione"));
-                        nomeCompletoPrSit.setText(documentSnapshot.getString("NomeCompleto"));
-                        emailPrSit2.setText(documentSnapshot.getString("Email"));
-                        numeroPrSit2.setText(documentSnapshot.getString("Telefono"));
-                        carPrSit2.setChecked(documentSnapshot.getBoolean("babysitter.Auto"));
-                        sessoPrSit2.setText(documentSnapshot.getString("babysitter.Genere"));
-                        dataPrSit2.setText(documentSnapshot.getString("babysitter.dataNascita"));
-                        ingaggiPrSit2.setText(documentSnapshot.get("babysitter.numLavori").toString());
-                        ratingPrSitter.setRating(documentSnapshot.getDouble("babysitter.Rating").floatValue());
-                        tariffaPrSit2.setText(documentSnapshot.getString("babysitter.Retribuzione"));
+                        showImage(documentSnapshot.getString(FirebaseDb.USER_AVATAR));
+                        descrPrSit.setText(documentSnapshot.getString(FirebaseDb.USER_DESCRIZIONE));
+                        nomeCompletoPrSit.setText(documentSnapshot.getString(FirebaseDb.USER_NOME_COMPLETO));
+                        emailPrSit2.setText(documentSnapshot.getString(FirebaseDb.USER_EMAIL));
+                        numeroPrSit2.setText(documentSnapshot.getString(FirebaseDb.USER_TELEFONO));
+                        carPrSit2.setChecked(documentSnapshot.getBoolean(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_AUTO));
+                        sessoPrSit2.setText(documentSnapshot.getString(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_GENERE));
+                        dataPrSit2.setText(documentSnapshot.getString(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_DATANASCITA));
+                        ingaggiPrSit2.setText(documentSnapshot.get(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_NUMLAVORI).toString());
+                        ratingPrSitter.setRating(documentSnapshot.getDouble(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_RATING).floatValue());
+                        tariffaPrSit2.setText(documentSnapshot.getString(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_RETRIBUZIONE));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -174,17 +175,17 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
     private void modifica(){
 
-        DocumentReference docRef = db.collection("utente")
+        DocumentReference docRef = db.collection(FirebaseDb.USERS)
                 .document(sessionManager.getSessionUid());
 
-        docRef.update("Descrizione", descrPrSit.getText().toString(),
-                "NomeCompleto", nomeCompletoPrSit.getText().toString(),
-                "Email", emailPrSit2.getText().toString(),
-                "Telefono", numeroPrSit2.getText().toString(),
-                "babysitter.Genere", sessoPrSit2.getText().toString(),
-                "babysitter.dataNascita", dataPrSit2.getText().toString(),
-                "babysitter.Auto", carPrSit2.isChecked(),
-                "babysitter.Retribuzione", tariffaPrSit2.getText().toString()
+        docRef.update(FirebaseDb.USER_DESCRIZIONE, descrPrSit.getText().toString(),
+                FirebaseDb.USER_NOME_COMPLETO, nomeCompletoPrSit.getText().toString(),
+                FirebaseDb.USER_EMAIL, emailPrSit2.getText().toString(),
+                FirebaseDb.USER_TELEFONO, numeroPrSit2.getText().toString(),
+                FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_GENERE, sessoPrSit2.getText().toString(),
+                FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_DATANASCITA, dataPrSit2.getText().toString(),
+                FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_AUTO, carPrSit2.isChecked(),
+                FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_RETRIBUZIONE, tariffaPrSit2.getText().toString()
         )
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -277,7 +278,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
 
     public void modificaFoto(){
         /**
-         * TODO per la modifica della foto
+         * per la modifica della foto
          * if (jsonObject.getString("response").equals("true")) {
          *                         sessionManager.setProfilePic(jsonObject.optString("nomeFile"));
          *                         Glide

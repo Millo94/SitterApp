@@ -37,8 +37,8 @@ public class RecensioniActivity extends DrawerActivity {
         //Tabbed Layout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setVisibility(View.VISIBLE);
-        tabLayout.addTab(tabLayout.newTab().setText("Recensioni Scritte"));
-        tabLayout.addTab(tabLayout.newTab().setText("Recensioni Ricevute"));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.recensioniScritte));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.recensioniRicevute));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         viewPager = (ViewPager) findViewById(R.id.pager);

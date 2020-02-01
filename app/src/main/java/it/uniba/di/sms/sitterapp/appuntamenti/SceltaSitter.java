@@ -32,6 +32,7 @@ import it.uniba.di.sms.sitterapp.oggetti.Notice;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
 import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
 import it.uniba.di.sms.sitterapp.profilo.ProfiloPubblicoActivity;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 import tr.xip.errorview.ErrorView;
 
 /**
@@ -84,7 +85,7 @@ public class SceltaSitter extends DrawerActivity
      * Metodo per caricare la lista delle babysitter candidate all'annuncio di competenza
      */
     private void loadSitter(){
-        db.collection("annuncio")
+        db.collection(FirebaseDb.ENGAGES)
                 .document(idAnnuncio)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -99,7 +100,7 @@ public class SceltaSitter extends DrawerActivity
                             errorView.setVisibility(View.INVISIBLE);
                             for(String u : listSitter.keySet()) {
                             FirebaseFirestore db2 = FirebaseFirestore.getInstance();
-                            db2.collection("utente")
+                            db2.collection(FirebaseDb.USERS)
                                     .document(listSitter.get(u).toString())
                                     .get()
                                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -108,9 +109,9 @@ public class SceltaSitter extends DrawerActivity
 
                                             UtenteSitter uS = new UtenteSitter(
                                                     documentSnapshot.getId(),
-                                                    documentSnapshot.getString("NomeCompleto"),
-                                                    documentSnapshot.getString("Avatar"),
-                                                    documentSnapshot.getBoolean("online"));
+                                                    documentSnapshot.getString(FirebaseDb.USER_NOME_COMPLETO),
+                                                    documentSnapshot.getString(FirebaseDb.USER_AVATAR),
+                                                    documentSnapshot.getBoolean(FirebaseDb.USER_ONLINE));
                                             sitterList.add(uS);
                                             sitterAdapter.notifyDataSetChanged();
                                         }
@@ -192,10 +193,10 @@ public class SceltaSitter extends DrawerActivity
 
     public void chooseSitter(final String userID){
 
-        DocumentReference docRef = db.collection("annuncio")
+        DocumentReference docRef = db.collection(FirebaseDb.ENGAGES)
                 .document(idAnnuncio);
 
-        docRef.update("sitter",userID)
+        docRef.update(FirebaseDb.ENGAGES_SITTER,userID)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

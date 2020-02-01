@@ -37,6 +37,7 @@ import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.oggetti.Message;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteFamiglia;
 import it.uniba.di.sms.sitterapp.SessionManager;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 
 /**
  * PROFILO PRIVATO FAMIGLIA
@@ -100,23 +101,23 @@ public class PrivatoFamigliaFragment extends Fragment {
 
     private void apriProfilo(){
 
-        db.collection("utente")
+        db.collection(FirebaseDb.USERS)
                 .document(sessionManager.getSessionUid())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         progressDialog.dismiss();
-                        showImage(documentSnapshot.getString("Avatar"));
-                        nomeCompletoPrFam.setText(documentSnapshot.getString("NomeCompleto"));
-                        descrPrFam.setText(documentSnapshot.getString("Descrizione"));
-                        emailPrFam2.setText(documentSnapshot.getString("Email"));
-                        telPrFam2.setText(documentSnapshot.getString("Telefono"));
-                        animaliPrFam2.setChecked(documentSnapshot.getBoolean("famiglia.Animali"));
-                        numFigliPrFam2.setText(documentSnapshot.getString("famiglia.numFigli"));
-                        nazionePrFam2.setText(documentSnapshot.getString("Nazione"));
-                        cittaPrFam2.setText(documentSnapshot.getString("Citta"));
-                        ratingPrFam.setRating(documentSnapshot.getDouble("famiglia.rating").floatValue());
+                        showImage(documentSnapshot.getString(FirebaseDb.USER_AVATAR));
+                        nomeCompletoPrFam.setText(documentSnapshot.getString(FirebaseDb.USER_NOME_COMPLETO));
+                        descrPrFam.setText(documentSnapshot.getString(FirebaseDb.USER_DESCRIZIONE));
+                        emailPrFam2.setText(documentSnapshot.getString(FirebaseDb.USER_EMAIL));
+                        telPrFam2.setText(documentSnapshot.getString(FirebaseDb.USER_TELEFONO));
+                        animaliPrFam2.setChecked(documentSnapshot.getBoolean(FirebaseDb.FAMIGLIA+"."+FirebaseDb.FAMIGLIA_ANIMALI));
+                        numFigliPrFam2.setText(documentSnapshot.getString(FirebaseDb.FAMIGLIA+"."+FirebaseDb.FAMIGLIA_NUMFIGLI));
+                        nazionePrFam2.setText(documentSnapshot.getString(FirebaseDb.USER_NAZIONE));
+                        cittaPrFam2.setText(documentSnapshot.getString(FirebaseDb.USER_CITTA));
+                        ratingPrFam.setRating(documentSnapshot.getDouble(FirebaseDb.FAMIGLIA+"."+FirebaseDb.FAMIGLIA_RATING).floatValue());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -162,17 +163,17 @@ public class PrivatoFamigliaFragment extends Fragment {
 
     private void modifica(){
 
-        DocumentReference docRef = db.collection("utente")
+        DocumentReference docRef = db.collection(FirebaseDb.USERS)
                 .document(sessionManager.getSessionUid());
 
-        docRef.update("famiglia.numFigli", numFigliPrFam2.getText().toString(),
-                "Nazione", nazionePrFam2.getText().toString(),
-                "Descrizione", descrPrFam.getText().toString(),
-                "Citta", cittaPrFam2.getText().toString(),
-                "Email", emailPrFam2.getText().toString(),
-                "Telefono", telPrFam2.getText().toString(),
-                "famiglia.Animali", animaliPrFam2.isChecked(),
-                "NomeCompleto", nomeCompletoPrFam.getText().toString()
+        docRef.update(FirebaseDb.FAMIGLIA+"."+FirebaseDb.FAMIGLIA_NUMFIGLI, numFigliPrFam2.getText().toString(),
+                FirebaseDb.USER_NAZIONE, nazionePrFam2.getText().toString(),
+                FirebaseDb.USER_DESCRIZIONE, descrPrFam.getText().toString(),
+                FirebaseDb.USER_CITTA, cittaPrFam2.getText().toString(),
+                FirebaseDb.USER_EMAIL, emailPrFam2.getText().toString(),
+                FirebaseDb.USER_TELEFONO, telPrFam2.getText().toString(),
+                FirebaseDb.FAMIGLIA+"."+FirebaseDb.FAMIGLIA_ANIMALI, animaliPrFam2.isChecked(),
+                FirebaseDb.USER_NOME_COMPLETO, nomeCompletoPrFam.getText().toString()
                 )
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

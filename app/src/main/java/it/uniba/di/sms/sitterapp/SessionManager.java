@@ -38,7 +38,7 @@ public class SessionManager {
      * Valori chiave
      */
     public static final String IS_LOGGED = "IsLoggedIn";
-    public static final String USERNAME = "username";
+    public static final String EMAIL = "email";
     public static final String UID = "uid";
     public static final String NOMECOMPLETO = "nomeCompleto";
     public static final String TYPE = "type";
@@ -64,9 +64,9 @@ public class SessionManager {
     /**
      * Funzione che salva i dati nel file di sessione
      */
-    public void createLoginSession(String username, String uid, int type, String nomeCompleto) {
+    public void createLoginSession(String email, String uid, int type, String nomeCompleto) {
         editor.putBoolean(IS_LOGGED, true);
-        editor.putString(USERNAME, username);
+        editor.putString(EMAIL, email);
         editor.putString(UID, uid);
         editor.putString(NOMECOMPLETO, nomeCompleto);
         editor.putInt(TYPE, type);
@@ -83,8 +83,8 @@ public class SessionManager {
      *
      * @return username
      */
-    public String getSessionUsername() {
-        return preferences.getString(USERNAME, null);
+    public String getSessionEmail() {
+        return preferences.getString(EMAIL, null);
     }
 
 

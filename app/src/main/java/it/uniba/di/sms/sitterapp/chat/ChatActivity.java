@@ -47,6 +47,7 @@ import it.uniba.di.sms.sitterapp.oggetti.Message;
 import it.uniba.di.sms.sitterapp.oggetti.User;
 import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
 import it.uniba.di.sms.sitterapp.utils.AppUtils;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 import tr.xip.errorview.ErrorView;
 
 public class ChatActivity extends DrawerActivity implements DialogsListAdapter.OnDialogClickListener<Dialog>,
@@ -137,9 +138,9 @@ public class ChatActivity extends DrawerActivity implements DialogsListAdapter.O
     }
 
     private void getDialogs(final String user) {
-        db.collection("chat")
-                .whereArrayContains("UsersList",sessionManager.getSessionUid())
-                .orderBy("lastMessage.timestamp", Query.Direction.DESCENDING)
+        db.collection(FirebaseDb.CHAT)
+                .whereArrayContains(FirebaseDb.CHAT_USERSLIST,sessionManager.getSessionUid())
+                .orderBy(FirebaseDb.CHAT_LASTMESSAGE+"."+FirebaseDb.LASTMESSAGE_TIMESTAMP, Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
@@ -163,20 +164,20 @@ public class ChatActivity extends DrawerActivity implements DialogsListAdapter.O
                                     ArrayList<User> userList = new ArrayList<>();
                                     for(String key: keySet){
                                         userList.add(new User(key,
-                                                (String) mapUserList.get(key).get("name"),
-                                                (String) mapUserList.get(key).get("avatar"),
-                                                (Boolean) mapUserList.get(key).get("online")));
+                                                (String) mapUserList.get(key).get(FirebaseDb.CHAT_USER_NAME),
+                                                (String) mapUserList.get(key).get(FirebaseDb.CHAT_USER_AVATAR),
+                                                (Boolean) mapUserList.get(key).get(FirebaseDb.CHAT_USER_ONLINE)));
                                     }
 
                                     //avvaloro il campo ultimo messaggio
-                                    Map<String, Object> mapMessage = (HashMap<String, Object>) documentSnapshot.get("lastMessage");
-                                    String textMessage = (String) mapMessage.get("text");
-                                    User userMessage = new User(documentSnapshot.getString("lastMessage.user.id"),
-                                            documentSnapshot.getString("lastMessage.user.name"),
-                                            documentSnapshot.getString("lastMessage.user.avatar"),
-                                            documentSnapshot.getBoolean("lastMessage.user.online"));
-                                    String idMessage = (String) mapMessage.get("id").toString();
-                                    Date dateMessage = ((Timestamp) mapMessage.get("timestamp")).toDate();
+                                    Map<String, Object> mapMessage = (HashMap<String, Object>) documentSnapshot.get(FirebaseDb.CHAT_LASTMESSAGE);
+                                    String textMessage = (String) mapMessage.get(FirebaseDb.LASTMESSAGE_TEXT);
+                                    User userMessage = new User(documentSnapshot.getString(FirebaseDb.CHAT_LASTMESSAGE+"."+FirebaseDb.LASTMESSAGE_USER+"."+FirebaseDb.LASTMESSAGE_USER_ID),
+                                            documentSnapshot.getString(FirebaseDb.CHAT_LASTMESSAGE+"."+FirebaseDb.LASTMESSAGE_USER+"."+FirebaseDb.LASTMESSAGE_USER_NAME),
+                                            documentSnapshot.getString(FirebaseDb.CHAT_LASTMESSAGE+"."+FirebaseDb.LASTMESSAGE_USER+"."+FirebaseDb.LASTMESSAGE_USER_AVATAR),
+                                            documentSnapshot.getBoolean(FirebaseDb.CHAT_LASTMESSAGE+"."+FirebaseDb.LASTMESSAGE_USER+"."+FirebaseDb.LASTMESSAGE_USER_ONLINE));
+                                    String idMessage = (String) mapMessage.get(FirebaseDb.LASTMESSAGE_ID).toString();
+                                    Date dateMessage = ((Timestamp) mapMessage.get(FirebaseDb.LASTMESSAGE_TIMESTAMP)).toDate();
                                     Message lastMessage = new Message(idMessage, userMessage, textMessage, dateMessage);
 
 

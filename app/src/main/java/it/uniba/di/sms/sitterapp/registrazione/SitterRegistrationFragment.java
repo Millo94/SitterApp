@@ -55,6 +55,7 @@ import java.util.regex.Pattern;
 import it.uniba.di.sms.sitterapp.Constants;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -175,7 +176,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
                 final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
                 builder.setTitle(R.string.choosePic);
-                builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -334,7 +335,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
 
             // Defining the child of storageReference
 
-            storageRef.child("img/user_img/" + randUid)
+            storageRef.child(FirebaseDb.LOCAL_USERIMAGE_PATH + randUid)
                     .putFile(selectedImage)
                     .addOnSuccessListener(
                             new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -358,7 +359,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
 
         } else {
 
-            storageRef.child("img/user_img/" + randUid)
+            storageRef.child(FirebaseDb.LOCAL_USERIMAGE_PATH + randUid)
                     .putFile(getImageUri(getContext(), sImage))
                     .addOnSuccessListener(
                             new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -382,7 +383,7 @@ public class SitterRegistrationFragment extends Fragment implements DatePickerDi
 
         }
 
-        pathFoto = storageRef.child("img/user_img/" + randUid).toString();
+        pathFoto = storageRef.child(FirebaseDb.LOCAL_USERIMAGE_PATH + randUid).toString();
 
     }
 

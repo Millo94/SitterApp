@@ -28,6 +28,7 @@ import java.util.UUID;
 
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 
 /**
  * Activity per caricare un nuovo annuncio
@@ -39,7 +40,6 @@ public class NewNoticeActivity  extends AppCompatActivity implements DatePickerD
     Button post;
     SessionManager sessionManager;
     Button cancella;
-    private static final String posta = "POST";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -152,24 +152,24 @@ public class NewNoticeActivity  extends AppCompatActivity implements DatePickerD
     private void sendNotice(){
 
         Map<String, Object> annuncio = new HashMap<>();
-        annuncio.put("idAnnuncio", "");
-        annuncio.put("family", sessionManager.getSessionUid());
+        annuncio.put(FirebaseDb.ENGAGES_IDANNUNCIO, "");
+        annuncio.put(FirebaseDb.ENGAGES_FAMIGLIA, sessionManager.getSessionUid());
         String dataAnnuncio = String.format("%04d-%02d-%02d", year, month, day);
-        annuncio.put("date", dataAnnuncio);
-        annuncio.put("start_time", oraInizio.getText().toString().trim());
-        annuncio.put("end_time", oraFine.getText().toString().trim());
-        annuncio.put("description", descrizione.getText().toString());
-        annuncio.put("sitter", "");
-        annuncio.put("candidatura", new HashMap<String,String>());
-        annuncio.put("conferma", false);
+        annuncio.put(FirebaseDb.ENGAGES_DATA, dataAnnuncio);
+        annuncio.put(FirebaseDb.ENGAGES_ORAINIZIO, oraInizio.getText().toString().trim());
+        annuncio.put(FirebaseDb.ENGAGES_ORAFINE, oraFine.getText().toString().trim());
+        annuncio.put(FirebaseDb.ENGAGES_DESCRIZIONE, descrizione.getText().toString());
+        annuncio.put(FirebaseDb.ENGAGES_SITTER, "");
+        annuncio.put(FirebaseDb.ENGAGE_CANDIDATURA, new HashMap<String,String>());
+        annuncio.put(FirebaseDb.ENGAGES_CONFERMA, false);
 
-        db.collection("annuncio")
+        db.collection(FirebaseDb.ENGAGES)
                 .add(annuncio)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Toast.makeText(NewNoticeActivity.this, R.string.annuncioPubblicato, Toast.LENGTH_SHORT).show();
-                        documentReference.update("idAnnuncio",documentReference.getId());
+                        documentReference.update(FirebaseDb.ENGAGES_IDANNUNCIO,documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

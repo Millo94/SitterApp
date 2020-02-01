@@ -31,6 +31,7 @@ import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.oggetti.Recensione;
 import it.uniba.di.sms.sitterapp.recensioni.RecensioniActivity;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 
 /**
  * Classe che gestisce la parte della scrittura delle recensioni
@@ -167,7 +168,7 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("recensione").whereEqualTo("receiver", uid)
+        db.collection(FirebaseDb.REVIEWS).whereEqualTo(FirebaseDb.REVIEW_RECEIVER, uid)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -176,7 +177,7 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
                     float sumRating = 0;
                     int i = 0;
                     for (QueryDocumentSnapshot queryDocumentSnapshot : querySnapshot) {
-                        sumRating += queryDocumentSnapshot.getDouble("rating").floatValue();
+                        sumRating += queryDocumentSnapshot.getDouble(FirebaseDb.REVIEW_RATING).floatValue();
                         i++;
                     }
 
@@ -184,11 +185,11 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
 
                     String attributeToUpdate;
                     if (TYPE == Constants.TYPE_FAMILY) {
-                        attributeToUpdate = "babysitter.Rating";
+                        attributeToUpdate = FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_RATING;
                     } else {
-                        attributeToUpdate = "famiglia.rating";
+                        attributeToUpdate = FirebaseDb.FAMIGLIA+"."+FirebaseDb.FAMIGLIA_RATING;
                     }
-                    db.collection("utente").document(uid).update(attributeToUpdate, newRating);
+                    db.collection(FirebaseDb.USERS).document(uid).update(attributeToUpdate, newRating);
                 }
         }
                 });

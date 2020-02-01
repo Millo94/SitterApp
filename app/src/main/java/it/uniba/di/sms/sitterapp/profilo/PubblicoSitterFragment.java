@@ -48,6 +48,7 @@ import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.chat.ChatConversationActivity;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
 import it.uniba.di.sms.sitterapp.recensioni.RecensioniPubblicoActivity;
+import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
 
 /**
  * FRAGMENT PROFILO PUBBLICO SITTER
@@ -137,28 +138,28 @@ public class PubblicoSitterFragment extends Fragment {
 
     private void mostraProfilo(final String uid){
 
-        db.collection("utente")
+        db.collection(FirebaseDb.USERS)
                 .document(uid)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         sitterUid = uid;
-                        imageLoader.loadImage((ImageView)getActivity().findViewById(R.id.imagePuSitter),documentSnapshot.getString("Avatar"),null);
-                        nomeCompletoPuSit.setText(documentSnapshot.getString("NomeCompleto"));
-                        emailPuSit2.setText((documentSnapshot.getString("Email")));
-                        email = documentSnapshot.getString("Email");
-                        numeroPuSit2.setText(documentSnapshot.getString("Telefono"));
-                        telefono = documentSnapshot.getString("Telefono");
-                        nazionePuSit2.setText(documentSnapshot.getString("Nazione"));
-                        cittaPuSit2.setText(documentSnapshot.getString("Citta"));
-                        ratingPuSitter.setRating(documentSnapshot.getDouble("babysitter.Rating").floatValue());
-                        dataPuSit2.setText(documentSnapshot.getString("babysitter.dataNascita"));
-                        tariffaPuSit2.setText(documentSnapshot.getString("babysitter.Retribuzione"));
-                        sessoPuSit2.setText(documentSnapshot.getString("babysitter.Genere"));
-                        carPuSit2.setText(documentSnapshot.getBoolean("babysitter.Auto")?"Sì":"No");
-                        ingaggiPuSit2.setText(documentSnapshot.get("babysitter.numLavori").toString());
-                        descrPuSit.setText(documentSnapshot.getString("Descrizione"));
+                        imageLoader.loadImage((ImageView)getActivity().findViewById(R.id.imagePuSitter),documentSnapshot.getString(FirebaseDb.USER_AVATAR),null);
+                        nomeCompletoPuSit.setText(documentSnapshot.getString(FirebaseDb.USER_NOME_COMPLETO));
+                        emailPuSit2.setText((documentSnapshot.getString(FirebaseDb.USER_EMAIL)));
+                        email = documentSnapshot.getString(FirebaseDb.USER_EMAIL);
+                        numeroPuSit2.setText(documentSnapshot.getString(FirebaseDb.USER_TELEFONO));
+                        telefono = documentSnapshot.getString(FirebaseDb.USER_TELEFONO);
+                        nazionePuSit2.setText(documentSnapshot.getString(FirebaseDb.USER_NAZIONE));
+                        cittaPuSit2.setText(documentSnapshot.getString(FirebaseDb.USER_CITTA));
+                        ratingPuSitter.setRating(documentSnapshot.getDouble(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_RATING).floatValue());
+                        dataPuSit2.setText(documentSnapshot.getString(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_DATANASCITA));
+                        tariffaPuSit2.setText(documentSnapshot.getString(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_RETRIBUZIONE));
+                        sessoPuSit2.setText(documentSnapshot.getString(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_GENERE));
+                        carPuSit2.setText(documentSnapshot.getBoolean(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_AUTO)?R.string.yes:R.string.no);
+                        ingaggiPuSit2.setText(documentSnapshot.get(FirebaseDb.BABYSITTER+"."+FirebaseDb.BABYSITTER_NUMLAVORI).toString());
+                        descrPuSit.setText(documentSnapshot.getString(FirebaseDb.USER_DESCRIZIONE));
 
                     }
                 })
@@ -233,7 +234,7 @@ public class PubblicoSitterFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                 builder.setTitle(R.string.sceltaAzione);
-                builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -264,7 +265,7 @@ public class PubblicoSitterFragment extends Fragment {
                                 break;
                             case 3:
 
-                                db.collection("chat")
+                                db.collection(FirebaseDb.CHAT)
                                         .get()
                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                             @Override
@@ -277,7 +278,7 @@ public class PubblicoSitterFragment extends Fragment {
                                                 chatConversationIntent.putExtra("senderId",sessionManager.getSessionUid());
                                                 chatConversationIntent.putExtra("receiverId", sitterUid);
                                                 for(DocumentSnapshot docSnap : documentsList){
-                                                    List<String> users = (List<String>)docSnap.get("UsersList");
+                                                    List<String> users = (List<String>)docSnap.get(FirebaseDb.CHAT_USERSLIST);
                                                     if(users.contains(sessionManager.getSessionUid()) && users.contains(sitterUid)){
                                                         code = docSnap.getId();
                                                     }
@@ -305,7 +306,7 @@ public class PubblicoSitterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent showfeedIntent = new Intent(getContext(), RecensioniPubblicoActivity.class);
-                showfeedIntent.putExtra("username", getActivity().getIntent().getStringExtra("username"));
+                showfeedIntent.putExtra("uid", getActivity().getIntent().getStringExtra("uid"));
                 startActivity(showfeedIntent);
             }
         });
@@ -324,13 +325,13 @@ public class PubblicoSitterFragment extends Fragment {
                 new AlertDialog.Builder(getContext())
                         .setTitle(R.string.permessoRichiesto)
                         .setMessage(R.string.stringPermissionRequest)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, CALL_PERMISSION);
                             }
                         })
-                        .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -361,13 +362,13 @@ public class PubblicoSitterFragment extends Fragment {
                 new AlertDialog.Builder(getContext())
                         .setTitle(R.string.permessoRichiesto)
                         .setMessage(R.string.stringPermissionRequest)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.SEND_SMS}, SEND_SMS_PEMISSION);
                             }
                         })
-                        .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
