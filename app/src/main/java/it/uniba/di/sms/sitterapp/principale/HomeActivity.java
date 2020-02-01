@@ -13,12 +13,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -31,27 +25,22 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import it.uniba.di.sms.sitterapp.Constants;
+import it.uniba.di.sms.sitterapp.Constants.Constants;
 
 import it.uniba.di.sms.sitterapp.R;
-import it.uniba.di.sms.sitterapp.adapter.NoticeAdapter;
 import it.uniba.di.sms.sitterapp.adapter.NoticeHomeAdapter;
 import it.uniba.di.sms.sitterapp.adapter.SitterAdapter;
 import it.uniba.di.sms.sitterapp.appuntamenti.DialogsNoticeDetails;
 import it.uniba.di.sms.sitterapp.oggetti.Notice;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
 import it.uniba.di.sms.sitterapp.profilo.ProfiloPubblicoActivity;
-import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
+import it.uniba.di.sms.sitterapp.Constants.FirebaseDb;
 import tr.xip.errorview.ErrorView;
 
 /**

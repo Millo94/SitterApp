@@ -1,6 +1,5 @@
 package it.uniba.di.sms.sitterapp.recensioni;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,7 @@ import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.adapter.RecensioniScritteAdapter;
 import it.uniba.di.sms.sitterapp.oggetti.Recensione;
-import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
+import it.uniba.di.sms.sitterapp.Constants.FirebaseDb;
 import tr.xip.errorview.ErrorView;
 
 

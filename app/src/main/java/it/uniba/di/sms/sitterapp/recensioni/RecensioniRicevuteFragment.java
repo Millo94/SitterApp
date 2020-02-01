@@ -27,7 +27,7 @@ import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.adapter.RecensioniRicevuteAdapter;
 import it.uniba.di.sms.sitterapp.oggetti.Recensione;
-import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
+import it.uniba.di.sms.sitterapp.Constants.FirebaseDb;
 import tr.xip.errorview.ErrorView;
 
 

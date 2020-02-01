@@ -17,14 +17,13 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
-import it.uniba.di.sms.sitterapp.Constants;
+import it.uniba.di.sms.sitterapp.Constants.Constants;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
 import it.uniba.di.sms.sitterapp.appuntamenti.IngaggiActivity;
 import it.uniba.di.sms.sitterapp.chat.ChatActivity;
 import it.uniba.di.sms.sitterapp.profilo.ProfiloPrivatoActivity;
 import it.uniba.di.sms.sitterapp.recensioni.RecensioniActivity;
-import it.uniba.di.sms.sitterapp.scriviRecensione.IngaggiDaRecensireActivity;
 
 /**
  * Questa classe contiene solo il drawer. E' una classe base. Tutte le classi legate al drawer, dovranno estendere

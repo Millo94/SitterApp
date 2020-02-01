@@ -1,4 +1,4 @@
-package it.uniba.di.sms.sitterapp.utils;
+package it.uniba.di.sms.sitterapp.Constants;
 
 public class FirebaseDb {
 

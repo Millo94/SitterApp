@@ -18,7 +18,7 @@ import java.util.List;
 import androidx.recyclerview.widget.RecyclerView;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.oggetti.Notice;
-import it.uniba.di.sms.sitterapp.utils.FirebaseDb;
+import it.uniba.di.sms.sitterapp.Constants.FirebaseDb;
 
 public class NoticeHomeAdapter extends RecyclerView.Adapter<NoticeHomeAdapter.MyViewHolder> {
     private Context context;
