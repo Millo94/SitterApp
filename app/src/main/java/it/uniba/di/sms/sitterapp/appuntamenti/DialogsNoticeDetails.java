@@ -69,7 +69,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
 
             builder.setView(view)
                     .setTitle(R.string.dettaglioAnnuncio)
-                    .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 

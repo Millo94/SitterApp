@@ -85,7 +85,7 @@ public class RecensioniScritteFragment extends Fragment {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         if (queryDocumentSnapshots.isEmpty()) {
-                            errorView.setTitle(R.string.niente_recensioni_ricevute);
+                            errorView.setTitle(R.string.niente_recensioni_scritte);
                             errorView.setVisibility(View.VISIBLE);
 
                         } else {

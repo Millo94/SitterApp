@@ -70,9 +70,9 @@ public class PubblicoFamigliaFragment extends Fragment {
 
     private final String TAG = "PubSitterFrag";
     View view;
-    TextView nomeCompletoPuFam, descrPuFam, nomePuFam, cognomePuFam, emailPuFam, numeroPuFam, nazionePuFam, cittaPuFam, numFigliPuFam, animaliPuFam;
+    TextView nomeCompletoPuFam, descrPuFam, emailPuFam, numeroPuFam, nazionePuFam, cittaPuFam, numFigliPuFam, animaliPuFam;
     //STRINGHE DA COLLEGARE AL DATABASE
-    TextView nomePuFam2, cognomePuFam2, emailPuFam2, numeroPuFam2, nazionePuFam2, cittaPuFam2, numFigliPuFam2, animaliPuFam2;
+    TextView emailPuFam2, numeroPuFam2, nazionePuFam2, cittaPuFam2, numFigliPuFam2, animaliPuFam2;
     Button contattaFamiglia;
     Button feedbackFam;
     RatingBar ratingPuFam;
@@ -158,7 +158,7 @@ public class PubblicoFamigliaFragment extends Fragment {
                         telefono = documentSnapshot.getString("Telefono");
                         nazionePuFam2.setText(documentSnapshot.getString("Nazione"));
                         cittaPuFam2.setText(documentSnapshot.getString("Citta"));
-                        getRatingFamily(uid);
+                        ratingPuFam.setRating(documentSnapshot.getDouble("famiglia.rating").floatValue());
                         animaliPuFam2.setText(documentSnapshot.getBoolean("famiglia.Animali")?"Sì":"No");
                         numFigliPuFam2.setText(documentSnapshot.getString("famiglia.numFigli"));
                         descrPuFam.setText(documentSnapshot.getString("Descrizione"));
@@ -171,35 +171,6 @@ public class PubblicoFamigliaFragment extends Fragment {
                         Toast.makeText(getContext(), R.string.profileError, Toast.LENGTH_SHORT).show();
                     }
                 });
-
-    }
-
-    private void getRatingFamily(final String uid){
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("recensione").whereEqualTo("receiver", uid)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    QuerySnapshot querySnapshot = task.getResult();
-                    float sumRating = 0;
-                    int i = 0;
-                    for(QueryDocumentSnapshot queryDocumentSnapshot : querySnapshot){
-
-                        sumRating += queryDocumentSnapshot.getDouble("rating").floatValue();
-                        i++;
-
-                    }
-
-                    ratingPuFam.setRating(sumRating/i);
-
-                }else{
-                    Toast.makeText(getContext(), R.string.genericError ,Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
     }
 
@@ -289,8 +260,9 @@ public class PubblicoFamigliaFragment extends Fragment {
                                                 chatConversationIntent.putExtra("receiverId", receiverId);
                                                 for(DocumentSnapshot docSnap : documentsList){
                                                     List<String> users = (List<String>)docSnap.get("UsersList");
-                                                    if(users.contains(sessionManager.getSessionUid()) & users.contains(receiverId))
-                                                    code = docSnap.getId();
+                                                    if(users.contains(sessionManager.getSessionUid()) & users.contains(receiverId)){
+                                                        code = docSnap.getId();
+                                                    }
                                                 }
                                                 chatConversationIntent.putExtra("conversationUID",code);
                                                 startActivity(chatConversationIntent);

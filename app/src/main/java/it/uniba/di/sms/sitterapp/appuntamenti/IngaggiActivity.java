@@ -104,7 +104,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
-        progressDialog.dismiss();
+
 
         CollectionReference colRef = db.collection("annuncio");
 
@@ -118,6 +118,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
                                 Toast.makeText(IngaggiActivity.this, R.string.genericError, Toast.LENGTH_SHORT).show();
                             }
                             else{
+                                progressDialog.dismiss();
                                 noticeList.clear();
                                 Iterator<QueryDocumentSnapshot> listNotice = queryDocumentSnapshots.iterator();
                                 ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
@@ -158,6 +159,7 @@ public class IngaggiActivity extends DrawerActivity implements NoticeAdapter.Not
 
                             }
                             else{
+                                progressDialog.dismiss();
                                 noticeList.clear();
                                 Iterator<QueryDocumentSnapshot> listNotice = queryDocumentSnapshots.iterator();
                                 ErrorView errorView = (ErrorView) findViewById(R.id.errorView);

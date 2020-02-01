@@ -17,10 +17,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
@@ -49,7 +49,6 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
     String id;
     String sitter;
     public static Intent intentReview;
-
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -141,6 +140,10 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
         comment.put("receiver", recensione.getReceiver());
         comment.put("sender", recensione.getSender());
 
+        //aggiorna il rating dell'utente recensito
+        setRatingUser(recensione.getReceiver(),recensione.getRating(),sessionManager.getSessionType());
+
+        //invio delle recensione
         db.collection("recensione")
                 .add(comment)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -160,4 +163,34 @@ public class ScriviRecensioneActivity extends AppCompatActivity {
 
     }
 
+    private void setRatingUser(final String uid, final Float newVote, final int TYPE) {
+
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("recensione").whereEqualTo("receiver", uid)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    QuerySnapshot querySnapshot = task.getResult();
+                    float sumRating = 0;
+                    int i = 0;
+                    for (QueryDocumentSnapshot queryDocumentSnapshot : querySnapshot) {
+                        sumRating += queryDocumentSnapshot.getDouble("rating").floatValue();
+                        i++;
+                    }
+
+                    final Float newRating = (sumRating + newVote) / (i + 1);
+
+                    String attributeToUpdate;
+                    if (TYPE == Constants.TYPE_FAMILY) {
+                        attributeToUpdate = "babysitter.Rating";
+                    } else {
+                        attributeToUpdate = "famiglia.rating";
+                    }
+                    db.collection("utente").document(uid).update(attributeToUpdate, newRating);
+                }
+        }
+                });
+    }
 }

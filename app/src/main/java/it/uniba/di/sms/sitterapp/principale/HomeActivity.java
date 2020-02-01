@@ -1,5 +1,6 @@
 package it.uniba.di.sms.sitterapp.principale;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -74,6 +75,7 @@ public class HomeActivity extends DrawerActivity
     private SitterAdapter sitterAdapter;
 
     FloatingActionButton cercaSitter;
+    ProgressDialog progressDialog;
 
     //richieste
     private static final String annunci = "ANNUNCI";
@@ -105,6 +107,11 @@ public class HomeActivity extends DrawerActivity
         //CARICAMENTO DEGLI ANNUNCI
         recyclerView = (RecyclerView) findViewById(R.id.recyclerHome);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         if (sessionManager.checkLogin()) {
             loadHome();
         } else {
@@ -118,7 +125,7 @@ public class HomeActivity extends DrawerActivity
     //Carica la home in fase di Demo
     private void loadDemo() {
         int type = getIntent().getIntExtra(Constants.TYPE, -1);
-
+        progressDialog.dismiss();
         if (type == Constants.TYPE_SITTER) {
 
             noticeList = new ArrayList<>();
@@ -207,6 +214,7 @@ public class HomeActivity extends DrawerActivity
                         }
 
                         else {
+                            progressDialog.dismiss();
                             noticeList.clear();
                         Iterator<QueryDocumentSnapshot> iterableNotice = queryDocumentSnapshots.iterator();
                          ErrorView errorView = (ErrorView) findViewById(R.id.errorView);
@@ -248,6 +256,7 @@ public class HomeActivity extends DrawerActivity
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        progressDialog.dismiss();
                         if(task.isSuccessful()){
                             QuerySnapshot querySnapshot = task.getResult();
                             sitterList.clear();
@@ -265,8 +274,8 @@ public class HomeActivity extends DrawerActivity
                                             (String) documentSnapshot.get("NomeCompleto"),
                                             (String) documentSnapshot.get("Avatar"),
                                             documentSnapshot.getBoolean("online"),
-                                            Float.valueOf(documentSnapshot.get("babysitter.Rating").toString()),
-                                            Integer.valueOf(documentSnapshot.get("babysitter.numLavori").toString()));
+                                            documentSnapshot.getDouble("babysitter.Rating").floatValue(),
+                                            documentSnapshot.getLong("babysitter.numLavori").intValue());
 
                                     sitterList.add(bs);
                                     dispTotali.put(documentSnapshot.getId(), new ArrayList<Long>());

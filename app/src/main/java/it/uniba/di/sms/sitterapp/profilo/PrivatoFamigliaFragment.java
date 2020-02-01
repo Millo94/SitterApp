@@ -1,5 +1,6 @@
 package it.uniba.di.sms.sitterapp.profilo;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -53,6 +54,8 @@ public class PrivatoFamigliaFragment extends Fragment {
     boolean edit = false;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    ProgressDialog progressDialog;
+
 
     RequestQueue requestQueue;
     SessionManager sessionManager;
@@ -78,10 +81,13 @@ public class PrivatoFamigliaFragment extends Fragment {
         //coda per la richiesta della volley
         requestQueue = Volley.newRequestQueue(getContext());
         inizializzazione();
-        //openProfile();
-        apriProfilo();
 
-        //setRatingDb();
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        apriProfilo();
 
         exit_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -92,58 +98,6 @@ public class PrivatoFamigliaFragment extends Fragment {
         return view;
     }
 
-    private void getRatingFamily(final String uid){
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("recensione").whereEqualTo("receiver", uid)
-            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    QuerySnapshot querySnapshot = task.getResult();
-                    float sumRating = 0;
-                    int i = 0;
-                    for(QueryDocumentSnapshot queryDocumentSnapshot : querySnapshot){
-
-                        sumRating += queryDocumentSnapshot.getDouble("rating").floatValue();
-                        i++;
-
-                    }
-
-                    ratingPrFam.setRating(sumRating/i);
-                    setRatingDb();
-
-                }else{
-                    Toast.makeText(getContext(), R.string.genericError ,Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-    }
-
-    private void setRatingDb(){
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("utente")
-                .document(sessionManager.getSessionUid())
-                .update("famiglia.rating", ratingPrFam.getRating())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
-
-    }
-
     private void apriProfilo(){
 
         db.collection("utente")
@@ -152,6 +106,7 @@ public class PrivatoFamigliaFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        progressDialog.dismiss();
                         showImage(documentSnapshot.getString("Avatar"));
                         nomeCompletoPrFam.setText(documentSnapshot.getString("NomeCompleto"));
                         descrPrFam.setText(documentSnapshot.getString("Descrizione"));
@@ -161,13 +116,13 @@ public class PrivatoFamigliaFragment extends Fragment {
                         numFigliPrFam2.setText(documentSnapshot.getString("famiglia.numFigli"));
                         nazionePrFam2.setText(documentSnapshot.getString("Nazione"));
                         cittaPrFam2.setText(documentSnapshot.getString("Citta"));
-                        getRatingFamily(sessionManager.getSessionUid());
-
+                        ratingPrFam.setRating(documentSnapshot.getDouble("famiglia.rating").floatValue());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
                         Toast.makeText(getContext(), R.string.profileError ,Toast.LENGTH_SHORT).show();
                     }
                 });

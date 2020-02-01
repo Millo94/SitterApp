@@ -135,36 +135,6 @@ public class PubblicoSitterFragment extends Fragment {
         return view;
     }
 
-    private void getRatingSitter(final String uid){
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("recensione").whereEqualTo("receiver", uid)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    QuerySnapshot querySnapshot = task.getResult();
-                    float sumRating = 0;
-                    int i = 0;
-                    for(QueryDocumentSnapshot queryDocumentSnapshot : querySnapshot){
-
-                        sumRating += queryDocumentSnapshot.getDouble("rating").floatValue();
-                        i++;
-
-                    }
-
-                    ratingPuSitter.setRating(sumRating/i);
-
-                }else{
-                    Toast.makeText(getContext(), R.string.genericError ,Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-    }
-
-
     private void mostraProfilo(final String uid){
 
         db.collection("utente")
@@ -182,7 +152,7 @@ public class PubblicoSitterFragment extends Fragment {
                         telefono = documentSnapshot.getString("Telefono");
                         nazionePuSit2.setText(documentSnapshot.getString("Nazione"));
                         cittaPuSit2.setText(documentSnapshot.getString("Citta"));
-                        getRatingSitter(uid);
+                        ratingPuSitter.setRating(documentSnapshot.getDouble("babysitter.Rating").floatValue());
                         dataPuSit2.setText(documentSnapshot.getString("babysitter.dataNascita"));
                         tariffaPuSit2.setText(documentSnapshot.getString("babysitter.Retribuzione"));
                         sessoPuSit2.setText(documentSnapshot.getString("babysitter.Genere"));
@@ -308,8 +278,9 @@ public class PubblicoSitterFragment extends Fragment {
                                                 chatConversationIntent.putExtra("receiverId", sitterUid);
                                                 for(DocumentSnapshot docSnap : documentsList){
                                                     List<String> users = (List<String>)docSnap.get("UsersList");
-                                                    if(users.contains(sessionManager.getSessionUid()) && users.contains(sitterUid));
-                                                    code = docSnap.getId();
+                                                    if(users.contains(sessionManager.getSessionUid()) && users.contains(sitterUid)){
+                                                        code = docSnap.getId();
+                                                    }
                                                 }
                                                 chatConversationIntent.putExtra("conversationUID",code);
                                                 startActivity(chatConversationIntent);

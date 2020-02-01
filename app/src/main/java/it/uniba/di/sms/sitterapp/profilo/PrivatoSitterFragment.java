@@ -73,6 +73,8 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     Button editDisp,exit_button;
     boolean edit = false;
 
+    ProgressDialog progressDialog;
+
     private OnFragmentInteractionListener mListener;
     private Bitmap bitmap;
 
@@ -103,6 +105,11 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                 c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 
         inizializzazione(datePickerDialog);
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         //apertura del profilo
         apriProfilo();
@@ -141,7 +148,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-
+                        progressDialog.dismiss();
                         showImage(documentSnapshot.getString("Avatar"));
                         descrPrSit.setText(documentSnapshot.getString("Descrizione"));
                         nomeCompletoPrSit.setText(documentSnapshot.getString("NomeCompleto"));
@@ -151,13 +158,14 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                         sessoPrSit2.setText(documentSnapshot.getString("babysitter.Genere"));
                         dataPrSit2.setText(documentSnapshot.getString("babysitter.dataNascita"));
                         ingaggiPrSit2.setText(documentSnapshot.get("babysitter.numLavori").toString());
-                        getRatingSitter(sessionManager.getSessionUid());
+                        ratingPrSitter.setRating(documentSnapshot.getDouble("babysitter.Rating").floatValue());
                         tariffaPrSit2.setText(documentSnapshot.getString("babysitter.Retribuzione"));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
                         Toast.makeText(getContext(), R.string.profileError ,Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -211,59 +219,6 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
                     }
                 });
     }
-
-    private void setRatingDb(){
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("utente")
-                .document(sessionManager.getSessionUid())
-                .update("babysitter.Rating", ratingPrSitter.getRating())
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
-
-    }
-
-    private void getRatingSitter(final String uid){
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("recensione").whereEqualTo("receiver", uid)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    QuerySnapshot querySnapshot = task.getResult();
-                    float sumRating = 0;
-                    int i = 0;
-                    for(QueryDocumentSnapshot queryDocumentSnapshot : querySnapshot){
-
-                        sumRating += queryDocumentSnapshot.getDouble("rating").floatValue();
-                        i++;
-
-                    }
-
-                    ratingPrSitter.setRating(sumRating/i);
-                    setRatingDb();
-
-                }else{
-                    Toast.makeText(getContext(), R.string.genericError ,Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-    }
-
 
     //inizializzazione dei campi
     public void inizializzazione(final DatePickerDialog datePickerDialog) {
@@ -382,11 +337,7 @@ public class PrivatoSitterFragment extends Fragment implements DatePickerDialog.
     //formattazione della stringa restituita dal date picker
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        dataPrSit2.setText(
-                new StringBuilder()
-                        .append(dayOfMonth).append("-")
-                        .append(month).append("-")
-                        .append(year));
+        dataPrSit2.setText(String.format("%02d-%02d-%04d",dayOfMonth,month+1,year));
     }
 
     //Interfaccia di comunicazione tra fragment e activity
