@@ -404,7 +404,7 @@ public class DialogsNoticeDetails extends AppCompatDialogFragment {
                         final Long ingaggi = documentSnapshot.getLong("babysitter.numLavori");
                         db.collection("utente")
                                 .document(sessionManager.getSessionUid())
-                                .update("numLavori",ingaggi+1);
+                                .update("babysitter.numLavori",ingaggi+1);
                     }
                 });
     }
