@@ -36,7 +36,7 @@ import it.uniba.di.sms.sitterapp.Constants.Constants;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.adapter.NoticeHomeAdapter;
 import it.uniba.di.sms.sitterapp.adapter.SitterAdapter;
-import it.uniba.di.sms.sitterapp.appuntamenti.DialogsNoticeDetails;
+import it.uniba.di.sms.sitterapp.ingaggi.DialogsNoticeDetails;
 import it.uniba.di.sms.sitterapp.oggetti.Notice;
 import it.uniba.di.sms.sitterapp.oggetti.UtenteSitter;
 import it.uniba.di.sms.sitterapp.profilo.ProfiloPubblicoActivity;

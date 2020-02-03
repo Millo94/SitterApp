@@ -20,7 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 import it.uniba.di.sms.sitterapp.Constants.Constants;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.SessionManager;
-import it.uniba.di.sms.sitterapp.appuntamenti.IngaggiActivity;
+import it.uniba.di.sms.sitterapp.ingaggi.IngaggiActivity;
 import it.uniba.di.sms.sitterapp.chat.ChatActivity;
 import it.uniba.di.sms.sitterapp.profilo.ProfiloPrivatoActivity;
 import it.uniba.di.sms.sitterapp.recensioni.RecensioniActivity;

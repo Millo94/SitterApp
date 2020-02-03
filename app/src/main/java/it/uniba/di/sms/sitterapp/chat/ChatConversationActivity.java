@@ -44,14 +44,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import it.uniba.di.sms.sitterapp.R;
-import it.uniba.di.sms.sitterapp.chat.fixtures.MessagesFixtures;
 import it.uniba.di.sms.sitterapp.chat.messages.CustomIncomingImageMessageViewHolder;
 import it.uniba.di.sms.sitterapp.chat.messages.CustomIncomingTextMessageViewHolder;
 import it.uniba.di.sms.sitterapp.chat.messages.CustomOutcomingImageMessageViewHolder;
 import it.uniba.di.sms.sitterapp.chat.messages.CustomOutcomingTextMessageViewHolder;
 import it.uniba.di.sms.sitterapp.oggetti.Message;
 import it.uniba.di.sms.sitterapp.oggetti.User;
-import it.uniba.di.sms.sitterapp.utils.AppUtils;
 import it.uniba.di.sms.sitterapp.Constants.FirebaseDb;
 
 
@@ -164,8 +162,6 @@ public class ChatConversationActivity extends AppCompatActivity
 
     }
 
-
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -221,7 +217,7 @@ public class ChatConversationActivity extends AppCompatActivity
                 break;
             case R.id.action_copy:
                 messagesAdapter.copySelectedMessagesText(this, getMessageStringFormatter(), true);
-                AppUtils.showToast(this, R.string.copied_message, true);
+                Toast.makeText(this, R.string.copied_message, Toast.LENGTH_LONG);
 
                 break;
         }
@@ -367,14 +363,19 @@ public class ChatConversationActivity extends AppCompatActivity
         return true;
     }
 
+    /*
+     * metodo per aggiungere funzionalità di invio di immagini
+     *
+     */
     @Override
     public void onAddAttachments() {
-        messagesAdapter.addToStart(MessagesFixtures.getImageMessage(), true);
+        //messagesAdapter.addToStart(getImage(), true);
     }
+
 
     @Override
     public void onMessageLongClick(Message message) {
-        AppUtils.showToast(this, R.string.on_log_click_message, false);
+        Toast.makeText(this, R.string.on_log_click_message, Toast.LENGTH_SHORT);
     }
 
     private void initAdapter() {

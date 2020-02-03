@@ -1,4 +1,4 @@
-package it.uniba.di.sms.sitterapp.scriviRecensione;
+package it.uniba.di.sms.sitterapp.recensioni.scriviRecensione;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package it.uniba.di.sms.sitterapp.appuntamenti;
+package it.uniba.di.sms.sitterapp.ingaggi;
 
 import android.content.DialogInterface;
 import android.content.Intent;

@@ -72,7 +72,7 @@
             android:theme="@style/AppTheme.Light.NoActionBar" />
 
         <activity
-            android:name=".appuntamenti.IngaggiActivity"
+            android:name=".ingaggi.IngaggiActivity"
             android:screenOrientation="portrait"
             android:label="@string/engagements"
             android:theme="@style/AppTheme.Light.NoActionBar" />
@@ -87,31 +87,31 @@
             android:parentActivityName=".principale.HomeActivity"
             android:theme="@style/AppTheme.Light.NoActionBar" />
         <activity
-            android:name=".scriviRecensione.IngaggiDaRecensireActivity"
+            android:name=".recensioni.scriviRecensione.IngaggiDaRecensireActivity"
             android:screenOrientation="portrait"
             android:label="@string/scrivi_recensione"
             android:parentActivityName=".recensioni.RecensioniActivity"
             android:theme="@style/AppTheme.Light.NoActionBar"/>
         <activity
-            android:name=".scriviRecensione.ScriviRecensioneActivity"
+            android:name=".recensioni.scriviRecensione.ScriviRecensioneActivity"
             android:screenOrientation="portrait"
             android:label="@string/review"
-            android:parentActivityName=".scriviRecensione.IngaggiDaRecensireActivity" />
+            android:parentActivityName=".recensioni.scriviRecensione.IngaggiDaRecensireActivity" />
         <activity
             android:name=".principale.NewNoticeActivity"
             android:screenOrientation="portrait"
             android:label="@string/nuovoAnnuncio"
-            android:parentActivityName=".appuntamenti.IngaggiActivity"
+            android:parentActivityName=".ingaggi.IngaggiActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".recensioni.RecensioniPubblicoActivity"
             android:screenOrientation="portrait"
             android:label="@string/review" />
         <activity
-            android:name=".appuntamenti.SceltaSitter"
+            android:name=".ingaggi.SceltaSitter"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Light.NoActionBar"
-            android:parentActivityName=".appuntamenti.IngaggiActivity"
+            android:parentActivityName=".ingaggi.IngaggiActivity"
             />
 
 

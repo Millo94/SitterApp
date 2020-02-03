@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,7 +42,6 @@ import it.uniba.di.sms.sitterapp.oggetti.Dialog;
 import it.uniba.di.sms.sitterapp.oggetti.Message;
 import it.uniba.di.sms.sitterapp.oggetti.User;
 import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
-import it.uniba.di.sms.sitterapp.utils.AppUtils;
 import it.uniba.di.sms.sitterapp.Constants.FirebaseDb;
 import tr.xip.errorview.ErrorView;
 
@@ -126,10 +126,7 @@ public class ChatActivity extends DrawerActivity implements DialogsListAdapter.O
     }
 
     public void onDialogLongClick(Dialog dialog) {
-        AppUtils.showToast(
-                this,
-                dialog.getDialogName(),
-                false);
+        Toast.makeText(this,dialog.getDialogName(),Toast.LENGTH_SHORT);
     }
 
     private void getDialogs(final String user) {

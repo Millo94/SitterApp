@@ -13,7 +13,7 @@ import android.view.View;
 import it.uniba.di.sms.sitterapp.adapter.PageViewAdapter;
 import it.uniba.di.sms.sitterapp.R;
 import it.uniba.di.sms.sitterapp.principale.DrawerActivity;
-import it.uniba.di.sms.sitterapp.scriviRecensione.IngaggiDaRecensireActivity;
+import it.uniba.di.sms.sitterapp.recensioni.scriviRecensione.IngaggiDaRecensireActivity;
 
 /**
  * Classe per le recensioni legate all'utente
